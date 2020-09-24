@@ -1,0 +1,22 @@
+%%esto deberia descartarlo. inicializamos o asumimos que estan creadas las variables?
+
+x = 5;
+xJJ_55 = 10;
+aaaaaaaaa = 2.56;
+bbbbbbbbbbbbbbbbbbbbbbbbbb = 3.f3; %%lo trunca y emite warning
+c = .5;
+
+
+
+%%condiciones
+
+if ( x > 2 ) then
+  x = 3;
+else
+  x = 9;
+
+
+
+%%sentencias de control
+
+%%until?

@@ -12,7 +12,7 @@ public class Main {
 	    
 	    AnalizadorLexico a = new AnalizadorLexico();
 		//leo archivo
-	    a.abrirArchivo();
+	    a.abrir_y_leerArchivo();
 		//%%leo archivo
 		
 	}

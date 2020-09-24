@@ -5,12 +5,17 @@ import java.io.File;
 import java.io.FileReader;
 
 public class AnalizadorLexico {
-	private int matriz_transicion_estados[][];
+	private String columnas_caracteres_validos = " l L d _ i . f + - * / > < = ! { } ( ) , ; % otro \n BL/TAB ";
+	private int cant_estados = 14; 
+	
+	
+	private int [][] matriz_transicion_estados;
 	private AccionSemantica matriz_acciones_semanticas[][];
+	private TablaSimbolos TSym;
 	
 	
 	public AnalizadorLexico() {
-		//inicializar matriz de transicion de estados
+		this.matriz_transicion_estados = new int[this.columnas_caracteres_validos.length()][this.cant_estados];
 		//inicializar matriz de acciones semanticas
 	}
 	
@@ -25,7 +30,7 @@ public class AnalizadorLexico {
 	//genera un token y lo devuelve 
 	//la funcion yylex devuelve el id asociado al token (en Tsym) 
 	
-	public void abrirArchivo() {
+	public void abrir_y_leerArchivo() {
 		File archivo = null;
 	    FileReader fr = null;
 	    BufferedReader br = null;
@@ -36,25 +41,49 @@ public class AnalizadorLexico {
 	        fr = new FileReader (archivo);
 	        br = new BufferedReader(fr);
 
-	         // Lectura del fichero
+
+	        // Lectura del fichero linea por linea
 	        String linea;
 	        int nro_linea = 0;
 	        
 	        while((linea=br.readLine()) != null) {
 	        	nro_linea ++;
 	        	
-	        	//asi leo caracteres
+	        	// leo caracteres
 	        	int i=0;
-	        	//AS1;
+	        	int id_fila = 0; //el estado inicial de cada nueva linea es el estado 0
+	        	int id_columna; //depende del tipo de caracter
+	        	
 	        	while (i < linea.length()){
-	        		System.out.println("Nro linea: " + nro_linea + " caracter " + linea.charAt(i));
-	        		i++;
+	        		//System.out.println("Nro linea: " + nro_linea + " caracter " + linea.charAt(i));
+	        		char caracter = linea.charAt(i); //es mejor usar directamente linea.charAt(i)
 	        		
-	        		nro_fila, nro_columna <- getCamino(linea[i])
-	        		matriz_transicion_estados[nro_fila][nro_columna]
-	        		//id_token <- yylex(buffer)
+	        		id_columna = getColumna(caracter); //funcion que busca en matriz de transicion de estados la columna correspondiente al caracter pasado como parametro
+	        		
+	        		// hasta aca tenemos el estado inicial(fila 0) y el ide_columna del tipo de caracter
+	        		
+	        		
+	        		//obtenemos sgte estado para proxima columna
+	        		int sgte_estado = getSgteEstado(id_fila, id_columna);
+	        		
+	        		
+	        		
+	        		//AccionSemantica AS = getAccionSemantica(id_fila, id_columna);
+	        		//AS.ejecutar();
+	        		
+	        		//asi va ejecutando en cada paso de acuerdo a la accion semantica
+	        		
+	        		
+	        		//hasta que en algun lado tendremos que corroborar si es un token valido
+	        		
+	        		//if (esTokenValido)
+	        		//  Token t = new Token();
+	        		//	Tsym.addToken(token)
+	        		//	Tsym[id_token] <- yylex(buffer)
+
+	        		
+	        		i++; //avanza de caracter
 	        	}
-	        	//ejecuta AS salto de linea
 	        	System.out.println("nro linea "+nro_linea+" -> "+linea);
 	        }
 	    }catch(Exception e){
@@ -72,7 +101,24 @@ public class AnalizadorLexico {
 	      }
 	}
 	
-	//primero lee el codigo fuente.
-	//si existe -> lo abre y empieza a leer linea por linea, caracter por caracter
-	//si no existe -> sacude un error
+	
+	
+	
+	public int getSgteEstado(int fil, int col) {
+		return this.matriz_transicion_estados[fil][col];
+	}
+	
+	
+	public int getColumna(char c) {
+		//obtengo el tipo de caracter
+		//recorro la matriz de transicion de estados hasta encontrar la columna correspondiente al tipo
+		return 0; //retorna el nro de columna asociado al tipo
+	}
+	
+	
+	
+	public AccionSemantica getAccionSemantica(int fil, int col) {
+		return this.matriz_acciones_semanticas[fil][col];
+	}
+	
 }
