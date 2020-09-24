@@ -30,7 +30,7 @@ public class AnalizadorLexico {
 	//genera un token y lo devuelve 
 	//la funcion yylex devuelve el id asociado al token (en Tsym) 
 	
-	public void abrir_y_leerArchivo() {
+	public void abrir_y_procesarArchivo() {
 		File archivo = null;
 	    FileReader fr = null;
 	    BufferedReader br = null;
