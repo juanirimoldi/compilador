@@ -1,7 +1,7 @@
 package tp_compiladores;
 
 public class Token {
-	private int id;
+	private int identificador;
 	private String lexema;
 	private int nro_linea;
 	
