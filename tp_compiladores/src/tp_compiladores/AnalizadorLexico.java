@@ -3,40 +3,48 @@ package tp_compiladores;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnalizadorLexico {
+	private int filas_estados = 14;
 	private String columnas_caracteres_validos = " l L d _ i . f + - * / > < = ! { } ( ) , ; % otro \n BL/TAB ";
-	private int filas_estados = 14; 
-	
+	//columnas_caracteres_validos esta definido como un string separado por espacios
+	//se puede definir de cualquier otro tipo, o no definir y solo darle la longitud. eso tenemos que verlo... 
+		
 	private int matriz_transicion_estados [][];
 	private AccionSemantica matriz_acciones_semanticas [][];
-	private TablaSimbolos TSym;
 	
+	private TablaSimbolos TSym;
+
+	private ArrayList<String> palabrasReservadas; //si no esta, devolver error!
+	
+	private String bufferInicial=""; //variable global usada por las AS
+
 	
 	
 	public AnalizadorLexico() {
-		//crea la estructura e inicializo la matriz con tamaño fijo
+		this.palabrasReservadas = new ArrayList<String> ();
+		//cargar lista de palabras reservadas
+		
+		//crea la estructura e inicializa la matriz con tamaño fijo
 		this.matriz_transicion_estados = new int[this.columnas_caracteres_validos.length()][this.filas_estados];
-		//aca podriamos llamar a una funcion que cargue la matriz de transicion de estados
+		//aca habria que cargar la matriz de transicion de estados
+		//podriamos llamar a una funcion que lo haga, o hacerlo aca directamente
 		
 		
-		//crea la matriz y la inicializa con el mismo tamaño
+		//crea la matriz de acciones semanticas y la inicializa con el mismo tamaño
 		this.matriz_acciones_semanticas = new AccionSemantica[this.columnas_caracteres_validos.length()][this.filas_estados];
 		//aca podriamos llamar a una funcion que cargue la matriz de AS
 	}
 	
 	
-	//public void inicializarMatrizTransicionEstados() {
-		//this.matriz_transicion_estados[][] = {... };
-	//}
 	
-	
-	
-	
+	// funcion que abre y procesa el codigo (el archivo casos_prueba.txt)
 	//1. lee programa fuente, liea por linea, caracter por caracter
-	//2.por cada caracter leido, matchea matrices
-	//3. la ejecucion de la AS eventualmente genera un token y lo devuelve
-	//4. en caso de generar un token, la funcion yylex devuelve el id asociado al token generado(en Tsym) 
+	//2. por cada caracter leido, matchea en las matrices
+	//3. se ejecutan las AS hasta que eventualmente genera un token valido y lo devuelve
+	//4. en caso de generar un token, la funcion yylex devuelve el id asociado al token generado(en Tsym) ?? 
 	
 	public void abrir_y_procesarArchivo() {
 		File archivo = null;
@@ -74,20 +82,20 @@ public class AnalizadorLexico {
 	        		
 	        		
 	        		//AS.ejecutar();
-	        		
-	        		
-	        		//obtenemos sgte estado para proxima columna
-	        		estado_actual = matriz_transicion_estados[estado_actual][nro_columna];
-	        		
-	        			        		
-	        		
-	        		//hasta que en algun lado tendremos que corroborar si es un token valido. lo hace la AS?
-	        		
-	        		//if (esTokenValido)
-	        		//  Token t = new Token();
-	        		//	Tsym.addToken(token)
-	        		//	Tsym[id_token] <- yylex(buffer)
+	        		//para que funcione hay que cargar la matriz de AS e implementar cada uno de sus metodos ejecutar
 
+	        		// la AS corrobora si el token es valido o no
+	        		// en caso de ser valido, la AS crea el Token y lo guarda en Tsym 
+	        		// la AS devuelve el id del token guardado en la Tsym como retorno de la funcion yylex()
+
+	        		
+	        		
+	        		//obtenemos el estado transicion: el sgte estado
+	        		estado_actual = matriz_transicion_estados[estado_actual][nro_columna];
+	        			        		
+	        			        		
+	        		// yylex(); ...hay que redefinirla? 
+	        		
 	        		
 	        		i++; //avanza de caracter
 	        	}
@@ -117,21 +125,22 @@ public class AnalizadorLexico {
 	
 	
 	public int getColumnaCaracter(char c) {
-		//aca deberia resolver si el caracter es una letra minuscula, mayuscula, digito, comentario, etc
-		//y devolver el numero de columna asociado
+		// funcion que resuelve el tipo de caracter: que camino seguir en el automata (que columna)
+		// si el caracter es una letra minuscula, mayuscula, digito, comentario, etc
 		
-		int nro_columna;
+		//devolver el numero de columna asociado
 		
-		Character.isLowerCase(c); // -> nro_columna=1
-		Character.isDigit(c); //return 2
+		int nro_columna=0;
+		
+		if (Character.isLowerCase(c)) { nro_columna=1; }; 
+		if (Character.isDigit(c)) { nro_columna=2; }; 
 		Character.isWhitespace(c); //return 0 (vuelvo a estado inicial)
 		
 		//if c = '+' -> return x;
 		//if . -> ...
 		
-		//recorro la matriz de transicion de estados hasta encontrar la columna correspondiente al tipo
 		
-		return 0; //retorna el nro de columna asociado al tipo
+		return nro_columna; //retorna el nro de columna asociado al tipo del caracter
 	}
 	
 	
@@ -141,7 +150,4 @@ public class AnalizadorLexico {
 	}
 	
 	
-	public void separarColumnaCaracteres() {
-		
-	}
 }
