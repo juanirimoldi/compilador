@@ -1,6 +1,14 @@
 package tp_compiladores;
 
 public abstract class AccionSemantica {
-	public abstract void ejecutar();
+	protected TablaTokens ttok;
+	protected static String buffer; // = ""; 
+	protected static String tipo;
+	
+	//public AccionSemantica(TablaTokens tt) {
+	//	this.ttok = tt;
+	//}
+	
+	public abstract void ejecutar(char c);
 }
 

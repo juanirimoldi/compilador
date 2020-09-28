@@ -11,10 +11,10 @@ public class Main {
 		// TODO Auto-generated method stub    
 	    
 	    AnalizadorLexico a = new AnalizadorLexico();
-		//leo archivo
-	    a.abrir_y_procesarArchivo();
-		//%%leo archivo
 		
+	    a.leerArchivo(); //primero hace abrir archivo. Si lo abre correctamente, lo lee
+		
+	    
 	}
 
 }

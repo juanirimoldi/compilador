@@ -1,14 +1,18 @@
 package tp_compiladores;
 
 public class Token {
-	private int identificador;
 	private String tipo;
-	//si es constante definir tipo
 	private String lexema;
-	private int nro_linea;
+	//si es constante definir tipo
+	//private String lexema;
+	//private int nro_linea;
 	
-	public Token() {
-		
+	public Token(String t, String l) {
+		this.tipo = t;
+		this.lexema = l;
 	}
 	
+	public String getTipo() {
+		return this.tipo;
+	}
 }
