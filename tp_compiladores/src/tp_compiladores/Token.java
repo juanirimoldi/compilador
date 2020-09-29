@@ -15,4 +15,8 @@ public class Token {
 	public String getTipo() {
 		return this.tipo;
 	}
+	
+	public String getLexema() {
+		return this.lexema;
+	}
 }

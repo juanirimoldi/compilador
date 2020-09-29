@@ -12,9 +12,12 @@ public class Main {
 	    
 	    AnalizadorLexico a = new AnalizadorLexico();
 		
-	    a.leerArchivo(); //primero hace abrir archivo. Si lo abre correctamente, lo lee
-		
-	    
+	    a.abrirCargarArchivo(); //primero hace abrir archivo. Si lo abre correctamente, lo lee
+		//a.procesarCodigo();
+	    a.yylex();
+	    a.yylex();
+	    a.yylex();
+	    a.yylex();
 	}
 
 }
