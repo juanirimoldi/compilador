@@ -205,7 +205,7 @@ public class AnalizadorLexico {
 				
 				//si es salto de linea
 				if (ascii == 10) { //codigo ascii de \n es 10
-					System.out.println("\n Salto de linea \n");
+					System.out.println("\n \n \n Salto de linea \n");
 					this.nro_linea++;
 					
 					//condicion de corte
@@ -225,7 +225,6 @@ public class AnalizadorLexico {
 			
 			//llega el estado final
 			
-			
 			if (!fin) {	//si no es el fin de archivo (String), ejecuto ASFinal
 					
 				estado_actual = this.estado_final; 
@@ -236,12 +235,12 @@ public class AnalizadorLexico {
 				AS.ejecutar(caracter, this.nro_linea);
 				
 	
-				//devuelvo token y espero
+				//devuelvo token, dejo de leer y actualizo posicion
 				titi = AS.getToken();
 				
-				this.leer = false; //dejo de leer codigo
+				this.leer = false; 
 				
-				this.ultima_pos = this.pos_actual; //actualizo posicion
+				this.ultima_pos = this.pos_actual; 
 				
 				//System.out.println("Return -> Nro Linea: " + this.nro_linea + " , Token: "+ titi.getLexema()+" , tipo "+titi.getTipo());
 				}
@@ -249,7 +248,7 @@ public class AnalizadorLexico {
 		return titi;
 	}
 
-
+	
 	
 	public int getColumnaCaracter(char c) {
 	
@@ -263,7 +262,6 @@ public class AnalizadorLexico {
 		if (Character.isWhitespace(c)) { nro_columna=2; }; 
 		if (c == '=') { nro_columna=3; };
 		if (c == ';') { nro_columna=4; };
-		
 		//if (c == '%') { nro_columna=5; };
 		//...
 		
@@ -277,12 +275,20 @@ public class AnalizadorLexico {
 		Token t = this.leerCodigo();
 		
 		if (t != null) {
-			System.out.println("Retorno -> " + t.getLexema()+" , "+t.getTipo()); 
-			//return this.buffer_temporal;
+			System.out.println("yylex Retorno ->  " + t.getLexema()+" , "+t.getTipo()); 
 		}
-		System.out.println("\n---------------------------------------------------\n");
+		
+		System.out.println("\n \n ---------------------------------------------------\n");
 	}
 	
+	
+
+	public boolean quedanTokens() {
+		if (this.fin) {
+			return false;
+		}
+		return true;
+	}
 	
 	
 	public void mostrarTablaTokens() {

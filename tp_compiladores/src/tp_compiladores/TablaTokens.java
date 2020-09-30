@@ -22,16 +22,16 @@ public class TablaTokens { //tabla de tokens unicos! lo que le entrega al sintac
 	
 	
 	public boolean existe(String b) {
-		System.out.println("Existe " + b + " en la Hash?");
+		//System.out.println("Existe " + b + " en la Hash?");
 		return this.id_tipo.contains(b);
 	}
 	
 	
 	public int getIdTipo(String s) {
-		//recorro la hash
+		//recorro la hash y busco key del tipo de token, para devolver a yylex
+		
 		int id_tipo = 0;
 		
-		System.out.println("Vengo a comparar "+s);
 		Enumeration enumeration_keys = this.id_tipo.keys();
 		Enumeration enumeration = this.id_tipo.elements();
 		
@@ -41,7 +41,7 @@ public class TablaTokens { //tabla de tokens unicos! lo que le entrega al sintac
 			String id_token = (String)enumeration.nextElement();
 			
 			if (id_token.equals(s)) {
-				System.out.println("Existe el tipo en la Tabla de Hash!!");
+				//System.out.println("Existe el tipo en la Tabla de Hash");
 				id_tipo = key;
 			}
 		}

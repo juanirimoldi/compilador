@@ -13,19 +13,13 @@ public class Main {
 	    AnalizadorLexico a = new AnalizadorLexico();
 		
 	    a.abrirCargarArchivo(); //primero hace abrir archivo. Si lo abre correctamente, lo lee
-		//a.procesarCodigo();
-	    //a.leerCaracterXCaracter();
-	    a.yylex();
-	    a.yylex();
-	    a.yylex();
-	    a.yylex();
-	    a.yylex();
 
-	    a.yylex();
-	    a.yylex();
-	    a.yylex();
-	    a.yylex();
 	    
+	    while (a.quedanTokens()) {
+	    	a.yylex();
+	    }
+	   	
+	    	    
 	    a.mostrarTablaTokens();
 	    a.mostrarTablaSimbolos();
 	}
