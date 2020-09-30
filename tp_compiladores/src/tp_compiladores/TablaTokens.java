@@ -5,7 +5,9 @@ import java.util.Hashtable;
 
 
 
-public class TablaTokens { //tabla de tokens unicos! lo que le entrega al sintactico
+public class TablaTokens { 
+	//tabla de tokens unicos. contiene el indice de lo que le entrega al sintactico
+	
 	private Hashtable<Integer, String> id_tipo;
 	
 	public TablaTokens() {
@@ -47,6 +49,7 @@ public class TablaTokens { //tabla de tokens unicos! lo que le entrega al sintac
 		}
 		return id_tipo;
 	}
+	
 	
 	
 	public void mostrarTokens() {

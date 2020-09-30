@@ -20,7 +20,7 @@ public class AnalizadorLexico {
 	private static boolean leer=false;
 	private static boolean fin=false;
 	
-	private int filas_estados = 4; //de 0 a 3 estados. en total ?;
+	private int filas_estados = 4; //de 0 a 3 estados. en total ?
 	private int columnas_caracteres_validos = 5; //l d = ' ' ; otro 
 	
 	private int estado_final = this.filas_estados - 1;
@@ -276,6 +276,7 @@ public class AnalizadorLexico {
 		
 		if (t != null) {
 			System.out.println("yylex Retorno ->  " + t.getLexema()+" , "+t.getTipo()); 
+			//return t.getTipo();
 		}
 		
 		System.out.println("\n \n ---------------------------------------------------\n");

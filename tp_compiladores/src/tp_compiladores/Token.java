@@ -5,9 +5,7 @@ public class Token {
 	private String lexema;
 	private int nro_linea;
 	private int id_tipo;
-	//si es constante definir tipo
-	//private String lexema;
-	//private int nro_linea;
+
 	
 	public Token(String l, String t, int linea, int id_tipo) {
 		this.tipo = t;
