@@ -14,7 +14,6 @@ public class TablaSimbolos {
 	
 	
 	public TablaSimbolos() {
-		//this.Tsym = new Hashtable<Integer, Token> ();
 		this.Tsymb = new ArrayList<Token> ();
 	}
 	

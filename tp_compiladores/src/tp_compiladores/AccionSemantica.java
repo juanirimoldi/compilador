@@ -2,7 +2,7 @@ package tp_compiladores;
 
 public abstract class AccionSemantica {
 	protected TablaTokens ttok;
-	protected static String buffer; // = ""; 
+	protected static String buffer; 
 	protected static String tipo_buffer;
 
 	
