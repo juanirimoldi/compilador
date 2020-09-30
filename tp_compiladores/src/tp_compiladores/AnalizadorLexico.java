@@ -10,22 +10,27 @@ import java.util.List;
 
 public class AnalizadorLexico {
 	private String codigo="";
-	private String buffer_temporal="";
 	
-	private static int nro_linea=1;
-	private static int pos_actual=0;
-	private static int ultima_pos=0;
+	private int nro_linea=1;
+	private int total_lineas;
+	
+	private int pos_actual=0;
+	private int ultima_pos=0;
 	
 	private static boolean leer=false;
+	private static boolean fin=false;
 	
-	private int filas_estados = 5; //de 0 a 3 estados. en total 14;
-	private int columnas_caracteres_validos = 5; //l, d, =,  , otro 
+	private int filas_estados = 4; //de 0 a 3 estados. en total ?;
+	private int columnas_caracteres_validos = 5; //l d = ' ' ; otro 
+	
+	private int estado_final = this.filas_estados - 1;
+
 	
 	private int matriz_transicion_estados [][];
 	private AccionSemantica matriz_acciones_semanticas [][];
 	
-	private TablaTokens TTok;
-	private TablaSimbolos TSym;
+	private TablaTokens TTok; //hash <int, String>
+	private TablaSimbolos TSym; //lista dinamica de registros Token
 
 	
 	
@@ -38,7 +43,6 @@ public class AnalizadorLexico {
 		
 		this.matriz_acciones_semanticas = new AccionSemantica[this.filas_estados][this.columnas_caracteres_validos];
 		this.inicializarMatrizAccionesSemanticas();
-		
 	}
 	
 	
@@ -82,15 +86,15 @@ public class AnalizadorLexico {
 	
 	
 	public void inicializarMatrizAccionesSemanticas() {
-		//fila 0
+		//Acciones Semanticas
 		AccionSemantica AS1 = new InicializarBuffer();
 		AccionSemantica AS2 = new AgregarCaracter();
 		AccionSemantica AS3 = new LlegaTokenValido(this.TTok, this.TSym); 
 		AccionSemantica AS4 = new DescartarBuffer();
-		AccionSemantica ASF = new EntregarTokenYReiniciar();
-		//AccionSemantica AS5 = new EntregarTokenIndividual(this.TTok, this.TSym); 
+		AccionSemantica ASF = new EntregarTokenYReiniciar(this.TTok, this.TSym);
 
 		
+		//fila 0
 		this.matriz_acciones_semanticas[0][0] = AS1; //InicializarBuffer(); //a inicio le llega letra -> inicializo buffer
 		this.matriz_acciones_semanticas[0][1] = AS1; //InicializarBuffer(); //a inicio le llega digito -> inicializo buffer
 		this.matriz_acciones_semanticas[0][2] = AS4; //a inicio le llega blanco ' ' -> 
@@ -112,21 +116,22 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[2][2] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
 		this.matriz_acciones_semanticas[2][3] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
 		this.matriz_acciones_semanticas[2][4] = AS3; //EntregarTokenIndividual(); //a E2 le llega otro caracter -> entrego token tipo constante
+		//...
 		
 		
 		//fila EstadoFinal
-		this.matriz_acciones_semanticas[3][0] = ASF; //a Ef le llega una letra -> reinicio Buffer
-		this.matriz_acciones_semanticas[3][1] = ASF; //a Ef le llega una letra -> reinicio Buffer
-		this.matriz_acciones_semanticas[3][2] = ASF; //a Ef le llega una letra -> reinicio Buffer
-		this.matriz_acciones_semanticas[3][3] = ASF; //a Ef le llega una letra -> reinicio Buffer
-		this.matriz_acciones_semanticas[3][4] = ASF; //a Ef le llega una letra -> reinicio Buffer
+		this.matriz_acciones_semanticas[3][0] = ASF; //a Ef le llega una letra -> reinicio estado y Buffer
+		this.matriz_acciones_semanticas[3][1] = ASF; //a Ef le llega un digimon -> reinicio estado y Buffer
+		this.matriz_acciones_semanticas[3][2] = ASF; //a Ef le llega un blanco -> reinicio estado y Buffer
+		this.matriz_acciones_semanticas[3][3] = ASF; //a Ef le llega un = -> reinicio estado y Buffer
+		this.matriz_acciones_semanticas[3][4] = ASF; //a Ef le llega una letra -> reinicio estado y Buffer
 	}
 	
 	
 	
 	
 	public void abrirCargarArchivo() {
-		///Lee fichero y lo carga en un String
+		///Lee fichero y lo carga en el String privado codigo
 		
 		File archivo = null; 
 		FileReader fr = null;
@@ -148,6 +153,9 @@ public class AnalizadorLexico {
 				System.out.println("nro linea "+nro_linea+" -> "+linea+"\n");
 				this.codigo += linea + "\n";
 			}
+	        
+	        this.total_lineas = nro_linea;
+        
         }catch(Exception e){
 	         e.printStackTrace();
 	    } 
@@ -155,58 +163,90 @@ public class AnalizadorLexico {
 	
 	
 	
-	public void leerCodigo() { //procesa el codigo con AS
+	public Token leerCodigo() { 
+		//lee el codigo y ejecuta ASs hasta encontrar un token
         
         AccionSemantica AS;
         			
-		int estado_actual = 0; //estado inicial de cada nueva linea es el estado 0
-		int nro_columna; //el nro de columna depende del tipo de caracter
+		int estado_actual = 0; //estado inicial 
+		int nro_columna = -1; //nro de columna depende del tipo de caracter. por defecto arranco con otro
+
 		char caracter = ' ';
+		int ascii;
+			
+		Token titi = null;
 		
-			
-		while (this.leer){ //mientras haya caracteres por leer
-			String aux = "";
-			this.pos_actual = this.ultima_pos;
-			
+		
+		while (leer & !fin){ //mientras haya caracteres por leer y no sea fin de codigo			
+			this.pos_actual = this.ultima_pos; //retomo a partir de la ultima posicion leida	
+				
 			while (estado_actual != -1) {
-				//System.out.println("posicion de string "+pos+" , caracter "+c);
+					
 				caracter = this.codigo.charAt(this.pos_actual); //leo caracter
+				ascii = (int)caracter;
+					
 				System.out.println("\n");
-				System.out.println("Caracter actual " + caracter);
-				
-				
+				System.out.println("Caracter actual "+caracter+" , ASCII "+(int)caracter);					
+										
 				nro_columna = getColumnaCaracter(caracter);
 				
-				System.out.println("Voy a Posicion matriz: " + estado_actual + " , " + nro_columna);
+				System.out.println("Voy a Posicion matriz: " + estado_actual + " , " + nro_columna);				
+				
+				AS = this.matriz_acciones_semanticas[estado_actual][nro_columna];
+					
+				
+				AS.ejecutar(caracter, this.nro_linea);
+					
+				
+				estado_actual = matriz_transicion_estados[estado_actual][nro_columna];	
+				
+				this.pos_actual++;
+				
+				
+				//si es salto de linea
+				if (ascii == 10) { //codigo ascii de \n es 10
+					System.out.println("\n Salto de linea \n");
+					this.nro_linea++;
+					
+					//condicion de corte
+					if (this.nro_linea > this.total_lineas) {  // si me paso corta todo
+						System.out.println();	
+						System.out.println("FIN de codigo!! nro linea "+this.nro_linea+" > "+this.total_lineas);
+						System.out.println();	
+						
+						this.leer = false;
+						this.fin = true;
+						estado_actual = -1;
+					}
+				}
+			}
+			
+			
+			
+			//llega el estado final
+			
+			
+			if (!fin) {	//si no es el fin de archivo (String), ejecuto ASFinal
+					
+				estado_actual = this.estado_final; 
 				
 				AS = this.matriz_acciones_semanticas[estado_actual][nro_columna];
 				
-				AS.ejecutar(caracter,  this.buffer_temporal);
+				// ejecuto ASF -> entregar token, y reiniciar estado y buffer
+				AS.ejecutar(caracter, this.nro_linea);
 				
+	
+				//devuelvo token y espero
+				titi = AS.getToken();
 				
-				estado_actual = matriz_transicion_estados[estado_actual][nro_columna];
+				this.leer = false; //dejo de leer codigo
 				
-				aux+=caracter;
-				this.pos_actual ++;
-			}
-			
-			//estando en el estado final... (-1)
-			nro_columna = getColumnaCaracter(caracter);
-			estado_actual = 3; //estado final!
-			
-			AS = this.matriz_acciones_semanticas[estado_actual][nro_columna];
-			//aca estoy en estado final. tengo que entregar token y reiniciar buffer
-			//esta accion semantica solo puede ser ASF
-			AS.ejecutar(caracter, "");
-			//devuelvo token, dejo de leer y espero
-			//this.pos++;
-			//System.out.println(AS.getToken());
-			this.leer = false;
-			
-			this.ultima_pos = this.pos_actual;
-			System.out.println("Retorno token -> " + AS.getToken());
-			aux = "";
+				this.ultima_pos = this.pos_actual; //actualizo posicion
+				
+				//System.out.println("Return -> Nro Linea: " + this.nro_linea + " , Token: "+ titi.getLexema()+" , tipo "+titi.getTipo());
+				}
 		}
+		return titi;
 	}
 
 
@@ -223,18 +263,36 @@ public class AnalizadorLexico {
 		if (Character.isWhitespace(c)) { nro_columna=2; }; 
 		if (c == '=') { nro_columna=3; };
 		if (c == ';') { nro_columna=4; };
-		//if (c == '%') { nro_columna=5; };
 		
+		//if (c == '%') { nro_columna=5; };
+		//...
 		
 		return nro_columna; //retorna el nro de columna asociado al tipo del caracter
 	}
 	
 	
 	
-	
 	public void yylex() { //invoco a yylex()
 		this.leer = true;
-		this.leerCodigo();
-		//return this.buffer_temporal;
+		Token t = this.leerCodigo();
+		
+		if (t != null) {
+			System.out.println("Retorno -> " + t.getLexema()+" , "+t.getTipo()); 
+			//return this.buffer_temporal;
+		}
+		System.out.println("\n---------------------------------------------------\n");
+	}
+	
+	
+	
+	public void mostrarTablaTokens() {
+		this.TTok.mostrarTokens();
+		System.out.println();
+	}
+	
+	
+	public void mostrarTablaSimbolos() {
+		System.out.println("\n Tabla de simbolos \n");
+		this.TSym.mostrarListaTsym();
 	}
 }

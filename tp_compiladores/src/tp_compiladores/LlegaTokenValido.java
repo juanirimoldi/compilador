@@ -12,41 +12,20 @@ public class LlegaTokenValido extends AccionSemantica {
 	public LlegaTokenValido(TablaTokens tt, TablaSimbolos ts) {
 		this.ttok = tt;
 		this.tsym = ts;
-		//super.tipo_AS = "";
 	}
 	
 	
-	public void ejecutar(char c, String buff) {
+	public void ejecutar(char c, int nro_linea) {
 		System.out.println("AS3 -> Voy a Ef con un Token Valido "+ super.buffer);// + super.tipo_buffer + " , " + super.buffer);// + " , " + this.buffer);
 		//InicializarBuffer ib =  
 		
 		super.buffer += c; //devuelvo a entrada caracter leido???
 		
-		/*
-		if (c == '=') {
-			//super.tipo_buffer = "IGUAL";
-			System.out.println("No cargo caracter al buffer porque es un "+c);	
-		}
-		if (c == ';') {
-			System.out.println("No cargo caracter al buffer porque es un "+c);
-			//super.tipo_buffer = "PyC";
-		}
-		*/
-		
-		if (this.tsym.existe(super.buffer)) { //si ya esta en Tsymb
-			//si es PR -> devolver PR
-			//sino -> devolver ID + punt Tsymb
-		} else { //si no esta en Tsymb
-			//Alta en Tsymb
-			//return ID + punt TSymb
-		}
 		
 		
 		
 		
 		/*
-		Token t = new Token(super.tipo_buffer, super.buffer);
-		
 		
 		if (this.ttok.existe(super.tipo_buffer)) { //si esta en palabras reservadas o tipos
 			System.out.println("Ya existe tipo!! ");
@@ -70,7 +49,7 @@ public class LlegaTokenValido extends AccionSemantica {
 	*/
 	}
 	
-	public String getToken() {
-		return "";//super.buffer;
+	public Token getToken() {
+		return null;//super.buffer;
 	}
 }

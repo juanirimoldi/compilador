@@ -6,25 +6,18 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class TablaSimbolos {
-	private Hashtable<Integer, Token> Tsym; //257 para adelante
+	//private Hashtable<Integer, Token> Tsym; //257 para adelante
 	private int id = 257; //de 0 a 256 esta reservado para ASCII
 	
 	private List<Token> Tsymb;
-	
 	//contiene un registro para cada identificador, constante y cadena de caracteres que aparezca en el codigo fuente
 	
+	
 	public TablaSimbolos() {
-		this.Tsym = new Hashtable<Integer, Token> ();
+		//this.Tsym = new Hashtable<Integer, Token> ();
 		this.Tsymb = new ArrayList<Token> ();
-		this.Tsymb.add(new Token("PR","IF"));
-		this.Tsymb.add(new Token("PR","THEN"));
 	}
 	
-	
-	public void addToken(Token t) {
-		this.Tsym.put(id, t);
-		this.id++;
-	}
 	
 	
 	public void addTokenLista(Token t) {
@@ -32,30 +25,23 @@ public class TablaSimbolos {
 	}
 	
 	
-	public boolean existe(String id) {
-		//System.out.println("Existe " + b + " en la Hash?");
-		return this.Tsymb.contains(id);
-		//return this.id_tipo.contains(b);
+	public boolean existe(String id, String tipo) {
+		boolean existe = false;
+		
+		for (Token t : this.Tsymb) {
+			if (t.getLexema().equals(id) & t.getTipo().equals(tipo)){
+				existe = true;
+			}
+		}
+		return existe;
 	}
+	
 	
 	
 	public void mostrarListaTsym() {
+		System.out.println("lexema	, tipo	, n_linea, id_tipo");
 		for (Token t : Tsymb) {
-			System.out.println(t.getTipo()+" , "+t.getLexema());
+			System.out.println(t.getLexema() + "	, " + t.getTipo() + "	 , " +t.getNroLinea()+" 	,   "+t.getIdTipo());
 		}
 	}
-	
-	/*
-	public void mostrarTablaSimbolos() {
-		System.out.println("Tabla de simbolos");
-
-		Enumeration enumeration_keys = this.Tsym.keys();
-		
-		Enumeration enumeration = this.Tsym.elements();
-		while (enumeration.hasMoreElements()) {
-			System.out.println(enumeration_keys.nextElement() + " , " + enumeration.nextElement());
-		}
-		System.out.println("\n");
-	}
-	*/
 }

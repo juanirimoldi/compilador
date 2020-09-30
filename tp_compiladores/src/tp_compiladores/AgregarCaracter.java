@@ -2,13 +2,12 @@ package tp_compiladores;
 
 public class AgregarCaracter extends AccionSemantica {
 	
-	public void ejecutar(char c, String buffer) {
-		System.out.println("Agrego caracter");
-		//s += c;
+	public void ejecutar(char c, int nro_linea) {
+		System.out.println("AS2 -> Agrego caracter");
 		super.buffer += c;
 	}
 	
-	public String getToken() {
-		return "bazo";
+	public Token getToken() {
+		return null;
 	}
 }
