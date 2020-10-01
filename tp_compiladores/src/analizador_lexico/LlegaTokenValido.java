@@ -1,4 +1,4 @@
-package tp_compiladores;
+package analizador_lexico;
 
 public class LlegaTokenValido extends AccionSemantica {
 	private TablaTokens ttok;

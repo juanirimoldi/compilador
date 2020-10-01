@@ -1,4 +1,4 @@
-package tp_compiladores;
+package analizador_lexico;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
