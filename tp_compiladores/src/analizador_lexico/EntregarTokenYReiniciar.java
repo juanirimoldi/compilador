@@ -24,20 +24,20 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 
 		
 		
-		// busco si existe el tipo de token en tabla de tipos de Token
-		if (!this.tt.existe(super.tipo_buffer)) { //si no existe el tipo en la tabla de id de Tokens
+		// busco en TablaTokens si existe el tipo de token
+		if (!this.tt.existe(super.tipo_buffer)) { //si no existe el tipo
 			this.tt.addToken(id, super.tipo_buffer); //lo agrego en la hash
 			this.id++;
 		}
 		
 
 		//lo cargo al nuevo token y al toque aplico una fucion que busca su llave
-		int id_tipo = this.tt.getIdTipo(super.tipo_buffer); // busco el id de tipo de token
+		int id_tipo = this.tt.getIdTipo(super.tipo_buffer); 
 		
 
 		// busco si existe en tabla de simbolos
 		if (this.ts.existe(super.buffer, super.tipo_buffer)) { //si existe el lexema
-			System.out.print("Ya existe registro en la Tsym!" + super.buffer);
+			System.out.println("Ya existe registro en la Tsym! " + super.buffer);
 			//return buffer + punt_TS
 			
 		} else { //si no existe en la tsym	
@@ -56,6 +56,8 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 	
 	
 	public Token getToken() {
-		return this.t; 
+		Token ttt = this.t; //si hago una copia?
+		super.buffer = ""; //despues de entregar token lo limpio
+		return ttt; 
 	}
 }

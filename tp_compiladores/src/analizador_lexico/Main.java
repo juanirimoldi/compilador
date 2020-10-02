@@ -5,6 +5,7 @@ import java.io.FileReader;
 
 import java.io.File;
 
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -12,14 +13,22 @@ public class Main {
 	    
 	    AnalizadorLexico a = new AnalizadorLexico();
 		
-	    a.abrirCargarArchivo(); //primero hace abrir archivo. Si lo abre correctamente, lo lee
+	    a.abrirCargarArchivo(); //primero intenta abrir archivo. Si lo abre correctamente, lo lee
 
+	    System.out.println("\n COMIENZA A LEER TOKENS \n");
+	    
 	    
 	    while (a.quedanTokens()) {
-	    	a.yylex();
+	    	//a.yylex();
+	    	Token yylex = a.yylex();
+	    	if (yylex != null) {
+	    		System.out.println("\n TOKEN -> " + yylex.getLexema() + " , " + yylex.getTipo());
+	    	} else {
+	    		System.out.println("NO HAY MAS TOKENS, MANIJA! \n");
+	    	}
 	    }
 	   	
-	    	    
+	    System.out.println();   
 	    a.mostrarTablaTokens();
 	    a.mostrarTablaSimbolos();
 	}

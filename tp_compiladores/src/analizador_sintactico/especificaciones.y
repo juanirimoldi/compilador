@@ -55,7 +55,7 @@ exp: NUM { $$ = $1; }
 /*
 
 // CARACTER DE SINCRONIZACION -> ;
-// ; -> SEGURO QUE CIERRA UNA REGLA
+// ; -> "SEGURO" QUE CIERRA UNA REGLA
 
 
 EJEMPLO MASSA
@@ -111,6 +111,8 @@ TIP -> HACERLO ANDAR CON EL TOKEN ERROR
 
 
 
+//CODE
+
 
 AnalizadorLexico lexico;
 
@@ -120,7 +122,7 @@ AnalizadorLexico lexico;
 
 
 private int yylex() {
-	Token token=lexico.getToken();
+	Token token=lexico.yylex();
 
 	if (token!=null){
 	    yylval = new ParserVal(token);
@@ -133,8 +135,8 @@ private int yylex() {
 
 
 
-String ins;
-StringTokenizer st;
+//String ins;
+//StringTokenizer st;
 
 
 void yyerror(String s)
@@ -143,7 +145,7 @@ void yyerror(String s)
 }
 
 
-/*  YYLEX DE LOS PIBES
+/*  YYLEX DE DOCUMENTACION
 boolean newline;
 int yylex()
 {
@@ -163,13 +165,13 @@ Double d;
  //System.out.println("tok:"+s);
  try
  {
- d = Double.valueOf(s);/*this may fail*/
+ d = Double.valueOf(s); //this may fail
  yylval = new ParserVal(d.doubleValue()); //SEE BELOW
  tok = NUM;
  }
  catch (Exception e)
  {
- tok = s.charAt(0);/*if not float, return char*/
+ tok = s.charAt(0);//if not float, return char
  }
  return tok;
 }
@@ -192,8 +194,9 @@ String s;
  //return 0;
  
  
- s = st.nextToken(); //ACA!!!
- s = lexico.getToken();
+ //s = st.nextToken(); //ACA!!!
+ s = lexico.yylex(); //aca devuelve Token
+ //s = lexico.yylex().getTipo(); //aca que tengo que devolver?
  
  //System.out.println("tok:"+s);
  try
@@ -238,7 +241,7 @@ BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 
 public static void main(String args[]) {
-    lexico = new AnalizadorLexico();
+    	lexico = new AnalizadorLexico();
 	lexico.abrirCargarArchivo();
 	
 	Parser par = new Parser(false);

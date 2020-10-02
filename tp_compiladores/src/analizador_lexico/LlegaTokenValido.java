@@ -16,9 +16,11 @@ public class LlegaTokenValido extends AccionSemantica {
 	
 	
 	public void ejecutar(char c, int nro_linea) {
+		super.buffer += c; 
+		
 		System.out.println("AS3 -> Voy a Ef con un Token Valido "+ super.buffer);
 		
-		super.buffer += c; 
+		
 	}
 	
 	
