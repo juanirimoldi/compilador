@@ -21,7 +21,7 @@ import java.lang.Math;
 import java.io.*;
 import java.util.StringTokenizer;
 
-package analizador_lexico;
+/*package analizador_lexico;*/
 import analizador_lexico.*;
 
 //#line 25 "Parser.java"
