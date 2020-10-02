@@ -1,0 +1,19 @@
+Aclaraciones!
+
+
+
+Caracteres reconocidos -> l d ' ' = ; otro
+
+
+
+Funciona bien para los ID simples, CTE y comparador =
+
+NO funciona bien para las cadenas de caracteres abc ni para los 'ID;'
+
+
+
+Falta: 
+
+definir en las matrices las cadenas de caracteres
+
+darle sentido sintactico al ; -> indica fin de sentencia ? de regla??
