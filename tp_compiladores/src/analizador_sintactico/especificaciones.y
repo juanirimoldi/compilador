@@ -121,22 +121,23 @@ AnalizadorLexico lexico;
 
 
 
-private int yylex() {
-	Token token=lexico.yylex();
+//private int yylex() {
+//	Token token=lexico.yylex();
 
-	if (token!=null){
-	    yylval = new ParserVal(token);
-	    return token.getId();
-	}
+//	if (token!=null){
+//	    yylval = new ParserVal(token);
+//	    return token.getId();
+//	}
 
-	return 0;
-}
-
-
+//	return 0;
+//}
 
 
-//String ins;
-//StringTokenizer st;
+
+
+String ins;
+StringTokenizer st;
+boolean newline;
 
 
 void yyerror(String s)
@@ -146,7 +147,6 @@ void yyerror(String s)
 
 
 /*  YYLEX DE DOCUMENTACION
-boolean newline;
 int yylex()
 {
 String s;
@@ -181,24 +181,24 @@ Double d;
 int yylex()   //YYLEX NUESTRO
 {
 String s;
-//int tok;
-//Double d;
+int tok;
+Double d;
  //System.out.print("yylex ");
- //if (!st.hasMoreTokens())
- //if (!newline)
- //{
- //newline=true;
- //return '\n'; //So we look like classic YACC example
- //}
- //else
- //return 0;
+ if (!st.hasMoreTokens())
+ if (!newline)
+ {
+ newline=true;
+ return '\n'; //So we look like classic YACC example
+ }
+ else
+ return 0;
  
  
  //s = st.nextToken(); //ACA!!!
- s = lexico.yylex(); //aca devuelve Token
- //s = lexico.yylex().getTipo(); //aca que tengo que devolver?
+ //s = lexico.yylex(); //aca devuelve Token
+ s = lexico.yylex().getTipo(); //aca que tengo que devolver id?
  
- //System.out.println("tok:"+s);
+ System.out.println("tok:"+s);
  try
  {
  d = Double.valueOf(s);/*this may fail*/
@@ -241,7 +241,7 @@ BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 
 public static void main(String args[]) {
-    	lexico = new AnalizadorLexico();
+ 	AnalizadorLexico lexico = new AnalizadorLexico();
 	lexico.abrirCargarArchivo();
 	
 	Parser par = new Parser(false);

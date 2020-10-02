@@ -1,3 +1,6 @@
+package analizador_sintactico;
+
+//import analizador
 //### This file created by BYACC 1.8(/Java extension  1.15)
 //### Java capabilities added 7 Jan 97, Bob Jamison
 //### Updated : 27 Nov 97  -- Bob Jamison, Joe Nieten
@@ -36,7 +39,7 @@ boolean yydebug;        //do I want debug output?
 int yynerrs;            //number of errors so far
 int yyerrflag;          //was there an error?
 int yychar;             //the current working character
-
+AnalizadorLexico lexico;
 //########## MESSAGES ##########
 //###############################################################
 // method: debug
@@ -364,29 +367,30 @@ TIP -> HACERLO ANDAR CON EL TOKEN ERROR
 //CODE
 
 
-AnalizadorLexico lexico;
+//AnalizadorLexico lexico;
 
 
 /* aca defino el codigo que tome un token!*/
 
 
 
-private int yylex() {
-	Token token=lexico.yylex();
+//private int yylex() {
+//	Token token=lexico.yylex();
 
-	if (token!=null){
-	    yylval = new ParserVal(token);
-	    return token.getId();
-	}
+//	if (token!=null){
+//	    yylval = new ParserVal(token);
+//	    return token.getId();
+//	}
 
-	return 0;
-}
-
-
+//	return 0;
+//}
 
 
-//String ins;
-//StringTokenizer st;
+
+
+String ins;
+StringTokenizer st;
+boolean newline;
 
 
 void yyerror(String s)
@@ -396,7 +400,6 @@ void yyerror(String s)
 
 
 /*  YYLEX DE DOCUMENTACION
-boolean newline;
 int yylex()
 {
 String s;
@@ -428,27 +431,28 @@ Double d;
 */
 
 
-int yylex()   //YYLEX NUESTRO
-{
-String s;
-//int tok;
-//Double d;
- //System.out.print("yylex ");
- //if (!st.hasMoreTokens())
- //if (!newline)
- //{
- //newline=true;
- //return '\n'; //So we look like classic YACC example
- //}
- //else
- //return 0;
+int yylex() { //YYLEX NUESTRO
+	String s;
+	int tok;
+	Double d;
+	//System.out.print("yylex ");
+	//if (!st.hasMoreTokens())
+		//if (!newline)
+		//{
+			//newline=true;
+			//return '\n'; //So we look like classic YACC example
+		//}
+	//else
+	 //return 0;
  
  
  //s = st.nextToken(); //ACA!!!
- s = lexico.yylex(); //aca devuelve Token
- //s = lexico.yylex().getTipo(); //aca que tengo que devolver?
+ //s = lexico.yylex(); //aca devuelve Token
+s = lexico.leerCodigo().getLexema();
+System.out.println("El lexico No tiene simbolos que procesar!!");
+this.lexico.mostrarTablaSimbolos();
+//s = lexico.yylex().getTipo(); //aca que tengo que devolver id?
  
- //System.out.println("tok:"+s);
  try
  {
  d = Double.valueOf(s);/*this may fail*/
@@ -491,12 +495,15 @@ BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 
 public static void main(String args[]) {
-    	lexico = new AnalizadorLexico();
+ 	AnalizadorLexico lexico = new AnalizadorLexico();
 	lexico.abrirCargarArchivo();
+	//lexico.mostrarTablaSimbolos(); //esta vacia!! te
+	lexico.yylex();
 	
 	Parser par = new Parser(false);
  	par.dotest();
 }
+
 //#line 429 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
