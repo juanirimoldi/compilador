@@ -184,7 +184,7 @@ public class AnalizadorLexico {
 		
 		while (this.leer_caracter & !fin){ //mientras haya caracteres por leer y no sea fin de codigo			
 			this.pos_actual = this.ultima_pos; //retomo a partir de la ultima posicion leida	
-			System.out.println("\n Frontera -> " +  this.pos_actual + " ,  limite -> "+ this.ultima_pos +" \n");
+			System.out.println("\n Frontera -> " +  this.pos_actual + " ,  limite -> "+ this.ultima_pos +" , TOTAL -> "+this.total_caracteres);
 	
 			while (estado_actual != -1) {
 					

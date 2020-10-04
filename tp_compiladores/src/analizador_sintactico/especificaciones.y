@@ -10,6 +10,36 @@ import analizador_lexico.*;
 
 %}
 
+%token
+		ID
+		CTE
+		CADENA
+		ASIGNACION
+		// Palabras reservadas
+		IF
+		THEN
+		ELSE
+		END_IF
+		BEGIN
+		END
+		INTEGER
+		DOUBLE
+		LONG 
+		WHILE
+		//CASE 
+		DO
+		RETURN 
+		PRINT
+		
+		/* Comparadores */
+		MAYORIGUAL
+		MENORIGUAL
+		IGUAL
+		DISTINTO
+		EOF
+//%%
+
+
 /* YACC Declarations */
 %token ID, CTE
 %left '-' '+'
@@ -116,7 +146,7 @@ TIP -> HACERLO ANDAR CON EL TOKEN ERROR
 //CODE
 
 
-AnalizadorLexico lexico;
+//AnalizadorLexico lexico;
 
 
 String ins;
@@ -164,36 +194,44 @@ Double d;
 
 int yylex()   //YYLEX NUESTRO
 {
-String s;
-int tok;
-Double d;
- //System.out.print("yylex ");
- if (!st.hasMoreTokens())
- if (!newline)
- {
- newline=true;
- return '\n'; //So we look like classic YACC example
- }
- else
- return 0;
+	String s;
+	int tok;
+	Double d;
+	//System.out.print("yylex ");
+	//if (!st.hasMoreTokens())
+		//if (!newline)
+		//{
+			//newline=true;
+			//return '\n'; //So we look like classic YACC example
+		//}
+	//else
+	 //return 0;
  
  
  //s = st.nextToken(); //ACA!!!
  //s = lexico.yylex(); //aca devuelve Token
- s = lexico.yylex().getTipo(); //aca que tengo que devolver id?
+//if (s != null) {
+if (lexico.quedanTokens()) {
+//System.out.println("El lexico No tiene simbolos que procesar!!");
+	s = lexico.getToken().getLexema();
+
+	this.lexico.mostrarTablaSimbolos();
+//s = lexico.yylex().getTipo(); //aca que tengo que devolver id?
  
- System.out.println("tok:"+s);
- try
- {
- d = Double.valueOf(s);/*this may fail*/
- yylval = new ParserVal(d.doubleValue()); //SEE BELOW
- tok = NUM;  //NUM es tipo token
- }
- catch (Exception e)
- {
- tok = s.charAt(0);/*if not float, return char*/
- }
- return tok;
+	try
+	{
+		d = Double.valueOf(s);/*this may fail*/
+		yylval = new ParserVal(d.doubleValue()); //SEE BELOW
+		tok = NUM;  //NUM es tipo token
+	}
+	catch (Exception e)
+	{
+		System.out.println("EXCEPCION!!!");
+		tok = s.charAt(0);/*if not float, return char*/
+	}
+	return tok;
+	}
+return 0;
 }
 
 
@@ -225,9 +263,14 @@ BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 
 public static void main(String args[]) {
- 	AnalizadorLexico lexico = new AnalizadorLexico();
-	lexico.abrirCargarArchivo();
+ 	TablaTokens tt = new TablaTokens();
+	TablaSimbolos ts = new TablaSimbolos();
 	
-	Parser par = new Parser(false);
+ 	AnalizadorLexico lexico = new AnalizadorLexico(tt, ts);
+	lexico.abrirCargarArchivo();
+	//lexico.mostrarTablaSimbolos(); //esta vacia!! te
+	lexico.getToken();
+	
+	Parser par = new Parser(false, lexico);
  	par.dotest();
 }
