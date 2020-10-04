@@ -39,7 +39,7 @@ boolean yydebug;        //do I want debug output?
 int yynerrs;            //number of errors so far
 int yyerrflag;          //was there an error?
 int yychar;             //the current working character
-AnalizadorLexico lexico;
+AnalizadorLexico lexico; //aca lo defino?
 //########## MESSAGES ##########
 //###############################################################
 // method: debug
@@ -364,28 +364,6 @@ TIP -> HACERLO ANDAR CON EL TOKEN ERROR
 
 
 
-//CODE
-
-
-//AnalizadorLexico lexico;
-
-
-/* aca defino el codigo que tome un token!*/
-
-
-
-//private int yylex() {
-//	Token token=lexico.yylex();
-
-//	if (token!=null){
-//	    yylval = new ParserVal(token);
-//	    return token.getId();
-//	}
-
-//	return 0;
-//}
-
-
 
 
 String ins;
@@ -448,22 +426,28 @@ int yylex() { //YYLEX NUESTRO
  
  //s = st.nextToken(); //ACA!!!
  //s = lexico.yylex(); //aca devuelve Token
-s = lexico.leerCodigo().getLexema();
-System.out.println("El lexico No tiene simbolos que procesar!!");
-this.lexico.mostrarTablaSimbolos();
+//if (s != null) {
+if (lexico.quedanTokens()) {
+//System.out.println("El lexico No tiene simbolos que procesar!!");
+	s = lexico.getToken().getLexema();
+
+	this.lexico.mostrarTablaSimbolos();
 //s = lexico.yylex().getTipo(); //aca que tengo que devolver id?
  
- try
- {
- d = Double.valueOf(s);/*this may fail*/
- yylval = new ParserVal(d.doubleValue()); //SEE BELOW
- tok = NUM;  //NUM es tipo token
- }
- catch (Exception e)
- {
- tok = s.charAt(0);/*if not float, return char*/
- }
- return tok;
+	try
+	{
+		d = Double.valueOf(s);/*this may fail*/
+		yylval = new ParserVal(d.doubleValue()); //SEE BELOW
+		tok = NUM;  //NUM es tipo token
+	}
+	catch (Exception e)
+	{
+		System.out.println("EXCEPCION!!!");
+		tok = s.charAt(0);/*if not float, return char*/
+	}
+	return tok;
+	}
+return 0;
 }
 
 
@@ -495,12 +479,15 @@ BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 
 public static void main(String args[]) {
- 	AnalizadorLexico lexico = new AnalizadorLexico();
+	TablaTokens tt = new TablaTokens();
+	TablaSimbolos ts = new TablaSimbolos();
+	
+ 	AnalizadorLexico lexico = new AnalizadorLexico(tt, ts);
 	lexico.abrirCargarArchivo();
 	//lexico.mostrarTablaSimbolos(); //esta vacia!! te
-	lexico.yylex();
+	lexico.getToken();
 	
-	Parser par = new Parser(false);
+	Parser par = new Parser(false, lexico);
  	par.dotest();
 }
 
@@ -733,6 +720,7 @@ break;
       }
     }//main loop
   return 0;//yyaccept!!
+    //}
 }
 //## end of method parse() ######################################
 
@@ -767,9 +755,10 @@ public Parser()
  * Create a parser, setting the debug to true or false.
  * @param debugMe true for debugging, false for no debug.
  */
-public Parser(boolean debugMe)
+public Parser(boolean debugMe, AnalizadorLexico al)
 {
   yydebug=debugMe;
+  this.lexico = al;
 }
 //###############################################################
 

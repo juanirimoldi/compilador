@@ -3,7 +3,7 @@
 %{
 import java.lang.Math;
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.StringTokenizer;  //????
 
 //package analizador_lexico;
 import analizador_lexico.*;
@@ -11,7 +11,7 @@ import analizador_lexico.*;
 %}
 
 /* YACC Declarations */
-%token NUM
+%token ID, CTE
 %left '-' '+'
 %left '*' '/'
 %left NEG /* negation--unary minus */
@@ -53,12 +53,13 @@ exp: NUM { $$ = $1; }
 
 
 /*
+// MASSA
 
 // CARACTER DE SINCRONIZACION -> ;
 // ; -> "SEGURO" QUE CIERRA UNA REGLA
 
 
-EJEMPLO MASSA
+EJEMPLO 
 
 // LINEA 5 -> ASIGNACION ENCONTRADA
 // LINEA 9 -> ASIGNACION CORRECTA ENCONTRADA
@@ -111,28 +112,11 @@ TIP -> HACERLO ANDAR CON EL TOKEN ERROR
 
 
 
+
 //CODE
 
 
 AnalizadorLexico lexico;
-
-
-/* aca defino el codigo que tome un token!*/
-
-
-
-//private int yylex() {
-//	Token token=lexico.yylex();
-
-//	if (token!=null){
-//	    yylval = new ParserVal(token);
-//	    return token.getId();
-//	}
-
-//	return 0;
-//}
-
-
 
 
 String ins;

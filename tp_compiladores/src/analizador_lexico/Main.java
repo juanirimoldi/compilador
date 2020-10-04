@@ -10,8 +10,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub    
-	    
-	    AnalizadorLexico a = new AnalizadorLexico();
+
+		//independizo las tablas del analizador lexico
+		TablaTokens tt = new TablaTokens();
+	    TablaSimbolos ts = new TablaSimbolos();
+
+	    AnalizadorLexico a = new AnalizadorLexico(tt, ts);
 		
 	    a.abrirCargarArchivo(); //primero intenta abrir archivo. Si lo abre correctamente, lo lee
 
@@ -20,7 +24,7 @@ public class Main {
 	    
 	    while (a.quedanTokens()) {
 	    	//a.yylex();
-	    	Token yylex = a.yylex();
+	    	Token yylex = a.getToken();
 	    	if (yylex != null) {
 	    		System.out.println("\n TOKEN -> " + yylex.getLexema() + " , " + yylex.getTipo());
 	    	} else {

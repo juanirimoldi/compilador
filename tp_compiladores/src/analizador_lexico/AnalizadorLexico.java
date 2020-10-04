@@ -14,6 +14,7 @@ public class AnalizadorLexico {
 	
 	private int nro_linea=1;
 	private int total_lineas;
+	private int total_caracteres;
 	
 	private int pos_actual=0;
 	private int ultima_pos=0;
@@ -35,9 +36,11 @@ public class AnalizadorLexico {
 
 	
 	
-	public AnalizadorLexico() {
-		this.TTok = new TablaTokens();
-		this.TSym = new TablaSimbolos();
+	public AnalizadorLexico(TablaTokens tt, TablaSimbolos ts) {
+		//this.TTok = new TablaTokens();
+		//this.TSym = new TablaSimbolos();
+		this.TTok = tt;
+		this.TSym = ts;
 		
 		this.matriz_transicion_estados = new int[this.filas_estados][this.columnas_caracteres_validos];
 		this.inicializarMatrizTransicionEstados();
@@ -156,6 +159,7 @@ public class AnalizadorLexico {
 			}
 	        
 	        this.total_lineas = nro_linea;
+	        this.total_caracteres = this.codigo.length();
 	        System.out.println();
         }catch(Exception e){
 	         e.printStackTrace();
@@ -180,7 +184,8 @@ public class AnalizadorLexico {
 		
 		while (this.leer_caracter & !fin){ //mientras haya caracteres por leer y no sea fin de codigo			
 			this.pos_actual = this.ultima_pos; //retomo a partir de la ultima posicion leida	
-				
+			System.out.println("\n Frontera -> " +  this.pos_actual + " ,  limite -> "+ this.ultima_pos +" \n");
+	
 			while (estado_actual != -1) {
 					
 				caracter = this.codigo.charAt(this.pos_actual); //leo caracter
@@ -243,7 +248,8 @@ public class AnalizadorLexico {
 				
 				this.ultima_pos = this.pos_actual; 
 				
-				//System.out.println("Return -> Nro Linea: " + this.nro_linea + " , Token: "+ titi.getLexema()+" , tipo "+titi.getTipo());
+				System.out.println("\n Frontera -> " +  pos_actual + " ,  limite -> "+ ultima_pos +" ,  total -> " + this.total_caracteres);
+				System.out.println("Return -> Nro Linea: " + this.nro_linea + " , Token: "+ titi.getLexema()+" , tipo "+titi.getTipo());
 				}
 		}
 		return titi;
@@ -271,13 +277,18 @@ public class AnalizadorLexico {
 	
 	
 	
-	public Token yylex() { //invoco a yylex()
+	public Token getToken() { //invoco a yylex()
 		this.leer_caracter = true;
+		
 		Token t = this.leerCodigo();
 		
 		if (t != null) {
 			//System.out.println("yylex Retorno ->  " + t.getLexema()+" , "+t.getTipo()); 
 			return t;
+		} else {
+			System.out.println("Fin de archivo!");
+			this.fin = true;
+			//break;
 		}
 		
 		System.out.println("\n \n ---------------------------------------------------\n");

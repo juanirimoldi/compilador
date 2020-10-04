@@ -50,6 +50,7 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		
 		
 		System.out.println("ASF -> Entregar token  "+t.getLexema()+" , tipo "+ t.getTipo() +"  y reinicio buffer \n");
+		this.ts.mostrarListaTsym();
 		
 		super.buffer = ""; //despues de entregar token lo limpio
 	}
