@@ -64,7 +64,7 @@ line: '\n'
  | exp '\n' { System.out.println(" " + $1.dval + " "); }
  ;
 
-exp: NUM { $$ = $1; }
+exp: CTE { $$ = $1; }
  | exp '+' exp { $$ = new ParserVal($1.dval + $3.dval); }
  | exp '-' exp { $$ = new ParserVal($1.dval - $3.dval); }
  | exp '*' exp { $$ = new ParserVal($1.dval * $3.dval); }
@@ -269,7 +269,7 @@ public static void main(String args[]) {
  	AnalizadorLexico lexico = new AnalizadorLexico(tt, ts);
 	lexico.abrirCargarArchivo();
 	//lexico.mostrarTablaSimbolos(); //esta vacia!! te
-	lexico.getToken();
+	//lexico.getToken();
 	
 	Parser par = new Parser(false, lexico);
  	par.dotest();
