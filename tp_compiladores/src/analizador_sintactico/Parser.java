@@ -437,8 +437,9 @@ int yylex()   //YYLEX NUESTRO
 //if (s != null) {
 if (lexico.quedanTokens()) {
 //System.out.println("El lexico No tiene simbolos que procesar!!");
-	s = lexico.getToken().getLexema();
-
+	s = lexico.getToken().getTipo();
+	
+	System.out.println("\n ACTUALIZO TABLA DE SIMBLOS ");
 	this.lexico.mostrarTablaSimbolos();
 //s = lexico.yylex().getTipo(); //aca que tengo que devolver id?
  
