@@ -416,7 +416,24 @@ Double d;
 */
 
 
-int yylex()   //YYLEX NUESTRO
+// yylex corta la bocha
+
+private int yylex() {
+	Token token=lexico.getToken();
+
+	if (token!=null){
+	    yylval = new ParserVal(token);
+	    return token.getIdTipo();
+	}
+
+	return 0;
+}
+
+
+/*
+
+
+int yylex()   //YYLEX NUESTRO + documentacion
 {
 	String s;
 	int tok;
@@ -445,48 +462,52 @@ if (lexico.quedanTokens()) {
  
 	try
 	{
-		System.out.println("aca que onda??? ");
-		d = Double.valueOf(s);/*this may fail*/
+		System.out.println("aca que onda? llega?? ");
+		d = Double.valueOf(s);//
 		System.out.println("aca no llega! "+d);
 		//aca llega solo con los enteros convertidos a double!!!
 
 		yylval = new ParserVal(d.doubleValue()); //SEE BELOW
 		tok = NUM;  //NUM es tipo token
-		System.out.println("Parseo el token!!!!!!! ->>> "+tok);
+		System.out.println("DOUBLE!! Parseo el token!!!!!!! ->>> "+tok);
 	}
 	catch (Exception e)
 	{
 		System.out.println("EXCEPCION!!! si no es un INT o FLOAT...");
-		tok = s.charAt(0);/*if not float, return char*/
-		System.out.println("FORRADA  de EXCEPCION!!!    ---> "+tok+ " , string -> "+s);
+		tok = s.charAt(0);//if not float, return char
+		System.out.println("es una FORRADA de EXCEPCION!!!    ---> "+tok+ " , string -> "+s);
 	}
 	return tok;
 	}
 return 0;
 }
 
+*/
 
 
 void dotest()
 {
 BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
  System.out.println("BYACC/J Calculator Demo");
- System.out.println("Note: Since this example uses the StringTokenizer");
- System.out.println("for simplicity, you will need to separate the items");
- System.out.println("with spaces, i.e.: '( 3 + 5 ) * 2'");
+ //System.out.println("Note: Since this example uses the StringTokenizer");
+ //System.out.println("for simplicity, you will need to separate the items");
+ System.out.println("Separate items with spaces, i.e.: '( 3 + 5 ) * 2'");
+ //while (true)
  while (true)
  {
+ System.out.println();
  System.out.print("expression:");
  try
  {
- ins = in.readLine();
- System.out.println("Leo linea!! "+ins);
+  ins = in.readLine();
+  System.out.println("Leo linea!! "+ins); 
+
  }
  catch (Exception e)
  {
  }
  st = new StringTokenizer(ins);
- System.out.println("STRING TOKENIZZZZZZERRRRRRRRRRRRRRRRRR -> "+ins);
+ System.out.println("EXPRESION A COMPROBAR -> "+ins);
  //ins es la entrada
  newline=false;
  yyparse();
@@ -514,6 +535,7 @@ public static void main(String args[]) {
 //###############################################################
 void yylexdebug(int state,int ch)
 {
+System.out.println("a ver si llego a yylexdebug......................"); //oh, no
 String s=null;
   if (ch < 0) ch=0;
   if (ch <= YYMAXTOKEN) //check index bounds
@@ -537,7 +559,8 @@ String yys;    //current token string
 //###############################################################
 // method: yyparse : parse input and execute indicated items
 //###############################################################
-int yyparse() //ACAAA!! aca procesa la data de entrada
+
+int yyparse() //ACAAA!! aca procesa la data de entrada!
 {
 boolean doaction;
   init_stacks();
@@ -695,7 +718,7 @@ case 11:
 //#line 43 "especificaciones.y"
 { yyval = new ParserVal(Math.pow(val_peek(2).dval, val_peek(0).dval)); }
 break;
-case 12:
+case 12:  //QUE ES ESTE CASE????
 //#line 44 "especificaciones.y"
 { yyval = val_peek(1); }
 break;
@@ -716,16 +739,21 @@ break;
       val_push(yyval);           //also save the semantic value of parsing
       if (yychar < 0)            //we want another character?
         {
-        yychar = yylex();        //get next character
+        yychar = yylex();        //get next character  // ???????
+        System.out.println("TOKEN VALIDO!!!!!!!");
+        System.out.println("yychar????????? SABE -> "+yychar);
         if (yychar<0) yychar=0;  //clean, if necessary
         if (yydebug)
+          //System.out.println("debuguea yychar???????????????????????????????????");
           yylexdebug(yystate,yychar);
         }
       if (yychar == 0)          //Good exit (if lex returns 0 ;-)
+         System.out.println("RAJEMO NEGRO "+yychar);
          break;                 //quit the loop--all DONE
       }//if yystate
     else                        //else not done yet
       {                         //get next state and push, for next yydefred[]
+      System.out.println("LLego aca???????????????????????????????"); //nono	
       yyn = yygindex[yym];      //find out where to go
       if ((yyn != 0) && (yyn += yystate) >= 0 &&
             yyn <= YYTABLESIZE && yycheck[yyn] == yystate)
@@ -749,9 +777,11 @@ break;
  * object in the background.  It is intended for extending Thread
  * or implementing Runnable.  Turn off with -Jnorun .
  */
-public void run()
+public void run() //VER!!
 {
-  yyparse();
+	//if (lexico.quedanTokens()) {
+		yyparse();
+	//}
 }
 //## end of method run() ########################################
 

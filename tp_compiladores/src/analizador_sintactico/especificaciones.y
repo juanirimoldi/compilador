@@ -146,7 +146,7 @@ TIP -> HACERLO ANDAR CON EL TOKEN ERROR
 //CODE
 
 
-//AnalizadorLexico lexico;
+AnalizadorLexico lexico;
 
 
 String ins;

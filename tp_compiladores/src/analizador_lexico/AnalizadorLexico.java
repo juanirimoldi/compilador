@@ -219,10 +219,13 @@ public class AnalizadorLexico {
 						System.out.println();	
 						System.out.println("FIN de codigo!! nro linea "+this.nro_linea+" > "+this.total_lineas);
 						System.out.println();	
-						
+						System.out.println("Frontera -> "+this.pos_actual+"  ,   total caracteres -> "+this.total_caracteres);
+						System.out.println();	
+
 						this.leer_caracter = false;
 						this.fin = true;
 						estado_actual = -1;
+						this.pos_actual ++;
 					}
 				}
 			}

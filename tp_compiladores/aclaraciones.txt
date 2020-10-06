@@ -17,3 +17,12 @@ Falta:
 definir en las matrices las cadenas de caracteres
 
 darle sentido sintactico al ; -> indica fin de sentencia ? de regla??
+
+
+
+
+Sintactico
+
+yyparse() -> shiftea, casea de acuerdo a las reglas y reduce
+
+comecara...
