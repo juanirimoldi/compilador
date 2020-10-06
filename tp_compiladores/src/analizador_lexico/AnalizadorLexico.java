@@ -23,16 +23,17 @@ public class AnalizadorLexico {
 	private boolean fin=false; //fin de "archivo"
 	
 	private int filas_estados = 4; //de 0 a 4 estados. en total ?
-	private int columnas_caracteres_validos = 5; // hasta ahora -> l d = ' ' ; otro 
+	private int columnas_caracteres_validos = 10; // hasta ahora -> l d BL + - * / = ; otro 
 	
 	private int estado_final = this.filas_estados - 1;
 
 	
+	
 	private int matriz_transicion_estados [][];
 	private AccionSemantica matriz_acciones_semanticas [][];
 	
-	private TablaTokens TTok; //hash <int, String>
-	private TablaSimbolos TSym; //lista dinamica de registros Token
+	private TablaTokens TTok; 
+	private TablaSimbolos TSym; 
 
 	
 	
@@ -53,39 +54,76 @@ public class AnalizadorLexico {
 	
 	public void inicializarMatrizTransicionEstados() {
 		//fila 0
-		this.matriz_transicion_estados[0][0] = 1; //al E0 llega una letra l -> voy a E1
-		this.matriz_transicion_estados[0][1] = 2; //al estado 0 llega un digito d -> voy a E2
-		this.matriz_transicion_estados[0][2] = 0; //al estado 0 llega blanco ' ' -> ciclo en E0
-		this.matriz_transicion_estados[0][3] = -1; //al estado 0 llega '=' -> voy a Ef 
-		this.matriz_transicion_estados[0][4] = -1; //al estado 0 llega otro caracter -> voy a Ef
-		//this.matriz_transicion_estados[0][5] = 1; //al estado 0 llega ';' -> fin de linea 
+		this.matriz_transicion_estados[0][0] = 1; //a E0 llega una letra l -> voy a E1
+		this.matriz_transicion_estados[0][1] = 2; //a E0 llega un digito d -> voy a E2
+		this.matriz_transicion_estados[0][2] = 0; //a E0 llega blanco ' ' -> ciclo en E0
+		this.matriz_transicion_estados[0][3] = -1; //a E0 llega + -> voy a EF
+		this.matriz_transicion_estados[0][4] = -1; //a E0 llega - -> voy a EF
+		this.matriz_transicion_estados[0][5] = -1; //a E0 llega * -> voy a EF
+		this.matriz_transicion_estados[0][6] = -1; //a E0 llega / -> voy a EF
+		
+		
+		this.matriz_transicion_estados[0][7] = -1; //a E0 llega '=' -> voy a Ef 
+		
+		this.matriz_transicion_estados[0][8] = -1; //a E0 llega ; -> voy a Ef
+		
+		this.matriz_transicion_estados[0][9] = -1; //a E0 llega otro caracter -> voy a Ef
+		//this.matriz_transicion_estados[0][5] = 1; //a E0 llega ';' -> fin de linea 
 		//...
+		
 		
 		
 		//fila 1
 		this.matriz_transicion_estados[1][0] = 1; //a E1 le llega una letra l -> ciclo en E1
 		this.matriz_transicion_estados[1][1] = 1; //a E1 le llega un digito d -> ciclo en E1
 		this.matriz_transicion_estados[1][2] = -1; //a E1 le llega blanco ' ' -> voy a Ef
-		this.matriz_transicion_estados[1][3] = -1; //a E1 le llega un '=' -> voy a Ef
-		this.matriz_transicion_estados[1][4] = -1; //a E1 le llega otro caracter -> voy a Ef
+		this.matriz_transicion_estados[1][3] = -1; //a E1 le llega + -> voy a Ef
+		this.matriz_transicion_estados[1][4] = -1; //a E1 le llega - -> voy a Ef
+		this.matriz_transicion_estados[1][5] = -1; //a E1 le llega * -> voy a Ef
+		this.matriz_transicion_estados[1][6] = -1; //a E1 le llega / -> voy a Ef
+		
+		
+		this.matriz_transicion_estados[1][7] = -1; //a E1 le llega un '=' -> voy a Ef
+		
+		this.matriz_transicion_estados[1][8] = -1; //a E1 le llega un ; -> voy a Ef
+		
+		this.matriz_transicion_estados[1][9] = -1; //a E1 le llega otro caracter -> voy a Ef
 		//...
+		
 		
 		
 		//fila 2
 		this.matriz_transicion_estados[2][0] = -1; //a E2 le llega una letra l -> voy a Ef
 		this.matriz_transicion_estados[2][1] = 2; //a E2 le llega un digito d -> ciclo en E2
 		this.matriz_transicion_estados[2][2] = -1; //a E2 le llega blanco ' ' -> voy a Ef
-		this.matriz_transicion_estados[2][3] = -1; //a E2 le llega '=' -> voy a Ef
-		this.matriz_transicion_estados[2][4] = -1; //a E2 le llega otro caracter -> voy a Ef
+		this.matriz_transicion_estados[2][3] = -1; //a E2 le llega + -> voy a Ef
+		this.matriz_transicion_estados[2][4] = -1; //a E2 le llega - -> voy a Ef
+		this.matriz_transicion_estados[2][5] = -1; //a E2 le llega * -> voy a Ef
+		this.matriz_transicion_estados[2][6] = -1; //a E2 le llega / -> voy a Ef
+		
+		
+		this.matriz_transicion_estados[2][7] = -1; //a E2 le llega '=' -> voy a Ef
+		this.matriz_transicion_estados[2][8] = -1; //a E2 le llega ; -> voy a Ef
+
+		this.matriz_transicion_estados[2][9] = -1; //a E2 le llega otro caracter -> voy a Ef
 		//...
+		
 		
 		
 		
 		this.matriz_transicion_estados[3][0] = 0; //del Ef siempre va a E0
 		this.matriz_transicion_estados[3][1] = 0; //del Ef siempre va a E0 ?
 		this.matriz_transicion_estados[3][2] = 0; //del Ef siempre va a E0 ??
-		this.matriz_transicion_estados[3][3] = 0; //del Ef siempre va a E0 ???
-		this.matriz_transicion_estados[3][4] = 0; //del Ef siempre va a E0 ???
+		this.matriz_transicion_estados[3][3] = 0; //del Ef siempre va a E0 ??
+		this.matriz_transicion_estados[3][4] = 0; //del Ef siempre va a E0 ??
+		this.matriz_transicion_estados[3][5] = 0; //del Ef siempre va a E0 ??
+		this.matriz_transicion_estados[3][6] = 0; //del Ef siempre va a E0 ??
+		
+		
+		this.matriz_transicion_estados[3][7] = 0; //del Ef siempre va a E0 ???
+		this.matriz_transicion_estados[3][8] = 0; //del Ef siempre va a E0 ??
+		
+		this.matriz_transicion_estados[3][9] = 0; //del Ef siempre va a E0 ???
 	}
 	
 	
@@ -104,22 +142,49 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[0][2] = AS4; //a inicio le llega blanco ' ' -> 
 		this.matriz_acciones_semanticas[0][3] = AS3; //EntregarToken(); //a inicio le llega otro caracter -> ??
 		this.matriz_acciones_semanticas[0][4] = AS3; //EntregarToken(); //a inicio le llega otro caracter -> ??
+		this.matriz_acciones_semanticas[0][5] = AS3; //EntregarToken(); //a inicio le llega otro caracter -> ??
+		this.matriz_acciones_semanticas[0][6] = AS3; //EntregarToken(); //a inicio le llega otro caracter -> ??
+		
+		
+		this.matriz_acciones_semanticas[0][7] = AS3; //EntregarToken(); //a inicio le llega otro caracter -> ??
+		this.matriz_acciones_semanticas[0][8] = AS3; //EntregarToken(); //a inicio le llega otro caracter -> ??
+		
+		this.matriz_acciones_semanticas[0][9] = AS3; //EntregarToken(); //a inicio le llega otro caracter -> ??
+		
 		
 		
 		//fila 1
 		this.matriz_acciones_semanticas[1][0] = AS2; //AgregarCaracter(); //a E1 le llega letra -> agrego caracter a buffer
 		this.matriz_acciones_semanticas[1][1] = AS2; //AgregarCaracter(); //a E1 le llega digito -> agrego caracter a buffer
 		this.matriz_acciones_semanticas[1][2] = AS3; //LlegaTokenValido(); //a E1 le llega blanco ' ' -> entrego token y descarto blanco
-		this.matriz_acciones_semanticas[1][3] = AS3; //LlegaTokenValido(); //a E1 le llega '=' -> entrego token 
-		this.matriz_acciones_semanticas[1][4] = AS3; //LlegaTokenValido(); //a E1 le llega otro caracter -> entrego token
+		this.matriz_acciones_semanticas[1][3] = AS3; //LlegaTokenValido(); //a E1 le llega + -> entrego token y descarto blanco
+		this.matriz_acciones_semanticas[1][4] = AS3; //LlegaTokenValido(); //a E1 le llega - -> entrego token y descarto blanco
+		this.matriz_acciones_semanticas[1][5] = AS3; //LlegaTokenValido(); //a E1 le llega * -> entrego token y descarto blanco
+		this.matriz_acciones_semanticas[1][6] = AS3; //LlegaTokenValido(); //a E1 le llega / -> entrego token y descarto blanco
+		
+		
+		this.matriz_acciones_semanticas[1][7] = AS3; //LlegaTokenValido(); //a E1 le llega '=' -> entrego token 
+		this.matriz_acciones_semanticas[1][8] = AS3; //LlegaTokenValido(); //a E1 le llega blanco ' ' -> entrego token y descarto blanco
+
+		this.matriz_acciones_semanticas[1][9] = AS3; //LlegaTokenValido(); //a E1 le llega otro caracter -> entrego token
 		//...
+		
+		
 		
 		//fila 2
 		this.matriz_acciones_semanticas[2][0] = AS4; //DescartarBuffer(); //a E2 le llega una letra -> descarto y vuelvo a inicio? o entregoToken?
 		this.matriz_acciones_semanticas[2][1] = AS2; //AgregarCaracter(); //a E2 le llega un digito -> 
 		this.matriz_acciones_semanticas[2][2] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
 		this.matriz_acciones_semanticas[2][3] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
-		this.matriz_acciones_semanticas[2][4] = AS3; //EntregarTokenIndividual(); //a E2 le llega otro caracter -> entrego token tipo constante
+		this.matriz_acciones_semanticas[2][4] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
+		this.matriz_acciones_semanticas[2][5] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
+		this.matriz_acciones_semanticas[2][6] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
+		
+		
+		this.matriz_acciones_semanticas[2][7] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
+		this.matriz_acciones_semanticas[2][8] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
+		
+		this.matriz_acciones_semanticas[2][9] = AS3; //EntregarTokenIndividual(); //a E2 le llega otro caracter -> entrego token tipo constante
 		//...
 		
 		
@@ -127,8 +192,16 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[3][0] = ASF; //a Ef le llega una letra -> reinicio estado y Buffer
 		this.matriz_acciones_semanticas[3][1] = ASF; //a Ef le llega un digimon -> reinicio estado y Buffer
 		this.matriz_acciones_semanticas[3][2] = ASF; //a Ef le llega un blanco -> reinicio estado y Buffer
-		this.matriz_acciones_semanticas[3][3] = ASF; //a Ef le llega un = -> reinicio estado y Buffer
-		this.matriz_acciones_semanticas[3][4] = ASF; //a Ef le llega una letra -> reinicio estado y Buffer
+		this.matriz_acciones_semanticas[3][3] = ASF; //a Ef le llega un blanco -> reinicio estado y Buffer
+		this.matriz_acciones_semanticas[3][4] = ASF; //a Ef le llega un blanco -> reinicio estado y Buffer
+		this.matriz_acciones_semanticas[3][5] = ASF; //a Ef le llega un blanco -> reinicio estado y Buffer
+		this.matriz_acciones_semanticas[3][6] = ASF; //a Ef le llega un blanco -> reinicio estado y Buffer
+		
+		
+		this.matriz_acciones_semanticas[3][7] = ASF; //a Ef le llega un = -> reinicio estado y Buffer
+		this.matriz_acciones_semanticas[3][8] = ASF; //a Ef le llega un blanco -> reinicio estado y Buffer
+		
+		this.matriz_acciones_semanticas[3][9] = ASF; //a Ef le llega una letra -> reinicio estado y Buffer
 	}
 	
 	
@@ -184,7 +257,7 @@ public class AnalizadorLexico {
 		
 		while (this.leer_caracter & !fin){ //mientras haya caracteres por leer y no sea fin de codigo			
 			this.pos_actual = this.ultima_pos; //retomo a partir de la ultima posicion leida	
-			System.out.println("\n Frontera -> " +  this.pos_actual + " ,  limite -> "+ this.ultima_pos +" , TOTAL -> "+this.total_caracteres);
+			//System.out.println("\n Frontera -> " +  this.pos_actual + " ,  limite -> "+ this.ultima_pos +" , TOTAL -> "+this.total_caracteres);
 	
 			while (estado_actual != -1) {
 					
@@ -243,15 +316,18 @@ public class AnalizadorLexico {
 				// ejecuto ASF -> entregar token, y reiniciar estado y buffer
 				AS.ejecutar(caracter, this.nro_linea);
 				
-	
+				//System.out.println("\n inicio -> " +  this.pos_actual + " ,  actual -> "+ this.ultima_pos +" , TOTAL -> "+this.total_caracteres);
+
 				//devuelvo token, dejo de leer y actualizo posicion
 				titi = AS.getToken();
 				
 				this.leer_caracter = false; 
 				
+				
+				System.out.println("\n inicio -> " +  ultima_pos + " ,  frontera -> "+ pos_actual +" ,  total -> " + this.total_caracteres);
+				
 				this.ultima_pos = this.pos_actual; 
 				
-				System.out.println("\n Frontera -> " +  pos_actual + " ,  limite -> "+ ultima_pos +" ,  total -> " + this.total_caracteres);
 				System.out.println("Return -> Nro Linea: " + this.nro_linea + " , Token: "+ titi.getLexema()+" , tipo "+titi.getTipo());
 				}
 		}
@@ -262,7 +338,7 @@ public class AnalizadorLexico {
 	
 	public int getColumnaCaracter(char c) {
 	
-		int nro_columna=5; //inicializo con otro caracter
+		int nro_columna=9; //inicializo con otro caracter
 		
 		
 		if (Character.isLowerCase(c)) { nro_columna=0; }; 
@@ -270,8 +346,13 @@ public class AnalizadorLexico {
 		
 		if (Character.isDigit(c)) { nro_columna=1; }; 
 		if (Character.isWhitespace(c)) { nro_columna=2; }; 
-		if (c == '=') { nro_columna=3; };
-		if (c == ';') { nro_columna=4; };
+		if (c == '+') { nro_columna=3; };
+		if (c == '-') { nro_columna=4; };
+		if (c == '*') { nro_columna=5; };
+		if (c == '/') { nro_columna=6; };
+		
+		if (c == '=') { nro_columna=7; };
+		if (c == ';') { nro_columna=8; };
 		//if (c == '%') { nro_columna=5; };
 		//...
 		
@@ -315,7 +396,7 @@ public class AnalizadorLexico {
 	
 	
 	public void mostrarTablaSimbolos() {
-		System.out.println("\n Tabla de simbolos \n");
+		//System.out.println("\n Tabla de simbolos \n");
 		this.TSym.mostrarListaTsym();
 	}
 }

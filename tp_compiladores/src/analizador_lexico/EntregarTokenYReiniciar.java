@@ -18,10 +18,13 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 	
 	public void ejecutar(char c, int nro_linea) { 
 		
-		//defino si el token es simple, sin necesidad de inicializar buffer temporal
+		//defino el token simple, sin necesidad de inicializar buffer temporal
 		if (c == '=') { super.tipo_buffer = "COMP"; };
 		if (c == ';') { super.tipo_buffer = "PUNT"; };
-
+		if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { 
+			super.tipo_buffer = "OPERANDO"; 
+			}
+		
 		
 		
 		// busco en TablaTokens si existe el tipo de token

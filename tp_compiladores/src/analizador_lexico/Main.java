@@ -26,9 +26,9 @@ public class Main {
 	    	//a.yylex();
 	    	Token yylex = a.getToken();
 	    	if (yylex != null) {
-	    		System.out.println("\n TOKEN -> " + yylex.getLexema() + " , " + yylex.getTipo());
+	    		System.out.println("\n TOKEN -> " + yylex.getLexema() + " , " + yylex.getTipo() + "\n");
 	    	} else {
-	    		System.out.println("NO HAY MAS TOKENS, MANIJA! \n");
+	    		System.out.println("NO HAY MAS TOKENS! \n");
 	    	}
 	    }
 	   	

@@ -38,9 +38,11 @@ public class TablaSimbolos {
 	
 	
 	public void mostrarListaTsym() {
+		System.out.println("\n TABLA DE SIMBOLOS \n");
 		System.out.println("lexema	, tipo	, n_linea, id_tipo");
 		for (Token t : Tsymb) {
 			System.out.println(t.getLexema() + "	, " + t.getTipo() + "	 , " +t.getNroLinea()+" 	,   "+t.getIdTipo());
 		}
+		System.out.println();
 	}
 }
