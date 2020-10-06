@@ -24,7 +24,6 @@ import analizador_lexico.*;
 		END
 		INTEGER
 		DOUBLE
-		LONG 
 		WHILE
 		//CASE 
 		DO
@@ -73,6 +72,16 @@ exp: CTE { $$ = $1; }
  | exp '^' exp { $$ = new ParserVal(Math.pow($1.dval, $3.dval)); }
  | '(' exp ')' { $$ = $2; }
  ;
+
+
+
+
+/* Gramatica temas 7
+
+
+
+
+*/
 
 %%
 
