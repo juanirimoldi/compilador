@@ -416,19 +416,23 @@ Double d;
 */
 
 
+//yylval -> puntero o lexema que permita al sintactico ir aesa entrada
+
 // yylex corta la bocha
 
 private int yylex() {
 	Token token=lexico.getToken();
 
 	if (token!=null){
-	    yylval = new ParserVal(token);
-	    return token.getIdTipo();
+	    yylval = new ParserVal(token); //var para obtener el token de la tabla
+	    return token.getIdTipo(); //acceso a la entrada que devolvumos
 	}
-
+	//lexico devuelve i de token! y lexico en yylval lo asocie con la tabla de simbolos
 	return 0;
 }
 
+//sintactico tambien se da cuenta de las ctes negativas!
+//va a Tsym y checkea si es + o - -> si es +, pongo como -
 
 /*
 
@@ -485,13 +489,13 @@ return 0;
 */
 
 
-void dotest()
+void dotest() //esto esta de mas!
 {
-BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
- System.out.println("BYACC/J Calculator Demo");
+//BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+ //System.out.println("BYACC/J Calculator Demo");
  //System.out.println("Note: Since this example uses the StringTokenizer");
  //System.out.println("for simplicity, you will need to separate the items");
- System.out.println("Separate items with spaces, i.e.: '( 3 + 5 ) * 2'");
+ //System.out.println("Separate items with spaces, i.e.: '( 3 + 5 ) * 2'");
  //while (true)
  while (true)
  {
@@ -499,8 +503,8 @@ BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
  System.out.print("expression:");
  try
  {
-  ins = in.readLine();
-  System.out.println("Leo linea!! "+ins); 
+  //ins = in.readLine();
+  //System.out.println("Leo linea!! "+ins); 
 
  }
  catch (Exception e)
@@ -528,6 +532,7 @@ public static void main(String args[]) {
 	
 	Parser par = new Parser(false, lexico);
  	par.dotest();
+ 	//par.yyparse()
 }
 //#line 428 "Parser.java"
 //###############################################################
@@ -560,8 +565,8 @@ String yys;    //current token string
 // method: yyparse : parse input and execute indicated items
 //###############################################################
 
-int yyparse() //ACAAA!! aca procesa la data de entrada!
-{
+int yyparse() //ACAAA!! aca procesa la data. lo ejecuta solo
+{   //yyparse empieza a pedirle a yylex
 boolean doaction;
   init_stacks();
   yynerrs = 0;

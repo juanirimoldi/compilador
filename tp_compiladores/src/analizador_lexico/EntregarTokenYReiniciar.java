@@ -37,7 +37,9 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		//lo cargo al nuevo token y al toque aplico una fucion que busca su llave
 		int id_tipo = this.tt.getIdTipo(super.tipo_buffer); 
 		
-
+		//if es cte, id o cadena
+			//add
+		
 		// busco si existe en tabla de simbolos
 		if (this.ts.existe(super.buffer, super.tipo_buffer)) { //si existe el lexema
 			System.out.println("Ya existe registro en la Tsym! " + super.buffer);

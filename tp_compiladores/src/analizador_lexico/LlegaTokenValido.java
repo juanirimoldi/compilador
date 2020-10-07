@@ -14,6 +14,7 @@ public class LlegaTokenValido extends AccionSemantica {
 		this.tsym = ts;
 	}
 	
+	//se detecta comentario -> volver a E0
 	
 	public void ejecutar(char c, int nro_linea) {
 		super.buffer += c; 

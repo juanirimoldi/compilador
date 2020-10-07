@@ -25,4 +25,13 @@ Sintactico
 
 yyparse() -> shiftea, casea de acuerdo a las reglas y reduce
 
-comecara...
+
+
+
+//id en mayuscula->error
+//caracter invalido -> token invalido
+//error lexico: token invalido
+
+al .jar le doy el .txt -> el lexico se transforma en getToken
+y el sintactico tiene el main()
+

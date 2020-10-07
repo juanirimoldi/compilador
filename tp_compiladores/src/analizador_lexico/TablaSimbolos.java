@@ -26,7 +26,7 @@ public class TablaSimbolos {
 	
 	public boolean existe(String id, String tipo) {
 		boolean existe = false;
-		
+
 		for (Token t : this.Tsymb) {
 			if (t.getLexema().equals(id) & t.getTipo().equals(tipo)){
 				existe = true;
@@ -35,6 +35,17 @@ public class TablaSimbolos {
 		return existe;
 	}
 	
+	
+	public void eliminarSimbolo(String s) {
+		Token t;
+		for (int i = 0; i<Tsymb.size(); i++) {
+			t = Tsymb.get(i);
+			if (t.getLexema().equals(s)) {
+				Tsymb.remove(t);
+				System.out.print("REMUEVO ALGO -> "+s + " \n");
+			}
+		}	
+	}
 	
 	
 	public void mostrarListaTsym() {

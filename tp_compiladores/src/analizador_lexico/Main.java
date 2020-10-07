@@ -35,6 +35,8 @@ public class Main {
 	    System.out.println();   
 	    a.mostrarTablaTokens();
 	    a.mostrarTablaSimbolos();
+	    ts.eliminarSimbolo(";");
+	    a.mostrarTablaSimbolos();
 	}
 
 }
