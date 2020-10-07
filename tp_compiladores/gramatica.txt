@@ -1,10 +1,8 @@
-GRAMATICA
-
 Sentencias/reglas  tema 8
+
 
 Sentencias declarativas:
 Sentencias de declaración de datos para los tipos de datos correspondientes a cada grupo según la consigna del Trabajo
-Práctico 1, con la siguiente sintaxis:
 
 <tipo> <lista_de_variables>;
 
@@ -29,10 +27,11 @@ PROC ID (<lista_de_parametros>) {
 Donde:
 <lista_de_parametros> será una lista de parámetros, separados por “,”, con la siguiente estructura para cada
 parámetro:
-o <tipo> ID
-o El número máximo de parámetros permitidos es 3, y puede no haber parámetros. Este chequeo debe
+. <tipo> ID
+. El número máximo de parámetros permitidos es 3, y puede no haber parámetros. Este chequeo debe
 efectuarse durante el Análisis Sintáctico
 // Incorporar PROC a la lista de palabras reservadas.
+
 
 TEMA 8
 Sentencias declarativas:
@@ -75,10 +74,10 @@ OUT(cadena)
 
 Las cadenas de caracteres sólo podrán ser usadas en esta sentencia, y tendrán el formato asignado al grupo en el Trabajo
 Práctico 1 (temas 20 y 21).
- Incorporar como sentencia ejecutable, invocaciones a procedimientos con la siguiente estructura:
+Incorporar como sentencia ejecutable, invocaciones a procedimientos con la siguiente estructura:
 
 ID(<parametros>)
-Donde <parsmetros> será una lista de identificadores separados por “,”.
+Donde <parametros> será una lista de identificadores separados por “,”.
 Nota: La semántica de la declaración e invocación de procedimientos, se explicará y resolverá en los trabajos prácticos 3 y 4.
 
 
@@ -98,3 +97,75 @@ f2(a:m, b:n)
 
 // Incorporar “:” a la lista de tokens aceptados por el Analizador Léxico.
 */
+
+
+
+
+
+//NUESTRA GRAMATICA
+
+
+<programa> := <sentencia>
+
+<sentencia> := <declarativa> | <ejecutable>
+
+<declarativa> := <tipo> <lista_de_variables>;
+
+
+
+//SENTENCIAS DECLARATIVAS
+
+<declaracion_procedimiento> := PROC ID (<lista_de_parametros>) {
+	<cuerpo_del_procedimiento> // conjunto de sentencias declarativas y ejecutables
+	// permitir procedimientos anidados
+	}
+
+
+<cuerpo_del_procedimiento> := //aca agregar procedimientos anidados! 
+							  //algo asi como <cuerpo> | <declaracion_procedimiento> ??
+
+
+<lista_de_parametros> :=  <tipo> <variable> , <lista_de_parametros> | <tipo> <variable> 
+//definir que la lista de parametros es de maximo 3!!
+
+
+
+
+//SENTENCIAS EJECUTABLES -> lado izq ID , lado derecho EXPR
+
+<clausula_seleccion> := IF (<condicion>) <bloque_de_sentencias> ELSE <bloque_de_sentencias> END_IF
+<clausula_seleccion> := IF (<condicion>) <bloque_de_sentencias> END_IF
+
+<condicion> := <comparacion> | <condicion> AND <comparacion> | <condicion> OR <comparacion>
+
+<bloque_de_sentencias> := <sentencia> | { <bloque_de_sentencias> }
+//constituido por una sola sentencia, o un conjunto de sentencias delimitadas por „{„ y „}‟.
+
+<invocar_procedimiento> := ID <parametros>
+
+<parametros> := ID : ID   o  <variable> : <variable> ????
+
+
+
+<lista_de_variables> := <lista_de_variables> | ID ,  //VER!
+
+
+<comparacion> := <expresion> <comparador> <expresion>
+
+<comparador> := < | > | == | <>
+
+<expresion> := <expresion> + <termino> | <expresion> - <termino> | <termino>
+
+<termino> := <termino> * <factor> | <termino> / <factor> | <factor>
+
+<factor> := <variable> | <constante>
+
+
+<variable> := ID | CTE  ???
+
+<tipo> := INTEGER | FLOAT
+
+
+
+
+
