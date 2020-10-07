@@ -18,12 +18,11 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 	
 	public void ejecutar(char c, int nro_linea) { 
 		
-		//defino los tipos de token, sin necesidad de inicializar buffer temporal
+		//defino los tipos de token simples que puede entregar al sintactico
 		if (c == '=') { super.tipo_buffer = "ASIG"; };
 		if ((c == ';') || (c == ',')) { super.tipo_buffer = "PUNT"; };
 		if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { super.tipo_buffer = "OP"; }
 		
-		//if (c == '%') { super.tipo_buffer = "COMENT"; }
 		
 		
 		
@@ -62,8 +61,8 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 	
 	
 	public Token getToken() {
-		Token ttt = this.t; //si hago una copia?
-		super.buffer = ""; //despues de entregar token lo limpio
+		Token ttt = this.t; //hago una copia?
+		super.buffer = ""; //y despues de entregar token lo limpio?
 		return ttt; 
 	}
 }

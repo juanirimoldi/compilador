@@ -353,7 +353,7 @@ public class AnalizadorLexico {
 		//Acciones Semanticas
 		AccionSemantica AS1 = new InicializarBuffer();
 		AccionSemantica AS2 = new AgregarCaracter();
-		AccionSemantica AS3 = new LlegaTokenValido(this.TTok, this.TSym); 
+		AccionSemantica AS3 = new LlegaTokenValido(); 
 		AccionSemantica AS4 = new DescartarBuffer(); 
 		AccionSemantica ASF = new EntregarTokenYReiniciar(this.TTok, this.TSym);
 

@@ -1,17 +1,17 @@
 package analizador_lexico;
 
 public class LlegaTokenValido extends AccionSemantica {
-	private TablaTokens ttok;
-	private TablaSimbolos tsym;
+	//private TablaTokens ttok;
+	//private TablaSimbolos tsym;
 	
 	//private 
 	
 	private int id = 20;
 	
 	
-	public LlegaTokenValido(TablaTokens tt, TablaSimbolos ts) {
-		this.ttok = tt;
-		this.tsym = ts;
+	public LlegaTokenValido() {//TablaTokens tt, TablaSimbolos ts) {
+		//this.ttok = tt;
+		//this.tsym = ts;
 	}
 	
 	//se detecta comentario -> volver a E0
