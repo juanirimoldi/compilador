@@ -12,7 +12,8 @@ public class InicializarBuffer extends AccionSemantica {
 		if (Character.isLetter(c)) { super.tipo_buffer = "ID"; }
 		if (Character.isDigit(c)) { super.tipo_buffer = "CTE"; }
 		
-		
+		if (c == '.') { super.tipo_buffer = "DOUBLE";}
+		if (c == '%') { super.tipo_buffer = "COMENT"; }
 		
 		
 		System.out.println("AS1 -> Inicializo buffer, agrego caracter "+ c +" , tipo "+ super.tipo_buffer);

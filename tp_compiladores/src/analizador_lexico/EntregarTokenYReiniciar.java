@@ -18,12 +18,12 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 	
 	public void ejecutar(char c, int nro_linea) { 
 		
-		//defino el token simple, sin necesidad de inicializar buffer temporal
+		//defino los tipos de token, sin necesidad de inicializar buffer temporal
 		if (c == '=') { super.tipo_buffer = "ASIG"; };
-		if (c == ';') { super.tipo_buffer = "PUNT"; };
-		if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { 
-			super.tipo_buffer = "OP"; 
-			}
+		if ((c == ';') || (c == ',')) { super.tipo_buffer = "PUNT"; };
+		if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { super.tipo_buffer = "OP"; }
+		
+		//if (c == '%') { super.tipo_buffer = "COMENT"; }
 		
 		
 		

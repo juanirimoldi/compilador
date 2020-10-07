@@ -22,8 +22,8 @@ public class AnalizadorLexico {
 	private boolean leer_caracter=false;
 	private boolean fin=false; //fin de "archivo"
 	
-	private int filas_estados = 10; //de 0 a 4 estados. en total ?
-	private int columnas_caracteres_validos = 14; // hasta ahora  ->  l d _ i . f BL + - * / = ; otro 
+	private int filas_estados = 13; //de 0 a 14 estados. en total ?
+	private int columnas_caracteres_validos = 24; // hasta ahora  ->  l d _ i . f BL + - * / = ; otro 
 	
 	private int estado_final = this.filas_estados - 1;
 
@@ -65,13 +65,13 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[0][8] = -1; //a E0 llega - -> voy a EF
 		this.matriz_transicion_estados[0][9] = -1; //a E0 llega * -> voy a EF
 		this.matriz_transicion_estados[0][10] = -1; //a E0 llega / -> voy a EF
-		
 		this.matriz_transicion_estados[0][11] = -1; //a E0 llega '=' -> voy a Ef 
-		this.matriz_transicion_estados[0][12] = -1; //a E0 llega ; -> voy a Ef
 		
-		this.matriz_transicion_estados[0][13] = 0; //a E0 llega otro caracter -> ciclo en E0
-		//this.matriz_transicion_estados[0][5] = 1; //a E0 llega ';' -> fin de linea 
-		//...
+		
+		this.matriz_transicion_estados[0][20] = -1; //a E0 llega ; -> voy a Ef
+		this.matriz_transicion_estados[0][21] = 10; //a E0 llega % -> voy a E10
+
+		this.matriz_transicion_estados[0][23] = 0; //a E0 llega otro caracter -> ciclo en E0
 		
 		
 		
@@ -88,11 +88,15 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[1][8] = -1; //a E1 le llega - -> voy a Ef
 		this.matriz_transicion_estados[1][9] = -1; //a E1 le llega * -> voy a Ef
 		this.matriz_transicion_estados[1][10] = -1; //a E1 le llega / -> voy a Ef
-		
 		this.matriz_transicion_estados[1][11] = -1; //a E1 le llega un '=' -> voy a Ef
-		this.matriz_transicion_estados[1][12] = -1; //a E1 le llega un ; -> voy a Ef
 		
-		this.matriz_transicion_estados[1][13] = -1; //a E1 le llega otro caracter -> limpio y reinicio? o voy a EF?
+		//aca poner < > ! etc...
+		
+		this.matriz_transicion_estados[1][20] = -1; //en E1 llega un ; -> voy a Ef
+		this.matriz_transicion_estados[1][21] = 0; //en E1 llega un % -> limpio y reinicio
+		// \n
+		
+		this.matriz_transicion_estados[1][23] = -1; //a E1 le llega otro caracter -> limpio y reinicio? o voy a EF?
 		//...
 		
 		
@@ -109,12 +113,14 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[2][8] = -1; //a E2 le llega - -> voy a Ef
 		this.matriz_transicion_estados[2][9] = -1; //a E2 le llega * -> voy a Ef
 		this.matriz_transicion_estados[2][10] = -1; //a E2 le llega / -> voy a Ef
-		
-		
 		this.matriz_transicion_estados[2][11] = -1; //a E2 le llega '=' -> voy a Ef
-		this.matriz_transicion_estados[2][12] = -1; //a E2 le llega ; -> voy a Ef
-
-		this.matriz_transicion_estados[2][13] = -1; //a E2 le llega otro caracter -> voy a Ef
+		
+		
+		this.matriz_transicion_estados[2][20] = -1; //en E2 llega ; -> voy a Ef
+		this.matriz_transicion_estados[2][21] = 0; //en E2 llega % -> limpio y reinicio
+		
+		
+		this.matriz_transicion_estados[2][23] = -1; //a E2 le llega otro caracter -> voy a Ef
 		//...
 		
 		
@@ -131,140 +137,214 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[3][8] = 0; //a E3 llega una - -> descarto y voy a EF
 		this.matriz_transicion_estados[3][9] = 0; //a E3 llega una * -> descarto y voy a EF
 		this.matriz_transicion_estados[3][10] = 0; //a E3 llega una / -> descarto y voy a EF
-		
-		
 		this.matriz_transicion_estados[3][11] = 0; //a E3 llega un = -> descarto y voy a EF
-		this.matriz_transicion_estados[3][12] = 0; //a E3 llega un ; -> descarto y voy a EF
 		
-		this.matriz_transicion_estados[3][13] = 0; //a E3 llega otro caracter -> descarto y voy a EF
+		
+		this.matriz_transicion_estados[3][20] = 0; //en E3 llega un ; -> descarto y reinicio
+		this.matriz_transicion_estados[3][21] = 0; //en E3 llega un % -> descarto y reinicio
+		
+		this.matriz_transicion_estados[3][23] = 0; //a E3 llega otro caracter -> descarto y voy a EF
 	
 	
+		
 		
 		//fila 4
-		this.matriz_transicion_estados[4][0] = 0; //a E4 llega una letra l -> descarto y voy a E0
-		this.matriz_transicion_estados[4][1] = 5; //a E4 llega un digito -> voy a E5
-		this.matriz_transicion_estados[4][2] = 0; //a E4 llega un _ -> descartes y voy a E0
-		this.matriz_transicion_estados[4][3] = 0; //a E4 llega una i -> descarto y reinicio
-		this.matriz_transicion_estados[4][4] = 0; //a E4 llega un . -> descarto y voy a E0
-		this.matriz_transicion_estados[4][5] = 0; //a E4 llega una f -> descarto y reinicio
-		this.matriz_transicion_estados[4][6] = 0; //a E4 llega un blanco ' ' -> descarto y voy a E0
-		this.matriz_transicion_estados[4][7] = 0; //a E4 llega un + -> descarto y reinicio
-		this.matriz_transicion_estados[4][8] = 0; //a E4 llega una - -> descarto y reinicio
-		this.matriz_transicion_estados[4][9] = 0; //a E4 llega una * -> descarto y reinicio
-		this.matriz_transicion_estados[4][10] = 0; //a E4 llega una / -> descarto y reinicio
+		this.matriz_transicion_estados[4][0] = 0; //en E4 llega una letra l -> descarto y voy a E0
+		this.matriz_transicion_estados[4][1] = 5; //en E4 llega un digito -> voy a E5
+		this.matriz_transicion_estados[4][2] = 0; //en E4 llega un _ -> descartes y voy a E0
+		this.matriz_transicion_estados[4][3] = 0; //en E4 llega una i -> descarto y reinicio
+		this.matriz_transicion_estados[4][4] = 0; //en E4 llega un . -> descarto y voy a E0
+		this.matriz_transicion_estados[4][5] = 0; //en E4 llega una f -> descarto y reinicio
+		this.matriz_transicion_estados[4][6] = 0; //en E4 llega un blanco ' ' -> descarto y voy a E0
+		this.matriz_transicion_estados[4][7] = 0; //en E4 llega un + -> descarto y reinicio
+		this.matriz_transicion_estados[4][8] = 0; //en E4 llega una - -> descarto y reinicio
+		this.matriz_transicion_estados[4][9] = 0; //en E4 llega una * -> descarto y reinicio
+		this.matriz_transicion_estados[4][10] = 0; //en E4 llega una / -> descarto y reinicio				
+		this.matriz_transicion_estados[4][11] = 0; //en E4 llega un = -> descarto y reinicio
+
+		
+		this.matriz_transicion_estados[4][20] = 0; //en E4 llega un ; -> descarto y reinicio
+		this.matriz_transicion_estados[4][21] = 0; //en E4 llega un % -> descarto y reinicio
 				
-				
-		this.matriz_transicion_estados[4][11] = 0; //a E4 llega un = -> descarto y reinicio
-		this.matriz_transicion_estados[4][12] = 0; //a E4 llega un ; -> descarto y reinicio
-				
-		this.matriz_transicion_estados[4][13] = 0; //a E4 llega otro caracter -> descarto y reinicio
+		this.matriz_transicion_estados[4][23] = 0; //a E4 llega otro caracter -> descarto y reinicio
 
 
 		
 		//fila (estado) 5
-		this.matriz_transicion_estados[5][0] = 0; //a E5 llega una letra l -> descarto y voy a E0
-		this.matriz_transicion_estados[5][1] = 5; //a E5 llega un digito -> voy a E5
-		this.matriz_transicion_estados[5][2] = 0; //a E5 llega un _ -> descartes y voy a E0
-		this.matriz_transicion_estados[5][3] = 0; //a E5 llega una i -> descarto y reinicio
-		this.matriz_transicion_estados[5][4] = 0; //a E5 llega un . -> descarto y reinicio
-		this.matriz_transicion_estados[5][5] = 6; //a E5 llega una f -> voy a E6
-		this.matriz_transicion_estados[5][6] = -1; //a E5 llega un blanco ' ' -> voy a EF
-		this.matriz_transicion_estados[5][7] = -1; //a E5 llega un + -> voy a EF
-		this.matriz_transicion_estados[5][8] = -1; //a E5 llega un - -> voy a EF
-		this.matriz_transicion_estados[5][9] = -1; //a E5 llega un * -> voy a EF
-		this.matriz_transicion_estados[5][10] = -1; //a E5 llega un / -> voy a EF
-						
-						
-		this.matriz_transicion_estados[5][11] = -1; //a E4 llega un = -> voy a EF
-		this.matriz_transicion_estados[5][12] = -1; //a E4 llega un ; -> voy a EF
+		this.matriz_transicion_estados[5][0] = 0; //en E5 llega una letra l -> descarto y voy a E0
+		this.matriz_transicion_estados[5][1] = 5; //en E5 llega un digito -> voy a E5
+		this.matriz_transicion_estados[5][2] = 0; //en E5 llega un _ -> descartes y voy a E0
+		this.matriz_transicion_estados[5][3] = 0; //en E5 llega una i -> descarto y reinicio
+		this.matriz_transicion_estados[5][4] = 0; //en E5 llega un . -> descarto y reinicio
+		this.matriz_transicion_estados[5][5] = 6; //en E5 llega una f -> voy a E6
+		this.matriz_transicion_estados[5][6] = -1; //en E5 llega un blanco ' ' -> voy a EF
+		this.matriz_transicion_estados[5][7] = -1; //en E5 llega un + -> voy a EF
+		this.matriz_transicion_estados[5][8] = -1; //en E5 llega un - -> voy a EF
+		this.matriz_transicion_estados[5][9] = -1; //en E5 llega un * -> voy a EF
+		this.matriz_transicion_estados[5][10] = -1; //en E5 llega un / -> voy a EF				
+		this.matriz_transicion_estados[5][11] = -1; //en E5 llega un = -> voy a EF
+
+		
+		this.matriz_transicion_estados[5][20] = -1; //en E5 llega un ; -> voy a EF
+		this.matriz_transicion_estados[5][21] = 0; //en E5 llega un % -> limpio y reinicio
 					
-		this.matriz_transicion_estados[5][13] = 0; //a E4 llega otro caracter -> descarto y reinicio
+		this.matriz_transicion_estados[5][23] = 0; //en E5 llega otro caracter -> descarto y reinicio
 
 		
 		
 		//fila (estado) 6
-		this.matriz_transicion_estados[6][0] = 0; //a E6 llega una letra l -> descarto y voy a E0
-		this.matriz_transicion_estados[6][1] = 8; //a E6 llega un digito -> voy a E8
-		this.matriz_transicion_estados[6][2] = 0; //a E6 llega un _ -> descartes y voy a E0
-		this.matriz_transicion_estados[6][3] = 0; //a E6 llega una i -> descarto y reinicio
-		this.matriz_transicion_estados[6][4] = 0; //a E6 llega un . -> descarto y reinicio
-		this.matriz_transicion_estados[6][5] = 6; //a E llega una f -> voy a E6
-		this.matriz_transicion_estados[6][6] = 0; //a E6 llega un blanco ' ' -> descarto y reinicio
-		this.matriz_transicion_estados[6][7] = 7; //a E6 llega un + -> voy a EF
-		this.matriz_transicion_estados[6][8] = 7; //a E6 llega un - -> voy a EF
-		this.matriz_transicion_estados[6][9] = 0; //a E6 llega un * -> descarto y reinicio
-		this.matriz_transicion_estados[6][10] = 0; //a E6 llega un / -> descarto y reinicio
-						
-						
-		this.matriz_transicion_estados[6][11] = 0; //a E6 llega un = -> descarto y reinicio
-		this.matriz_transicion_estados[6][12] = 0; //a E6 llega un ; -> descarto y reincioi
+		this.matriz_transicion_estados[6][0] = 0; //en E6 llega una letra l -> descarto y voy a E0
+		this.matriz_transicion_estados[6][1] = 8; //en E6 llega un digito -> voy a E8
+		this.matriz_transicion_estados[6][2] = 0; //en E6 llega un _ -> descartes y voy a E0
+		this.matriz_transicion_estados[6][3] = 0; //en E6 llega una i -> descarto y reinicio
+		this.matriz_transicion_estados[6][4] = 0; //en E6 llega un . -> descarto y reinicio
+		this.matriz_transicion_estados[6][5] = 0; //en E6 llega una f -> descarto
+		this.matriz_transicion_estados[6][6] = 0; //en E6 llega un blanco ' ' -> descarto y reinicio
+		this.matriz_transicion_estados[6][7] = 7; //en E6 llega un + -> voy a EF
+		this.matriz_transicion_estados[6][8] = 7; //en E6 llega un - -> voy a EF
+		this.matriz_transicion_estados[6][9] = 0; //en E6 llega un * -> descarto y reinicio
+		this.matriz_transicion_estados[6][10] = 0; //en E6 llega un / -> descarto y reinicio				
+		this.matriz_transicion_estados[6][11] = 0; //en E6 llega un = -> descarto y reinicio
+		
+		
+		this.matriz_transicion_estados[6][20] = 0; //en E6 llega un ; -> descarto y reincioi
+		this.matriz_transicion_estados[6][21] = 0; //en E6 llega un % -> descarto y reincioi
 					
-		this.matriz_transicion_estados[6][13] = 0; //a E6 llega otro caracter -> descarto y reinicio
+		this.matriz_transicion_estados[6][23] = 0; //en E6 llega otro caracter -> descarto y reinicio
 		
 		
 		
 		//fila (estado) 7
-		this.matriz_transicion_estados[7][0] = 0; //a E7 llega una letra l -> descarto y voy a E0
-		this.matriz_transicion_estados[7][1] = 8; //a E7 llega un digito -> voy a E8
-		this.matriz_transicion_estados[7][2] = 0; //a E7 llega un _ -> descartes y voy a E0
-		this.matriz_transicion_estados[7][3] = 0; //a E7 llega una i -> descarto y reinicio
-		this.matriz_transicion_estados[7][4] = 0; //a E7 llega un . -> descarto y reinicio
-		this.matriz_transicion_estados[7][5] = 0; //a E7 llega una f -> descarto y reinicio
-		this.matriz_transicion_estados[7][6] = 0; //a E7 llega un blanco ' ' -> descarto y reinicio
-		this.matriz_transicion_estados[7][7] = 0; //a E7 llega un + -> descarto y reinicio
-		this.matriz_transicion_estados[7][8] = 0; //a E7 llega un - -> descarto y reinicio
-		this.matriz_transicion_estados[7][9] = 0; //a E7 llega un * -> descarto y reinicio
-		this.matriz_transicion_estados[7][10] = 0; //a E7 llega un / -> descarto y reinicio
-						
-						
-		this.matriz_transicion_estados[7][11] = 0; //a E7 llega un = -> descarto y reinicio
-		this.matriz_transicion_estados[7][12] = 0; //a E7 llega un ; -> descarto y reincio
+		this.matriz_transicion_estados[7][0] = 0; //en E7 llega una letra l -> descarto y voy a E0
+		this.matriz_transicion_estados[7][1] = 8; //en E7 llega un digito -> voy a E8
+		this.matriz_transicion_estados[7][2] = 0; //en E7 llega un _ -> descartes y voy a E0
+		this.matriz_transicion_estados[7][3] = 0; //en E7 llega una i -> descarto y reinicio
+		this.matriz_transicion_estados[7][4] = 0; //en E7 llega un . -> descarto y reinicio
+		this.matriz_transicion_estados[7][5] = 0; //en E7 llega una f -> descarto y reinicio
+		this.matriz_transicion_estados[7][6] = 0; //en E7 llega un blanco ' ' -> descarto y reinicio
+		this.matriz_transicion_estados[7][7] = 0; //en E7 llega un + -> descarto y reinicio
+		this.matriz_transicion_estados[7][8] = 0; //en E7 llega un - -> descarto y reinicio
+		this.matriz_transicion_estados[7][9] = 0; //en E7 llega un * -> descarto y reinicio
+		this.matriz_transicion_estados[7][10] = 0; //en E7 llega un / -> descarto y reinicio				
+		this.matriz_transicion_estados[7][11] = 0; //en E7 llega un = -> descarto y reinicio
+
+		
+		this.matriz_transicion_estados[7][20] = 0; //en E7 llega un ; -> descarto y reincio
+		this.matriz_transicion_estados[7][21] = 0; //en E7 llega un % -> descarto y reincio
 					
-		this.matriz_transicion_estados[7][13] = 0; //a E7 llega otro caracter -> descarto y reinicio
+		this.matriz_transicion_estados[7][23] = 0; //en E7 llega otro caracter -> descarto y reinicio
 		
 		
 		
 		//fila (estado) 8
-		this.matriz_transicion_estados[8][0] = 0; //a E8 llega una letra l -> descarto y voy a E0
-		this.matriz_transicion_estados[8][1] = 8; //a E8 llega un digito -> voy a E8
-		this.matriz_transicion_estados[8][2] = 0; //a E8 llega un _ -> descartes y voy a E0
-		this.matriz_transicion_estados[8][3] = 0; //a E8 llega una i -> descarto y reinicio
-		this.matriz_transicion_estados[8][4] = 0; //a E8 llega un . -> descarto y reinicio
-		this.matriz_transicion_estados[8][5] = 0; //a E8 llega una f -> descarto y reinicio
-		this.matriz_transicion_estados[8][6] = -1; //a E8 llega un blanco ' ' -> voy a EF
-		this.matriz_transicion_estados[8][7] = -1; //a E8 llega un + -> voy a EF
-		this.matriz_transicion_estados[8][8] = -1; //a E8 llega un - -> voy a EF
-		this.matriz_transicion_estados[8][9] = -1; //a E8 llega un * -> voy a EF
-		this.matriz_transicion_estados[8][10] = -1; //a E8 llega un / -> voy a EF
-								
-								
-		this.matriz_transicion_estados[8][11] = -1; //a E8 llega un = -> voy a EF
-		this.matriz_transicion_estados[8][12] = -1; //a E8 llega un ; -> voy a EF
+		this.matriz_transicion_estados[8][0] = 0; //en E8 llega una letra l -> descarto y voy a E0
+		this.matriz_transicion_estados[8][1] = 8; //en E8 llega un digito -> voy a E8
+		this.matriz_transicion_estados[8][2] = 0; //en E8 llega un _ -> descartes y voy a E0
+		this.matriz_transicion_estados[8][3] = 0; //en E8 llega una i -> descarto y reinicio
+		this.matriz_transicion_estados[8][4] = 0; //en E8 llega un . -> descarto y reinicio
+		this.matriz_transicion_estados[8][5] = 0; //en E8 llega una f -> descarto y reinicio
+		this.matriz_transicion_estados[8][6] = -1; //en E8 llega un blanco ' ' -> voy a EF
+		this.matriz_transicion_estados[8][7] = -1; //en E8 llega un + -> voy a EF
+		this.matriz_transicion_estados[8][8] = -1; //en E8 llega un - -> voy a EF
+		this.matriz_transicion_estados[8][9] = -1; //en E8 llega un * -> voy a EF
+		this.matriz_transicion_estados[8][10] = -1; //en E8 llega un / -> voy a EF						
+		this.matriz_transicion_estados[8][11] = -1; //e E8 llega un = -> voy a EF
+		
+		
+		this.matriz_transicion_estados[8][20] = -1; //en E8 llega un ; -> voy a EF
+		this.matriz_transicion_estados[8][21] = 0; //en E8 llega un % -> limpio y reinicio
 						
-		this.matriz_transicion_estados[8][13] = 0; //a E8 llega otro caracter -> descarto y reinicio
+		this.matriz_transicion_estados[8][23] = 0; //a E8 llega otro caracter -> descarto y reinicio
 				
 
 		
-		//fila (estado final) 
-		this.matriz_transicion_estados[9][0] = 0; //en EF reinicio
-		this.matriz_transicion_estados[9][1] = 0; //en EF entrego token y reinicio
-		this.matriz_transicion_estados[9][2] = 0; //en EF entrego token y reinicio
-		this.matriz_transicion_estados[9][3] = 0; //en EF entrego token y reinicio
-		this.matriz_transicion_estados[9][4] = 0; //en EF reinicio
-		this.matriz_transicion_estados[9][5] = 0; //en EF entrego token y reinicio
-		this.matriz_transicion_estados[9][6] = 0; //en EF entrego token y reinicio
-		this.matriz_transicion_estados[9][7] = 0; //en EF entrego token y reinicio
-		this.matriz_transicion_estados[9][8] = 0; //en EF entrego token y reinicio
-		this.matriz_transicion_estados[9][9] = 0; //en EF entrego token y reinicio
-		this.matriz_transicion_estados[9][10] = 0; //en EF entrego token y reinicio
-										
-										
-		this.matriz_transicion_estados[9][11] = 0; //en EF entrego token y reinicio
-		this.matriz_transicion_estados[9][12] = 0; //en EF entrego token y reinicio
-								
-		this.matriz_transicion_estados[9][13] = 0; //en EF entrego token y reinicio
+		//fila (estado) 9
+		this.matriz_transicion_estados[9][0] = 0; //en E9 llega una letra l -> descarto y voy a E0
+		this.matriz_transicion_estados[9][1] = 0; //en E9 llega un digito -> descarto y reinicio
+		this.matriz_transicion_estados[9][2] = 0; //en E9 llega un _ -> descartes y voy a E0
+		this.matriz_transicion_estados[9][3] = 0; //en E9 llega una i -> descarto y reinicio
+		this.matriz_transicion_estados[9][4] = 0; //en E9 llega un . -> descarto y reinicio
+		this.matriz_transicion_estados[9][5] = 0; //en E9 llega una f -> descarto y reinicio
+		this.matriz_transicion_estados[9][6] = -1; //en E9 llega un blanco ' ' -> voy a EF
+		this.matriz_transicion_estados[9][7] = 0; //en E9 llega un + -> limpio y reinicio
+		this.matriz_transicion_estados[9][8] = 0; //en E9 llega un - -> limpioy reinicio
+		this.matriz_transicion_estados[9][9] = 0; //en E9 llega un * -> limpio y reinicio
+		this.matriz_transicion_estados[9][10] = 0; //en E9 llega un / -> limpio y reinicio								
+		this.matriz_transicion_estados[9][11] = -1; //a E9 llega un = -> voy a EF
 
 		
+		this.matriz_transicion_estados[9][20] = 0; //en E9 llega un ; -> limpio y reinicio
+		this.matriz_transicion_estados[9][21] = 0; //en E9 llega un % -> limpio y reinicio
+								
+		this.matriz_transicion_estados[9][23] = 0; //a E9 llega otro caracter -> descarto y reinicio
+						
+
+		
+		//fila (estado) 10
+		this.matriz_transicion_estados[10][0] = 0; //en E10 llega una letra l -> descarto y voy a E0
+		this.matriz_transicion_estados[10][1] = 0; //en E10 llega un digito -> descarto y reinicio
+		this.matriz_transicion_estados[10][2] = 0; //en E10 llega un _ -> descartes y voy a E0
+		this.matriz_transicion_estados[10][3] = 0; //en E10 llega una i -> descarto y reinicio
+		this.matriz_transicion_estados[10][4] = 0; //en E10 llega un . -> descarto y reinicio
+		this.matriz_transicion_estados[10][5] = 0; //en E10 llega una f -> descarto y reinicio
+		this.matriz_transicion_estados[10][6] = 0; //en E10 llega un blanco ' ' -> voy a EF
+		this.matriz_transicion_estados[10][7] = 0; //en E10 llega un + -> limpio y reinicio
+		this.matriz_transicion_estados[10][8] = 0; //en E10 llega un - -> limpioy reinicio
+		this.matriz_transicion_estados[10][9] = 0; //en E10 llega un * -> limpio y reinicio
+		this.matriz_transicion_estados[10][10] = 0; //en E10 llega un / -> limpio y reinicio										
+		this.matriz_transicion_estados[10][11] = 0; //a E10 llega un = -> voy a EF
+		
+		
+		this.matriz_transicion_estados[10][20] = 0; //en E10 llega un ; -> limpio y reinicio
+		this.matriz_transicion_estados[10][21] = 11; //en E10 llega un % -> voy a E11
+										
+		this.matriz_transicion_estados[10][23] = 0; //a E10 llega otro caracter -> descarto y reinicio
+								
+
+		
+		//fila (estado) 11
+		this.matriz_transicion_estados[11][0] = 11; //en E11 llega una letra l -> agrego caracter
+		this.matriz_transicion_estados[11][1] = 11; //en E11 llega un digito -> agrego caracter
+		this.matriz_transicion_estados[11][2] = 11; //en E11 llega un _ -> agrego caracter
+		this.matriz_transicion_estados[11][3] = 11; //en E11 llega una i -> agrego caracter
+		this.matriz_transicion_estados[11][4] = 11; //en E11 llega un . -> agrego caracter
+		this.matriz_transicion_estados[11][5] = 11; //en E11 llega una f -> agrego caracter
+		this.matriz_transicion_estados[11][6] = 11; //en E11 llega un blanco ' ' -> agrego caracter
+		this.matriz_transicion_estados[11][7] = 11; //en E11 llega un + -> agrego caracter
+		this.matriz_transicion_estados[11][8] = 11; //en E11 llega un - -> agrego caracter
+		this.matriz_transicion_estados[11][9] = 11; //en E11 llega un * -> agrego caracter
+		this.matriz_transicion_estados[11][10] = 11; //en E11 llega un / -> agrego caracter										
+		this.matriz_transicion_estados[11][11] = 11; //en E11 llega un = -> agrego caracter
+		
+		
+		this.matriz_transicion_estados[11][20] = 11; //en E11 llega un ; -> agrego caracter
+		this.matriz_transicion_estados[11][21] = 11; //en E11 llega un % -> agrego caracter
+										
+		this.matriz_transicion_estados[11][23] = 11; //a E11 llega otro caracter -> agrego caracter
+		
+		
+		
+		
+		//fila (estado final) 
+		this.matriz_transicion_estados[12][0] = 0; //en EF reinicio
+		this.matriz_transicion_estados[12][1] = 0; //en EF entrego token y reinicio
+		this.matriz_transicion_estados[12][2] = 0; //en EF entrego token y reinicio
+		this.matriz_transicion_estados[12][3] = 0; //en EF entrego token y reinicio
+		this.matriz_transicion_estados[12][4] = 0; //en EF reinicio
+		this.matriz_transicion_estados[12][5] = 0; //en EF entrego token y reinicio
+		this.matriz_transicion_estados[12][6] = 0; //en EF entrego token y reinicio
+		this.matriz_transicion_estados[12][7] = 0; //en EF entrego token y reinicio
+		this.matriz_transicion_estados[12][8] = 0; //en EF entrego token y reinicio
+		this.matriz_transicion_estados[12][9] = 0; //en EF entrego token y reinicio
+		this.matriz_transicion_estados[12][10] = 0; //en EF entrego token y reinicio								
+		this.matriz_transicion_estados[12][11] = 0; //en EF entrego token y reinicio
+
+		
+		this.matriz_transicion_estados[12][20] = 0; //en EF entrego token y reinicio
+		this.matriz_transicion_estados[12][21] = 0; //en EF muestro comentario y reinicio
+								
+		this.matriz_transicion_estados[12][23] = 0; //en EF entrego token y reinicio
+
 	}
 	
 	
@@ -281,8 +361,7 @@ public class AnalizadorLexico {
 		//fila 0
 		this.matriz_acciones_semanticas[0][0] = AS1; //InicializarBuffer(); //a inicio le llega letra -> inicializo buffer
 		this.matriz_acciones_semanticas[0][1] = AS1; //InicializarBuffer(); //a inicio le llega digito -> inicializo buffer
-		
-		this.matriz_acciones_semanticas[0][2] = AS4; //Descartar(); //a inicio le llega _ -> rene descarte
+		this.matriz_acciones_semanticas[0][2] = AS4; //DescartarBuffer(); //a inicio le llega _ -> rene descartes
 		this.matriz_acciones_semanticas[0][3] = AS1; //InicializarBuffer(); //a inicio le llega i -> inicializo buffer
 		this.matriz_acciones_semanticas[0][4] = AS1; //InicializarBuffer(); //a inicio le llega . -> inicializo buffer
 		this.matriz_acciones_semanticas[0][5] = AS1; //InicializarBuffer(); //a inicio le llega f -> inicializo buffer
@@ -290,35 +369,36 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[0][7] = AS3; //EntregarToken(); //a inicio le llega +
 		this.matriz_acciones_semanticas[0][8] = AS3; //EntregarToken(); //a inicio le llega - 
 		this.matriz_acciones_semanticas[0][9] = AS3; //EntregarToken(); //a inicio le llega * 
-		this.matriz_acciones_semanticas[0][10] = AS3; //EntregarToken(); //a inicio le llega / 
+		this.matriz_acciones_semanticas[0][10] = AS3; //EntregarToken(); //a inicio le llega / 	
+		this.matriz_acciones_semanticas[0][11] = AS3; //EntregarToken(); //a inicio le llega =
 
 		
-		this.matriz_acciones_semanticas[0][11] = AS3; //EntregarToken(); //a inicio le llega =
-		this.matriz_acciones_semanticas[0][12] = AS3; //EntregarToken(); //a inicio le llega ;
+		this.matriz_acciones_semanticas[0][20] = AS3; //EntregarToken(); //a inicio le llega ;
+		this.matriz_acciones_semanticas[0][21] = AS1; //InicializarBuffer(); //a inicio le llega %
 		
-		this.matriz_acciones_semanticas[0][13] = AS4; //Descartar(); //a inicio le llega otro caracter
+		this.matriz_acciones_semanticas[0][23] = AS4; //Descartar(); //a inicio le llega otro caracter
 		
 		
 		
 		//fila 1
 		this.matriz_acciones_semanticas[1][0] = AS2; //AgregarCaracter(); //a E1 le llega letra -> agrego caracter a buffer
 		this.matriz_acciones_semanticas[1][1] = AS2; //AgregarCaracter(); //a E1 le llega digito -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[1][2] = AS2; //AgregarCaracter(); //a E1 le llega _ -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[1][3] = AS2; //AgregarCaracter(); //a E1 le llega i -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[1][4] = AS4; //Descartar(); //a E1 le llega . -> limpio y reinicio
+		this.matriz_acciones_semanticas[1][2] = AS2; //AgregarCaracter(); //a E1 le llega _ -> agrego _ a buffer
+		this.matriz_acciones_semanticas[1][3] = AS2; //AgregarCaracter(); //a E1 le llega i -> agrego i a buffer
+		this.matriz_acciones_semanticas[1][4] = AS4; //DescartarBuffer(); //a E1 le llega . -> limpio y reinicio
 		this.matriz_acciones_semanticas[1][5] = AS2; //AgregarCaracter(); //a E1 le llega f -> agrego caracter a buffer
-		
 		this.matriz_acciones_semanticas[1][6] = AS3; //LlegaTokenValido(); //a E1 le llega blanco ' ' -> entrego token y descarto blanco
 		this.matriz_acciones_semanticas[1][7] = AS3; //LlegaTokenValido(); //a E1 le llega + -> entrego token y descarto blanco
 		this.matriz_acciones_semanticas[1][8] = AS3; //LlegaTokenValido(); //a E1 le llega - -> entrego token y descarto blanco
 		this.matriz_acciones_semanticas[1][9] = AS3; //LlegaTokenValido(); //a E1 le llega * -> entrego token y descarto blanco
 		this.matriz_acciones_semanticas[1][10] = AS3; //LlegaTokenValido(); //a E1 le llega / -> entrego token y descarto blanco
-		
-		
 		this.matriz_acciones_semanticas[1][11] = AS3; //LlegaTokenValido(); //a E1 le llega '=' -> entrego token 
-		this.matriz_acciones_semanticas[1][12] = AS3; //LlegaTokenValido(); //a E1 le llega blanco ' ' -> entrego token y descarto blanco
+		
+		
+		this.matriz_acciones_semanticas[1][20] = AS3; //LlegaTokenValido(); //a E1 le llega ; -> entrego token y descarto blanco
+		this.matriz_acciones_semanticas[1][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
 
-		this.matriz_acciones_semanticas[1][13] = AS3; //LlegaTokenValido(); //a E1 le llega otro caracter -> entrego token
+		this.matriz_acciones_semanticas[1][23] = AS3; //LlegaTokenValido(); //a E1 le llega otro caracter -> entrego token
 		//...
 		
 		
@@ -326,94 +406,94 @@ public class AnalizadorLexico {
 		//fila 2
 		this.matriz_acciones_semanticas[2][0] = AS4; //DescartarBuffer(); //a E2 le llega una letra -> descarto y vuelvo a inicio? o entregoToken?
 		this.matriz_acciones_semanticas[2][1] = AS2; //AgregarCaracter(); //a E2 le llega un digito -> 
-		
-		this.matriz_acciones_semanticas[2][2] = AS2; //AgregarCaracter(); //a E2 le llega _ -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[2][3] = AS4; //Descartar(); //a E2 le llega i -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[2][4] = AS2; //AgregarCaracter(); //a E2 le llega . -> limpio y reinicio
-		this.matriz_acciones_semanticas[2][5] = AS2; //AgregarCaracter(); //a E2 le llega f -> agrego caracter a buffer
-		
-		
+		this.matriz_acciones_semanticas[2][2] = AS2; //AgregarCaracter(); //a E2 le llega _ -> agrego _ a buffer
+		this.matriz_acciones_semanticas[2][3] = AS4; //DescartarBuffer(); //a E2 le llega i -> descarto. limpio y reinicio
+		this.matriz_acciones_semanticas[2][4] = AS4; //DescartarBuffer(); //a E2 le llega . -> limpio y reinicio
+		this.matriz_acciones_semanticas[2][5] = AS2; //AgregarCaracter(); //a E2 le llega f -> agrego caracter a buffer		
 		this.matriz_acciones_semanticas[2][6] = AS3; //EntregarToken(); //a E2 le llega blanco ' ' -> entrego token tipo constante
 		this.matriz_acciones_semanticas[2][7] = AS3; //EntregarToken(); //a E2 le llega + -> entrego token tipo constante
 		this.matriz_acciones_semanticas[2][8] = AS3; //EntregarToken(); //a E2 le llega - -> entrego token tipo constante
 		this.matriz_acciones_semanticas[2][9] = AS3; //EntregarToken(); //a E2 le llega * -> entrego token tipo constante
 		this.matriz_acciones_semanticas[2][10] = AS3; //EntregarToken(); //a E2 le llega / -> entrego token tipo constante
-		
-		
 		this.matriz_acciones_semanticas[2][11] = AS3; //EntregarToken(); //a E2 le llega = -> entrego token tipo constante
-		this.matriz_acciones_semanticas[2][12] = AS3; //EntregarToken(); //a E2 le llega ; -> entrego token tipo constante
+
 		
-		this.matriz_acciones_semanticas[2][13] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
+		this.matriz_acciones_semanticas[2][20] = AS3; //EntregarToken(); //a E2 le llega ; -> entrego token tipo constante
+		this.matriz_acciones_semanticas[2][21] = AS4; //DescartarBuffer(); //a E2 le llega % -> descarto buffer
+		
+		this.matriz_acciones_semanticas[2][23] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
 		//...
 		
 		
 		
 		//fila (estado) 3
 		this.matriz_acciones_semanticas[3][0] = AS4; //DescartarBuffer(); //a E3 le llega una letra -> descarto y vuelvo a inicio? o entregoToken?
-		this.matriz_acciones_semanticas[3][1] = AS4; //Descartar(); //a E3 le llega un digito -> 
-				
-		this.matriz_acciones_semanticas[3][2] = AS2; //Descartar(); //a E3 le llega _ -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[3][3] = AS4; //AgregarCaracter(); //a E3 le llega i -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[3][4] = AS2; //Descartar(); //a E3 le llega . -> limpio y reinicio
-		this.matriz_acciones_semanticas[3][5] = AS2; //Descartar(); //a E3 le llega f -> agrego caracter a buffer
-				
-				
+		this.matriz_acciones_semanticas[3][1] = AS4; //DescartarBuffer(); //a E3 le llega un digito -> descarto
+		this.matriz_acciones_semanticas[3][2] = AS4; //DescartarBuffer(); //a E3 le llega _ -> descarto buffer
+		this.matriz_acciones_semanticas[3][3] = AS3; //TokenValido(); //a E3 le llega i -> agrego caracter y entrego token
+		this.matriz_acciones_semanticas[3][4] = AS4; //DescartarBuffer(); //a E3 le llega . -> limpio y reinicio
+		this.matriz_acciones_semanticas[3][5] = AS4; //DescartarBuffer(); //a E3 le llega f -> limpio y reinicio
 		this.matriz_acciones_semanticas[3][6] = AS3; //EntregarToken(); //a E3 le llega blanco ' ' -> entrego token tipo constante
 		this.matriz_acciones_semanticas[3][7] = AS3; //EntregarToken(); //a E3 le llega + -> entrego token tipo constante
 		this.matriz_acciones_semanticas[3][8] = AS3; //EntregarToken(); //a E3 le llega - -> entrego token tipo constante
 		this.matriz_acciones_semanticas[3][9] = AS3; //EntregarToken(); //a E3 le llega * -> entrego token tipo constante
-		this.matriz_acciones_semanticas[3][10] = AS3; //EntregarToken(); //a E3 le llega / -> entrego token tipo constante
-				
-				
-		this.matriz_acciones_semanticas[3][11] = AS3; //EntregarToken(); //a E2 le llega = -> entrego token tipo constante
-		this.matriz_acciones_semanticas[3][12] = AS3; //EntregarToken(); //a E2 le llega ; -> entrego token tipo constante
-			
-		this.matriz_acciones_semanticas[3][13] = AS3; //EntregarTokenIndividual(); //a E2 le llega otro caracter -> entrego token tipo constante
+		this.matriz_acciones_semanticas[3][10] = AS3; //EntregarToken(); //a E3 le llega / -> entrego token tipo constante		
+		this.matriz_acciones_semanticas[3][11] = AS3; //EntregarToken(); //a E3 le llega = -> entrego token tipo constante
+
+		
+		this.matriz_acciones_semanticas[3][20] = AS3; //EntregarToken(); //a E3 le llega ; -> entrego token tipo constante
+		this.matriz_acciones_semanticas[3][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
+	
+		this.matriz_acciones_semanticas[3][23] = AS3; //EntregarTokenIndividual(); //a E3 le llega otro caracter -> entrego token tipo constante
 		//...
-				
+		
+		//VER EL CASO DEL ESTADO FINAL!! si llega otro caracter... reinicio?
+		
 		
 		
 		//fila (estado) 4
 		this.matriz_acciones_semanticas[4][0] = AS4; //DescartarBuffer(); //a E4 le llega una letra -> descarto y vuelvo a inicio? o entregoToken?
 		this.matriz_acciones_semanticas[4][1] = AS2; //AgregarCaracter(); //a E4 le llega un digito -> 
-		this.matriz_acciones_semanticas[4][2] = AS4; //Descartar(); //a E4 le llega _ -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[4][3] = AS4; //Descartar(); //a E4 le llega i -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[4][4] = AS4; //Descartar(); //a E4 le llega . -> limpio y reinicio
-		this.matriz_acciones_semanticas[4][5] = AS4; //Descartar(); //a E4 le llega f -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[4][6] = AS4; //Descartar(); //a E4 le llega blanco ' ' -> entrego token tipo constante
-		this.matriz_acciones_semanticas[4][7] = AS4; //Descartar(); //a E4 le llega + -> entrego token tipo constante
-		this.matriz_acciones_semanticas[4][8] = AS4; //Descartar(); //a E4 le llega - -> entrego token tipo constante
-		this.matriz_acciones_semanticas[4][9] = AS4; //Descartar(); //a E4 le llega * -> entrego token tipo constante
-		this.matriz_acciones_semanticas[4][10] = AS4; //Descartar(); //a E4 le llega / -> entrego token tipo constante
-				
-				
-		this.matriz_acciones_semanticas[4][11] = AS4; //Descartar(); //a E4 le llega = -> entrego token tipo constante
-		this.matriz_acciones_semanticas[4][12] = AS4; //Descartar(); //a E4 le llega ; -> entrego token tipo constante
-			
-		this.matriz_acciones_semanticas[4][13] = AS4; //Descartar(); //a E4 le llega otro caracter -> entrego token tipo constante
+		this.matriz_acciones_semanticas[4][2] = AS4; //DescartarBuffer(); //a E4 le llega _ -> rene
+		this.matriz_acciones_semanticas[4][3] = AS4; //DescartarBuffer(); //a E4 le llega i -> descartes
+		this.matriz_acciones_semanticas[4][4] = AS4; //DescartarBuffer(); //a E4 le llega . -> limpio y reinicio
+		this.matriz_acciones_semanticas[4][5] = AS4; //DescartarBuffer(); //a E4 le llega f -> limpio y reinicio
+		this.matriz_acciones_semanticas[4][6] = AS4; //DescartarBuffer(); //a E4 le llega blanco ' ' -> limpio y reinicio
+		this.matriz_acciones_semanticas[4][7] = AS4; //DescartarBuffer(); //a E4 le llega + -> limpio y reinicio
+		this.matriz_acciones_semanticas[4][8] = AS4; //DescartarBuffer(); //a E4 le llega - -> limpio y reinicio
+		this.matriz_acciones_semanticas[4][9] = AS4; //DescartarBuffer(); //a E4 le llega * -> limpio y reinicio
+		this.matriz_acciones_semanticas[4][10] = AS4; //DescartaBuffer(); //a E4 le llega / -> limpio y reinicio		
+		this.matriz_acciones_semanticas[4][11] = AS4; //DescartarBuffer(); //a E4 le llega = -> limpio y reinicio
+
+		
+		this.matriz_acciones_semanticas[4][20] = AS4; //DescartarBuffer(); //a E4 le llega ; -> limpio y reinicio
+		this.matriz_acciones_semanticas[4][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
+	
+		this.matriz_acciones_semanticas[4][23] = AS4; //DescartarBuffer(); //a E4 le llega otro caracter -> limpio y reinicio
 		//...
 				
 		
 		
 		
 		//fila (estado) 5
-		this.matriz_acciones_semanticas[5][0] = AS4; //DescartarBuffer(); //a E5 le llega una letra -> descarto y vuelvo a inicio? o entregoToken?
+		this.matriz_acciones_semanticas[5][0] = AS4; //DescartarBuffer(); //a E5 le llega una letra -> descarto y vuelvo a inicio
 		this.matriz_acciones_semanticas[5][1] = AS2; //AgregarCaracter(); //a E5 le llega un digito -> 
-		this.matriz_acciones_semanticas[5][2] = AS4; //Descartar(); //a E5 le llega _ -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[5][3] = AS4; //Descartar(); //a E5 le llega i -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[5][4] = AS4; //Descartar(); //a E5 le llega . -> limpio y reinicio
+		this.matriz_acciones_semanticas[5][2] = AS4; //DescartarBuffer(); //a E5 le llega _ -> limpio y reinicio
+		this.matriz_acciones_semanticas[5][3] = AS4; //DescartarBuffer(); //a E5 le llega i -> limpio y reinicio
+		this.matriz_acciones_semanticas[5][4] = AS4; //DescartarBuffer(); //a E5 le llega . -> limpio y reinicio
 		this.matriz_acciones_semanticas[5][5] = AS2; //AgregarCaracter(); //a E5 le llega f -> agrego caracter a buffer
 		this.matriz_acciones_semanticas[5][6] = AS3; //EntregarToken(); //a E5 le llega blanco ' ' -> entrego token tipo constante
 		this.matriz_acciones_semanticas[5][7] = AS3; //EntregarToken(); //a E5 le llega + -> entrego token tipo constante
 		this.matriz_acciones_semanticas[5][8] = AS3; //EntregarToken(); //a E5 le llega - -> entrego token tipo constante
 		this.matriz_acciones_semanticas[5][9] = AS3; //EntregarToken(); //a E5 le llega * -> entrego token tipo constante
-		this.matriz_acciones_semanticas[5][10] = AS3; //EntregarToken(); //a E5 le llega / -> entrego token tipo constante
-				
-				
+		this.matriz_acciones_semanticas[5][10] = AS3; //EntregarToken(); //a E5 le llega / -> entrego token tipo constante		
 		this.matriz_acciones_semanticas[5][11] = AS3; //EntregarToken(); //a E5 le llega = -> entrego token tipo constante
-		this.matriz_acciones_semanticas[5][12] = AS3; //EntregarToken(); //a E5 le llega ; -> entrego token tipo constante
-			
-		this.matriz_acciones_semanticas[5][13] = AS4; //Descartar(); //a E4 le llega otro caracter -> entrego token tipo constante
+		
+		
+		this.matriz_acciones_semanticas[5][20] = AS3; //EntregarToken(); //a E5 le llega ; -> entrego token tipo constante
+		this.matriz_acciones_semanticas[5][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
+	
+		this.matriz_acciones_semanticas[5][23] = AS4; //Descartar(); //a E4 le llega otro caracter -> entrego token tipo constante
 		//...
 		
 		
@@ -421,29 +501,30 @@ public class AnalizadorLexico {
 		//fila (estado) 6
 		this.matriz_acciones_semanticas[6][0] = AS4; //DescartarBuffer(); //a E6 le llega una letra -> descarto y vuelvo a inicio? o entregoToken?
 		this.matriz_acciones_semanticas[6][1] = AS2; //AgregarCaracter(); //a E6 le llega un digito -> 
-		this.matriz_acciones_semanticas[6][2] = AS4; //Descartar(); //a E6 le llega _ -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[6][3] = AS4; //Descartar(); //a E6 le llega i -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[6][4] = AS4; //Descartar(); //a E6 le llega . -> limpio y reinicio
-		this.matriz_acciones_semanticas[6][5] = AS4; //Descartar(); //a E6 le llega f -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[6][6] = AS4; //Descartar(); //a E6 le llega blanco ' ' -> limpio y notifico error
+		this.matriz_acciones_semanticas[6][2] = AS4; //DescartarBuffer(); //a E6 le llega _ -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[6][3] = AS4; //DescartarBuffer(); //a E6 le llega i -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[6][4] = AS4; //DescartarBuffer(); //a E6 le llega . -> limpio y reinicio
+		this.matriz_acciones_semanticas[6][5] = AS4; //DescartarBuffer(); //a E6 le llega f -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[6][6] = AS4; //DescartarBuffer(); //a E6 le llega blanco ' ' -> limpio y notifico error
 		this.matriz_acciones_semanticas[6][7] = AS2; //AgregarCaracter(); //a E6 le llega + -> agrego caracter +
 		this.matriz_acciones_semanticas[6][8] = AS2; //AgregarCaracter(); //a E6 le llega - -> agregp caracter -
-		this.matriz_acciones_semanticas[6][9] = AS4; //Descartar(); //a E6 le llega * -> limpio y reinicio
-		this.matriz_acciones_semanticas[6][10] = AS4; //Descartar(); //a E6 le llega / -> lmpio y reinicio
-				
-				
-		this.matriz_acciones_semanticas[6][11] = AS4; //Descartar(); //a E6 le llega = -> limpio y reinicio
-		this.matriz_acciones_semanticas[6][12] = AS4; //Descartar(); //a E6 le llega ; -> limpio y reinicio
-			
-		this.matriz_acciones_semanticas[6][13] = AS4; //Descartar(); //a E4 le llega otro caracter -> entrego token tipo constante
+		this.matriz_acciones_semanticas[6][9] = AS4; //DescartarBuffer(); //a E6 le llega * -> limpio y reinicio
+		this.matriz_acciones_semanticas[6][10] = AS4; //DescartarBuffer(); //a E6 le llega / -> lmpio y reinicio			
+		this.matriz_acciones_semanticas[6][11] = AS4; //DescartarBuffer(); //a E6 le llega = -> limpio y reinicio
+		
+		
+		this.matriz_acciones_semanticas[6][20] = AS4; //DescartarBuffer(); //a E6 le llega ; -> limpio y reinicio
+		this.matriz_acciones_semanticas[6][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
+	
+		this.matriz_acciones_semanticas[6][23] = AS4; //DescartarBuffer(); //a E6 le llega otro caracter -> entrego token tipo constante
 		//...
 		
 		
 
 		//fila (estado) 7
 		this.matriz_acciones_semanticas[7][0] = AS4; //DescartarBuffer(); //a E7 le llega una letra -> descarto y vuelvo a inicio? o entregoToken?
-		this.matriz_acciones_semanticas[7][1] = AS2; //AgregarCaracter(); //a E7 le llega un digito -> 
-		this.matriz_acciones_semanticas[7][2] = AS4; //Descartar(); //a E7 le llega _ -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[7][1] = AS2; //AgregarCaracter(); //a E7 le llega un digito -> agrego caracter
+		this.matriz_acciones_semanticas[7][2] = AS4; //DescartarBuffer(); //a E7 le llega _ -> agrego caracter a buffer
 		this.matriz_acciones_semanticas[7][3] = AS4; //Descartar(); //a E7 le llega i -> agrego caracter a buffer
 		this.matriz_acciones_semanticas[7][4] = AS4; //Descartar(); //a E7 le llega . -> limpio y reinicio
 		this.matriz_acciones_semanticas[7][5] = AS4; //Descartar(); //a E7 le llega f -> agrego caracter a buffer
@@ -451,13 +532,14 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[7][7] = AS4; //Descartar(); //a E7 le llega + -> agrego caracter +
 		this.matriz_acciones_semanticas[7][8] = AS4; //Descartar(); //a E7 le llega - -> agregp caracter -
 		this.matriz_acciones_semanticas[7][9] = AS4; //Descartar(); //a E7 le llega * -> limpio y reinicio
-		this.matriz_acciones_semanticas[7][10] = AS4; //Descartar(); //a E7 le llega / -> lmpio y reinicio
-				
-				
+		this.matriz_acciones_semanticas[7][10] = AS4; //Descartar(); //a E7 le llega / -> lmpio y reinicio		
 		this.matriz_acciones_semanticas[7][11] = AS4; //Descartar(); //a E6 le llega = -> limpio y reinicio
-		this.matriz_acciones_semanticas[7][12] = AS4; //Descartar(); //a E6 le llega ; -> limpio y reinicio
-			
-		this.matriz_acciones_semanticas[7][13] = AS4; //Descartar(); //a E4 le llega otro caracter -> entrego token tipo constante
+		
+		
+		this.matriz_acciones_semanticas[7][20] = AS4; //Descartar(); //a E6 le llega ; -> limpio y reinicio
+		this.matriz_acciones_semanticas[7][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
+	
+		this.matriz_acciones_semanticas[7][23] = AS4; //Descartar(); //a E4 le llega otro caracter -> entrego token tipo constante
 		//...
 
 		
@@ -465,44 +547,115 @@ public class AnalizadorLexico {
 		//fila (estado) 8
 		this.matriz_acciones_semanticas[8][0] = AS4; //DescartarBuffer(); //a E8 le llega una letra -> descarto y vuelvo a inicio? o entregoToken?
 		this.matriz_acciones_semanticas[8][1] = AS2; //AgregarCaracter(); //a E8 le llega un digito -> 
-		this.matriz_acciones_semanticas[8][2] = AS4; //Descartar(); //a E8 le llega _ -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[8][3] = AS4; //Descartar(); //a E8 le llega i -> agrego caracter a buffer
-		this.matriz_acciones_semanticas[8][4] = AS4; //Descartar(); //a E8 le llega . -> limpio y reinicio
-		this.matriz_acciones_semanticas[8][5] = AS4; //Descartar(); //a E8 le llega f -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[8][2] = AS4; //DescartarBuffer(); //a E8 le llega _ -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[8][3] = AS4; //DescartarBuffer(); //a E8 le llega i -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[8][4] = AS4; //DescartarBuffer(); //a E8 le llega . -> limpio y reinicio
+		this.matriz_acciones_semanticas[8][5] = AS4; //DescartarBuffer(); //a E8 le llega f -> agrego caracter a buffer
 		this.matriz_acciones_semanticas[8][6] = AS3; //EntregarToken(); //a E8 le llega blanco ' ' -> limpio y notifico error
 		this.matriz_acciones_semanticas[8][7] = AS3; //EntregarToken(); //a E8 le llega + -> agrego caracter +
 		this.matriz_acciones_semanticas[8][8] = AS3; //EntregarToken(); //a E8 le llega - -> agregp caracter -
 		this.matriz_acciones_semanticas[8][9] = AS3; //EntregarToken(); //a E8 le llega * -> limpio y reinicio
-		this.matriz_acciones_semanticas[8][10] = AS3; //EntregarToken(); //a E8 le llega / -> lmpio y reinicio
-				
-				
+		this.matriz_acciones_semanticas[8][10] = AS3; //EntregarToken(); //a E8 le llega / -> lmpio y reinicio		
 		this.matriz_acciones_semanticas[8][11] = AS3; //EntregarToken(); //a E6 le llega = -> limpio y reinicio
-		this.matriz_acciones_semanticas[8][12] = AS3; //EntregarToken(); //a E6 le llega ; -> limpio y reinicio
-			
-		this.matriz_acciones_semanticas[8][13] = AS4; //Descartar(); //a E4 le llega otro caracter -> entrego token tipo constante
+
+		
+		this.matriz_acciones_semanticas[8][20] = AS3; //EntregarToken(); //a E6 le llega ; -> limpio y reinicio
+		this.matriz_acciones_semanticas[8][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
+	
+		this.matriz_acciones_semanticas[8][23] = AS4; //DescartarBuffer(); //a E4 le llega otro caracter -> entrego token tipo constante
 		//...
+		
+
+		
+		//fila (estado) 9
+		this.matriz_acciones_semanticas[9][0] = AS4; //DescartarBuffer(); //en E9 le llega una letra -> descarto y vuelvo a inicio? o entregoToken?
+		this.matriz_acciones_semanticas[9][1] = AS4; //DescartarBuffer(); //en E9 le llega un digito -> 
+		this.matriz_acciones_semanticas[9][2] = AS4; //DescartarBuffer(); //en E9 le llega _ -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[9][3] = AS4; //DescartarBuffer(); //en E9 le llega i -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[9][4] = AS4; //DescartarBuffer(); //en E9 le llega . -> limpio y reinicio
+		this.matriz_acciones_semanticas[9][5] = AS4; //DescartarBuffer(); //en E9 le llega f -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[9][6] = AS3; //EntregarToken(); //en E9 le llega blanco ' ' -> entregar token
+		this.matriz_acciones_semanticas[9][7] = AS4; //DescartarBuffer(); //en E9 le llega + -> limpio y reinicio
+		this.matriz_acciones_semanticas[9][8] = AS4; //DescartarBuffer(); //en E9 le llega - -> limpio y reinicio
+		this.matriz_acciones_semanticas[9][9] = AS4; //DescartarBuffer(); //en E9 le llega * -> limpio y reinicio
+		this.matriz_acciones_semanticas[9][10] = AS4; //DescartarBuffer(); //en E9 le llega / -> lmpio y reinicio		
+		this.matriz_acciones_semanticas[9][11] = AS3; //EntregarToken(); //en E9 le llega = -> entregar token
+		
+		
+		this.matriz_acciones_semanticas[9][20] = AS4; //DescartarBuffer(); //en E9 le llega ; -> limpio y reinicio
+		this.matriz_acciones_semanticas[9][21] = AS4; //DescartarBuffer(); //en E9 le llega % -> descarto buffer
+	
+		this.matriz_acciones_semanticas[9][23] = AS4; //DescartarBuffer(); //a E4 le llega otro caracter -> entrego token tipo constante
+		//...
+
+		
+		
+		//fila (estado) 10
+		this.matriz_acciones_semanticas[10][0] = AS4; //DescartarBuffer(); //a E10 le llega una letra -> descarto y vuelvo a inicio? o entregoToken?
+		this.matriz_acciones_semanticas[10][1] = AS4; //DescartarBuffer(); //a E10 le llega un digito -> 
+		this.matriz_acciones_semanticas[10][2] = AS4; //DescartarBuffer(); //a E10 le llega _ -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[10][3] = AS4; //DescartarBuffer(); //a E10 le llega i -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[10][4] = AS4; //DescartarBuffer(); //a E10 le llega . -> limpio y reinicio
+		this.matriz_acciones_semanticas[10][5] = AS4; //DescartarBuffer(); //a E10 le llega f -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[10][6] = AS3; //DescartarBuffer(); //a E10 le llega blanco ' ' -> entregar token
+		this.matriz_acciones_semanticas[10][7] = AS4; //DescartarBuffer(); //a E10 le llega + -> limpio y reinicio
+		this.matriz_acciones_semanticas[10][8] = AS4; //DescartarBuffer(); //a E10 le llega - -> limpio y reinicio
+		this.matriz_acciones_semanticas[10][9] = AS4; //DescartarBuffer(); //a E10 le llega * -> limpio y reinicio
+		this.matriz_acciones_semanticas[10][10] = AS4; //DescartarBuffer(); //a E10 le llega / -> lmpio y reinicio				
+		this.matriz_acciones_semanticas[10][11] = AS4; //DescartarBuffer(); //a E10 le llega = -> limpio y reinicio
+
+		
+		this.matriz_acciones_semanticas[10][20] = AS4; //DescartarBuffer(); //a E10 le llega ; -> limpio y reinicio
+		this.matriz_acciones_semanticas[10][21] = AS2; //AgregarCaracter(); //en E10 le llega % -> agrego caracter
+			
+		this.matriz_acciones_semanticas[10][23] = AS4; //DescartarBuffer(); //a E4 le llega otro caracter -> entrego token tipo constante
+		//...
+
+		
+		
+		//fila (estado) 11
+		this.matriz_acciones_semanticas[11][0] = AS2; //AgregarCaracter(); //a E11 le llega una letra -> agrego caracter
+		this.matriz_acciones_semanticas[11][1] = AS2; //AgregarCaracter(); //a E11 le llega un digito -> agrego caracter
+		this.matriz_acciones_semanticas[11][2] = AS2; //AgregarCaracter(); //a E11 le llega _ -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[11][3] = AS2; //AgregarCaracter(); //a E11 le llega i -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[11][4] = AS2; //AgregarCaracter(); //a E11 le llega . -> agrego caracter
+		this.matriz_acciones_semanticas[11][5] = AS2; //AgregarCaracter(); //a E11 le llega f -> agrego caracter a buffer
+		this.matriz_acciones_semanticas[11][6] = AS2; //AgregarCaracter(); //a E11 le llega blanco ' ' -> agrego caracter
+		this.matriz_acciones_semanticas[11][7] = AS2; //AgregarCaracter(); //a E11 le llega + -> agrego caracter
+		this.matriz_acciones_semanticas[11][8] = AS2; //AgregarCaracter(); //a E11 le llega - -> agrego caracter
+		this.matriz_acciones_semanticas[11][9] = AS2; //AgregarCaracter(); //a E11 le llega * -> agrego
+		this.matriz_acciones_semanticas[11][10] = AS2; //AgregarCaracter(); //a E11 le llega / -> agrego						
+		this.matriz_acciones_semanticas[11][11] = AS2; //AgregarCaracter(); //a E11 le llega = -> agrego
+		
+		
+		this.matriz_acciones_semanticas[11][20] = AS2; //AgregarCaracter(); //en E11 le llega ; -> agrego caracter
+		this.matriz_acciones_semanticas[11][21] = AS2; //AgregarCaracter(); //en E11 le llega % -> agrego caracter
+					
+		this.matriz_acciones_semanticas[11][23] = AS2; //AgregarCaracter(); //a E11 le llega otro caracter -> agrego caracter
+		//...
+
 		
 		
 		
 		//fila EstadoFinal
-		this.matriz_acciones_semanticas[9][0] = ASF; //en EF aplico ASF y reinicio
-		this.matriz_acciones_semanticas[9][1] = ASF; //en EF aplico ASF y reinicio
-		this.matriz_acciones_semanticas[9][2] = ASF; //en EF aplico ASF y reinicio
-		this.matriz_acciones_semanticas[9][3] = ASF; //en EF aplico ASF y reinicio
-		this.matriz_acciones_semanticas[9][4] = ASF; //en EF aplico ASF y reinicio
-		this.matriz_acciones_semanticas[9][5] = ASF; //
+		this.matriz_acciones_semanticas[12][0] = ASF; //en EF aplico ASF y reinicio
+		this.matriz_acciones_semanticas[12][1] = ASF; //en EF aplico ASF y reinicio
+		this.matriz_acciones_semanticas[12][2] = ASF; //en EF aplico ASF y reinicio
+		this.matriz_acciones_semanticas[12][3] = ASF; //en EF aplico ASF y reinicio
+		this.matriz_acciones_semanticas[12][4] = ASF; //en EF aplico ASF y reinicio
+		this.matriz_acciones_semanticas[12][5] = ASF; //	
+		this.matriz_acciones_semanticas[12][6] = ASF; //
+		this.matriz_acciones_semanticas[12][7] = ASF;
+		this.matriz_acciones_semanticas[12][8] = ASF; 
+		this.matriz_acciones_semanticas[12][9] = ASF; 
+		this.matriz_acciones_semanticas[12][10] = ASF; 
+		this.matriz_acciones_semanticas[12][11] = ASF; 
 		
-		this.matriz_acciones_semanticas[9][6] = ASF; //
-		this.matriz_acciones_semanticas[9][7] = ASF;
-		this.matriz_acciones_semanticas[9][8] = ASF; 
-		this.matriz_acciones_semanticas[9][9] = ASF; 
-		this.matriz_acciones_semanticas[9][10] = ASF; 
 		
-		
-		this.matriz_acciones_semanticas[9][11] = ASF; 
-		this.matriz_acciones_semanticas[9][12] = ASF; 
-		
-		this.matriz_acciones_semanticas[9][13] = ASF; 
+		this.matriz_acciones_semanticas[12][20] = ASF; 
+		this.matriz_acciones_semanticas[12][21] = ASF; //MostrarComentario() y descartar; //a E12 le llega % -> descarto buffer
+
+		this.matriz_acciones_semanticas[12][23] = ASF; 
 	}
 	
 	
@@ -639,7 +792,7 @@ public class AnalizadorLexico {
 	
 	public int getColumnaCaracter(char c) {
 	
-		int nro_columna=13; //inicializo con otro caracter
+		int nro_columna=23; //inicializo con otro caracter
 		
 		
 		if (Character.isLowerCase(c)) { nro_columna=0; }; 
@@ -661,8 +814,9 @@ public class AnalizadorLexico {
 		if (c == '/') { nro_columna=10; };
 		
 		if (c == '=') { nro_columna=11; };
-		if (c == ';') { nro_columna=12; };
-		//if (c == '%') { nro_columna=5; };
+		
+		if (c == ';') { nro_columna=20; };
+		if (c == '%') { nro_columna=21; };
 		//...
 		
 		return nro_columna; //retorna el nro de columna asociado al tipo del caracter

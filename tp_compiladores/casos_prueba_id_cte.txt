@@ -1,4 +1,6 @@
 x = 5 ;
 abc = 10 ;
 b = 9 ;
-x + b ; //error sintactico. no hay regla que define esta expresion
+g = 5.7 ;
+.6666 ;
+x + b ; %%error sintactico! no hay regla que define esta expresion
