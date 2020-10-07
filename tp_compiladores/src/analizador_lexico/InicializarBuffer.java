@@ -10,7 +10,7 @@ public class InicializarBuffer extends AccionSemantica {
 		
 		//defino el tipo de los que se inicializan y se les pueden cargar caracteres
 		if (Character.isLetter(c)) { super.tipo_buffer = "ID"; }
-		if (Character.isDigit(c)) { super.tipo_buffer = "CTE"; }
+		if (Character.isDigit(c)) { super.tipo_buffer = "INT"; }
 		
 		if (c == '.') { super.tipo_buffer = "DOUBLE";}
 		if (c == '%') { super.tipo_buffer = "COMENT"; }
