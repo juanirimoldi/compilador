@@ -21,7 +21,10 @@ public class LlegaTokenValido extends AccionSemantica {
 		
 		System.out.println("AS3 -> Voy a Ef con un Token Valido ->> "+ super.buffer + "	, tipo ->"+super.tipo_buffer);
 		
-		//aca hago AS 3.1 
+		//aca checkeo rango -> hago AS 3.1 , 3.2 
+		//if (super.tipo == "INTEGER") -> checkeo tipos de enteros y trunco si es necesario
+		//if (super.tipo == "DOUBLE") -> checkeo tipos de enteros y si es necesario trunco
+
 	}
 	
 	
