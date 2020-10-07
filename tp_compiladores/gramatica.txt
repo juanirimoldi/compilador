@@ -1,0 +1,100 @@
+GRAMATICA
+
+Sentencias/reglas  tema 8
+
+Sentencias declarativas:
+Sentencias de declaración de datos para los tipos de datos correspondientes a cada grupo según la consigna del Trabajo
+Práctico 1, con la siguiente sintaxis:
+
+<tipo> <lista_de_variables>;
+
+Donde <tipo> puede ser (Según tipos correspondientes a cada grupo):
+
+	INTEGER
+	UINT
+	LONGINT
+	ULONGINT
+	FLOAT
+	DOUBLE
+
+Las variables de la lista se separan con coma ( “,” )
+
+Incluir declaraciones de procedimientos, con la siguiente sintaxis:
+
+PROC ID (<lista_de_parametros>) {
+	<cuerpo_del_procedimiento> // conjunto de sentencias declarativas y ejecutables
+	// permitir procedimientos anidados
+}
+
+Donde:
+<lista_de_parametros> será una lista de parámetros, separados por “,”, con la siguiente estructura para cada
+parámetro:
+o <tipo> ID
+o El número máximo de parámetros permitidos es 3, y puede no haber parámetros. Este chequeo debe
+efectuarse durante el Análisis Sintáctico
+// Incorporar PROC a la lista de palabras reservadas.
+
+TEMA 8
+Sentencias declarativas:
+Modificar los encabezados de declaraciones de procedimientos con la siguiente estructura:
+
+PROC ID (<lista_de_parametros>) NI=n { ... }
+Donde n será una constante de tipo entero (temas 1-2-3-4)
+Modificar la estructura de cada parámetro, permitiendo usar la palabra reservada REF, delante de cada
+parámetro.
+Ejemplos de declaraciones de procedimiento válidas:
+
+PROC f1(INTEGER x, REF FLOAT y, FLOAT z) NI = 2 {...}
+PROC f2(REF DOUBLE a, REF DOUBLE b) NI = 4 {...}
+
+// Incorporar NI y REF a la lista de palabras reservadas.
+
+
+
+Sentencias ejecutables:
+
+Asignaciones donde el lado izquierdo es un identificador, y el lado derecho una expresión aritmética.
+Los operandos de las expresiones aritméticas pueden ser variables, constantes, u otras expresiones aritméticas.
+No se deben permitir anidamientos de expresiones con paréntesis.
+
+Cláusula de selección (IF). Cada rama de la selección será un bloque de sentencias. La condición será una comparación
+entre expresiones aritméticas, variables o constantes, y debe escribirse entre “(“ “)”. La estructura de la selección será,
+entonces:
+
+IF (<condicion>) <bloque_de_sentencias> ELSE <bloque_de_sentencias> END_IF
+
+El bloque para el ELSE puede estar ausente.
+Un bloque de sentencias puede estar constituido por una sola sentencia, o un conjunto de sentencias delimitadas por „{„ y
+„}‟.
+Sentencia de control según tipo especial asignado al grupo. (Temas 12 A 14 del Trabajo práctico 1)
+Debe permitirse anidamiento de sentencias de control. Por ejemplo, puede haber una iteración dentro de una rama de una
+selección.
+Sentencia de salida de mensajes por pantalla. El formato será
+
+OUT(cadena)
+
+Las cadenas de caracteres sólo podrán ser usadas en esta sentencia, y tendrán el formato asignado al grupo en el Trabajo
+Práctico 1 (temas 20 y 21).
+ Incorporar como sentencia ejecutable, invocaciones a procedimientos con la siguiente estructura:
+
+ID(<parametros>)
+Donde <parsmetros> será una lista de identificadores separados por “,”.
+Nota: La semántica de la declaración e invocación de procedimientos, se explicará y resolverá en los trabajos prácticos 3 y 4.
+
+
+Sentencias ejecutables:
+Modificar las invocaciones a procedimientos, incorporando notación explícita (indicando los nombres de los
+parámetros formales) para los parámetros:
+La invocación a una procedimiento será:
+
+ID(<parametros>)
+Donde cada parámetro de la lista tendrá la siguiente estructura:
+ID:ID
+
+Ejemplos de invocaciones a procedimiento válidas:
+
+f1(z:i, y:j, x:k)
+f2(a:m, b:n)
+
+// Incorporar “:” a la lista de tokens aceptados por el Analizador Léxico.
+*/
