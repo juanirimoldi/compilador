@@ -14,8 +14,9 @@ public class Main {
 		//independizo las tablas del analizador lexico
 		TablaTokens tt = new TablaTokens();
 	    TablaSimbolos ts = new TablaSimbolos();
-
-	    AnalizadorLexico a = new AnalizadorLexico(tt, ts);
+	    String arch = "casos_prueba.txt";
+	    
+	    AnalizadorLexico a = new AnalizadorLexico(arch, tt, ts);
 		
 	    a.abrirCargarArchivo(); //primero intenta abrir archivo. Si lo abre correctamente, lo lee
 
@@ -26,17 +27,18 @@ public class Main {
 	    	//a.yylex();
 	    	Token yylex = a.getToken();
 	    	if (yylex != null) {
-	    		System.out.println("\n TOKEN -> " + yylex.getLexema() + " , " + yylex.getTipo() + "\n");
+	    		System.out.println("\n \n TOKEN -> " + yylex.getLexema() + " , " + yylex.getTipo() + "\n");
+	    		System.out.println("\n -------------------------------------");
 	    	} else {
-	    		System.out.println("NO HAY MAS TOKENS! \n");
+	    		System.out.println("NO HAY MAS TOKENS! \n \n");
 	    	}
 	    }
 	   	
 	    System.out.println();   
 	    a.mostrarTablaTokens();
 	    a.mostrarTablaSimbolos();
-	    ts.eliminarSimbolo(";");
-	    a.mostrarTablaSimbolos();
+	    //ts.eliminarSimbolo(";");
+	    //a.mostrarTablaSimbolos();
 	}
 
 }

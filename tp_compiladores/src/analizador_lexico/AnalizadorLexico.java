@@ -10,6 +10,7 @@ import java.util.List;
 
 
 public class AnalizadorLexico {
+	private String dir_codigo;
 	private String codigo="";
 	
 	private int nro_linea=1;
@@ -37,9 +38,9 @@ public class AnalizadorLexico {
 
 	
 	
-	public AnalizadorLexico(TablaTokens tt, TablaSimbolos ts) {
-		//this.TTok = new TablaTokens();
-		//this.TSym = new TablaSimbolos();
+	public AnalizadorLexico(String programa, TablaTokens tt, TablaSimbolos ts) {
+		this.dir_codigo = programa;
+		
 		this.TTok = tt;
 		this.TSym = ts;
 		
@@ -672,7 +673,7 @@ public class AnalizadorLexico {
         int nro_linea = 0;
         
         try {
-        	archivo = new File ("casos_prueba_id_cte.txt");	        
+        	archivo = new File (this.dir_codigo);	        
 	        fr = new FileReader (archivo);
 	        System.out.println("Archivo valido "+fr+ "\n");
 	        
@@ -778,11 +779,11 @@ public class AnalizadorLexico {
 				this.leer_caracter = false; 
 				
 				
-				System.out.println("\n inicio -> " +  ultima_pos + " ,  frontera -> "+ pos_actual +" ,  total -> " + this.total_caracteres);
+				//System.out.println("Inicio -> " +  ultima_pos + " ,  frontera -> "+ pos_actual +" ,  total -> " + this.total_caracteres+"\n");
 				
 				this.ultima_pos = this.pos_actual; 
 				
-				System.out.println("Return -> Nro Linea: " + this.nro_linea + " , Token: "+ titi.getLexema()+" , tipo "+titi.getTipo());
+				//System.out.println("Return ->   Token: "+ titi.getLexema()+" ,  tipo: "+titi.getTipo()+" ,  nro linea: " + this.nro_linea +" \n");
 				}
 		}
 		return titi;

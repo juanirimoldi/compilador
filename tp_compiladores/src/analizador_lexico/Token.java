@@ -8,8 +8,8 @@ public class Token {
 
 	
 	public Token(String l, String t, int linea, int id_tipo) {
-		this.tipo = t;
 		this.lexema = l;
+		this.tipo = t;
 		this.nro_linea = linea;
 		this.id_tipo = id_tipo;
 	}

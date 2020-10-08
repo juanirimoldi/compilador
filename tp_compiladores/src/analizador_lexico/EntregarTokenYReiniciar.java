@@ -6,6 +6,7 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 	
 	private Token t;
 	private int id = 40;
+	private int linea_actual;
 	
 	
 	//Accion Semantica Final 
@@ -17,13 +18,17 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 	
 	
 	public void ejecutar(char c, int nro_linea) { 
-		
+		//super.buffer += c;
+		this.linea_actual = nro_linea;
 		//defino los tipos de token simples que puede entregar al sintactico
-		if (c == '=') { super.tipo_buffer = "ASIG"; };
+		if (c == '=') {  super.tipo_buffer = "ASIG"; };
 		if ((c == ';') || (c == ',')) { super.tipo_buffer = "PUNT"; };
 		if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { super.tipo_buffer = "OP"; }
-		
-		
+
+		int id_tipo = this.tt.getIdTipo(super.tipo_buffer); 
+
+		this.t = new Token(super.buffer, super.tipo_buffer, nro_linea, id_tipo);
+
 		
 		
 		// busco en TablaTokens si existe el tipo de token
@@ -33,36 +38,32 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		}
 		
 
-		//lo cargo al nuevo token y al toque aplico una fucion que busca su llave
-		int id_tipo = this.tt.getIdTipo(super.tipo_buffer); 
 		
 		//if es cte, id o cadena
 			//add
-		
+
 		// busco si existe en tabla de simbolos
 		if (this.ts.existe(super.buffer, super.tipo_buffer)) { //si existe el lexema
-			System.out.println("Ya existe registro en la Tsym! " + super.buffer);
+			System.out.println("El token  " +super.buffer+"  ya existe en la Tsym " );
 			//return buffer + punt_TS
 			
 		} else { //si no existe en la tsym	
-			this.t = new Token(super.buffer, super.tipo_buffer, nro_linea, id_tipo);
 			this.ts.addTokenLista(t); //doy de alta en Tsym
 			//return buffer + punt_TS
 		}
 		
-		//aun no lo retorno, sino que modifico la variable privada
 		
 		
-		System.out.println("ASF -> Entregar token  "+t.getLexema()+" , tipo "+ t.getTipo() +"  y reinicio buffer \n");
-		this.ts.mostrarListaTsym();
-		
+		System.out.println("ASF -> Entregar token  "+super.buffer+" , tipo "+ super.tipo_buffer +"  y reinicio buffer \n");
+		//this.ts.mostrarListaTsym();
+		super.tipo_buffer="";
 		super.buffer = ""; //despues de entregar token lo limpio
 	}
 	
 	
 	public Token getToken() {
-		Token ttt = this.t; //hago una copia?
+		Token ttt = new Token(super.buffer, super.tipo_buffer, linea_actual, id); //hago una copia
 		super.buffer = ""; //y despues de entregar token lo limpio?
-		return ttt; 
-	}
+		return t;
+		}
 }

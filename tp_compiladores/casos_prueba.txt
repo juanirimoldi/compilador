@@ -1,22 +1,7 @@
-%%esto deberia descartarlo. inicializamos o asumimos que estan creadas las variables?
+x = 5 ;
+abc = 10 ;
+b = 9 ;
+g = 5.7 ;
+.6666 ;
+x + b ; %%error sintactico! no hay regla que define esta expresion
 
-x = 5;
-xJJ_55 = 10;
-aaaaaaaaa = 2.56;
-bbbbbbbbbbbbbbbbbbbbbbbbbb = 3.f3; %%lo trunca y emite warning
-c = .5;
-
-
-
-%%condiciones
-
-if ( x > 2 ) then
-  x = 3;
-else
-  x = 9;
-
-
-
-%%sentencias de control
-
-%%until?
