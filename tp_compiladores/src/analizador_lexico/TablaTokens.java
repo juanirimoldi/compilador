@@ -74,12 +74,12 @@ public class TablaTokens {
 	
 	public void addToken(String s) {
 		//int id_tipo_token = this.getIdentificadorTipo(s);
-		System.out.println("AGREGO TOKEN -> ");
+		//System.out.println("AGREGO TOKEN -> ");
 		if (existe(s)) {
-			System.out.println("EXISTE EL tipo de TOKEN "+s);
+			//System.out.println("EXISTE EL tipo de TOKEN "+s);
 		}
 		else {
-			System.out.println("NO existe el tipo de TOKEN, lo agrego "+s +"  "+sgte_id);
+			//System.out.println("NO existe el tipo de TOKEN, lo agrego "+s +"  "+sgte_id);
 		//this.getIdentificadorTipo(s);
 			this.id_tipo.put(sgte_id, s);
 			sgte_id++;
@@ -93,7 +93,7 @@ public class TablaTokens {
 	
 	public boolean existe(String b) {
 		//this.mostrarTokens();
-		System.out.println("Existe " + b + " en la Hash???? "+this.id_tipo.contains(b));
+		//System.out.println("Existe " + b + " en la Hash???? "+this.id_tipo.contains(b));
 		return this.id_tipo.contains(b);
 	}
 	

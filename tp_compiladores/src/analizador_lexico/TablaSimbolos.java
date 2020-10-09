@@ -21,7 +21,7 @@ public class TablaSimbolos {
 	
 	public void addTokenLista(Token t) {
 		this.Tsymb.add(t);
-		this.mostrarListaTsym();
+		//this.mostrarListaTsym();
 	}
 	
 	
@@ -33,7 +33,7 @@ public class TablaSimbolos {
 				existe = true;
 			}
 		}
-		System.out.println("Existe "+ id + " , tipo "+ tipo + " en la Tsym???  -> "+existe);
+		//System.out.println("Existe "+ id + " , tipo "+ tipo + " en la Tsym???  -> "+existe);
 		
 		return existe;
 	}

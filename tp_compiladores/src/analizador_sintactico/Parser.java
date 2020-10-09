@@ -412,15 +412,11 @@ boolean newline;
 
 
 
-public Parser(AnalizadorLexico al, TablaTokens tt, TablaSimbolos ts) {
-	//this.tt = new TablaTokens();
-	//this.ts = new TablaSimbolos();
-	//this.lexico = new AnalizadorLexico(prog, tt, ts);
-	//this.prog = prog;
-	this.lexico = al;
-	this.tt = tt;
-	this.ts = ts;
-}
+//public Parser(AnalizadorLexico al, TablaTokens tt, TablaSimbolos ts) {
+//	this.lexico = al;
+//	this.tt = tt;
+//	this.ts = ts;
+//}
 
 
 public int Parsear() {
@@ -437,6 +433,7 @@ void yyerror(String s)
 
 private int yylex() {
 	Token token=lexico.getToken();
+	System.out.println("\n Dentro del sintactico....");
 	System.out.println("\n yylex -> GET TOKEN -> "+token.getLexema()+" , tipo -> "+token.getTipo()+" , id_tipo -> "+token.getIdTipo()+"\n");
 	if (token!=null){
 	    yylval = new ParserVal(token.getIdTipo()); //var para obtener el token de la tabla
@@ -452,12 +449,7 @@ private int yylex() {
 
 
 public static void main(String args[]) {
-	//String path_archivo = args[0];
-    //asi ejecuto pasando archivo como parametro
-    
 	
- 	//TablaTokens tt = new TablaTokens();
-	//TablaSimbolos ts = new TablaSimbolos();
 	String direccion_codigo = "casos_prueba_id_cte.txt";
 	
 	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);//, tt, ts);
@@ -480,10 +472,10 @@ public static void main(String args[]) {
 	//Parser par = new Parser(al);//, tt, ts);
  	//par.dotest();
 	par.Parsear();
+	par.Parsear();
+	par.Parsear();
 	//par.Parsear();
-	par.Parsear();
-	par.Parsear();
-	par.Parsear();
+	//par.Parsear();
 	//par.yyparse()
 }
 
@@ -537,7 +529,7 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token!!! ACA! 
-        System.out.println("yychar = identificador de tipode token en tabla -> "+yychar);
+        System.out.println("yychar = identificador de tipo de token en tabla -> "+yychar);
         //int id_token = 
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
@@ -557,6 +549,7 @@ boolean doaction;
         //#### NEXT STATE ####
         System.out.println("LLEGO A NEXT STATEE???????? -> SAPEEE");
         //hasta aca llego con el token
+        
         yystate = yytable[yyn];//we are in a new state
         state_push(yystate);   //save it
         val_push(yylval);      //push our lval as the input for next rule
@@ -564,14 +557,19 @@ boolean doaction;
         if (yyerrflag > 0)     //have we recovered an error?
            --yyerrflag;        //give ourselves credit
         doaction=false;        //but don't process yet
+        System.out.println("\n CONSUMI EL TOKEN!!!! rompo el ciclo asi consumo otro");
+        System.out.println("\n---------------------------------");
         break;   //quit the yyn=0 loop
         }
-    System.out.println("Y ACA?? -> YEAH, NIGGA");  //hasta aca llego con el =
+    System.out.println("ACA LLego con el otro token -> YEAH, NIGGA");  //hasta aca llego con el =
     //salto NEXT STATE!
     yyn = yyrindex[yystate];  //reduce
+    System.out.println("que carajos es yyn???????????????????????????????????? "+yyn+"  , e  yystate??"+yystate);
+    //NO ENTRA ACA!!! NO REDUCE..
     if ((yyn !=0 ) && (yyn += yychar) >= 0 &&
             yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
       {   //we reduced!
+      System.out.println("REDUCTOOOOOOOOOOOOOOOOO"); //NO llego aca...
       if (yydebug) debug("reduce");
       yyn = yytable[yyn];
       doaction=true; //get ready to execute

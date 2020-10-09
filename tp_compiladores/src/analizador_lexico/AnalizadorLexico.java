@@ -782,8 +782,8 @@ public class AnalizadorLexico {
 				//System.out.println("Inicio -> " +  ultima_pos + " ,  frontera -> "+ pos_actual +" ,  total -> " + this.total_caracteres+"\n");
 				
 				this.ultima_pos = this.pos_actual; 
-				
-				//System.out.println("Return ->   Token: "+ titi.getLexema()+" ,  tipo: "+titi.getTipo()+" ,  nro linea: " + this.nro_linea +" \n");
+				System.out.println("Dentro del Lexico...");
+				System.out.println("\n Return ->   Token: "+ titi.getLexema()+" ,  tipo: "+titi.getTipo()+" ,  nro linea: " + this.nro_linea +" \n");
 				}
 		}
 		return titi;

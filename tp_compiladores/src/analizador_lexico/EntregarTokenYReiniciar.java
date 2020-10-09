@@ -25,7 +25,7 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		if ((c == ';') || (c == ',')) { super.tipo_buffer = "PUNT"; };
 		if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { super.tipo_buffer = "OP"; }
 		
-		System.out.println("TIPO TOKEN -> "+ super.tipo_buffer);
+		//System.out.println("TIPO TOKEN -> "+ super.tipo_buffer);
 		
 		//int id_tipo = this.tt.getIdTipo(super.tipo_buffer); 
 		//System.out.println("ID TIPO TOKEN -> "+id_tipo);
@@ -56,12 +56,12 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 
 		// busco si existe en tabla de simbolos
 		if (this.ts.existe(super.buffer, super.tipo_buffer)) { //si existe el lexema
-			System.out.println("El token  " +super.buffer+"  ya existe en la Tsym " );
+			//System.out.println("El token  " +super.buffer+"  ya existe en la Tsym " );
 			//return buffer + punt_TS
 			
 		} else { //si no existe en la tsym	
 			//t.setIdTipo(id_tipo);
-			System.out.println("El token "+ super.buffer+ " NO existe en la TSymb");
+			//System.out.println("El token "+ super.buffer+ " NO existe en la TSymb");
 			this.ts.addTokenLista(t); //doy de alta en Tsym
 			
 			//return buffer + punt_TS
