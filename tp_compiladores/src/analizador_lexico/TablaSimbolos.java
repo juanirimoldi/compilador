@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TablaSimbolos {
 
-	private int id = 257; //de 0 a 256 esta reservado para ASCII
+	//private int id = 257; //de 0 a 256 esta reservado para ASCII
 	
 	private List<Token> Tsymb;
 	//contiene un registro para cada identificador, constante y cadena de caracteres que aparezca en el codigo fuente
@@ -21,17 +21,20 @@ public class TablaSimbolos {
 	
 	public void addTokenLista(Token t) {
 		this.Tsymb.add(t);
+		this.mostrarListaTsym();
 	}
 	
 	
 	public boolean existe(String id, String tipo) {
 		boolean existe = false;
-
+		//System.out.println("Existe "+ id + " , tipo "+ tipo + " en la Tsym???");
 		for (Token t : this.Tsymb) {
 			if (t.getLexema().equals(id) & t.getTipo().equals(tipo)){
 				existe = true;
 			}
 		}
+		System.out.println("Existe "+ id + " , tipo "+ tipo + " en la Tsym???  -> "+existe);
+		
 		return existe;
 	}
 	

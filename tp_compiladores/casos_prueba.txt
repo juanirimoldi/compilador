@@ -4,4 +4,4 @@ b = 9 ;
 g = 5.7 ;
 .6666 ;
 x + b ; %%error sintactico! no hay regla que define esta expresion
-
+1.55

@@ -2,7 +2,7 @@ package analizador_lexico;
 
 public class LlegaTokenValido extends AccionSemantica {
 	
-	private int id = 20;
+	//private int id = 20;
 	
 	
 	//se detecta comentario -> volver a E0

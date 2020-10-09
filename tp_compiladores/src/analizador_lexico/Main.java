@@ -10,13 +10,16 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub    
-
-		//independizo las tablas del analizador lexico
-		TablaTokens tt = new TablaTokens();
-	    TablaSimbolos ts = new TablaSimbolos();
-	    String arch = "casos_prueba.txt";
+	    //String path_archivo = args[0];
+	    //asi ejecuto pasando archivo como parametro
 	    
-	    AnalizadorLexico a = new AnalizadorLexico(arch, tt, ts);
+
+	    TablaTokens tt = new TablaTokens();
+	    TablaSimbolos ts = new TablaSimbolos();
+	    
+	    String path_archivo = "casos_prueba.txt";
+	    
+	    AnalizadorLexico a = new AnalizadorLexico(path_archivo);//, tt, ts);
 		
 	    a.abrirCargarArchivo(); //primero intenta abrir archivo. Si lo abre correctamente, lo lee
 

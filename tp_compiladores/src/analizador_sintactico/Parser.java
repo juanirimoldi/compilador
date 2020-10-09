@@ -412,11 +412,11 @@ boolean newline;
 
 
 
-public Parser(String prog, AnalizadorLexico al, TablaTokens tt, TablaSimbolos ts) {
+public Parser(AnalizadorLexico al, TablaTokens tt, TablaSimbolos ts) {
 	//this.tt = new TablaTokens();
 	//this.ts = new TablaSimbolos();
 	//this.lexico = new AnalizadorLexico(prog, tt, ts);
-	this.prog = prog;
+	//this.prog = prog;
 	this.lexico = al;
 	this.tt = tt;
 	this.ts = ts;
@@ -437,9 +437,10 @@ void yyerror(String s)
 
 private int yylex() {
 	Token token=lexico.getToken();
-
+	System.out.println("\n yylex -> GET TOKEN -> "+token.getLexema()+" , tipo -> "+token.getTipo()+" , id_tipo -> "+token.getIdTipo()+"\n");
 	if (token!=null){
-	    yylval = new ParserVal(token); //var para obtener el token de la tabla
+	    yylval = new ParserVal(token.getIdTipo()); //var para obtener el token de la tabla
+	    
 	    return token.getIdTipo(); //acceso a la entrada que devolvumos
 	}
 	//lexico devuelve i de token! y lexico en yylval lo asocie con la tabla de simbolos
@@ -451,23 +452,35 @@ private int yylex() {
 
 
 public static void main(String args[]) {
- 	TablaTokens tt = new TablaTokens();
-	TablaSimbolos ts = new TablaSimbolos();
+	//String path_archivo = args[0];
+    //asi ejecuto pasando archivo como parametro
+    
+	
+ 	//TablaTokens tt = new TablaTokens();
+	//TablaSimbolos ts = new TablaSimbolos();
 	String direccion_codigo = "casos_prueba_id_cte.txt";
 	
-	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo, tt, ts);
+	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);//, tt, ts);
 	
 	al.abrirCargarArchivo();
 	
+	
+	System.out.println("--------------------------------------- \n ");
+	System.out.println("\n ARRANCA EL SINTACTICO \n");
+	al.mostrarTablaTokens();
+	al.mostrarTablaSimbolos();
+
  	//AnalizadorLexico lexico = new AnalizadorLexico(direccion_codigo, tt, ts);
 	//AnalizadorLexico lexico = new AnalizadorLexico(programa, tt, ts);
 	//lexico.abrirCargarArchivo();
 	//lexico.mostrarTablaSimbolos(); 
 	//lexico.getToken();
 	
-	//Parser par = new Parser(false, lexico);
-	Parser par = new Parser(direccion_codigo, al, tt, ts);
+	Parser par = new Parser(false, al);
+	//Parser par = new Parser(al);//, tt, ts);
  	//par.dotest();
+	par.Parsear();
+	//par.Parsear();
 	par.Parsear();
 	par.Parsear();
 	par.Parsear();
@@ -525,6 +538,7 @@ boolean doaction;
         {
         yychar = yylex();  //get next token!!! ACA! 
         System.out.println("yychar = identificador de tipode token en tabla -> "+yychar);
+        //int id_token = 
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
         if (yychar < 0)    //it it didn't work/error
@@ -534,8 +548,6 @@ boolean doaction;
             yylexdebug(yystate,yychar);
           }
         }//yychar<0
-      System.out.println("entra aca!!!");
-      System.out.println("error a la hora de hacer shift reduce");
       yyn = yysindex[yystate];  //get amount to shift by (shift index)
       if ((yyn != 0) && (yyn += yychar) >= 0 &&
           yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
@@ -543,6 +555,8 @@ boolean doaction;
         if (yydebug)
           debug("state "+yystate+", shifting to state "+yytable[yyn]);
         //#### NEXT STATE ####
+        System.out.println("LLEGO A NEXT STATEE???????? -> SAPEEE");
+        //hasta aca llego con el token
         yystate = yytable[yyn];//we are in a new state
         state_push(yystate);   //save it
         val_push(yylval);      //push our lval as the input for next rule
@@ -552,7 +566,8 @@ boolean doaction;
         doaction=false;        //but don't process yet
         break;   //quit the yyn=0 loop
         }
-
+    System.out.println("Y ACA?? -> YEAH, NIGGA");  //hasta aca llego con el =
+    //salto NEXT STATE!
     yyn = yyrindex[yystate];  //reduce
     if ((yyn !=0 ) && (yyn += yychar) >= 0 &&
             yyn <= YYTABLESIZE && yycheck[yyn] == yychar)

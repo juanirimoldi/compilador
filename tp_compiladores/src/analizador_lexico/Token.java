@@ -7,7 +7,7 @@ public class Token {
 	private int id_tipo;
 
 	
-	public Token(String l, String t, int linea, int id_tipo) {
+	public Token(String l, String t, int linea) {//, int id_tipo) {
 		this.lexema = l;
 		this.tipo = t;
 		this.nro_linea = linea;
@@ -29,5 +29,9 @@ public class Token {
 	
 	public int getIdTipo() {
 		return this.id_tipo;
+	}
+	
+	public void setIdTipo(int id) {
+		this.id_tipo = id;
 	}
 }

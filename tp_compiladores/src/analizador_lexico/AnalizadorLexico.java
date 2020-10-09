@@ -38,11 +38,11 @@ public class AnalizadorLexico {
 
 	
 	
-	public AnalizadorLexico(String programa, TablaTokens tt, TablaSimbolos ts) {
+	public AnalizadorLexico(String programa){//, TablaTokens tt, TablaSimbolos ts) {
 		this.dir_codigo = programa;
 		
-		this.TTok = tt;
-		this.TSym = ts;
+		this.TTok = new TablaTokens();
+		this.TSym = new TablaSimbolos();
 		
 		this.matriz_transicion_estados = new int[this.filas_estados][this.columnas_caracteres_validos];
 		this.inicializarMatrizTransicionEstados();

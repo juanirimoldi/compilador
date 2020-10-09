@@ -32,6 +32,8 @@ import analizador_lexico.*;
 %%
 
 
+/*
+
 programa : lista_de_sentencias //
 	 ;
 
@@ -142,11 +144,12 @@ termino : termino '*' factor
 	| termino '/' factor
 	| factor
 	;
+*/
 		
 		
-factor : CTE
+factor : CTE {System.out.print("Entra en CTE en  regla factor ");}
        | '-' factor 
-       | ID
+       | ID {System.out.print("Entra en ID en regla factor ");}
        ;
 	   	
 
