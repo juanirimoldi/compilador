@@ -149,9 +149,9 @@ termino : termino '*' factor {System.out.println("TERMINO..");}
 	;
 		
 		
-factor : CTE {System.out.println("Entra en CTE en  regla factor ");}
+factor : CTE {System.out.println("CTE!! entra en regla factor ");}
        | '-' factor 
-       | ID {System.out.println("Entra en ID en regla factor ");}
+       | ID {System.out.println("ID!! entra en regla factor ");}
        ;
 	   	
 
@@ -183,6 +183,7 @@ void yyerror(String s)
 
 private int yylex() {
 	Token token=lexico.getToken();
+	System.out.println("\n Dentro del Sintactico...\n");
 
 	if (token!=null){
 	    yylval = new ParserVal(token); //var para obtener el token de la tabla
@@ -227,11 +228,12 @@ void dotest() //esto esta de mas!
 
 
 public static void main(String args[]) {
- 	TablaTokens tt = new TablaTokens();
-	TablaSimbolos ts = new TablaSimbolos();
+ 	//TablaTokens tt = new TablaTokens();
+	//TablaSimbolos ts = new TablaSimbolos();
+	String direccion_codigo = "casos_prueba_id_cte.txt";
 	
- 	AnalizadorLexico lexico = new AnalizadorLexico(tt, ts);
-	lexico.abrirCargarArchivo();
+ 	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
+	al.abrirCargarArchivo();
 	//lexico.mostrarTablaSimbolos(); 
 	//lexico.getToken();
 	
