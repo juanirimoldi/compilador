@@ -213,5 +213,5 @@ public static void main(String args[]) {
 	//lexico.getToken();
 	
 	Parser par = new Parser(false, al);
- 	par.yyparse()
+ 	par.yyparse();
 }
