@@ -127,29 +127,31 @@ parametro_ejecutable : ID
 		 			
 					
 sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
-	             ;
-										
+             ;
+
+*/		
+
 					
-asignacion : ID '=' expresion
+
+asignacion : ID '=' expresion {System.out.println("FLASHO ASIGNACION??? ");}
  	   ;
 					
 
-expresion : expresion '+' termino
+expresion : expresion '+' termino {System.out.println("EXPRESION... ");}
 	  | expresion '-' termino
 	  | termino
 	  ;
 
 
-termino : termino '*' factor
+termino : termino '*' factor {System.out.println("TERMINO..");}
 	| termino '/' factor
 	| factor
 	;
-*/
 		
 		
-factor : CTE {System.out.print("Entra en CTE en  regla factor ");}
+factor : CTE {System.out.println("Entra en CTE en  regla factor ");}
        | '-' factor 
-       | ID {System.out.print("Entra en ID en regla factor ");}
+       | ID {System.out.println("Entra en ID en regla factor ");}
        ;
 	   	
 
@@ -191,7 +193,7 @@ private int yylex() {
 }
 
 
-
+/*
 void dotest() //esto esta de mas!
 {
 //BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -220,7 +222,7 @@ void dotest() //esto esta de mas!
  yyparse();
  }
 }
-
+*/
 
 
 
@@ -234,6 +236,6 @@ public static void main(String args[]) {
 	//lexico.getToken();
 	
 	Parser par = new Parser(false, lexico);
- 	par.dotest();
- 	//par.yyparse()
+ 	//par.dotest();
+ 	par.yyparse()
 }
