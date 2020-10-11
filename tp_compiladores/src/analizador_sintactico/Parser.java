@@ -326,7 +326,7 @@ private int yylex() {
 	Token token=lexico.getToken();
 	System.out.println("\n Dentro del Sintactico...\n");
 	if (token!=null){
-	    yylval = new ParserVal(token); //var para obtener el token de la tabla
+	    yylval = new ParserVal(token.getLexema()); //var para obtener el token de la tabla
 	    return token.getIdTipo(); //acceso a la entrada que devolvumos
 	}
 	//lexico devuelve i de token! y lexico en yylval lo asocie con la tabla de simbolos
@@ -334,36 +334,6 @@ private int yylex() {
 }
 
 
-/*
-void dotest() //esto esta de mas!
-{
-//BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
- //System.out.println("BYACC/J Calculator Demo");
- //System.out.println("Note: Since this example uses the StringTokenizer");
- //System.out.println("for simplicity, you will need to separate the items");
- //System.out.println("Separate items with spaces, i.e.: '( 3 + 5 ) * 2'");
- //while (true)
- while (true)
- {
- System.out.println();
- System.out.print("expression:");
- try
- {
-  //ins = in.readLine();
-  //System.out.println("Leo linea!! "+ins); 
-
- }
- catch (Exception e)
- {
- }
- st = new StringTokenizer(ins);
- System.out.println("EXPRESION A COMPROBAR -> "+ins);
- //ins es la entrada
- newline=false;
- yyparse();
- }
-}
-*/
 
 
 
@@ -459,19 +429,21 @@ boolean doaction;
         state_push(yystate);   //save it
         val_push(yylval);      //push our lval as the input for next rule
         yychar = -1;           //since we have 'eaten' a token, say we need another
-        System.out.println("ME comi el token y pido otro ");
+        System.out.println("\n ME COMI EL TOKEN -> break y pido otro ");
         if (yyerrflag > 0)     //have we recovered an error?
            --yyerrflag;        //give ourselves credit
         doaction=false;        //but don't process yet
         break;   //quit the yyn=0 loop
         }
-    System.out.println("Zona del reduce");
+    System.out.println("Zona del reduce \n");
     yyn = yyrindex[yystate];  //reduce
+    System.out.println("yyn -> "+yyn);
+
     if ((yyn !=0 ) && (yyn += yychar) >= 0 &&
             yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
       {   //we reduced!
       if (yydebug) debug("reduce");
-      System.out.println("Entro en la condicion ??");
+      System.out.println("Entro en la condicion ?? -> NO");
       yyn = yytable[yyn];
       doaction=true; //get ready to execute
       break;         //drop down to actions
@@ -480,6 +452,7 @@ boolean doaction;
       {
       if (yyerrflag==0)
         {
+        System.out.println("ERROR RECOVERY!!!!!!!!");
         yyerror("syntax error");
         yynerrs++;
         }

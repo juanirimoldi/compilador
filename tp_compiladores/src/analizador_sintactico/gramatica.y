@@ -28,6 +28,8 @@ import analizador_lexico.*;
 	DISTINTO
 	EOF
 
+%start programa
+
 
 %%
 
@@ -131,28 +133,31 @@ sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
 
 */		
 
+
+programa : asignacion
+		;
 					
 
-asignacion : ID '=' expresion {System.out.println("FLASHO ASIGNACION??? ");}
- 	   ;
+asignacion : ID IGUAL expresion {System.out.println("FLASHO ASIGNACION??? ");}
+		;
 					
 
 expresion : expresion '+' termino {System.out.println("EXPRESION... ");}
-	  | expresion '-' termino
-	  | termino
-	  ;
+	  	| expresion '-' termino
+	  	| termino
+	  	;
 
 
 termino : termino '*' factor {System.out.println("TERMINO..");}
-	| termino '/' factor
-	| factor
-	;
+		| termino '/' factor
+		| factor
+		;
 		
 		
 factor : CTE {System.out.println("CTE!! entra en regla factor ");}
-       | '-' factor 
-       | ID {System.out.println("ID!! entra en regla factor ");}
-       ;
+       	| '-' factor 
+       	| ID {System.out.println("ID!! entra en regla factor ");}
+       	;
 	   	
 
 
@@ -194,36 +199,6 @@ private int yylex() {
 }
 
 
-/*
-void dotest() //esto esta de mas!
-{
-//BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
- //System.out.println("BYACC/J Calculator Demo");
- //System.out.println("Note: Since this example uses the StringTokenizer");
- //System.out.println("for simplicity, you will need to separate the items");
- //System.out.println("Separate items with spaces, i.e.: '( 3 + 5 ) * 2'");
- //while (true)
- while (true)
- {
- System.out.println();
- System.out.print("expression:");
- try
- {
-  //ins = in.readLine();
-  //System.out.println("Leo linea!! "+ins); 
-
- }
- catch (Exception e)
- {
- }
- st = new StringTokenizer(ins);
- System.out.println("EXPRESION A COMPROBAR -> "+ins);
- //ins es la entrada
- newline=false;
- yyparse();
- }
-}
-*/
 
 
 
@@ -237,7 +212,6 @@ public static void main(String args[]) {
 	//lexico.mostrarTablaSimbolos(); 
 	//lexico.getToken();
 	
-	Parser par = new Parser(false, lexico);
- 	//par.dotest();
+	Parser par = new Parser(false, al);
  	par.yyparse()
 }
