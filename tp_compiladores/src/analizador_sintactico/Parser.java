@@ -437,7 +437,7 @@ private int yylex() {
 	System.out.println("\n yylex -> GET TOKEN -> "+token.getLexema()+" , tipo -> "+token.getTipo()+" , id_tipo -> "+token.getIdTipo()+"\n");
 	if (token!=null){
 	    yylval = new ParserVal(token.getIdTipo()); //var para obtener el token de la tabla
-	    
+	    //yylval que es???
 	    return token.getIdTipo(); //acceso a la entrada que devolvumos
 	}
 	//lexico devuelve i de token! y lexico en yylval lo asocie con la tabla de simbolos
@@ -469,14 +469,7 @@ public static void main(String args[]) {
 	//lexico.getToken();
 	
 	Parser par = new Parser(false, al);
-	//Parser par = new Parser(al);//, tt, ts);
- 	//par.dotest();
-	par.Parsear();
-	par.Parsear();
-	par.Parsear();
-	//par.Parsear();
-	//par.Parsear();
-	//par.yyparse()
+	par.yyparse();
 }
 
 //#line 406 "Parser.java"
