@@ -23,11 +23,13 @@ public class TablaTokens {
 	public final static short MENORIGUAL=268;
 	public final static short IGUAL=269;
 	public final static short DISTINTO=270;
-	public final static short EOF=271;
-	public final static short INTEGER=272;
-	public final static short FLOAT=273;
-	public final static short LOOP=274;
-	public final static short UNTIL=275;
+	public final static short PUNT=271;
+	public final static short EOF=272;
+	public final static short YYERRCODE=256;
+	public final static short INTEGER=273;
+	public final static short FLOAT=274;
+	public final static short LOOP=275;
+	public final static short UNTIL=276;
 	
 	public int sgte_id = 280;
 	

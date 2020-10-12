@@ -1,5 +1,5 @@
 x = 5 ;
-abc = 10 ;
+abc = 10 ; %%algo debe tener que ver el salto de linea... -_-
 b = 9 ;
 g = 5.7 ;
 .6666 ;

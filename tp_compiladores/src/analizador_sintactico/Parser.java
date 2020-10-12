@@ -177,7 +177,8 @@ public final static short MAYORIGUAL=267;
 public final static short MENORIGUAL=268;
 public final static short IGUAL=269;
 public final static short DISTINTO=270;
-public final static short EOF=271;
+public final static short PUNT=271;
+public final static short EOF=272;
 public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
     0,    1,    2,    2,    2,    3,    3,    3,    4,    4,
@@ -194,25 +195,24 @@ final static short yydefred[] = {                         0,
 final static short yydgoto[] = {                          2,
     3,    8,    9,   10,
 };
-final static short yysindex[] = {                      -247,
- -254,    0,    0,  -45,    0,    0,  -45,  -42,  -33,    0,
-    0,    0,  -45,  -45,  -45,  -45,  -33,  -33,    0,    0,
+final static short yysindex[] = {                      -244,
+ -255,    0,    0,  -37,    0,    0,  -37,  -43,  -32,    0,
+    0,    0,  -37,  -37,  -37,  -37,  -32,  -32,    0,    0,
 };
 final static short yyrindex[] = {                         0,
-    0,    0,    0,    0,    0,    0,    0,    0,  -41,    0,
-    0,    0,    0,    0,    0,    0,  -38,  -37,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,  -42,    0,
+    0,    0,    0,    0,    0,    0,  -39,  -38,    0,    0,
 };
 final static short yygindex[] = {                         0,
-    0,    0,   -1,    4,
+    0,    0,   -2,    2,
 };
-final static int YYTABLESIZE=213;
+final static int YYTABLESIZE=233;
 static short yytable[];
 static { yytable();}
 static void yytable(){
-yytable = new short[]{                          7,
-   13,    5,   14,    5,    3,    4,    3,    4,   15,    1,
-   11,   17,   18,   16,    4,    0,   12,    5,   19,   20,
-    3,    4,    0,    0,    0,    0,    0,    0,    0,    0,
+yytable = new short[]{                         13,
+    5,   14,    5,    3,    4,    3,    4,    7,   11,   15,
+   17,   18,    1,    4,   16,    0,   19,   20,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -231,16 +231,18 @@ yytable = new short[]{                          7,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    5,    6,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    5,
+    6,    0,    0,    0,    0,    0,    0,   12,    5,    0,
+    0,    3,    4,
 };
 }
 static short yycheck[];
 static { yycheck(); }
 static void yycheck() {
-yycheck = new short[] {                         45,
-   43,   43,   45,   45,   43,   43,   45,   45,   42,  257,
-    7,   13,   14,   47,  269,   -1,   59,   59,   15,   16,
-   59,   59,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+yycheck = new short[] {                         43,
+   43,   45,   45,   43,   43,   45,   45,   45,    7,   42,
+   13,   14,  257,  269,   47,   -1,   15,   16,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
@@ -259,16 +261,19 @@ yycheck = new short[] {                         45,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,  257,  258,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  257,
+  258,   -1,   -1,   -1,   -1,   -1,   -1,  271,  271,   -1,
+   -1,  271,  271,
 };
 }
 final static short YYFINAL=2;
-final static short YYMAXTOKEN=271;
+final static short YYMAXTOKEN=272;
 final static String yyname[] = {
 "end-of-file",null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,"'*'","'+'",null,
-"'-'",null,"'/'",null,null,null,null,null,null,null,null,null,null,null,"';'",
+"'-'",null,"'/'",null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
@@ -282,12 +287,12 @@ null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,"ID","CTE","CADENA","IF","ELSE","END_IF","PROC","NI",
-"REF","OUT","MAYORIGUAL","MENORIGUAL","IGUAL","DISTINTO","EOF",
+"REF","OUT","MAYORIGUAL","MENORIGUAL","IGUAL","DISTINTO","PUNT","EOF",
 };
 final static String yyrule[] = {
 "$accept : programa",
 "programa : asignacion",
-"asignacion : ID IGUAL expresion ';'",
+"asignacion : ID IGUAL expresion PUNT",
 "expresion : expresion '+' termino",
 "expresion : expresion '-' termino",
 "expresion : termino",
@@ -299,7 +304,7 @@ final static String yyrule[] = {
 "factor : ID",
 };
 
-//#line 164 "gramatica.y"
+//#line 165 "gramatica.y"
 
 	   	
 
@@ -311,9 +316,9 @@ final static String yyrule[] = {
 AnalizadorLexico lexico;
 
 
-//String ins;
-//StringTokenizer st;
-//boolean newline;
+String ins;
+StringTokenizer st;
+boolean newline;
 
 
 
@@ -354,7 +359,7 @@ public static void main(String args[]) {
 	Parser par = new Parser(false, al);
  	par.yyparse();
 }
-//#line 284 "Parser.java"
+//#line 289 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -404,7 +409,7 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token
-        System.out.println("token -> "+yychar+"\n\n");
+        System.out.println("yycharly -> "+yychar+"\n");
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
         if (yychar < 0)    //it it didn't work/error
@@ -510,34 +515,34 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 2:
-//#line 141 "gramatica.y"
+//#line 142 "gramatica.y"
 {System.out.println("FLASHO ASIGNACION??? ");}
 break;
 case 3:
-//#line 145 "gramatica.y"
+//#line 146 "gramatica.y"
 {System.out.println("EXPRESION... ");}
 break;
 case 5:
-//#line 147 "gramatica.y"
+//#line 148 "gramatica.y"
 {System.out.println("de EXPRESION a TERMINO... ");}
 break;
 case 6:
-//#line 151 "gramatica.y"
+//#line 152 "gramatica.y"
 {System.out.println("TERMINO..");}
 break;
 case 8:
-//#line 153 "gramatica.y"
+//#line 154 "gramatica.y"
 {System.out.println("de regla TERMINO a FACTOR..");}
 break;
 case 9:
-//#line 157 "gramatica.y"
-{System.out.println("CTE!! entra en regla factor ");}
+//#line 158 "gramatica.y"
+{System.out.println("CTE!! entra en regla factor \n");}
 break;
 case 11:
-//#line 159 "gramatica.y"
+//#line 160 "gramatica.y"
 {System.out.println("ID!! entra en regla factor ");}
 break;
-//#line 461 "Parser.java"
+//#line 466 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

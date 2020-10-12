@@ -135,11 +135,11 @@ sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
 */		
 
 
-programa : asignacion
+programa : asignacion {System.out.println("LLEGO A INICIALIZAR ASIGNACION?? ");}
 		;
 					
 
-asignacion : ID IGUAL expresion PUNT {System.out.println("FLASHO ASIGNACION??? ");} 
+asignacion : ID IGUAL expresion PUNT {System.out.println("FLASHO ASIGNACION? -> SAPE ");} 
 		;
 					
 
