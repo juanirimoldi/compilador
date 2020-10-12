@@ -26,6 +26,7 @@ import analizador_lexico.*;
 	MENORIGUAL
 	IGUAL
 	DISTINTO
+	PUNT
 	EOF
 
 %start programa
@@ -138,7 +139,7 @@ programa : asignacion
 		;
 					
 
-asignacion : ID IGUAL expresion ';' {System.out.println("FLASHO ASIGNACION??? ");} 
+asignacion : ID IGUAL expresion PUNT {System.out.println("FLASHO ASIGNACION??? ");} 
 		;
 					
 
@@ -154,7 +155,7 @@ termino : termino '*' factor {System.out.println("TERMINO..");}
 		;
 		
 		
-factor : CTE {System.out.println("CTE!! entra en regla factor ");}
+factor : CTE {System.out.println("CTE!! entra en regla factor \n");}
        	| '-' factor 
        	| ID {System.out.println("ID!! entra en regla factor ");}
        	;

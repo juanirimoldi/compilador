@@ -184,37 +184,37 @@ final static short yylhs[] = {                           -1,
     4,
 };
 final static short yylen[] = {                            2,
-    1,    3,    3,    3,    1,    3,    3,    1,    1,    2,
+    1,    4,    3,    3,    1,    3,    3,    1,    1,    2,
     1,
 };
 final static short yydefred[] = {                         0,
     0,    0,    1,    0,   11,    9,    0,    0,    0,    8,
-   10,    0,    0,    0,    0,    0,    0,    6,    7,
+   10,    2,    0,    0,    0,    0,    0,    0,    6,    7,
 };
 final static short yydgoto[] = {                          2,
     3,    8,    9,   10,
 };
-final static short yysindex[] = {                      -250,
- -257,    0,    0,  -45,    0,    0,  -45,  -37,  -38,    0,
-    0,  -45,  -45,  -45,  -45,  -38,  -38,    0,    0,
+final static short yysindex[] = {                      -247,
+ -254,    0,    0,  -45,    0,    0,  -45,  -42,  -33,    0,
+    0,    0,  -45,  -45,  -45,  -45,  -33,  -33,    0,    0,
 };
 final static short yyrindex[] = {                         0,
-    0,    0,    0,    0,    0,    0,    0,   13,    1,    0,
-    0,    0,    0,    0,    0,    2,    5,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,  -41,    0,
+    0,    0,    0,    0,    0,    0,  -38,  -37,    0,    0,
 };
 final static short yygindex[] = {                         0,
-    0,    0,    3,   -4,
+    0,    0,   -1,    4,
 };
 final static int YYTABLESIZE=213;
 static short yytable[];
 static { yytable();}
 static void yytable(){
 yytable = new short[]{                          7,
-    5,    3,   11,   14,    4,   12,    1,   13,   15,   18,
-   19,    4,    2,    0,   16,   17,    0,    0,    0,    0,
+   13,    5,   14,    5,    3,    4,    3,    4,   15,    1,
+   11,   17,   18,   16,    4,    0,   12,    5,   19,   20,
+    3,    4,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    5,    3,    5,    3,    4,    0,    4,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -238,11 +238,11 @@ static short yycheck[];
 static { yycheck(); }
 static void yycheck() {
 yycheck = new short[] {                         45,
-    0,    0,    7,   42,    0,   43,  257,   45,   47,   14,
-   15,  269,    0,   -1,   12,   13,   -1,   -1,   -1,   -1,
+   43,   43,   45,   45,   43,   43,   45,   45,   42,  257,
+    7,   13,   14,   47,  269,   -1,   59,   59,   15,   16,
+   59,   59,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   43,   43,   45,   45,   43,   -1,   45,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
@@ -268,7 +268,7 @@ final static String yyname[] = {
 "end-of-file",null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,"'*'","'+'",null,
-"'-'",null,"'/'",null,null,null,null,null,null,null,null,null,null,null,null,
+"'-'",null,"'/'",null,null,null,null,null,null,null,null,null,null,null,"';'",
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
@@ -287,7 +287,7 @@ null,null,null,null,null,"ID","CTE","CADENA","IF","ELSE","END_IF","PROC","NI",
 final static String yyrule[] = {
 "$accept : programa",
 "programa : asignacion",
-"asignacion : ID IGUAL expresion",
+"asignacion : ID IGUAL expresion ';'",
 "expresion : expresion '+' termino",
 "expresion : expresion '-' termino",
 "expresion : termino",
@@ -311,9 +311,9 @@ final static String yyrule[] = {
 AnalizadorLexico lexico;
 
 
-String ins;
-StringTokenizer st;
-boolean newline;
+//String ins;
+//StringTokenizer st;
+//boolean newline;
 
 
 
@@ -404,7 +404,7 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token
-        System.out.println("TOKEN a parsear -> "+yychar+"\n\n\n");
+        System.out.println("token -> "+yychar+"\n\n");
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
         if (yychar < 0)    //it it didn't work/error
@@ -517,9 +517,17 @@ case 3:
 //#line 145 "gramatica.y"
 {System.out.println("EXPRESION... ");}
 break;
+case 5:
+//#line 147 "gramatica.y"
+{System.out.println("de EXPRESION a TERMINO... ");}
+break;
 case 6:
 //#line 151 "gramatica.y"
 {System.out.println("TERMINO..");}
+break;
+case 8:
+//#line 153 "gramatica.y"
+{System.out.println("de regla TERMINO a FACTOR..");}
 break;
 case 9:
 //#line 157 "gramatica.y"
@@ -529,7 +537,7 @@ case 11:
 //#line 159 "gramatica.y"
 {System.out.println("ID!! entra en regla factor ");}
 break;
-//#line 453 "Parser.java"
+//#line 461 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
