@@ -138,19 +138,19 @@ programa : asignacion
 		;
 					
 
-asignacion : ID IGUAL expresion {System.out.println("FLASHO ASIGNACION??? ");}
+asignacion : ID IGUAL expresion ';' {System.out.println("FLASHO ASIGNACION??? ");} 
 		;
 					
 
 expresion : expresion '+' termino {System.out.println("EXPRESION... ");}
 	  	| expresion '-' termino
-	  	| termino
+	  	| termino  {System.out.println("de EXPRESION a TERMINO... ");}
 	  	;
 
 
 termino : termino '*' factor {System.out.println("TERMINO..");}
 		| termino '/' factor
-		| factor
+		| factor {System.out.println("de regla TERMINO a FACTOR..");}
 		;
 		
 		
