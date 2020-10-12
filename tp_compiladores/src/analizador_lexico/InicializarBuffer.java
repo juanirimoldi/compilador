@@ -16,7 +16,7 @@ public class InicializarBuffer extends AccionSemantica {
 		if (c == '%') { super.tipo_buffer = "COMENT"; }
 		
 		
-		System.out.println("AS1 -> Inicializo buffer, agrego caracter "+ c +" , tipo "+ super.tipo_buffer);
+		//System.out.println("AS1 -> Inicializo buffer, agrego caracter "+ c +" , tipo "+ super.tipo_buffer);
 	}
 	
 	

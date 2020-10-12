@@ -3,7 +3,7 @@ package analizador_lexico;
 public class DescartarBuffer extends AccionSemantica {
 	
 	public void ejecutar(char c, int nro_linea) {
-		System.out.println("Descarto Buffer -> "+ super.buffer);
+		//System.out.println("Descarto Buffer -> "+ super.buffer);
 		super.buffer = "";
 	}
 	

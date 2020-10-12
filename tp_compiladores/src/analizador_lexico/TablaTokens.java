@@ -41,7 +41,7 @@ public class TablaTokens {
 		
 		inicializarTokensDelParser();
 
-		this.mostrarTokens();
+		//this.mostrarTokens();
 	}
 	
 	

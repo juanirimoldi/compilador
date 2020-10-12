@@ -69,15 +69,14 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		
 		
 		
-		System.out.println("ASF -> Entregar token  "+super.buffer+" , tipo "+ super.tipo_buffer +"  y reinicio buffer \n");
-		//this.ts.mostrarListaTsym();
+		//System.out.println("ASF -> Entregar token  "+super.buffer+" , tipo "+ super.tipo_buffer +"  y reinicio buffer \n");
+		
 		super.tipo_buffer="";
 		super.buffer = ""; //despues de entregar token lo limpio
 	}
 	
 	
 	public Token getToken() {
-		//Token ttt = new Token(super.buffer, super.tipo_buffer, linea_actual, id); //hago una copia
 		super.buffer = ""; //y despues de entregar token lo limpio?
 		return t;
 		}

@@ -4,7 +4,7 @@ package analizador_lexico;
 public class AgregarCaracter extends AccionSemantica {
 	
 	public void ejecutar(char c, int nro_linea) {
-		System.out.println("AS2 -> Agrego caracter "+c);
+		//System.out.println("AS2 -> Agrego caracter "+c);
 		super.buffer += c;
 		
 		if (super.tipo_buffer.equals("COMENT")) {

@@ -2,15 +2,13 @@ package analizador_lexico;
 
 public class LlegaTokenValido extends AccionSemantica {
 	
-	//private int id = 20;
-	
 	
 	//se detecta comentario -> volver a E0
 	
 	public void ejecutar(char c, int nro_linea) {
 		super.buffer += c; 
 		
-		System.out.println("AS3 -> Voy a Ef con un Token Valido -> "+ super.buffer + " , tipo ->"+super.tipo_buffer);
+		//System.out.println("AS3 -> Voy a Ef con un Token Valido -> "+ super.buffer + " , tipo ->"+super.tipo_buffer);
 		
 		//aca checkeo tipos y rango de un token valido -> hago AS 3.1 , 3.2 y 3.3
 		//if super.tipo == "ID" -> checkeo rango

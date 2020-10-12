@@ -719,12 +719,12 @@ public class AnalizadorLexico {
 				caracter = this.codigo.charAt(this.pos_actual); //leo caracter
 				ascii = (int)caracter;
 					
-				System.out.println("\n");
-				System.out.println("Caracter actual "+caracter+" , ASCII "+(int)caracter);					
+				//System.out.println("\n");
+				//System.out.println("Caracter actual "+caracter+" , ASCII "+(int)caracter);					
 										
 				nro_columna = getColumnaCaracter(caracter);
 				
-				System.out.println("Voy a Posicion matriz: " + estado_actual + " , " + nro_columna);				
+				//System.out.println("Voy a Posicion matriz: " + estado_actual + " , " + nro_columna);				
 				
 				AS = this.matriz_acciones_semanticas[estado_actual][nro_columna];
 					
