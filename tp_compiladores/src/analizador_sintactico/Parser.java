@@ -409,7 +409,7 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token
-        System.out.println("yycharly -> "+yychar+"\n");
+        System.out.println("yycharly -> "+yychar+"\n\n\n");
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
         if (yychar < 0)    //it it didn't work/error

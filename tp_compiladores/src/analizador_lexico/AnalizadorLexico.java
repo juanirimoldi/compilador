@@ -710,13 +710,13 @@ public class AnalizadorLexico {
 		Token titi = null;
 		
 		
-		while (this.leer_caracter & !fin){ //mientras haya caracteres por leer y no sea fin de codigo			
+		while (this.leer_caracter & !fin){ 			
 			this.pos_actual = this.ultima_pos; //retomo a partir de la ultima posicion leida	
 			//System.out.println("\n Frontera -> " +  this.pos_actual + " ,  limite -> "+ this.ultima_pos +" , TOTAL -> "+this.total_caracteres);
 	
 			while (estado_actual != -1) {
 					
-				caracter = this.codigo.charAt(this.pos_actual); //leo caracter
+				caracter = this.codigo.charAt(this.pos_actual); 
 				ascii = (int)caracter;
 					
 				//System.out.println("\n");
@@ -741,6 +741,8 @@ public class AnalizadorLexico {
 				if (ascii == 10) { //codigo ascii de \n es 10
 					System.out.println("\n \n \n Salto de linea \n");
 					this.nro_linea++;
+					//aca!! ver que onda
+					//pos_actual++;
 					
 					//condicion de corte
 					if (this.nro_linea > this.total_lineas) {  // si me paso corta todo
@@ -829,7 +831,8 @@ public class AnalizadorLexico {
 		this.leer_caracter = true;
 		
 		Token t = this.leerCodigo();
-		
+		//System.out.println("yylex Retorno ->  " + t.getLexema()+" , "+t.getTipo()); 
+
 		if (t != null) {
 			//System.out.println("yylex Retorno ->  " + t.getLexema()+" , "+t.getTipo()); 
 			return t;

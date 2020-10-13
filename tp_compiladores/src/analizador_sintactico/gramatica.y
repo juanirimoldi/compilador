@@ -173,9 +173,9 @@ factor : CTE {System.out.println("CTE!! entra en regla factor \n");}
 AnalizadorLexico lexico;
 
 
-String ins;
-StringTokenizer st;
-boolean newline;
+//String ins;
+//StringTokenizer st;
+//boolean newline;
 
 
 
