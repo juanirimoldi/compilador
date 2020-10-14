@@ -1,8 +1,12 @@
 package analizador_lexico;
 
+import tabla_simbolos.TablaDeSimbolos;
+
 public class EntregarTokenYReiniciar extends AccionSemantica {
 	private TablaTokens tt;
 	private TablaSimbolos ts;
+	private TablaDeSimbolos tds;
+	
 	
 	private Token t;
 	private int sgte_id = 300;
@@ -33,11 +37,13 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		
 		//System.out.println("Token!!!!!!!!!!!! -> "+this.t.getLexema()+" , tipo: "+this.t.getTipo()+" , ref_tipo: "+id_tipo);
 		
+		//tds.addToken(this.t);
+		
+		
 		
 		// busco en TablaTokens si existe el tipo de token
-		if (!this.tt.existe(super.tipo_buffer)) { //si no existe el tipo
-			// 
-			this.t.setIdTipo(sgte_id);
+		if (!this.tt.existe(super.tipo_buffer)) { 
+			//this.t.setIdTipo(sgte_id);
 			//System.out.println("ID TIPO TOKEN -> "+super.tipo_buffer);
 
 			this.tt.addToken(super.tipo_buffer); //lo agrego en la hash
