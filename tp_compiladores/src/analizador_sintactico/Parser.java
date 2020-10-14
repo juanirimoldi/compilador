@@ -23,9 +23,11 @@ package analizador_sintactico;
 import java.lang.Math;
 import java.io.*;
 import java.util.StringTokenizer;  /*????*/
+//package analizador_sintactico;
 
 import analizador_lexico.*;
-//#line 24 "Parser.java"
+//#line 25 "Parser.java"
+
 
 
 
@@ -304,7 +306,7 @@ final static String yyrule[] = {
 "factor : ID",
 };
 
-//#line 165 "gramatica.y"
+//#line 166 "gramatica.y"
 
 	   	
 
@@ -316,9 +318,9 @@ final static String yyrule[] = {
 AnalizadorLexico lexico;
 
 
-String ins;
-StringTokenizer st;
-boolean newline;
+//String ins;
+//StringTokenizer st;
+//boolean newline;
 
 
 
@@ -359,7 +361,7 @@ public static void main(String args[]) {
 	Parser par = new Parser(false, al);
  	par.yyparse();
 }
-//#line 289 "Parser.java"
+//#line 290 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -409,7 +411,7 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token
-        System.out.println("yycharly -> "+yychar+"\n\n\n");
+        System.out.println("1er yychar -> "+yychar);
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
         if (yychar < 0)    //it it didn't work/error
@@ -435,13 +437,16 @@ boolean doaction;
         doaction=false;        //but don't process yet
         break;   //quit the yyn=0 loop
         }
-
+    //System.out.println("reducto 1");
     yyn = yyrindex[yystate];  //reduce
     if ((yyn !=0 ) && (yyn += yychar) >= 0 &&
             yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
       {   //we reduced!
+      //System.out.println("Entro aca en algun mmento?? -> SI! para reducir   yyn: "+yyn+ " , yychar: "+yychar);
       if (yydebug) debug("reduce");
       yyn = yytable[yyn];
+      //System.out.println("Y aca????   yyn: "+yyn+ " , yychar: "+yychar);
+
       doaction=true; //get ready to execute
       break;         //drop down to actions
       }
@@ -505,6 +510,7 @@ boolean doaction;
     }//yyn=0 loop
     if (!doaction)   //any reason not to proceed?
       continue;      //skip action
+    //System.out.println("llego aca??? UPAAAAA");
     yym = yylen[yyn];          //get count of terminals on rhs
     if (yydebug)
       debug("state "+yystate+", reducing "+yym+" by rule "+yyn+" ("+yyrule[yyn]+")");
@@ -514,41 +520,48 @@ boolean doaction;
     switch(yyn)
       {
 //########## USER-SUPPLIED ACTIONS ##########
+case 1:
+//#line 139 "gramatica.y"
+{System.out.println("LLEGO A RAIZ?? ");}
+break;
 case 2:
-//#line 142 "gramatica.y"
-{System.out.println("FLASHO ASIGNACION??? ");}
+//#line 143 "gramatica.y"
+{System.out.println("HAGO ASIGNACION! ");}
 break;
 case 3:
-//#line 146 "gramatica.y"
+//#line 147 "gramatica.y"
 {System.out.println("EXPRESION... ");}
 break;
 case 5:
-//#line 148 "gramatica.y"
+//#line 149 "gramatica.y"
 {System.out.println("de EXPRESION a TERMINO... ");}
 break;
 case 6:
-//#line 152 "gramatica.y"
+//#line 153 "gramatica.y"
 {System.out.println("TERMINO..");}
 break;
 case 8:
-//#line 154 "gramatica.y"
+//#line 155 "gramatica.y"
 {System.out.println("de regla TERMINO a FACTOR..");}
 break;
 case 9:
-//#line 158 "gramatica.y"
+//#line 159 "gramatica.y"
 {System.out.println("CTE!! entra en regla factor \n");}
 break;
 case 11:
-//#line 160 "gramatica.y"
+//#line 161 "gramatica.y"
 {System.out.println("ID!! entra en regla factor ");}
 break;
-//#line 466 "Parser.java"
+//#line 471 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
+    //System.out.println("REDUCTORRR");
     if (yydebug) debug("reduce");
     state_drop(yym);             //we just reduced yylen states
     yystate = state_peek(0);     //get new state
+    //System.out.println("estado reducido -> "+yystate);
+    //por que 0 !!!???
     val_drop(yym);               //corresponding value drop
     yym = yylhs[yyn];            //select next TERMINAL(on lhs)
     if (yystate == 0 && yym == 0)//done? 'rest' state and at first TERMINAL
@@ -560,6 +573,7 @@ break;
       if (yychar < 0)            //we want another character?
         {
         yychar = yylex();        //get next character
+        System.out.println("2DO yychar -> "+yychar);
         if (yychar<0) yychar=0;  //clean, if necessary
         if (yydebug)
           yylexdebug(yystate,yychar);

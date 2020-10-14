@@ -2,7 +2,7 @@
 import java.lang.Math;
 import java.io.*;
 import java.util.StringTokenizer;  //????
-package analizador_sintactico;
+//package analizador_sintactico;
 
 import analizador_lexico.*;
 %}
@@ -136,11 +136,11 @@ sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
 */		
 
 
-programa : asignacion {System.out.println("LLEGO A INICIALIZAR ASIGNACION?? ");}
+programa : asignacion {System.out.println("LLEGO A RAIZ?? ");}
 		;
 					
 
-asignacion : ID IGUAL expresion PUNT {System.out.println("FLASHO ASIGNACION? -> SAPE ");} 
+asignacion : ID IGUAL expresion PUNT {System.out.println("HAGO ASIGNACION! ");} 
 		;
 					
 

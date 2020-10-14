@@ -739,11 +739,12 @@ public class AnalizadorLexico {
 				
 				//si es salto de linea
 				if (ascii == 10) { //codigo ascii de \n es 10
-					System.out.println("\n \n \n Salto de linea \n");
+					System.out.println("\n \n \n Salto de linea \n \n \n");
 					this.nro_linea++;
 					//aca!! ver que onda
 					//pos_actual++;
-					
+					estado_actual = 0;
+					//this.pos_actual ++;
 					//condicion de corte
 					if (this.nro_linea > this.total_lineas) {  // si me paso corta todo
 						System.out.println();	
