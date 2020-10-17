@@ -1,20 +1,27 @@
    0  $accept : programa $end
 
-   1  programa : asignacion
+   1  programa : lista_de_sentencias
 
-   2  asignacion : ID IGUAL expresion PUNT
+   2  lista_de_sentencias : sentencia
+   3                      | lista_de_sentencias sentencia
 
-   3  expresion : expresion '+' termino
-   4            | expresion '-' termino
-   5            | termino
+   4  sentencia : sentencia_ejecutable
 
-   6  termino : termino '*' factor
-   7          | termino '/' factor
-   8          | factor
+   5  sentencia_ejecutable : asignacion
 
-   9  factor : CTE
-  10         | '-' factor
-  11         | ID
+   6  asignacion : ID IGUAL expresion PUNT
+
+   7  expresion : expresion '+' termino
+   8            | expresion '-' termino
+   9            | termino
+
+  10  termino : termino '*' factor
+  11          | termino '/' factor
+  12          | factor
+
+  13  factor : CTE
+  14         | '-' factor
+  15         | ID
 
 state 0
 	$accept : . programa $end  (0)
@@ -23,13 +30,16 @@ state 0
 	.  error
 
 	programa  goto 2
-	asignacion  goto 3
+	lista_de_sentencias  goto 3
+	sentencia  goto 4
+	sentencia_ejecutable  goto 5
+	asignacion  goto 6
 
 
 state 1
-	asignacion : ID . IGUAL expresion PUNT  (2)
+	asignacion : ID . IGUAL expresion PUNT  (6)
 
-	IGUAL  shift 4
+	IGUAL  shift 7
 	.  error
 
 
@@ -40,169 +50,199 @@ state 2
 
 
 state 3
-	programa : asignacion .  (1)
+	programa : lista_de_sentencias .  (1)
+	lista_de_sentencias : lista_de_sentencias . sentencia  (3)
 
-	.  reduce 1
+	ID  shift 1
+	$end  reduce 1
+
+	sentencia  goto 8
+	sentencia_ejecutable  goto 5
+	asignacion  goto 6
 
 
 state 4
-	asignacion : ID IGUAL . expresion PUNT  (2)
-
-	ID  shift 5
-	CTE  shift 6
-	'-'  shift 7
-	.  error
-
-	expresion  goto 8
-	termino  goto 9
-	factor  goto 10
-
-
-state 5
-	factor : ID .  (11)
-
-	.  reduce 11
-
-
-state 6
-	factor : CTE .  (9)
-
-	.  reduce 9
-
-
-state 7
-	factor : '-' . factor  (10)
-
-	ID  shift 5
-	CTE  shift 6
-	'-'  shift 7
-	.  error
-
-	factor  goto 11
-
-
-state 8
-	asignacion : ID IGUAL expresion . PUNT  (2)
-	expresion : expresion . '+' termino  (3)
-	expresion : expresion . '-' termino  (4)
-
-	PUNT  shift 12
-	'+'  shift 13
-	'-'  shift 14
-	.  error
-
-
-state 9
-	expresion : termino .  (5)
-	termino : termino . '*' factor  (6)
-	termino : termino . '/' factor  (7)
-
-	'*'  shift 15
-	'/'  shift 16
-	PUNT  reduce 5
-	'+'  reduce 5
-	'-'  reduce 5
-
-
-state 10
-	termino : factor .  (8)
-
-	.  reduce 8
-
-
-state 11
-	factor : '-' factor .  (10)
-
-	.  reduce 10
-
-
-state 12
-	asignacion : ID IGUAL expresion PUNT .  (2)
+	lista_de_sentencias : sentencia .  (2)
 
 	.  reduce 2
 
 
-state 13
-	expresion : expresion '+' . termino  (3)
+state 5
+	sentencia : sentencia_ejecutable .  (4)
 
-	ID  shift 5
-	CTE  shift 6
-	'-'  shift 7
+	.  reduce 4
+
+
+state 6
+	sentencia_ejecutable : asignacion .  (5)
+
+	.  reduce 5
+
+
+state 7
+	asignacion : ID IGUAL . expresion PUNT  (6)
+
+	ID  shift 9
+	CTE  shift 10
+	'-'  shift 11
 	.  error
 
-	termino  goto 17
-	factor  goto 10
+	expresion  goto 12
+	termino  goto 13
+	factor  goto 14
+
+
+state 8
+	lista_de_sentencias : lista_de_sentencias sentencia .  (3)
+
+	.  reduce 3
+
+
+state 9
+	factor : ID .  (15)
+
+	.  reduce 15
+
+
+state 10
+	factor : CTE .  (13)
+
+	.  reduce 13
+
+
+state 11
+	factor : '-' . factor  (14)
+
+	ID  shift 9
+	CTE  shift 10
+	'-'  shift 11
+	.  error
+
+	factor  goto 15
+
+
+state 12
+	asignacion : ID IGUAL expresion . PUNT  (6)
+	expresion : expresion . '+' termino  (7)
+	expresion : expresion . '-' termino  (8)
+
+	PUNT  shift 16
+	'+'  shift 17
+	'-'  shift 18
+	.  error
+
+
+state 13
+	expresion : termino .  (9)
+	termino : termino . '*' factor  (10)
+	termino : termino . '/' factor  (11)
+
+	'*'  shift 19
+	'/'  shift 20
+	PUNT  reduce 9
+	'+'  reduce 9
+	'-'  reduce 9
 
 
 state 14
-	expresion : expresion '-' . termino  (4)
+	termino : factor .  (12)
 
-	ID  shift 5
-	CTE  shift 6
-	'-'  shift 7
-	.  error
-
-	termino  goto 18
-	factor  goto 10
+	.  reduce 12
 
 
 state 15
-	termino : termino '*' . factor  (6)
+	factor : '-' factor .  (14)
 
-	ID  shift 5
-	CTE  shift 6
-	'-'  shift 7
-	.  error
-
-	factor  goto 19
+	.  reduce 14
 
 
 state 16
-	termino : termino '/' . factor  (7)
-
-	ID  shift 5
-	CTE  shift 6
-	'-'  shift 7
-	.  error
-
-	factor  goto 20
-
-
-state 17
-	expresion : expresion '+' termino .  (3)
-	termino : termino . '*' factor  (6)
-	termino : termino . '/' factor  (7)
-
-	'*'  shift 15
-	'/'  shift 16
-	PUNT  reduce 3
-	'+'  reduce 3
-	'-'  reduce 3
-
-
-state 18
-	expresion : expresion '-' termino .  (4)
-	termino : termino . '*' factor  (6)
-	termino : termino . '/' factor  (7)
-
-	'*'  shift 15
-	'/'  shift 16
-	PUNT  reduce 4
-	'+'  reduce 4
-	'-'  reduce 4
-
-
-state 19
-	termino : termino '*' factor .  (6)
+	asignacion : ID IGUAL expresion PUNT .  (6)
 
 	.  reduce 6
 
 
+state 17
+	expresion : expresion '+' . termino  (7)
+
+	ID  shift 9
+	CTE  shift 10
+	'-'  shift 11
+	.  error
+
+	termino  goto 21
+	factor  goto 14
+
+
+state 18
+	expresion : expresion '-' . termino  (8)
+
+	ID  shift 9
+	CTE  shift 10
+	'-'  shift 11
+	.  error
+
+	termino  goto 22
+	factor  goto 14
+
+
+state 19
+	termino : termino '*' . factor  (10)
+
+	ID  shift 9
+	CTE  shift 10
+	'-'  shift 11
+	.  error
+
+	factor  goto 23
+
+
 state 20
-	termino : termino '/' factor .  (7)
+	termino : termino '/' . factor  (11)
 
-	.  reduce 7
+	ID  shift 9
+	CTE  shift 10
+	'-'  shift 11
+	.  error
+
+	factor  goto 24
 
 
-22 terminals, 6 nonterminals
-12 grammar rules, 21 states
+state 21
+	expresion : expresion '+' termino .  (7)
+	termino : termino . '*' factor  (10)
+	termino : termino . '/' factor  (11)
+
+	'*'  shift 19
+	'/'  shift 20
+	PUNT  reduce 7
+	'+'  reduce 7
+	'-'  reduce 7
+
+
+state 22
+	expresion : expresion '-' termino .  (8)
+	termino : termino . '*' factor  (10)
+	termino : termino . '/' factor  (11)
+
+	'*'  shift 19
+	'/'  shift 20
+	PUNT  reduce 8
+	'+'  reduce 8
+	'-'  reduce 8
+
+
+state 23
+	termino : termino '*' factor .  (10)
+
+	.  reduce 10
+
+
+state 24
+	termino : termino '/' factor .  (11)
+
+	.  reduce 11
+
+
+22 terminals, 9 nonterminals
+16 grammar rules, 25 states

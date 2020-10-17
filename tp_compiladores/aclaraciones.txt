@@ -35,3 +35,21 @@ yyparse() -> shiftea, casea de acuerdo a las reglas y reduce
 al .jar le doy el .txt -> el lexico se transforma en getToken
 y el sintactico tiene el main()
 
+
+
+en regla expre + termino 
+1er componnet -> +
+2do componente -> lado izq $1 y expr de otra variable a $2
+terceto -> +, a, b
+a + b -> a existe? b exisye? en ambito?
+
+
+redefinicion de IGUAL y PUNT!!!
+
+
+Salida del sintactico:
+
+linea x -> error
+linea -> sentencia 
+linena -> estructura bien o mal reconocida
+linea x -> IF reconocido

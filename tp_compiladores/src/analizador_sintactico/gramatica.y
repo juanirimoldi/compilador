@@ -140,9 +140,13 @@ programa : asignacion {System.out.println("LLEGO A RAIZ?? ");}
 		;
 					
 
-asignacion : ID IGUAL expresion PUNT {System.out.println("HAGO ASIGNACION! ");} 
+asignacion : ID IGUAL expresion PUNT {System.out.println("HAGO ASIGNACION! ");} //$1, $$ etc.. y genero el terceto
 		;
 					
+					
+//terceto -> clase con lista de objetios terceto
+// a = b -> checkeo semantico! tiene que existir a y tiene que existir b -> chequeos semanticos dentro de las llaves
+// si llego a la raiz -> lista bien escrita -> se lo entrego  a generador de coigo para hacer asembler
 
 expresion : expresion '+' termino {System.out.println("EXPRESION... ");}
 	  	| expresion '-' termino

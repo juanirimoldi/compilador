@@ -30,7 +30,7 @@ public class TablaDeTipos {
 	public final static short LOOP=275;
 	public final static short UNTIL=276;
 	
-	public int sgte_id = 280;
+	public int sgte_id = 300;
 	
 	
 	private Hashtable<Integer, String> id_tipo;

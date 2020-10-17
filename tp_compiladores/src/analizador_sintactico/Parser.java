@@ -18,16 +18,14 @@ package analizador_sintactico;
 
 
 
-//#line 1 "gramatica.y"
-
+//#line 2 "gramaticaIncremental.y"
 import java.lang.Math;
 import java.io.*;
-import java.util.StringTokenizer;  /*????*/
-//package analizador_sintactico;
+import java.util.StringTokenizer;  /*????*/
+/*package analizador_sintactico;*/
 
 import analizador_lexico.*;
-//#line 25 "Parser.java"
-
+//#line 24 "Parser.java"
 
 
 
@@ -183,38 +181,41 @@ public final static short PUNT=271;
 public final static short EOF=272;
 public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
-    0,    1,    2,    2,    2,    3,    3,    3,    4,    4,
-    4,
+    0,    1,    1,    2,    3,    4,    5,    5,    5,    6,
+    6,    6,    7,    7,    7,
 };
 final static short yylen[] = {                            2,
-    1,    4,    3,    3,    1,    3,    3,    1,    1,    2,
-    1,
+    1,    1,    2,    1,    1,    4,    3,    3,    1,    3,
+    3,    1,    1,    2,    1,
 };
 final static short yydefred[] = {                         0,
-    0,    0,    1,    0,   11,    9,    0,    0,    0,    8,
-   10,    2,    0,    0,    0,    0,    0,    0,    6,    7,
+    0,    0,    0,    2,    4,    5,    0,    3,   15,   13,
+    0,    0,    0,   12,   14,    6,    0,    0,    0,    0,
+    0,    0,   10,   11,
 };
 final static short yydgoto[] = {                          2,
-    3,    8,    9,   10,
+    3,    4,    5,    6,   12,   13,   14,
 };
 final static short yysindex[] = {                      -244,
- -255,    0,    0,  -37,    0,    0,  -37,  -43,  -32,    0,
-    0,    0,  -37,  -37,  -37,  -37,  -32,  -32,    0,    0,
+ -255,    0, -244,    0,    0,    0,  -37,    0,    0,    0,
+  -37,  -43,  -32,    0,    0,    0,  -37,  -37,  -37,  -37,
+  -32,  -32,    0,    0,
 };
 final static short yyrindex[] = {                         0,
-    0,    0,    0,    0,    0,    0,    0,    0,  -42,    0,
-    0,    0,    0,    0,    0,    0,  -39,  -38,    0,    0,
+    0,    0,   16,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,  -42,    0,    0,    0,    0,    0,    0,    0,
+  -39,  -38,    0,    0,
 };
 final static short yygindex[] = {                         0,
-    0,    0,   -2,    2,
+    0,   17,    0,    0,    0,   -6,   -2,
 };
 final static int YYTABLESIZE=233;
 static short yytable[];
 static { yytable();}
 static void yytable(){
-yytable = new short[]{                         13,
-    5,   14,    5,    3,    4,    3,    4,    7,   11,   15,
-   17,   18,    1,    4,   16,    0,   19,   20,    0,    0,
+yytable = new short[]{                         17,
+    9,   18,    9,    7,    8,    7,    8,   11,   15,   19,
+   21,   22,    1,    7,   20,    1,   23,   24,    0,    8,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -234,17 +235,17 @@ yytable = new short[]{                         13,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    5,
-    6,    0,    0,    0,    0,    0,    0,   12,    5,    0,
-    0,    3,    4,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    9,
+   10,    0,    0,    0,    0,    0,    0,   16,    9,    0,
+    0,    7,    8,
 };
 }
 static short yycheck[];
 static { yycheck(); }
 static void yycheck() {
 yycheck = new short[] {                         43,
-   43,   45,   45,   43,   43,   45,   45,   45,    7,   42,
-   13,   14,  257,  269,   47,   -1,   15,   16,   -1,   -1,
+   43,   45,   45,   43,   43,   45,   45,   45,   11,   42,
+   17,   18,  257,  269,   47,    0,   19,   20,   -1,    3,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
@@ -293,7 +294,11 @@ null,null,null,null,null,"ID","CTE","CADENA","IF","ELSE","END_IF","PROC","NI",
 };
 final static String yyrule[] = {
 "$accept : programa",
-"programa : asignacion",
+"programa : lista_de_sentencias",
+"lista_de_sentencias : sentencia",
+"lista_de_sentencias : lista_de_sentencias sentencia",
+"sentencia : sentencia_ejecutable",
+"sentencia_ejecutable : asignacion",
 "asignacion : ID IGUAL expresion PUNT",
 "expresion : expresion '+' termino",
 "expresion : expresion '-' termino",
@@ -306,8 +311,7 @@ final static String yyrule[] = {
 "factor : ID",
 };
 
-//#line 166 "gramatica.y"
-
+//#line 200 "gramaticaIncremental.y"
 	   	
 
 
@@ -361,7 +365,7 @@ public static void main(String args[]) {
 	Parser par = new Parser(false, al);
  	par.yyparse();
 }
-//#line 290 "Parser.java"
+//#line 295 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -411,7 +415,6 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token
-        System.out.println("1er yychar -> "+yychar);
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
         if (yychar < 0)    //it it didn't work/error
@@ -437,16 +440,13 @@ boolean doaction;
         doaction=false;        //but don't process yet
         break;   //quit the yyn=0 loop
         }
-    //System.out.println("reducto 1");
+
     yyn = yyrindex[yystate];  //reduce
     if ((yyn !=0 ) && (yyn += yychar) >= 0 &&
             yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
       {   //we reduced!
-      //System.out.println("Entro aca en algun mmento?? -> SI! para reducir   yyn: "+yyn+ " , yychar: "+yychar);
       if (yydebug) debug("reduce");
       yyn = yytable[yyn];
-      //System.out.println("Y aca????   yyn: "+yyn+ " , yychar: "+yychar);
-
       doaction=true; //get ready to execute
       break;         //drop down to actions
       }
@@ -510,7 +510,6 @@ boolean doaction;
     }//yyn=0 loop
     if (!doaction)   //any reason not to proceed?
       continue;      //skip action
-    //System.out.println("llego aca??? UPAAAAA");
     yym = yylen[yyn];          //get count of terminals on rhs
     if (yydebug)
       debug("state "+yystate+", reducing "+yym+" by rule "+yyn+" ("+yyrule[yyn]+")");
@@ -521,47 +520,56 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
-//#line 139 "gramatica.y"
+//#line 142 "gramaticaIncremental.y"
 {System.out.println("LLEGO A RAIZ?? ");}
 break;
-case 2:
-//#line 143 "gramatica.y"
-{System.out.println("HAGO ASIGNACION! ");}
-break;
 case 3:
-//#line 147 "gramatica.y"
-{System.out.println("EXPRESION... ");}
+//#line 147 "gramaticaIncremental.y"
+{System.out.println("LISTA DE SENTENCIAS RECURSIVA! ");}
+break;
+case 4:
+//#line 152 "gramaticaIncremental.y"
+{System.out.println("TIPO DE SENTENCIA -> EJECUTABLE ");}
 break;
 case 5:
-//#line 149 "gramatica.y"
-{System.out.println("de EXPRESION a TERMINO... ");}
+//#line 164 "gramaticaIncremental.y"
+{System.out.println("SENTENCIA EJECUTABLE -> ASIGNACION! ");}
 break;
 case 6:
-//#line 153 "gramatica.y"
-{System.out.println("TERMINO..");}
+//#line 172 "gramaticaIncremental.y"
+{System.out.println("HAGO ASIGNACION! "+val_peek(3));}
 break;
-case 8:
-//#line 155 "gramatica.y"
-{System.out.println("de regla TERMINO a FACTOR..");}
+case 7:
+//#line 180 "gramaticaIncremental.y"
+{System.out.println("EXPRESION... ");}
 break;
 case 9:
-//#line 159 "gramatica.y"
+//#line 182 "gramaticaIncremental.y"
+{System.out.println("de EXPRESION a TERMINO... ");}
+break;
+case 10:
+//#line 186 "gramaticaIncremental.y"
+{System.out.println("TERMINO..");}
+break;
+case 12:
+//#line 188 "gramaticaIncremental.y"
+{System.out.println("de regla TERMINO a FACTOR..");}
+break;
+case 13:
+//#line 192 "gramaticaIncremental.y"
 {System.out.println("CTE!! entra en regla factor \n");}
 break;
-case 11:
-//#line 161 "gramatica.y"
+case 15:
+//#line 194 "gramaticaIncremental.y"
 {System.out.println("ID!! entra en regla factor ");}
 break;
-//#line 471 "Parser.java"
+//#line 488 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
-    //System.out.println("REDUCTORRR");
     if (yydebug) debug("reduce");
     state_drop(yym);             //we just reduced yylen states
     yystate = state_peek(0);     //get new state
-    //System.out.println("estado reducido -> "+yystate);
-    //por que 0 !!!???
     val_drop(yym);               //corresponding value drop
     yym = yylhs[yyn];            //select next TERMINAL(on lhs)
     if (yystate == 0 && yym == 0)//done? 'rest' state and at first TERMINAL
@@ -573,7 +581,6 @@ break;
       if (yychar < 0)            //we want another character?
         {
         yychar = yylex();        //get next character
-        System.out.println("2DO yychar -> "+yychar);
         if (yychar<0) yychar=0;  //clean, if necessary
         if (yydebug)
           yylexdebug(yystate,yychar);
