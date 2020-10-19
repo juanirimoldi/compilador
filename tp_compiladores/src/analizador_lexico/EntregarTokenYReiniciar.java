@@ -3,8 +3,8 @@ package analizador_lexico;
 import tabla_simbolos.TablaDeSimbolos;
 
 public class EntregarTokenYReiniciar extends AccionSemantica {
-	private TablaTokens tt;
-	private TablaSimbolos ts;
+	//private TablaTokens tt;
+	//private TablaSimbolos ts;
 	private TablaDeSimbolos tds;
 	
 	
