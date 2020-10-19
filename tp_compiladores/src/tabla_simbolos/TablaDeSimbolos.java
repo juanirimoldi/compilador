@@ -33,7 +33,7 @@ public class TablaDeSimbolos {
 	
 	
 	public void addToken(Token t) {
-		System.out.println("AGREGANDO TOKEN EN TDS!!! \n");
+		//System.out.println("AGREGANDO TOKEN EN TDS!!! \n");
 		
 		int id_tipo = this.tdt.getIdTipo(t.getTipo());
 		t.setIdTipo(id_tipo);
@@ -41,17 +41,17 @@ public class TablaDeSimbolos {
 		if (t.getTipo().equals("ID")){
 			//agrego identificador de tipo y lo guardp
 			this.TSimbolos.put(t.getLexema(), t);
-			System.out.println("APARECE UN ID -> lo agrego "+ t.getTipo() + "\n");
+			//System.out.println("APARECE UN ID -> lo agrego "+ t.getTipo() + "\n");
 		}
 		if (t.getTipo().equals("CTE")){
 			//agrego identificador de tipo y lo guardp
 			this.TSimbolos.put(t.getLexema(), t);
-			System.out.println("APARECE UNA CTE -> la agrego "+ t.getTipo() + "\n");
+			//System.out.println("APARECE UNA CTE -> la agrego "+ t.getTipo() + "\n");
 		}
 		if (t.getTipo().equals("CADENA")){
 			//agrego identificador de tipo y lo guardo
 			this.TSimbolos.put(t.getLexema(), t);
-			System.out.println("APARECE UNA CADENA -> la agrego "+ t.getTipo() + "\n");
+			//System.out.println("APARECE UNA CADENA -> la agrego "+ t.getTipo() + "\n");
 		}
 		
 		
@@ -83,9 +83,9 @@ public class TablaDeSimbolos {
 	
 	
 	public void mostrarSimbolos() {
-		System.out.println("Tabla de SImbolos posta \n");
+		System.out.println("\n\n Tabla de SImbolos \n");
 
-		System.out.println("id_token, lexema	");
+		System.out.println("Lexema	, Token	");
 		Enumeration enumeration_keys = this.TSimbolos.keys();
 		
 		Enumeration enumeration = this.TSimbolos.elements();

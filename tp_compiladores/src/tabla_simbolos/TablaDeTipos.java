@@ -7,6 +7,9 @@ import java.util.Hashtable;
 public class TablaDeTipos {
 	//tabla de tokens unicos. contiene el indice de lo que le entrega al sintactico
 
+	//con private -> no anda
+	//sin final -> anda pero con warnings
+	
 	//#### end semantic value section ####
 	public final static short ID=257;
 	public final static short CTE=258;
@@ -43,7 +46,7 @@ public class TablaDeTipos {
 		
 		inicializarTokensDelParser();
 
-		this.mostrarTokens();
+		//this.mostrarTokens();
 	}
 	
 	

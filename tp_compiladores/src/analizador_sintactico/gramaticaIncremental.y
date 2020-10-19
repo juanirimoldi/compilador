@@ -141,7 +141,7 @@ sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
 
 
 
-programa : lista_de_sentencias {System.out.println("LLEGO A RAIZ!! ");}
+programa : lista_de_sentencias {System.out.println("\n LLEGO A RAIZ! -> termino programa \n ");}
 	 ;
 
 

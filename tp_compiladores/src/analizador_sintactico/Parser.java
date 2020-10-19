@@ -340,16 +340,12 @@ void yyerror(String s)
 
 private int yylex() {
 	Token token=lexico.getToken();
-	System.out.println("\n Dentro del Sintactico..."+ token.getTipo() +"\n");
+	//System.out.println("\n Dentro del Sintactico...");//+ token.getTipo() +"\n");
 	
-	this.tabla.addToken(token);
-	
-	//aca decido si lo guardo o no el la tabla de simbolos
-	//sacudo el token y en la tabla de simbolos decido todo
-	//si es ID, CTE o CADENA 
-	//tambien le asocio el id de tipo
 	
 	if (token!=null){
+		this.tabla.addToken(token);
+
 	    yylval = new ParserVal(token); //var para obtener el token de la tabla
 	    return token.getIdTipo(); //acceso a la entrada que devolvumos
 	}
@@ -374,6 +370,8 @@ public static void main(String args[]) throws IllegalArgumentException, IllegalA
 	
 	Parser par = new Parser(false, al, tds);
  	par.yyparse();
+ 	
+ 	tds.mostrarSimbolos();
 }
 
 //#line 295 "Parser.java"
@@ -426,7 +424,7 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token
-        System.out.println("yycharly garcia?? -> "+yychar);
+        System.out.println(" Sintactico  ->  yycharly garcia?? -> "+yychar+" \n\n");
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
         if (yychar < 0)    //it it didn't work/error
