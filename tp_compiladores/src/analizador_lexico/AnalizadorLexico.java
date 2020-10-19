@@ -8,6 +8,8 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import tabla_simbolos.TablaDeSimbolos;
+
 
 public class AnalizadorLexico {
 	private String dir_codigo;
@@ -33,16 +35,22 @@ public class AnalizadorLexico {
 	private int matriz_transicion_estados [][];
 	private AccionSemantica matriz_acciones_semanticas [][];
 	
-	private TablaTokens TTok; 
-	private TablaSimbolos TSym; 
-
+	//private TablaTokens TTok; 
+	//private TablaSimbolos TSym; 
+	
+	private TablaDeSimbolos tds;
+	//aca agrego Tabla de simbolos del paquete tabla_simbolos!!!
 	
 	
-	public AnalizadorLexico(String programa){//, TablaTokens tt, TablaSimbolos ts) {
+	
+	public AnalizadorLexico(String programa){//, TablaDeSimbolos tds){//, TablaTokens tt, TablaSimbolos ts) {
 		this.dir_codigo = programa;
 		
-		this.TTok = new TablaTokens();
-		this.TSym = new TablaSimbolos();
+		this.tds = tds;
+		
+		//this.TTok = new TablaTokens();
+		//this.TSym = new TablaSimbolos();
+		
 		
 		this.matriz_transicion_estados = new int[this.filas_estados][this.columnas_caracteres_validos];
 		this.inicializarMatrizTransicionEstados();
@@ -356,7 +364,7 @@ public class AnalizadorLexico {
 		AccionSemantica AS2 = new AgregarCaracter();
 		AccionSemantica AS3 = new LlegaTokenValido(); 
 		AccionSemantica AS4 = new DescartarBuffer(); 
-		AccionSemantica ASF = new EntregarTokenYReiniciar(this.TTok, this.TSym);
+		AccionSemantica ASF = new EntregarTokenYReiniciar(this.tds);//this.TTok, this.TSym, this.tds);
 
 		
 		//fila 0
@@ -857,14 +865,16 @@ public class AnalizadorLexico {
 	}
 	
 	
-	public void mostrarTablaTokens() {
-		this.TTok.mostrarTokens();
+	public void mostrarTablaDeSimbolos() {
+		this.tds.mostrarSimbolos();
 		System.out.println();
 	}
 	
+	/*
 	
 	public void mostrarTablaSimbolos() {
 		//System.out.println("\n Tabla de simbolos \n");
 		this.TSym.mostrarListaTsym();
 	}
+	*/
 }

@@ -14,9 +14,10 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 	
 	
 	//Accion Semantica Final 
-	public EntregarTokenYReiniciar(TablaTokens tt, TablaSimbolos ts) {
-		this.tt = tt;
-		this.ts = ts;
+	public EntregarTokenYReiniciar(TablaDeSimbolos tds){//TablaTokens tt, TablaSimbolos ts, TablaDeSimbolos tds) {
+		//this.tt = tt;
+		//this.ts = ts;
+		this.tds = tds;
 	}
 	
 	
@@ -37,10 +38,11 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		
 		//System.out.println("Token!!!!!!!!!!!! -> "+this.t.getLexema()+" , tipo: "+this.t.getTipo()+" , ref_tipo: "+id_tipo);
 		
-		//tds.addToken(this.t);
 		
+		//this.tds.addToken(this.t); //token crudo a la tabla de simblos posta
+
 		
-		
+		/*
 		// busco en TablaTokens si existe el tipo de token
 		if (!this.tt.existe(super.tipo_buffer)) { 
 			//this.t.setIdTipo(sgte_id);
@@ -73,6 +75,7 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 			//return buffer + punt_TS
 		}
 		
+		*/
 		
 		
 		//System.out.println("ASF -> Entregar token  "+super.buffer+" , tipo "+ super.tipo_buffer +"  y reinicio buffer \n");

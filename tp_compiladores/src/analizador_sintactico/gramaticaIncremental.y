@@ -139,6 +139,8 @@ sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
 
 
 
+
+
 programa : lista_de_sentencias {System.out.println("LLEGO A RAIZ!! ");}
 	 ;
 
@@ -166,7 +168,7 @@ sentencia_ejecutable : asignacion {System.out.println("SENTENCIA EJECUTABLE -> A
 		   //  | sentencia_de_control ','
 		   //  | sentencia_de_salida ','
 		   //  | invocacion ','
-				  ;
+		;
 
 
 asignacion : ID IGUAL expresion PUNT {System.out.println("HAGO ASIGNACION! "+$1);} //$1, $$ etc.. y genero el terceto

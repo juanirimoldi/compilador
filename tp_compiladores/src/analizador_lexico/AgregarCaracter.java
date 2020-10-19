@@ -18,6 +18,7 @@ public class AgregarCaracter extends AccionSemantica {
 		}
 	}
 	
+	
 	public Token getToken() {
 		return null;
 	}

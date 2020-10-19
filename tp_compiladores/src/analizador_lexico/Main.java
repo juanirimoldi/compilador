@@ -3,6 +3,8 @@ package analizador_lexico;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import tabla_simbolos.TablaDeSimbolos;
+
 import java.io.File;
 
 
@@ -14,13 +16,16 @@ public class Main {
 	    //asi ejecuto pasando archivo como parametro
 	    
 
-	    TablaTokens tt = new TablaTokens();
-	    TablaSimbolos ts = new TablaSimbolos();
+	    //TablaTokens tt = new TablaTokens();
+	    //TablaSimbolos ts = new TablaSimbolos();
+	    
+	    //TablaDeSimbolos tds = new TablaDeSimbolos();
 	    
 	    String path_archivo = "casos_prueba.txt";
 	    
-	    AnalizadorLexico a = new AnalizadorLexico(path_archivo);//, tt, ts);
+	    AnalizadorLexico a = new AnalizadorLexico(path_archivo);//, tds);//, tt, ts);
 		
+	    
 	    a.abrirCargarArchivo(); //primero intenta abrir archivo. Si lo abre correctamente, lo lee
 
 	    System.out.println("\n COMIENZA A LEER TOKENS \n");
@@ -38,8 +43,8 @@ public class Main {
 	    }
 	   	
 	    System.out.println();   
-	    a.mostrarTablaTokens();
-	    a.mostrarTablaSimbolos();
+	    a.mostrarTablaDeSimbolos();
+	    //a.mostrarTablaSimbolos();
 	    //ts.eliminarSimbolo(";");
 	    //a.mostrarTablaSimbolos();
 	}

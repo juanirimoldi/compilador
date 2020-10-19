@@ -43,7 +43,7 @@ public class TablaDeTipos {
 		
 		inicializarTokensDelParser();
 
-		//this.mostrarTokens();
+		this.mostrarTokens();
 	}
 	
 	

@@ -26,6 +26,7 @@ import java.util.StringTokenizer;  /*????*/
 
 import analizador_lexico.*;
 //#line 24 "Parser.java"
+import tabla_simbolos.TablaDeSimbolos;
 
 
 
@@ -311,7 +312,7 @@ final static String yyrule[] = {
 "factor : ID",
 };
 
-//#line 200 "gramaticaIncremental.y"
+//#line 202 "gramaticaIncremental.y"
 	   	
 
 
@@ -321,6 +322,7 @@ final static String yyrule[] = {
 
 AnalizadorLexico lexico;
 
+TablaDeSimbolos tabla;
 
 //String ins;
 //StringTokenizer st;
@@ -338,8 +340,15 @@ void yyerror(String s)
 
 private int yylex() {
 	Token token=lexico.getToken();
-	System.out.println("\n Dentro del Sintactico...\n");
-
+	System.out.println("\n Dentro del Sintactico..."+ token.getTipo() +"\n");
+	
+	this.tabla.addToken(token);
+	
+	//aca decido si lo guardo o no el la tabla de simbolos
+	//sacudo el token y en la tabla de simbolos decido todo
+	//si es ID, CTE o CADENA 
+	//tambien le asocio el id de tipo
+	
 	if (token!=null){
 	    yylval = new ParserVal(token); //var para obtener el token de la tabla
 	    return token.getIdTipo(); //acceso a la entrada que devolvumos
@@ -352,19 +361,21 @@ private int yylex() {
 
 
 
-public static void main(String args[]) {
+public static void main(String args[]) throws IllegalArgumentException, IllegalAccessException {
  	//TablaTokens tt = new TablaTokens();
 	//TablaSimbolos ts = new TablaSimbolos();
 	String direccion_codigo = "casos_prueba_id_cte.txt";
+	TablaDeSimbolos tds = new TablaDeSimbolos();
 	
- 	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
+ 	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);//, tds);
 	al.abrirCargarArchivo();
 	//lexico.mostrarTablaSimbolos(); 
 	//lexico.getToken();
 	
-	Parser par = new Parser(false, al);
+	Parser par = new Parser(false, al, tds);
  	par.yyparse();
 }
+
 //#line 295 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
@@ -415,6 +426,7 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token
+        System.out.println("yycharly garcia?? -> "+yychar);
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
         if (yychar < 0)    //it it didn't work/error
@@ -520,47 +532,47 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
-//#line 142 "gramaticaIncremental.y"
-{System.out.println("LLEGO A RAIZ?? ");}
+//#line 144 "gramaticaIncremental.y"
+{System.out.println("LLEGO A RAIZ!! ");}
 break;
 case 3:
-//#line 147 "gramaticaIncremental.y"
+//#line 149 "gramaticaIncremental.y"
 {System.out.println("LISTA DE SENTENCIAS RECURSIVA! ");}
 break;
 case 4:
-//#line 152 "gramaticaIncremental.y"
+//#line 154 "gramaticaIncremental.y"
 {System.out.println("TIPO DE SENTENCIA -> EJECUTABLE ");}
 break;
 case 5:
-//#line 164 "gramaticaIncremental.y"
+//#line 166 "gramaticaIncremental.y"
 {System.out.println("SENTENCIA EJECUTABLE -> ASIGNACION! ");}
 break;
 case 6:
-//#line 172 "gramaticaIncremental.y"
+//#line 174 "gramaticaIncremental.y"
 {System.out.println("HAGO ASIGNACION! "+val_peek(3));}
 break;
 case 7:
-//#line 180 "gramaticaIncremental.y"
+//#line 182 "gramaticaIncremental.y"
 {System.out.println("EXPRESION... ");}
 break;
 case 9:
-//#line 182 "gramaticaIncremental.y"
+//#line 184 "gramaticaIncremental.y"
 {System.out.println("de EXPRESION a TERMINO... ");}
 break;
 case 10:
-//#line 186 "gramaticaIncremental.y"
+//#line 188 "gramaticaIncremental.y"
 {System.out.println("TERMINO..");}
 break;
 case 12:
-//#line 188 "gramaticaIncremental.y"
+//#line 190 "gramaticaIncremental.y"
 {System.out.println("de regla TERMINO a FACTOR..");}
 break;
 case 13:
-//#line 192 "gramaticaIncremental.y"
+//#line 194 "gramaticaIncremental.y"
 {System.out.println("CTE!! entra en regla factor \n");}
 break;
 case 15:
-//#line 194 "gramaticaIncremental.y"
+//#line 196 "gramaticaIncremental.y"
 {System.out.println("ID!! entra en regla factor ");}
 break;
 //#line 488 "Parser.java"
@@ -636,10 +648,11 @@ public Parser()
  * Create a parser, setting the debug to true or false.
  * @param debugMe true for debugging, false for no debug.
  */
-public Parser(boolean debugMe, AnalizadorLexico al)
+public Parser(boolean debugMe, AnalizadorLexico al, TablaDeSimbolos tds)
 {
   yydebug=debugMe;
   lexico=al;
+  tabla = tds;
 }
 //###############################################################
 
