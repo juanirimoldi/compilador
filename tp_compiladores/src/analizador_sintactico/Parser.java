@@ -337,14 +337,19 @@ private int yylex() {
 	//System.out.println("\n Dentro del Sintactico... -> "+token.getTipo());
 	if (token!=null){
 		tabla.addToken(token);
-		if (token.getTipo().equals("PUNT") || token.getTipo().equals("IGUAL")) {
+		
+		//if token es id, cte o cadena -> tabla.addToken()
+		//else todo lo de abajo -> seteo el idTipo y no lo guardo en Tsymb
+		
+		//esto checkearlo dentro de la tabla de simbolos!
+		if (token.getTipo().equals("PUNT") || token.getTipo().equals("IGUAL") || token.getTipo().equals("OP")) {
 			int ascii = (int)token.getLexema().charAt(0);
 			token.setIdTipo(ascii);
 		}
-	    yylval = new ParserVal(token); //var para obtener el token de la tabla
-	    return token.getIdTipo(); //acceso a la entrada que devolvumos
+		
+	    yylval = new ParserVal(token); 
+	    return token.getIdTipo(); 
 	}
-	//lexico devuelve i de token! y lexico en yylval lo asocie con la tabla de simbolos
 	return 0;
 }
 
@@ -353,18 +358,18 @@ private int yylex() {
 
 
 public static void main(String args[]) throws IllegalArgumentException, IllegalAccessException {
- 	//TablaTokens tt = new TablaTokens();
-	//TablaSimbolos ts = new TablaSimbolos();
+
 	String direccion_codigo = "casos_prueba_id_cte.txt";
 	
  	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
 	al.abrirCargarArchivo();
 	TablaDeSimbolos tds = new TablaDeSimbolos();
-	//lexico.mostrarTablaSimbolos(); 
-	//lexico.getToken();
+
 	
 	Parser par = new Parser(false, al, tds);
  	par.yyparse();
+ 	
+ 	tds.mostrarSimbolos();
 }
 //#line 290 "Parser.java"
 //###############################################################
@@ -416,7 +421,7 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token
-        System.out.println(" Sintactico  ->  yycharly "+yychar);
+        System.out.println(" Sintactico  ->  yychar "+yychar+"\n");
         System.out.println();
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
@@ -544,7 +549,7 @@ case 6:
 break;
 case 7:
 //#line 182 "gramaticaIncremental.y"
-{System.out.println("EXPRESION... ");}
+{System.out.println("de EXPRESION a ASIGNACION... ");}
 break;
 case 9:
 //#line 184 "gramaticaIncremental.y"
@@ -552,15 +557,15 @@ case 9:
 break;
 case 10:
 //#line 188 "gramaticaIncremental.y"
-{System.out.println("TERMINO..");}
+{System.out.println("de TERMINO a EXPRESION..");}
 break;
 case 12:
 //#line 190 "gramaticaIncremental.y"
-{System.out.println("de regla TERMINO a FACTOR..");}
+{System.out.println("de regla FACTOR a TERMINO..");}
 break;
 case 13:
 //#line 194 "gramaticaIncremental.y"
-{System.out.println("CTE!! entra en regla factor \n");}
+{System.out.println("CTE!! entra en regla FACTOR \n");}
 break;
 case 15:
 //#line 196 "gramaticaIncremental.y"

@@ -207,11 +207,7 @@ factor : CTE {System.out.println("CTE!! entra en regla factor \n");}
 
 
 AnalizadorLexico lexico;
-TablaDeSimbolos tds;
-
-//String ins;
-//StringTokenizer st;
-//boolean newline;
+TablaDeSimbolos tabla;
 
 
 
@@ -225,7 +221,7 @@ void yyerror(String s)
 
 private int yylex() {
 	Token token=lexico.getToken();
-	System.out.println("\n Dentro del Sintactico...\n");
+	//System.out.println("\n Dentro del Sintactico...\n");
 
 	if (token!=null){
 	    yylval = new ParserVal(token); //var para obtener el token de la tabla
@@ -240,15 +236,14 @@ private int yylex() {
 
 
 public static void main(String args[]) {
- 	//TablaTokens tt = new TablaTokens();
-	//TablaSimbolos ts = new TablaSimbolos();
-	String direccion_codigo = "casos_prueba_id_cte.txt";
+ 	String direccion_codigo = "casos_prueba_id_cte.txt";
 	
  	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
 	al.abrirCargarArchivo();
-	//lexico.mostrarTablaSimbolos(); 
-	//lexico.getToken();
+	TablaDeSimbolos tds = new TablaDeSimbolos();
 	
 	Parser par = new Parser(false, al);
  	par.yyparse();
+ 	
+ 	tds.mostrarSimbolos();
 }

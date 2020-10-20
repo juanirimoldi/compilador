@@ -33,35 +33,27 @@ public class TablaDeSimbolos {
 	
 	
 	public void addToken(Token t) {
-		//System.out.println("AGREGANDO TOKEN EN TDS!!! \n");
 		
-		///int id_tipo = this.tdt.getIdTipo(t.getTipo());
-		//System.out.println(t.getTipo().equals("PUNT"));
-		//t.setIdTipo(id_tipo);
 		
 		if (t.getTipo().equals("ID")){
-			//agrego identificador de tipo y lo guardp
 			int id_tipo = this.tdt.getIdTipo(t.getTipo());
-			//System.out.println(t.getTipo().equals("PUNT"));
 			t.setIdTipo(id_tipo);
 			this.TSimbolos.put(t.getLexema(), t);
-			//System.out.println("APARECE UN ID -> lo agrego "+ t.getTipo() + "\n");
+			System.out.println("APARECE UN ID -> agrego  "+ t.getLexema() + " , " + t.getTipo() + "\n");
 		}
 		if (t.getTipo().equals("CTE")){
 			int id_tipo = this.tdt.getIdTipo(t.getTipo());
-			//System.out.println(t.getTipo().equals("PUNT"));
 			t.setIdTipo(id_tipo);
 			//agrego identificador de tipo y lo guardp
 			this.TSimbolos.put(t.getLexema(), t);
-			//System.out.println("APARECE UNA CTE -> la agrego "+ t.getTipo() + "\n");
+			System.out.println("APARECE UNA CTE -> agrego "+ t.getLexema() + " , " +t.getTipo() + "\n");
 		}
 		if (t.getTipo().equals("CADENA")){
 			int id_tipo = this.tdt.getIdTipo(t.getTipo());
-			//System.out.println(t.getTipo().equals("PUNT"));
 			t.setIdTipo(id_tipo);
 			//agrego identificador de tipo y lo guardo
 			this.TSimbolos.put(t.getLexema(), t);
-			//System.out.println("APARECE UNA CADENA -> la agrego "+ t.getTipo() + "\n");
+			System.out.println("APARECE UNA CADENA -> la agrego "+ t.getTipo() + "\n");
 		}
 		
 		

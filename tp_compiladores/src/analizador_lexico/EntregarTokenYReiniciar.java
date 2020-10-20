@@ -26,7 +26,6 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		if ((c == ';') || (c == ',')) { super.tipo_token = "PUNT"; };
 		if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { super.tipo_token = "OP"; }
 		
-		//System.out.println("TIPO TOKEN -> "+ super.tipo_buffer);
 		
 		//int id_tipo = this.tt.getIdTipo(super.tipo_buffer); 
 		//System.out.println("ID TIPO TOKEN -> "+id_tipo);

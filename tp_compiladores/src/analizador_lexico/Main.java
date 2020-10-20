@@ -43,7 +43,7 @@ public class Main {
 	    }
 	   	
 	    System.out.println();   
-	    a.mostrarTablaDeSimbolos();
+	    //a.mostrarTablaDeSimbolos();
 	}
 
 }
