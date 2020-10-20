@@ -44,9 +44,6 @@ public class Main {
 	   	
 	    System.out.println();   
 	    a.mostrarTablaDeSimbolos();
-	    //a.mostrarTablaSimbolos();
-	    //ts.eliminarSimbolo(";");
-	    //a.mostrarTablaSimbolos();
 	}
 
 }

@@ -9,7 +9,7 @@
 
    5  sentencia_ejecutable : asignacion
 
-   6  asignacion : ID IGUAL expresion PUNT
+   6  asignacion : ID '=' expresion ';'
 
    7  expresion : expresion '+' termino
    8            | expresion '-' termino
@@ -37,9 +37,9 @@ state 0
 
 
 state 1
-	asignacion : ID . IGUAL expresion PUNT  (6)
+	asignacion : ID . '=' expresion ';'  (6)
 
-	IGUAL  shift 7
+	'='  shift 7
 	.  error
 
 
@@ -80,7 +80,7 @@ state 6
 
 
 state 7
-	asignacion : ID IGUAL . expresion PUNT  (6)
+	asignacion : ID '=' . expresion ';'  (6)
 
 	ID  shift 9
 	CTE  shift 10
@@ -122,11 +122,11 @@ state 11
 
 
 state 12
-	asignacion : ID IGUAL expresion . PUNT  (6)
+	asignacion : ID '=' expresion . ';'  (6)
 	expresion : expresion . '+' termino  (7)
 	expresion : expresion . '-' termino  (8)
 
-	PUNT  shift 16
+	';'  shift 16
 	'+'  shift 17
 	'-'  shift 18
 	.  error
@@ -139,7 +139,7 @@ state 13
 
 	'*'  shift 19
 	'/'  shift 20
-	PUNT  reduce 9
+	';'  reduce 9
 	'+'  reduce 9
 	'-'  reduce 9
 
@@ -157,7 +157,7 @@ state 15
 
 
 state 16
-	asignacion : ID IGUAL expresion PUNT .  (6)
+	asignacion : ID '=' expresion ';' .  (6)
 
 	.  reduce 6
 
@@ -215,7 +215,7 @@ state 21
 
 	'*'  shift 19
 	'/'  shift 20
-	PUNT  reduce 7
+	';'  reduce 7
 	'+'  reduce 7
 	'-'  reduce 7
 
@@ -227,7 +227,7 @@ state 22
 
 	'*'  shift 19
 	'/'  shift 20
-	PUNT  reduce 8
+	';'  reduce 8
 	'+'  reduce 8
 	'-'  reduce 8
 
@@ -244,5 +244,5 @@ state 24
 	.  reduce 11
 
 
-22 terminals, 9 nonterminals
+23 terminals, 9 nonterminals
 16 grammar rules, 25 states

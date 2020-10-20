@@ -25,7 +25,7 @@ import analizador_lexico.*;
 	/* Comparadores */
 	MAYORIGUAL
 	MENORIGUAL
-	IGUAL
+	//IGUAL
 	DISTINTO
 	PUNT
 	EOF
@@ -171,7 +171,7 @@ sentencia_ejecutable : asignacion {System.out.println("SENTENCIA EJECUTABLE -> A
 		;
 
 
-asignacion : ID IGUAL expresion PUNT {System.out.println("HAGO ASIGNACION! "+$1);} //$1, $$ etc.. y genero el terceto
+asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION! "+$1);} //$1, $$ etc.. y genero el terceto
 		;
 					
 					
@@ -207,7 +207,7 @@ factor : CTE {System.out.println("CTE!! entra en regla factor \n");}
 
 
 AnalizadorLexico lexico;
-
+TablaDeSimbolos tds;
 
 //String ins;
 //StringTokenizer st;
