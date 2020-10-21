@@ -16,9 +16,7 @@ public class Main {
 	    //asi ejecuto pasando archivo como parametro
 	    
 
-	    //TablaTokens tt = new TablaTokens();
-	    //TablaSimbolos ts = new TablaSimbolos();
-	    
+	      
 	    //TablaDeSimbolos tds = new TablaDeSimbolos();
 	    
 	    String path_archivo = "casos_prueba.txt";

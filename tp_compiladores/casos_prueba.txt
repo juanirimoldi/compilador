@@ -1,4 +1,6 @@
 x = 5 ;
+r=8; %%problema en el automata!
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
 abc = 10 ;
 b = 9 ;
 g = 5.7 ;

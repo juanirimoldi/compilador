@@ -11,7 +11,7 @@ public class Token {
 		this.lexema = l;
 		this.tipo = t;
 		this.nro_linea = linea;
-		this.id_tipo = id_tipo;
+		//this.id_tipo = id_tipo;
 	}
 	
 	

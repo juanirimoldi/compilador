@@ -35,22 +35,17 @@ public class AnalizadorLexico {
 	private int matriz_transicion_estados [][];
 	private AccionSemantica matriz_acciones_semanticas [][];
 	
-	//private TablaTokens TTok; 
-	//private TablaSimbolos TSym; 
 	
 	private TablaDeSimbolos tds;
-	//aca agrego Tabla de simbolos del paquete tabla_simbolos!!!
 	
 	
 	
-	public AnalizadorLexico(String programa){//, TablaDeSimbolos tds){//, TablaTokens tt, TablaSimbolos ts) {
+	
+	public AnalizadorLexico(String programa){
 		this.dir_codigo = programa;
 		
 		this.tds = tds;
-		
-		//this.TTok = new TablaTokens();
-		//this.TSym = new TablaSimbolos();
-		
+				
 		
 		this.matriz_transicion_estados = new int[this.filas_estados][this.columnas_caracteres_validos];
 		this.inicializarMatrizTransicionEstados();
@@ -103,10 +98,9 @@ public class AnalizadorLexico {
 		
 		this.matriz_transicion_estados[1][20] = -1; //en E1 llega un ; -> voy a Ef
 		this.matriz_transicion_estados[1][21] = 0; //en E1 llega un % -> limpio y reinicio
-		// \n
 		
 		this.matriz_transicion_estados[1][23] = -1; //a E1 le llega otro caracter -> limpio y reinicio? o voy a EF?
-		//...
+	
 		
 		
 		
@@ -130,7 +124,7 @@ public class AnalizadorLexico {
 		
 		
 		this.matriz_transicion_estados[2][23] = -1; //a E2 le llega otro caracter -> voy a Ef
-		//...
+		
 		
 		
 		
@@ -178,6 +172,7 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[4][23] = 0; //a E4 llega otro caracter -> descarto y reinicio
 
 
+		
 		
 		//fila (estado) 5
 		this.matriz_transicion_estados[5][0] = 0; //en E5 llega una letra l -> descarto y voy a E0
@@ -364,7 +359,7 @@ public class AnalizadorLexico {
 		AccionSemantica AS2 = new AgregarCaracter();
 		AccionSemantica AS3 = new LlegaTokenValido(); 
 		AccionSemantica AS4 = new DescartarBuffer(); 
-		AccionSemantica ASF = new EntregarTokenYReiniciar(this.tds);//this.TTok, this.TSym, this.tds);
+		AccionSemantica ASF = new EntregarTokenYReiniciar(this.tds);
 
 		
 		//fila 0
@@ -408,7 +403,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[1][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
 
 		this.matriz_acciones_semanticas[1][23] = AS3; //LlegaTokenValido(); //a E1 le llega otro caracter -> entrego token
-		//...
+		
 		
 		
 		
@@ -431,7 +426,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[2][21] = AS4; //DescartarBuffer(); //a E2 le llega % -> descarto buffer
 		
 		this.matriz_acciones_semanticas[2][23] = AS3; //EntregarToken(); //a E2 le llega otro caracter -> entrego token tipo constante
-		//...
+		
 		
 		
 		
@@ -454,7 +449,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[3][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
 	
 		this.matriz_acciones_semanticas[3][23] = AS3; //EntregarTokenIndividual(); //a E3 le llega otro caracter -> entrego token tipo constante
-		//...
+	
 		
 		//VER EL CASO DEL ESTADO FINAL!! si llega otro caracter... reinicio?
 		
@@ -479,7 +474,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[4][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
 	
 		this.matriz_acciones_semanticas[4][23] = AS4; //DescartarBuffer(); //a E4 le llega otro caracter -> limpio y reinicio
-		//...
+		
 				
 		
 		
@@ -503,7 +498,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[5][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
 	
 		this.matriz_acciones_semanticas[5][23] = AS4; //Descartar(); //a E4 le llega otro caracter -> entrego token tipo constante
-		//...
+		
 		
 		
 
@@ -526,7 +521,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[6][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
 	
 		this.matriz_acciones_semanticas[6][23] = AS4; //DescartarBuffer(); //a E6 le llega otro caracter -> entrego token tipo constante
-		//...
+		
 		
 		
 
@@ -549,7 +544,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[7][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
 	
 		this.matriz_acciones_semanticas[7][23] = AS4; //Descartar(); //a E4 le llega otro caracter -> entrego token tipo constante
-		//...
+		
 
 		
 
@@ -572,7 +567,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[8][21] = AS4; //DescartarBuffer(); //a E1 le llega % -> descarto buffer
 	
 		this.matriz_acciones_semanticas[8][23] = AS4; //DescartarBuffer(); //a E4 le llega otro caracter -> entrego token tipo constante
-		//...
+		
 		
 
 		
@@ -595,7 +590,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[9][21] = AS4; //DescartarBuffer(); //en E9 le llega % -> descarto buffer
 	
 		this.matriz_acciones_semanticas[9][23] = AS4; //DescartarBuffer(); //a E4 le llega otro caracter -> entrego token tipo constante
-		//...
+		
 
 		
 		
@@ -618,7 +613,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[10][21] = AS2; //AgregarCaracter(); //en E10 le llega % -> agrego caracter
 			
 		this.matriz_acciones_semanticas[10][23] = AS4; //DescartarBuffer(); //a E4 le llega otro caracter -> entrego token tipo constante
-		//...
+		
 
 		
 		
@@ -641,7 +636,7 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[11][21] = AS2; //AgregarCaracter(); //en E11 le llega % -> agrego caracter
 					
 		this.matriz_acciones_semanticas[11][23] = AS2; //AgregarCaracter(); //a E11 le llega otro caracter -> agrego caracter
-		//...
+		
 
 		
 		
@@ -709,7 +704,7 @@ public class AnalizadorLexico {
         
         AccionSemantica AS;
         			
-		int estado_actual = 0; //estado inicial 
+		int estado_actual = 0; 
 		int nro_columna = -1; //nro de columna depende del tipo de caracter. por defecto arranco con otro
 
 		char caracter = ' ';
@@ -726,7 +721,17 @@ public class AnalizadorLexico {
 					
 				caracter = this.codigo.charAt(this.pos_actual); 
 				ascii = (int)caracter;
-					
+				
+				/*
+				//si es espacio paso el caracter
+				if (ascii == 32) {
+					System.out.println("Espacio en blanquzco!!! -> avanzo posicion");
+					this.pos_actual++;
+					caracter = this.codigo.charAt(this.pos_actual); 
+					ascii = (int)caracter;
+				}
+				*/
+				
 				//System.out.println("\n");
 				//System.out.println("Caracter actual "+caracter+" , ASCII "+(int)caracter);					
 										
@@ -749,10 +754,8 @@ public class AnalizadorLexico {
 				if (ascii == 10) { //codigo ascii de \n es 10
 					System.out.println("\n \n \n Salto de linea \n \n \n");
 					this.nro_linea++;
-					//aca!! ver que onda
-					//pos_actual++;
 					estado_actual = 0;
-					//this.pos_actual ++;
+					
 					//condicion de corte
 					if (this.nro_linea > this.total_lineas) {  // si me paso corta todo
 						System.out.println();	
@@ -770,30 +773,27 @@ public class AnalizadorLexico {
 			}
 			
 			
-			
 			//llega el estado final
-			
-			if (!fin) {	//si no es el fin de archivo (String), ejecuto ASFinal
+			if (!fin) {	//si no es el fin de archivo (String), ejecuto ASFinal (entrego Token)
 					
 				estado_actual = this.estado_final; 
 				
 				AS = this.matriz_acciones_semanticas[estado_actual][nro_columna];
 				
-				// ejecuto ASF -> entregar token, y reiniciar estado y buffer
 				AS.ejecutar(caracter, this.nro_linea);
 				
 				//System.out.println("\n inicio -> " +  this.pos_actual + " ,  actual -> "+ this.ultima_pos +" , TOTAL -> "+this.total_caracteres);
 
+				
 				//devuelvo token, dejo de leer y actualizo posicion
 				titi = AS.getToken();
 				
 				this.leer_caracter = false; 
 				
-				
 				//System.out.println("Inicio -> " +  ultima_pos + " ,  frontera -> "+ pos_actual +" ,  total -> " + this.total_caracteres+"\n");
 				
 				this.ultima_pos = this.pos_actual; 
-				//System.out.println("Dentro del Lexico...");
+				
 				System.out.println("\n Lexico  ->  Linea: "+ this.nro_linea + " , Token: "+ titi.getLexema()+" ,  tipo: "+titi.getTipo()+" \n");
 				}
 		}
@@ -827,31 +827,30 @@ public class AnalizadorLexico {
 		
 		if (c == '=') { nro_columna=11; };
 		
+		
 		if (c == ';') { nro_columna=20; };
 		if (c == '%') { nro_columna=21; };
 		//...
 		
-		return nro_columna; //retorna el nro de columna asociado al tipo del caracter
+		return nro_columna; 
 	}
 	
 	
 	
-	public Token getToken() { //invoco a yylex()
+	public Token getToken() { 
 		this.leer_caracter = true;
 		
 		Token t = this.leerCodigo();
-		//System.out.println("yylex Retorno ->  " + t.getLexema()+" , "+t.getTipo()); 
-
+		
 		if (t != null) {
 			//System.out.println("yylex Retorno ->  " + t.getLexema()+" , "+t.getTipo()); 
 			return t;
 		} else {
 			System.out.println("Fin de archivo!");
 			this.fin = true;
-			//break;
 		}
 		
-		System.out.println("\n \n ---------------------------------------------------\n");
+		//System.out.println("\n \n ---------------------------------------------------\n");
 		return null;
 	}
 	
@@ -870,11 +869,5 @@ public class AnalizadorLexico {
 		System.out.println();
 	}
 	
-	/*
-	
-	public void mostrarTablaSimbolos() {
-		//System.out.println("\n Tabla de simbolos \n");
-		this.TSym.mostrarListaTsym();
-	}
-	*/
+
 }
