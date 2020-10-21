@@ -12,22 +12,28 @@ import analizador_lexico.*;
 	ID
 	CTE
 	CADENA
+	
 	/* Palabras reservadas */
 	IF
+	THEN
 	ELSE
 	END_IF
-	PROC
-	NI
-	REF
+	FUNC
+	RETURN
+	//NI
+	//REF
 	OUT
+	
 	/* Tipo de Constantes */
+	INTEGER
+	FLOAT
 		
 	/* Comparadores */
 	MAYORIGUAL
 	MENORIGUAL
 	//IGUAL
 	DISTINTO
-	PUNT
+	//PUNT
 	EOF
 
 %start programa
@@ -36,55 +42,63 @@ import analizador_lexico.*;
 %%
 
 
-/*
 
-programa : lista_de_sentencias //
-	 ;
+programa : lista_de_sentencias {System.out.println("\n LLEGO A RAIZ! -> termino programa \n ");}
+		 ;
 
 
 lista_de_sentencias : sentencia
-		    | lista_de_sentencias sentencia
-		    ;
+		   		    | lista_de_sentencias sentencia {System.out.println("LISTA DE SENTENCIAS RECURSIVA! ");}
+		    		;
 
 
-sentencia : sentencia_declarativa
-          | sentencia_ejecutable
-	  ;
+sentencia : sentencia_declarativa {System.out.println("TIPO DE SENTENCIA DECLARATIVA ");}
+		  | sentencia_ejecutable {System.out.println("SENTENCIA -> EJECUTABLE ");}
+	  	  ;
+
+
+
+
+
+//SENTENCIAS DECLARATIVAS
 
 
 sentencia_declarativa : declaracion_de_variable ';'
-		      | declaracion_de_procedimiento ';'
-		      ;
-			
-					  
+				      | declaracion_de_procedimiento ';'
+				      ;
+
+		
 declaracion_de_variable : tipo lista_de_variables
-		        ;
+				        ;
 
 
 declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'
-			     | PROC ID '(' ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'
-			     ;
+						     | PROC ID '(' ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'
+			     			 ;
 			
 			
 cuerpo_del_procedimiento : lista_de_sentencias
-			 | lista_de_sentencias declaracion_de_procedimiento
-			 ;			
+			 			 | lista_de_sentencias declaracion_de_procedimiento
+			 			 ;			
 
-		 		
+
+//numero maximo de parametros = 3		 		
+
 lista_de_parametros : parametro_declarado ',' parametro_declarado ',' parametro_declarado
-		    | parametro_declarado ',' parametro_declarado
-		    | parametro_declarado 
-		    ;
+		    		| parametro_declarado ',' parametro_declarado
+		    		| parametro_declarado 
+				    ;
+
 
 
 parametro_declarado : tipo ID
-		    | REF tipo ID
-		    ;
+				    | REF tipo ID
+		    		;
 
 
 lista_de_variables : lista_de_variables ',' ID
-		   | ID
-		   ;
+		   		   | ID
+		  		   ;
 
 
 tipo : INTEGER
@@ -92,83 +106,56 @@ tipo : INTEGER
      ;
 
 
-sentencia_ejecutable : asignacion ','
-		     | clausula_de_seleccion ','
-		     | sentencia_de_control ','
-		     | sentencia_de_salida ','
-		     | invocacion ','
-					  ;
-					
+
+
+
+//SENTENCIAS EJECUTABLES
+
+		
+sentencia_ejecutable : clausula_de_seleccion ','
+		   			 | sentencia_de_control ','
+		   			 | sentencia_de_salida ','
+		   			 | invocacion ','
+		   			 | asignacion {System.out.println("SENTENCIA EJECUTABLE -> ASIGNACION! ");}
+					 ;
+
+
 clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF					
-		      | IF '(' condicion ')' bloque_de_sentencias END_IF
-		      ;
+		      		  | IF '(' condicion ')' bloque_de_sentencias END_IF
+		     		  ;
+					
 						
 condicion : expresion '>' expresion
-	  | expresion '<' expresion
-	  | expresion MAYORIGUAL expresion
-	  | expresion MENORIGUAL expresion
-	  | expresion IGUAL expresion
-	  | expresion DISTINTO expresion
-	  ;
-		 
-		 
+	  	  | expresion '<' expresion
+	  	  | expresion MAYORIGUAL expresion
+	  	  | expresion MENORIGUAL expresion
+	  	  | expresion IGUAL expresion
+	  	  | expresion DISTINTO expresion
+	  	  ;
+
+
 bloque_de_sentencias : sentencia
-		     | '{' lista_de_sentencias '}'
-		     ;
+				     | '{' lista_de_sentencias '}'
+				     ;
 					
+
+sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
+		             ;
+
 					
-sentencia_de_salida : OUT '(' CADENA
-		    ;
+sentencia_de_salida : OUT '(' CADENA ')'
+				    ;
 					
 					
 invocacion : ID '(' parametro_ejecutable ')'
-	   ;
+	   	   ;
 		  
 		  
 parametro_ejecutable : ID
-		     | parametro_ejecutable ',' ID
-		     ;
+		   		     | parametro_ejecutable ',' ID
+		     		 ;
 		 			
 					
-sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
-             ;
-
-*/		
-
-
-
-
-
-
-
-programa : lista_de_sentencias {System.out.println("\n LLEGO A RAIZ! -> termino programa \n ");}
-	 ;
-
-
-lista_de_sentencias : sentencia
-		    | lista_de_sentencias sentencia {System.out.println("LISTA DE SENTENCIAS RECURSIVA! ");}
-		    ;
-
-
-//sentencia : sentencia_declarativa
-sentencia :  sentencia_ejecutable {System.out.println("TIPO DE SENTENCIA -> EJECUTABLE ");}
-	  	;
-
-
-//sentencia_declarativa : declaracion_de_variable ';'
-//		      | declaracion_de_procedimiento ';'
-//		      ;
-		
-
-//... defino sentencias declarativas
-
-		
-sentencia_ejecutable : asignacion {System.out.println("SENTENCIA EJECUTABLE -> ASIGNACION! ");}
-		   //  | clausula_de_seleccion ','
-		   //  | sentencia_de_control ','
-		   //  | sentencia_de_salida ','
-		   //  | invocacion ','
-		;
 
 
 asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION! "+$1);} //$1, $$ etc.. y genero el terceto
@@ -178,6 +165,7 @@ asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION! "+$1);} 
 //terceto -> clase con lista de objetios terceto
 // a = b -> checkeo semantico! tiene que existir a y tiene que existir b -> chequeos semanticos dentro de las llaves
 // si llego a la raiz -> lista bien escrita -> se lo entrego  a generador de coigo para hacer asembler
+
 
 expresion : expresion '+' termino {System.out.println("EXPRESION... ");}
 	  	| expresion '-' termino
@@ -224,6 +212,16 @@ private int yylex() {
 	//System.out.println("\n Dentro del Sintactico...\n");
 
 	if (token!=null){
+		tabla.addToken(token);
+		
+		//if token es id, cte o cadena -> tabla.addToken()
+		//else todo lo de abajo -> seteo el idTipo y no lo guardo en Tsymb
+		
+		//esto checkearlo dentro de la tabla de simbolos!
+		if (token.getTipo().equals("PUNT") || token.getTipo().equals("IGUAL") || token.getTipo().equals("OP")) {
+			int ascii = (int)token.getLexema().charAt(0);
+			token.setIdTipo(ascii);
+		}
 	    yylval = new ParserVal(token); //var para obtener el token de la tabla
 	    return token.getIdTipo(); //acceso a la entrada que devolvumos
 	}
@@ -241,9 +239,9 @@ public static void main(String args[]) {
  	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
 	al.abrirCargarArchivo();
 	TablaDeSimbolos tds = new TablaDeSimbolos();
+
 	
-	Parser par = new Parser(false, al);
+	Parser par = new Parser(false, al, tds);
  	par.yyparse();
  	
  	tds.mostrarSimbolos();
-}
