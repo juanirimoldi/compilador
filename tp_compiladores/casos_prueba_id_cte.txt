@@ -1,6 +1,7 @@
 x = 5 ;
-r=8;
-abc = 10 ; %%algo debe tener que ver el salto de linea... -_-
+%%r=8; error! ver por que
+%%INTEGER cv = 9999 ;
+abc = 10 ; 
 b = 9 ;
 g = 5.7 ;
 %% .6666 ;

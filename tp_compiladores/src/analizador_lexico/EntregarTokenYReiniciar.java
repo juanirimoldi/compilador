@@ -34,7 +34,7 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 	
 		super.tipo_token="";
 		super.buffer = ""; //despues de entregar token lo limpio
-		super.token_valido=false;
+		//super.token_valido=false;
 	}
 	
 	

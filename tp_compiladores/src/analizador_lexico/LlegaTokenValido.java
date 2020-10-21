@@ -19,7 +19,7 @@ public class LlegaTokenValido extends AccionSemantica {
 		//super.buffer += c; 
 		//System.out.println("2do caracter -> " + c+" , ascii-> "+ascii);
 
-		super.token_valido=true;
+		//super.token_valido=true;
 		
 		//System.out.println("AS3 -> Voy a Ef con un Token Valido -> "+ super.buffer + " , tipo ->"+super.tipo_buffer);
 		

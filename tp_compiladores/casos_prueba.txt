@@ -1,6 +1,7 @@
 x = 5 ;
-r=8; %%problema en el automata!
+%%r=8;
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
+INTEGER xy = 9889 ;
 abc = 10 ;
 b = 9 ;
 g = 5.7 ;
