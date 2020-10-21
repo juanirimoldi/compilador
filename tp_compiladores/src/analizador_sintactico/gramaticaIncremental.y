@@ -18,11 +18,15 @@ import analizador_lexico.*;
 	THEN
 	ELSE
 	END_IF
-	FUNC
+	PROC
 	RETURN
-	//NI
-	//REF
+	NI
+	REF
 	OUT
+	
+	/* Sentencias de Control*/
+	LOOP
+	UNTIL
 	
 	/* Tipo de Constantes */
 	INTEGER
@@ -31,7 +35,7 @@ import analizador_lexico.*;
 	/* Comparadores */
 	MAYORIGUAL
 	MENORIGUAL
-	//IGUAL
+	IGUAL
 	DISTINTO
 	//PUNT
 	EOF
