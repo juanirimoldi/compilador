@@ -9,21 +9,31 @@ public class LlegaTokenValido extends AccionSemantica {
 		//System.out.println("AS3 -> Voy a Ef con un Token Valido -> "+ super.buffer + " , tipo ->"+super.tipo_buffer);
 		
 		int ascii = (int)c;
+		//if (super.buffer == '=') {
+			
+		//}
 		if (ascii == 32){
-			System.out.println("ESPACIO EN BLANCO -> "+ascii);
+			//System.out.println("ESPACIO EN BLANCO -> "+ascii);
 			//continue;
 		} else if (ascii == 61) {
-			System.out.println("IGUAL -> "+ascii);
+			//System.out.println("IGUAL -> "+ascii);
 			//continue;
+			super.tipo_token="IGUAL";
 			super.buffer += c;
-		} else {
-			super.buffer += c; 
-			System.out.println("ASCII normal -> "+super.buffer + "  ,  " +ascii);
-			}
+		} 
+	
+		if ((c == ';') || (c == ',')) {
+			super.tipo_token = "PUNT";
+			super.buffer += c;
+		} else if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { 
+			super.tipo_token = "OP";
+			super.buffer += c;
+		} 
 		
 		
-		
-		//if (super.tipo_variable.equals("ID"))
+		//COMPARADORES!
+		//if (c == '<') ->
+		//if (c == '>')
 		
 		//super.token_valido=true;
 		

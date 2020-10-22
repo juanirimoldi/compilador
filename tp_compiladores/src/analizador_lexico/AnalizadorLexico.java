@@ -755,16 +755,16 @@ public class AnalizadorLexico {
 				
 				//si es salto de linea
 				if (ascii == 10) { 
-					System.out.println("\n \n \n Salto de linea \n \n \n");
+					//System.out.println("\n \n \n Salto de linea \n \n \n");
 					this.nro_linea++;
 					estado_actual = 0;
 					
 					//condicion de corte
 					if (this.nro_linea > this.total_lineas) {  // si me paso corta todo
 						System.out.println();	
-						System.out.println("FIN de codigo!! nro linea "+this.nro_linea+" > "+this.total_lineas);
+						//System.out.println("FIN de codigo!! nro linea "+this.nro_linea+" > "+this.total_lineas);
 						System.out.println();	
-						System.out.println("Frontera -> "+this.pos_actual+"  ,   total caracteres -> "+this.total_caracteres);
+						//System.out.println("Frontera -> "+this.pos_actual+"  ,   total caracteres -> "+this.total_caracteres);
 						System.out.println();	
 
 						this.leer_caracter = false;

@@ -525,6 +525,7 @@ boolean doaction;
         if (yydebug)
           debug("state "+yystate+", shifting to state "+yytable[yyn]);
         //#### NEXT STATE ####
+        System.out.println("\n Sintactico -> Sgte estado... \n");
         yystate = yytable[yyn];//we are in a new state
         state_push(yystate);   //save it
         val_push(yylval);      //push our lval as the input for next rule
@@ -534,7 +535,7 @@ boolean doaction;
         doaction=false;        //but don't process yet
         break;   //quit the yyn=0 loop
         }
-
+    //System.out.println(" Sintactico ... \n");
     yyn = yyrindex[yystate];  //reduce
     if ((yyn !=0 ) && (yyn += yychar) >= 0 &&
             yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
