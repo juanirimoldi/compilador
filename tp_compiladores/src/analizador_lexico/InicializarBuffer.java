@@ -20,6 +20,9 @@ public class InicializarBuffer extends AccionSemantica {
 		if (c == '%') { super.tipo_token = "COMENT"; }
 		
 		
+		//if (super.tipo_token.equals("ID") | super.tipo_token.equals("CTE") | super.tipo_token.equals("CADENA")) {
+		//	super.buffer += c;
+		//}
 		//System.out.println("AS1 -> Inicializo buffer, agrego caracter "+ c +" , tipo "+ super.tipo_buffer);
 	}
 	

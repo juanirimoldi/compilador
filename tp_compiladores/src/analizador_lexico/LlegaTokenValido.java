@@ -6,22 +6,28 @@ public class LlegaTokenValido extends AccionSemantica {
 	//si detecta comentario -> volver a E0
 	
 	public void ejecutar(char c, int nro_linea) {
-		//System.out.println("Buffer original -> " + super.buffer+" , "+super.buffer.length());
+		//System.out.println("AS3 -> Voy a Ef con un Token Valido -> "+ super.buffer + " , tipo ->"+super.tipo_buffer);
+		
 		int ascii = (int)c;
 		if (ascii == 32){
-			//System.out.println("ESPACIO EN BLANCOO BOTON! -> "+ascii);
+			System.out.println("ESPACIO EN BLANCO -> "+ascii);
 			//continue;
+		} else if (ascii == 61) {
+			System.out.println("IGUAL -> "+ascii);
+			//continue;
+			super.buffer += c;
 		} else {
 			super.buffer += c; 
-			
-		}
+			System.out.println("ASCII normal -> "+super.buffer + "  ,  " +ascii);
+			}
 		
-		//super.buffer += c; 
-		//System.out.println("2do caracter -> " + c+" , ascii-> "+ascii);
-
+		
+		
+		//if (super.tipo_variable.equals("ID"))
+		
 		//super.token_valido=true;
 		
-		//System.out.println("AS3 -> Voy a Ef con un Token Valido -> "+ super.buffer + " , tipo ->"+super.tipo_buffer);
+		
 		
 		//aca checkeo tipos y rango de un token valido -> hago AS 3.1 , 3.2 y 3.3
 		
@@ -30,7 +36,7 @@ public class LlegaTokenValido extends AccionSemantica {
 		if (super.tipo_token.equals("ID")) {
 			//System.out.println("TOKEN ID VALIDO -> " + super.buffer+" , "+super.buffer.length());
 			if (super.buffer.length() > this.id_long_max) {
-				System.out.println("WARNING!!!! TE CEBASTE BESTIA.. -> " + super.buffer+" , "+super.buffer.length());
+				System.out.println("WARNING!!!! TE CEBASTE.. -> " + super.buffer+" , "+super.buffer.length());
 				super.buffer = super.buffer.substring(0, id_long_max);
 				System.out.println("TRUNCADO -> " + super.buffer+" , "+super.buffer.length());
 

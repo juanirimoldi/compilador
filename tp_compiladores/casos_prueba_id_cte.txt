@@ -1,5 +1,5 @@
 x = 5 ;
-%%r=8; error! ver por que
+%%r=8; %%error! ver por que
 %%INTEGER cv = 9999 ;
 abc = 10 ; 
 b = 9 ;

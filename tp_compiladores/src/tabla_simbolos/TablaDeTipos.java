@@ -23,7 +23,7 @@ public class TablaDeTipos {
 	public final static short OUT=266;
 	public final static short MAYORIGUAL=267;
 	public final static short MENORIGUAL=268;
-	//public final static short IGUAL=269;
+	public final static short IGUAL=269;
 	public final static short DISTINTO=270;
 	public final static short PUNT=271;
 	public final static short EOF=272;
@@ -75,7 +75,7 @@ public class TablaDeTipos {
 			//System.out.println("FIELDDD -> "+id+"  "+ref);
 		    } 
 		}
-
+	
 	
 	public void addToken(String s) {
 		//int id_tipo_token = this.getIdentificadorTipo(s);

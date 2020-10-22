@@ -56,8 +56,8 @@ lista_de_sentencias : sentencia
 		    		;
 
 
-sentencia : sentencia_declarativa {System.out.println("TIPO DE SENTENCIA DECLARATIVA ");}
-		  | sentencia_ejecutable {System.out.println("SENTENCIA -> EJECUTABLE ");}
+sentencia : sentencia_declarativa ';' {System.out.println("SENTENCIA DECLARATIVA ");}
+		  | sentencia_ejecutable ';' {System.out.println("SENTENCIA EJECUTABLE ");}
 	  	  ;
 
 
@@ -66,9 +66,9 @@ sentencia : sentencia_declarativa {System.out.println("TIPO DE SENTENCIA DECLARA
 
 //SENTENCIAS DECLARATIVAS
 
-
-sentencia_declarativa : declaracion_de_variable ';'
-				      | declaracion_de_procedimiento ';'
+//aca los ; andan
+sentencia_declarativa : declaracion_de_variable  {System.out.println("DECLARO variable ");}
+				      | declaracion_de_procedimiento  {System.out.println("DECLARO PROCEDIMIENTO ");}
 				      ;
 
 		
@@ -76,6 +76,7 @@ declaracion_de_variable : tipo lista_de_variables
 				        ;
 
 
+//!!!VER!!!
 declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'
 						     | PROC ID '(' ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'
 			     			 ;
@@ -87,12 +88,12 @@ cuerpo_del_procedimiento : lista_de_sentencias
 
 
 //numero maximo de parametros = 3		 		
+//puede no haber parametros!!   !!VER!!
 
 lista_de_parametros : parametro_declarado ',' parametro_declarado ',' parametro_declarado
 		    		| parametro_declarado ',' parametro_declarado
 		    		| parametro_declarado 
 				    ;
-
 
 
 parametro_declarado : tipo ID
@@ -116,12 +117,18 @@ tipo : INTEGER
 //SENTENCIAS EJECUTABLES
 
 		
-sentencia_ejecutable : clausula_de_seleccion ','
+sentencia_ejecutable : asignacion {System.out.println("SENTENCIA EJECUTABLE -> ASIGNACION! ");}
+					 | clausula_de_seleccion ',' {System.out.println("CLAUSULA de SELECCION  IF ");}
 		   			 | sentencia_de_control ','
 		   			 | sentencia_de_salida ','
 		   			 | invocacion ','
-		   			 | asignacion {System.out.println("SENTENCIA EJECUTABLE -> ASIGNACION! ");}
+		   			 | 
 					 ;
+
+
+
+asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION! "+$1);} //$1, $$ etc.. y genero el terceto
+		;
 
 
 clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF					
@@ -139,7 +146,7 @@ condicion : expresion '>' expresion
 
 
 bloque_de_sentencias : sentencia
-				     | '{' lista_de_sentencias '}'
+				     | '{' lista_de_sentencias '}' //DEFINIDA ARRIBA!! lista de sentencias declarativas o ejecutables
 				     ;
 					
 
@@ -154,16 +161,13 @@ sentencia_de_salida : OUT '(' CADENA ')'
 invocacion : ID '(' parametro_ejecutable ')'
 	   	   ;
 		  
-		  
-parametro_ejecutable : ID
-		   		     | parametro_ejecutable ',' ID
+
+//!!!VER!!! 		  
+parametro_ejecutable : ID':'ID  //para las invocaciones a parametros!!
+		   		     | parametro_ejecutable ',' ID':'ID
 		     		 ;
 		 			
 					
-
-
-asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION! "+$1);} //$1, $$ etc.. y genero el terceto
-		;
 					
 					
 //terceto -> clase con lista de objetios terceto
@@ -184,9 +188,9 @@ termino : termino '*' factor {System.out.println("TERMINO..");}
 		
 		
 factor : CTE {System.out.println("CTE!! entra en regla factor \n");}
-       	| '-' factor 
-       	| ID {System.out.println("ID!! entra en regla factor ");}
-       	;
+       | '-' factor 
+       | ID {System.out.println("ID!! entra en regla factor ");}
+       ;
 	   	
 
 
