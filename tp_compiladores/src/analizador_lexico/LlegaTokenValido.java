@@ -10,8 +10,9 @@ public class LlegaTokenValido extends AccionSemantica {
 		
 		int ascii = (int)c;
 		//if (super.buffer == '=') {
-			
-		//}
+		//TOKEN DOBLE!!! dos tokens simples!! como entrego los dos por separado?
+		//System.out.println("LLEGA TOKEN VALIDO!! "+super.buffer+" , char "+c);	
+		
 		if (ascii == 32){
 			//System.out.println("ESPACIO EN BLANCO -> "+ascii);
 			//continue;

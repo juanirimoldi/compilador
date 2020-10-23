@@ -34,4 +34,8 @@ public class Token {
 	public void setIdTipo(int id) {
 		this.id_tipo = id;
 	}
+	
+	public void setTipo(String tipo) {
+		this.tipo=tipo;
+	}
 }

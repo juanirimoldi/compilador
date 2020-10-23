@@ -8,16 +8,26 @@ public class InicializarBuffer extends AccionSemantica {
 		
 		//int ascii = (int)c;
 		//System.out.println("llega caracter -> "+c+"  ,  ascii -> "+ascii);
-		super.buffer += c;
+		//super.buffer += c;
 		
 		//defino los tokens simples -> el tipo de los que se inicializan y se les pueden cargar caracteres
-		if (Character.isLetter(c)) { super.tipo_token = "ID"; }
+		if (Character.isLetter(c)) { super.tipo_token = "ID"; 
+									 super.buffer += c;
+									}
 
-		if (Character.isDigit(c)) { super.tipo_token = "CTE"; super.tipo_variable = "INTEGER";}
+		if (Character.isDigit(c)) { super.tipo_token = "CTE"; 
+									super.tipo_variable = "INTEGER";
+									super.buffer += c;
+								 }
 
-		if (c == '.') { super.tipo_token = "CTE"; super.tipo_variable = "DOUBLE";}
+		if (c == '.') { super.tipo_token = "CTE"; 
+						super.tipo_variable = "DOUBLE";
+						super.buffer += c;
+						}
 		
-		if (c == '%') { super.tipo_token = "COMENT"; }
+		if (c == '%') { super.tipo_token = "COMENT"; 
+						super.buffer += c;
+						}
 		
 		
 		//if (super.tipo_token.equals("ID") | super.tipo_token.equals("CTE") | super.tipo_token.equals("CADENA")) {

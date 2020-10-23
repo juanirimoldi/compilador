@@ -447,12 +447,13 @@ private int yylex() {
 
 
 public static void main(String args[]) throws IllegalArgumentException, IllegalAccessException {
- 	String direccion_codigo = "casos_prueba_id_cte.txt";
+ 	String direccion_codigo = "casos_de_prueba_tps.txt";
 	
  	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
 	al.abrirCargarArchivo();
 	TablaDeSimbolos tds = new TablaDeSimbolos();
-
+	
+	al.asociarTablaDeSimbolos(tds);
 	
 	Parser par = new Parser(false, al, tds);
  	par.yyparse();
@@ -509,6 +510,7 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token
+        System.out.println("yycharly garcia "+yychar);
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
         if (yychar < 0)    //it it didn't work/error
@@ -740,6 +742,7 @@ public Parser(boolean debugMe, AnalizadorLexico al, TablaDeSimbolos tds)
   yydebug=debugMe;
   lexico=al;
   tabla=tds;
+  //lexico.asociarTablaDeSimbolos(tabla);
 }
 //###############################################################
 

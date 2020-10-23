@@ -12,6 +12,7 @@ public class AgregarCaracter extends AccionSemantica {
 				//System.out.println("Si el tipo es COMMENT y el caracter un salto d linea ");
 				System.out.println("\n COMENTARIO \n");
 				System.out.println(super.buffer);
+				System.out.println("--------------------------------\n");
 				super.buffer = "";
 				super.tipo_token="";
 			}

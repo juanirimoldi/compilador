@@ -67,12 +67,12 @@ sentencia : sentencia_declarativa ';' {System.out.println("SENTENCIA DECLARATIVA
 //SENTENCIAS DECLARATIVAS
 
 //aca los ; andan
-sentencia_declarativa : declaracion_de_variable  {System.out.println("DECLARO variable ");}
+sentencia_declarativa : declaracion_de_variable  {System.out.println("DECLARO VARIABLE! ");}
 				      | declaracion_de_procedimiento  {System.out.println("DECLARO PROCEDIMIENTO ");}
 				      ;
 
 		
-declaracion_de_variable : tipo lista_de_variables
+declaracion_de_variable : tipo lista_de_variables {System.out.println("DECLARO VARIABLE con TIPO ");}
 				        ;
 
 
@@ -127,9 +127,11 @@ sentencia_ejecutable : asignacion {System.out.println("SENTENCIA EJECUTABLE -> A
 
 
 
-asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION! "+$1);} //$1, $$ etc.. y genero el terceto
-		;
-
+asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION! "+$1);
+									//checkeo semantico dentro de las reglas
+								   asignacion.ptr = crear_terceto(=, ID.ptr, EXPRESION.ptr); } //$1, $$ etc.. y genero el terceto
+		   ;
+//expr.ptr nro de terceto que tiene la expresion
 
 clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF					
 		      		  | IF '(' condicion ')' bloque_de_sentencias END_IF
@@ -175,21 +177,34 @@ parametro_ejecutable : ID':'ID  //para las invocaciones a parametros!!
 // si llego a la raiz -> lista bien escrita -> se lo entrego  a generador de coigo para hacer asembler
 
 
-expresion : expresion '+' termino {System.out.println("EXPRESION... ");}
-	  	| expresion '-' termino
-	  	| termino  {System.out.println("de EXPRESION a TERMINO... ");}
-	  	;
+expresion : expresion '+' termino {System.out.println("EXPRESION... ");
+								   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
+	  	  
+	  	  | expresion '-' termino {System.out.println("EXPRESION... ");
+			      				   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
+	  	  
+	  	  | termino  {System.out.println("de EXPRESION a TERMINO... ");
+	  	  			  expresion.ptr = termino.ptr	}
+	  	  ;
 
 
 termino : termino '*' factor {System.out.println("TERMINO..");}
+		
 		| termino '/' factor
-		| factor {System.out.println("de regla TERMINO a FACTOR..");}
+		
+		| factor {System.out.println("de regla TERMINO a FACTOR..");
+				  termino.ptr = factor.ptr}
 		;
 		
 		
-factor : CTE {System.out.println("CTE!! entra en regla factor \n");}
+		
+factor : CTE {System.out.println("CTE!! entra en regla factor \n");
+			  factor.ptr = CTE.ptr; }
+       
        | '-' factor 
-       | ID {System.out.println("ID!! entra en regla factor ");}
+       
+       | ID {System.out.println("ID!! entra en regla factor ");
+       		 factor.ptr = ID.ptr; }
        ;
 	   	
 

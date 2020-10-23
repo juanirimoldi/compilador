@@ -27,9 +27,21 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { super.tipo_token = "OP"; }
 		
 		
+		//PALABRAS RESERVADAS SAPE
+		if (super.buffer.equals("INTEGER") | super.buffer.equals("FLOAT")) {
+			super.tipo_token="PALABRA_RESERVADA" ;
+		}
+		
+		if (super.buffer.equals("IF") | super.buffer.equals("ELSE") | super.buffer.equals("END_IF")) {
+			super.tipo_token="PALABRA_RESERVADA" ;
+		}
+		
 		//int id_tipo = this.tt.getIdTipo(super.tipo_buffer); 
 		//System.out.println("ID TIPO TOKEN -> "+id_tipo);
 		this.t = new Token(super.buffer, super.tipo_token, nro_linea);//, id_tipo);
+		
+		//la sacudo, en la tabla de simbolos decide si la guarda o no
+		this.tds.addToken(t);
 		
 	
 		super.tipo_token="";

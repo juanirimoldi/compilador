@@ -41,10 +41,11 @@ public class AnalizadorLexico {
 	
 	
 	
-	public AnalizadorLexico(String programa){
+	public AnalizadorLexico(String programa) throws IllegalArgumentException, IllegalAccessException{
 		this.dir_codigo = programa;
 		
-		this.tds = tds;
+		//por que tengo qie inicializar en lexico y en sintactico la tabla de simbolos?
+		this.tds = new TablaDeSimbolos();
 				
 		
 		this.matriz_transicion_estados = new int[this.filas_estados][this.columnas_caracteres_validos];
@@ -797,7 +798,7 @@ public class AnalizadorLexico {
 				
 				this.ultima_pos = this.pos_actual; 
 				
-				System.out.println("\n Lexico  ->  Linea: "+ this.nro_linea + " , Token: "+ titi.getLexema()+" ,  tipo: "+titi.getTipo()+" \n");
+				System.out.println("\n Lexico  ->  Linea: "+ titi.getNroLinea() + " , Token: "+ titi.getLexema()+" ,  tipo: "+titi.getTipo()+" \n");
 				}
 		}
 		return titi;
@@ -872,5 +873,9 @@ public class AnalizadorLexico {
 		System.out.println();
 	}
 	
-
+	
+	public void asociarTablaDeSimbolos(TablaDeSimbolos tds) {
+		System.out.println("asocio algo?");
+		this.tds = tds;
+	}
 }

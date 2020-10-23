@@ -34,8 +34,15 @@ public class TablaDeSimbolos {
 	
 	public void addToken(Token t) {
 		
+		if (tdt.existe(t.getLexema())){
+			//System.out.println("Entro aca???");
+			t.setIdTipo(tdt.getIdTipo(t.getLexema()));
+			//System.out.println("que onda? "+t.getLexema()+" , "+t.getIdTipo());
+
+		}
 		//if t.getLexema() existe en tabla de palabra reservada 
 		//    no agrego el token y seteo el id con la palabra reservada
+		
 		if (t.getTipo().equals("PUNT") | t.getTipo().equals("IGUAL") | t.getTipo().equals("OP")) {
 			int ascii = (int)t.getLexema().charAt(0);
 			t.setIdTipo(ascii);
@@ -45,14 +52,14 @@ public class TablaDeSimbolos {
 			int id_tipo = this.tdt.getIdTipo(t.getTipo());
 			t.setIdTipo(id_tipo);
 			this.TSimbolos.put(t.getLexema(), t);
-			System.out.println(" Tabla -> APARECE UN ID  "+ t.getLexema() + " , " + t.getTipo() + " a la Tabla de Simbolos \n");
+			//System.out.println(" Tabla -> APARECE UN ID  "+ t.getLexema() + " , " + t.getTipo() + " a la Tabla de Simbolos \n");
 		}
 		if (t.getTipo().equals("CTE")){
 			int id_tipo = this.tdt.getIdTipo(t.getTipo());
 			t.setIdTipo(id_tipo);
 			//agrego identificador de tipo y lo guardp
 			this.TSimbolos.put(t.getLexema(), t);
-			System.out.println(" Tabla de Simbolos -> APARECE UNA CTE "+ t.getLexema() + " , " +t.getTipo() + " \n");
+			//System.out.println(" Tabla de Simbolos -> APARECE UNA CTE "+ t.getLexema() + " , " +t.getTipo() + " \n");
 		}
 		if (t.getTipo().equals("CADENA")){
 			int id_tipo = this.tdt.getIdTipo(t.getTipo());
