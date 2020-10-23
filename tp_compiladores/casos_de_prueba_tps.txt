@@ -1,0 +1,12 @@
+x = 5 ;
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
+INTEGER xy ;
+xy = 777 ;
+xy = 9889 ;
+abc = 10 ;
+y = x + abc ;
+b = 9 ;
+g = 5.7 ;
+%%.6666 ;
+f = x + b ; %%error sintactico! no hay regla que define esta expresion
+1.55
