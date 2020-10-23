@@ -445,7 +445,7 @@ public static void main(String args[]) throws IllegalArgumentException, IllegalA
 	al.abrirCargarArchivo();
 	TablaDeSimbolos tds = new TablaDeSimbolos();
 	
-	al.asociarTablaDeSimbolos(tds);
+	//al.asociarTablaDeSimbolos(tds);
 	
 	Parser par = new Parser(false, al, tds);
  	par.yyparse();
@@ -502,7 +502,7 @@ boolean doaction;
       if (yychar < 0)      //we want a char?
         {
         yychar = yylex();  //get next token
-        System.out.println("yycharly garcia "+yychar);
+        //System.out.println("yycharly garcia "+yychar);
         if (yydebug) debug(" next yychar:"+yychar);
         //#### ERROR CHECK ####
         if (yychar < 0)    //it it didn't work/error

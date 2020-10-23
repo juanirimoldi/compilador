@@ -51,7 +51,7 @@ programa : lista_de_sentencias {System.out.println("\n LLEGO A RAIZ! -> termino 
 		 ;
 
 
-lista_de_sentencias : sentencia
+lista_de_sentencias : sentencia {System.out.println("SENTENCIA SIMPLE! ");}
 		   		    | lista_de_sentencias sentencia {System.out.println("LISTA DE SENTENCIAS RECURSIVA! ");}
 		    		;
 
@@ -127,9 +127,9 @@ sentencia_ejecutable : asignacion {System.out.println("SENTENCIA EJECUTABLE -> A
 
 
 
-asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION! "+$1);
+asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION! -> asigno la EXPRESION! "+$1); }
 									//checkeo semantico dentro de las reglas
-								   asignacion.ptr = crear_terceto(=, ID.ptr, EXPRESION.ptr); } //$1, $$ etc.. y genero el terceto
+									//asignacion.ptr = crear_terceto(=, ID.ptr, EXPRESION.ptr); } //$1, $$ etc.. y genero el terceto
 		   ;
 //expr.ptr nro de terceto que tiene la expresion
 
@@ -177,14 +177,14 @@ parametro_ejecutable : ID':'ID  //para las invocaciones a parametros!!
 // si llego a la raiz -> lista bien escrita -> se lo entrego  a generador de coigo para hacer asembler
 
 
-expresion : expresion '+' termino {System.out.println("EXPRESION... ");
-								   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
+expresion : expresion '+' termino {System.out.println("EXPRESION... "); }
+						//		   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
 	  	  
-	  	  | expresion '-' termino {System.out.println("EXPRESION... ");
-			      				   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
+	  	  | expresion '-' termino {System.out.println("EXPRESION... "); }
+			      		//		   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
 	  	  
-	  	  | termino  {System.out.println("de EXPRESION a TERMINO... ");
-	  	  			  expresion.ptr = termino.ptr	}
+	  	  | termino  {System.out.println("soy terrible TERMINO -> voy a regla EXPRESION "); }
+	  	  			 // expresion.ptr = termino.ptr	}
 	  	  ;
 
 
@@ -192,19 +192,19 @@ termino : termino '*' factor {System.out.println("TERMINO..");}
 		
 		| termino '/' factor
 		
-		| factor {System.out.println("de regla TERMINO a FACTOR..");
-				  termino.ptr = factor.ptr}
+		| factor {System.out.println("soy factor -> voy a regla TERMINO");}
+				 // termino.ptr = factor.ptr}
 		;
 		
 		
 		
-factor : CTE {System.out.println("CTE!! entra en regla factor \n");
-			  factor.ptr = CTE.ptr; }
+factor : CTE {System.out.println("llega CTE! -> voy a regla factor \n"); }
+			 // factor.ptr = CTE.ptr; }
        
        | '-' factor 
        
-       | ID {System.out.println("ID!! entra en regla factor ");
-       		 factor.ptr = ID.ptr; }
+       | ID {System.out.println("llega ID! -> voy a regla factor "); }
+       		 //factor.ptr = ID.ptr; }
        ;
 	   	
 
@@ -237,14 +237,6 @@ private int yylex() {
 	if (token!=null){
 		tabla.addToken(token);
 		
-		//if token es id, cte o cadena -> tabla.addToken()
-		//else todo lo de abajo -> seteo el idTipo y no lo guardo en Tsymb
-		
-		//esto checkearlo dentro de la tabla de simbolos!
-		if (token.getTipo().equals("PUNT") || token.getTipo().equals("IGUAL") || token.getTipo().equals("OP")) {
-			int ascii = (int)token.getLexema().charAt(0);
-			token.setIdTipo(ascii);
-		}
 	    yylval = new ParserVal(token); //var para obtener el token de la tabla
 	    return token.getIdTipo(); //acceso a la entrada que devolvumos
 	}
@@ -268,3 +260,4 @@ public static void main(String args[]) {
  	par.yyparse();
  	
  	tds.mostrarSimbolos();
+}
