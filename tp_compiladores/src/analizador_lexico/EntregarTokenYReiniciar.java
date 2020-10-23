@@ -41,7 +41,7 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		this.t = new Token(super.buffer, super.tipo_token, nro_linea);//, id_tipo);
 		
 		//la sacudo, en la tabla de simbolos decide si la guarda o no
-		this.tds.addToken(t);
+		//this.tds.addToken(t);
 		
 	
 		super.tipo_token="";

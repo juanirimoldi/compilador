@@ -427,14 +427,6 @@ private int yylex() {
 	if (token!=null){
 		tabla.addToken(token);
 		
-		//if token es id, cte o cadena -> tabla.addToken()
-		//else todo lo de abajo -> seteo el idTipo y no lo guardo en Tsymb
-		
-		//esto checkearlo dentro de la tabla de simbolos!
-		//if (token.getTipo().equals("PUNT") | token.getTipo().equals("IGUAL") | token.getTipo().equals("OP")) {
-		//	int ascii = (int)token.getLexema().charAt(0);
-		//	token.setIdTipo(ascii);
-		//}
 	    yylval = new ParserVal(token); //var para obtener el token de la tabla
 	    return token.getIdTipo(); //acceso a la entrada que devolvumos
 	}

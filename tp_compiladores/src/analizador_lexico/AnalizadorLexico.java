@@ -45,7 +45,7 @@ public class AnalizadorLexico {
 		this.dir_codigo = programa;
 		
 		//por que tengo qie inicializar en lexico y en sintactico la tabla de simbolos?
-		this.tds = new TablaDeSimbolos();
+		//this.tds = new TablaDeSimbolos();
 				
 		
 		this.matriz_transicion_estados = new int[this.filas_estados][this.columnas_caracteres_validos];

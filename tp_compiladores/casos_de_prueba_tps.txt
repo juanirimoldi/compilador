@@ -7,6 +7,8 @@ abc = 10 ;
 y = x + abc ;
 b = 9 ;
 g = 5.7 ;
-%%.6666 ;
-f = x + b ; %%error sintactico! no hay regla que define esta expresion
-1.55
+dd = .6666 ;
+f = x + b ; 
+%%hasta aca reconoce bien
+
+%%1.55  no reconoce 1.55!!
