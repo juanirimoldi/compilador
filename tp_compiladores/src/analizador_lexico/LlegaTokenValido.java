@@ -23,18 +23,37 @@ public class LlegaTokenValido extends AccionSemantica {
 			super.buffer += c;
 		} 
 	
-		if ((c == ';') || (c == ',')) {
-			super.tipo_token = "PUNT";
-			super.buffer += c;
-		} else if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { 
+		
+		if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { 
 			super.tipo_token = "OP";
 			super.buffer += c;
 		} 
 		
 		
-		//COMPARADORES!
-		//if (c == '<') ->
-		//if (c == '>')
+		if ((c == '<') | (c == '>') | (c == '!')) { 
+			super.tipo_token = "COMP";
+			super.buffer += c;
+		} 
+		
+		
+		if ((c == '(') | (c == ')')) { 
+			super.tipo_token = "PARENTESIS";
+			super.buffer += c;
+		}
+		
+		
+		if ((c == '{') | (c == '}')) {
+			super.tipo_token = "LLAVES";
+			super.buffer += c;
+		}
+		
+		
+		if ((c == ';') || (c == ',')) {
+			super.tipo_token = "PUNT";
+			super.buffer += c;
+		} 
+		
+		
 		
 		//super.token_valido=true;
 		
@@ -47,7 +66,7 @@ public class LlegaTokenValido extends AccionSemantica {
 		if (super.tipo_token.equals("ID")) {
 			//System.out.println("TOKEN ID VALIDO -> " + super.buffer+" , "+super.buffer.length());
 			if (super.buffer.length() > this.id_long_max) {
-				System.out.println("WARNING!!!! TE CEBASTE.. -> " + super.buffer+" , "+super.buffer.length());
+				System.out.println("\n WARNING!!!! TE CEBASTE.. -> " + super.buffer+" , "+super.buffer.length());
 				super.buffer = super.buffer.substring(0, id_long_max);
 				System.out.println("TRUNCADO -> " + super.buffer+" , "+super.buffer.length());
 

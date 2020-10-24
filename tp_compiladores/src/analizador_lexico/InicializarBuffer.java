@@ -13,6 +13,7 @@ public class InicializarBuffer extends AccionSemantica {
 		//defino los tokens simples -> el tipo de los que se inicializan y se les pueden cargar caracteres
 		if (Character.isLetter(c)) { super.tipo_token = "ID"; 
 									 super.buffer += c;
+									 super.tipo_variable = "STRING";
 									}
 
 		if (Character.isDigit(c)) { super.tipo_token = "CTE"; 
@@ -29,6 +30,11 @@ public class InicializarBuffer extends AccionSemantica {
 						super.buffer += c;
 						}
 		
+		if ((c == '<') | (c == '>') | (c == '!')) { 
+			super.tipo_token = "COMP"; 
+			super.buffer += c;
+		}
+
 		
 		//if (super.tipo_token.equals("ID") | super.tipo_token.equals("CTE") | super.tipo_token.equals("CADENA")) {
 		//	super.buffer += c;

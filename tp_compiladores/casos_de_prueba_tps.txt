@@ -1,5 +1,6 @@
 x = 5 ;
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
+bazo = -5 ;
 INTEGER xy ;
 xy = 777 ;
 xy = 9889 ;
@@ -12,3 +13,5 @@ f = x + b ;
 %%hasta aca reconoce bien
 
 %%1.55  no reconoce 1.55!!
+
+IF ( x + 5 > 9 ) f = 8 ; END_IF

@@ -5,13 +5,15 @@ public class Token {
 	private String lexema;
 	private int nro_linea;
 	private int id_tipo;
+	private String tipo_var;
 
 	
-	public Token(String l, String t, int linea) {//, int id_tipo) {
+	public Token(String l, String t, int linea, String tipo_var) {//, int id_tipo) {
 		this.lexema = l;
 		this.tipo = t;
 		this.nro_linea = linea;
 		//this.id_tipo = id_tipo;
+		this.tipo_var=tipo_var;
 	}
 	
 	
@@ -37,5 +39,9 @@ public class Token {
 	
 	public void setTipo(String tipo) {
 		this.tipo=tipo;
+	}
+	
+	public String getTipoVar() {
+		return this.tipo_var;
 	}
 }

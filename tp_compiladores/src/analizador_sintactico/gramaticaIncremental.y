@@ -52,12 +52,12 @@ programa : lista_de_sentencias {System.out.println("\n LLEGO A RAIZ! -> termino 
 
 
 lista_de_sentencias : sentencia {System.out.println("SENTENCIA SIMPLE! ");}
-		   		    | lista_de_sentencias sentencia {System.out.println("LISTA DE SENTENCIAS RECURSIVA! ");}
+		   		    | lista_de_sentencias sentencia {System.out.println("LISTA DE SENTENCIAS RECURSIVA \n ");}
 		    		;
 
 
-sentencia : sentencia_declarativa ';' {System.out.println("SENTENCIA DECLARATIVA ");}
-		  | sentencia_ejecutable ';' {System.out.println("SENTENCIA EJECUTABLE ");}
+sentencia : sentencia_declarativa  {System.out.println("SENTENCIA DECLARATIVA ");}
+		  | sentencia_ejecutable  {System.out.println("SENTENCIA EJECUTABLE ");}
 	  	  ;
 
 
@@ -67,7 +67,7 @@ sentencia : sentencia_declarativa ';' {System.out.println("SENTENCIA DECLARATIVA
 //SENTENCIAS DECLARATIVAS
 
 //aca los ; andan
-sentencia_declarativa : declaracion_de_variable  {System.out.println("DECLARO VARIABLE! ");}
+sentencia_declarativa : declaracion_de_variable ';' {System.out.println("DECLARO VARIABLE! ");}
 				      | declaracion_de_procedimiento  {System.out.println("DECLARO PROCEDIMIENTO ");}
 				      ;
 
@@ -121,13 +121,12 @@ sentencia_ejecutable : asignacion {System.out.println("SENTENCIA EJECUTABLE -> A
 					 | clausula_de_seleccion ',' {System.out.println("CLAUSULA de SELECCION  IF ");}
 		   			 | sentencia_de_control ','
 		   			 | sentencia_de_salida ','
-		   			 | invocacion ','
-		   			 | 
+		   			 | invocacion ',' 
 					 ;
 
 
 
-asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION! -> asigno la EXPRESION! "+$1); }
+asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION -> asigno la EXPRESION! "+(Token)$1.obj.getLexema()); }
 									//checkeo semantico dentro de las reglas
 									//asignacion.ptr = crear_terceto(=, ID.ptr, EXPRESION.ptr); } //$1, $$ etc.. y genero el terceto
 		   ;
@@ -147,7 +146,7 @@ condicion : expresion '>' expresion
 	  	  ;
 
 
-bloque_de_sentencias : sentencia
+bloque_de_sentencias : '{' sentencia '}'
 				     | '{' lista_de_sentencias '}' //DEFINIDA ARRIBA!! lista de sentencias declarativas o ejecutables
 				     ;
 					
@@ -188,7 +187,7 @@ expresion : expresion '+' termino {System.out.println("EXPRESION... "); }
 	  	  ;
 
 
-termino : termino '*' factor {System.out.println("TERMINO..");}
+termino : termino '*' factor //{System.out.println("TERMINO..");}
 		
 		| termino '/' factor
 		
@@ -249,7 +248,7 @@ private int yylex() {
 
 
 public static void main(String args[]) {
- 	String direccion_codigo = "casos_prueba_id_cte.txt";
+ 	String direccion_codigo = "casos_de_prueba_tps.txt";
 	
  	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
 	al.abrirCargarArchivo();

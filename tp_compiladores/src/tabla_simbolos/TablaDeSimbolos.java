@@ -43,10 +43,14 @@ public class TablaDeSimbolos {
 		//if t.getLexema() existe en tabla de palabra reservada 
 		//    no agrego el token y seteo el id con la palabra reservada
 		
-		if (t.getTipo().equals("PUNT") | t.getTipo().equals("IGUAL") | t.getTipo().equals("OP")) {
+		
+		//para los tokens simples asigno su identificador ASCII
+		if (t.getTipo().equals("PUNT") | t.getTipo().equals("IGUAL") | t.getTipo().equals("OP") | t.getTipo().equals("PARENTESIS") | t.getTipo().equals("LLAVES") | t.getTipo().equals("COMP")) {
 			int ascii = (int)t.getLexema().charAt(0);
 			t.setIdTipo(ascii);
 		}
+		
+		
 		
 		if (t.getTipo().equals("ID")){
 			int id_tipo = this.tdt.getIdTipo(t.getTipo());
@@ -90,7 +94,8 @@ public class TablaDeSimbolos {
 		
 		Enumeration enumeration = this.TSimbolos.elements();
 		while (enumeration.hasMoreElements()) {
-			System.out.println(enumeration_keys.nextElement() + " 	, " + enumeration.nextElement());
+			Token t = (Token)enumeration.nextElement();
+			System.out.println(enumeration_keys.nextElement() + " 	, "+t.getTipo()+ " 	, "+t.getTipoVar());
 		}
 		System.out.println("\n");
 	}
