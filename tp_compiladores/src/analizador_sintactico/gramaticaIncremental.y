@@ -51,7 +51,7 @@ programa : lista_de_sentencias {System.out.println("\n LLEGO A RAIZ! -> termino 
 		 ;
 
 
-lista_de_sentencias : sentencia {System.out.println("SENTENCIA SIMPLE! ");}
+lista_de_sentencias : sentencia //{System.out.println("SENTENCIA SIMPLE! ");}
 		   		    | lista_de_sentencias sentencia {System.out.println("LISTA DE SENTENCIAS RECURSIVA \n ");}
 		    		;
 
