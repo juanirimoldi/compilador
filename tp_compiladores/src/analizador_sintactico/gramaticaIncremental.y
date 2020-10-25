@@ -83,7 +83,7 @@ declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE '{
 			
 			
 cuerpo_del_procedimiento : lista_de_sentencias
-			 			 | lista_de_sentencias declaracion_de_procedimiento
+			 			 //| lista_de_sentencias declaracion_de_procedimiento !!VER!! esto no reduce nunca
 			 			 ;			
 
 
@@ -118,19 +118,24 @@ tipo : INTEGER
 
 		
 sentencia_ejecutable : asignacion {System.out.println("SENTENCIA EJECUTABLE -> ASIGNACION! ");}
-					 | clausula_de_seleccion ',' {System.out.println("CLAUSULA de SELECCION  IF ");}
-		   			 | sentencia_de_control ','
-		   			 | sentencia_de_salida ','
-		   			 | invocacion ',' 
+					 | clausula_de_seleccion {System.out.println("CLAUSULA de SELECCION  IF ");}
+		   			 | sentencia_de_control 
+		   			 | sentencia_de_salida 
+		   			 | invocacion 
 					 ;
 
 
+//al hacer la asignacion debo checkear si la variable existe en la tabla de simbolos!!
+//si existe -> hago la asignacion
+//si no existe sacudo un error de que falta inicializar
 
 asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION -> asigno la EXPRESION! "+(Token)$1.obj.getLexema()); }
-									//checkeo semantico dentro de las reglas
-									//asignacion.ptr = crear_terceto(=, ID.ptr, EXPRESION.ptr); } //$1, $$ etc.. y genero el terceto
+								//checkeo semantico dentro de las reglas
+								//asignacion.ptr = crear_terceto(=, ID.ptr, EXPRESION.ptr); } //$1, $$ etc.. y genero el terceto
 		   ;
 //expr.ptr nro de terceto que tiene la expresion
+
+
 
 clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF					
 		      		  | IF '(' condicion ')' bloque_de_sentencias END_IF
@@ -146,12 +151,12 @@ condicion : expresion '>' expresion
 	  	  ;
 
 
-bloque_de_sentencias : '{' sentencia '}'
-				     | '{' lista_de_sentencias '}' //DEFINIDA ARRIBA!! lista de sentencias declarativas o ejecutables
+//bloque_de_sentencias : '{' sentencia '}' {System.out.println("\n\nBLOQUE DE 1 SOLA SENTENCIA!!\n\n");}
+bloque_de_sentencias : '{' lista_de_sentencias '}' {System.out.println("\n\nBLOQUE DE MULTIPLES SENTENCIAS!!\n\n");}
 				     ;
 					
 
-sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
+sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')' {System.out.println("\n\nSENTENCIA DE CONTROL!!\n\n");}
 		             ;
 
 					
@@ -176,13 +181,13 @@ parametro_ejecutable : ID':'ID  //para las invocaciones a parametros!!
 // si llego a la raiz -> lista bien escrita -> se lo entrego  a generador de coigo para hacer asembler
 
 
-expresion : expresion '+' termino {System.out.println("EXPRESION... "); }
+expresion : expresion '+' termino {System.out.println("EXPRESION SUMA  + "); }
 						//		   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
 	  	  
-	  	  | expresion '-' termino {System.out.println("EXPRESION... "); }
+	  	  | expresion '-' termino {System.out.println("EXPRESION RESTA  -  "); }
 			      		//		   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
 	  	  
-	  	  | termino  {System.out.println("soy terrible TERMINO -> voy a regla EXPRESION "); }
+	  	  | termino  //{System.out.println("soy terrible TERMINO -> voy a regla EXPRESION "); }
 	  	  			 // expresion.ptr = termino.ptr	}
 	  	  ;
 
@@ -191,18 +196,18 @@ termino : termino '*' factor //{System.out.println("TERMINO..");}
 		
 		| termino '/' factor
 		
-		| factor {System.out.println("soy factor -> voy a regla TERMINO");}
+		| factor //{System.out.println("soy factor -> voy a regla TERMINO");}
 				 // termino.ptr = factor.ptr}
 		;
 		
 		
 		
-factor : CTE {System.out.println("llega CTE! -> voy a regla factor \n"); }
+factor : CTE //{System.out.println("llega CTE! -> voy a regla factor \n"); }
 			 // factor.ptr = CTE.ptr; }
        
        | '-' factor 
        
-       | ID {System.out.println("llega ID! -> voy a regla factor "); }
+       | ID  //{System.out.println("llega ID! -> voy a regla factor "); }
        		 //factor.ptr = ID.ptr; }
        ;
 	   	

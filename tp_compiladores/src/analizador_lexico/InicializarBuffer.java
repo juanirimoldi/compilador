@@ -22,7 +22,7 @@ public class InicializarBuffer extends AccionSemantica {
 								 }
 
 		if (c == '.') { super.tipo_token = "CTE"; 
-						super.tipo_variable = "DOUBLE";
+						super.tipo_variable = "FLOAT";
 						super.buffer += c;
 						}
 		
