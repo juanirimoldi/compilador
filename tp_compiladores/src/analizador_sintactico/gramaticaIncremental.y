@@ -52,12 +52,12 @@ programa : lista_de_sentencias {System.out.println("\n LLEGO A RAIZ! -> termino 
 
 
 lista_de_sentencias : sentencia //{System.out.println("SENTENCIA SIMPLE! ");}
-		   		    | lista_de_sentencias sentencia {System.out.println("LISTA DE SENTENCIAS RECURSIVA \n ");}
+		   		    | lista_de_sentencias sentencia //{System.out.println("LISTA DE SENTENCIAS RECURSIVA \n ");}
 		    		;
 
 
-sentencia : sentencia_declarativa  {System.out.println("SENTENCIA DECLARATIVA ");}
-		  | sentencia_ejecutable  {System.out.println("SENTENCIA EJECUTABLE ");}
+sentencia : sentencia_declarativa  //{System.out.println("SENTENCIA DECLARATIVA CORRECTA ");}
+		  | sentencia_ejecutable // {System.out.println("SENTENCIA EJECUTABLE ");}
 	  	  ;
 
 
@@ -67,12 +67,23 @@ sentencia : sentencia_declarativa  {System.out.println("SENTENCIA DECLARATIVA ")
 //SENTENCIAS DECLARATIVAS
 
 //aca los ; andan
-sentencia_declarativa : declaracion_de_variable ';' {System.out.println("DECLARO VARIABLE! ");}
+sentencia_declarativa : declaracion_de_variable ';' //{System.out.println("VARIABLE DECLARADA! ");}
 				      | declaracion_de_procedimiento  {System.out.println("DECLARO PROCEDIMIENTO ");}
 				      ;
 
 		
-declaracion_de_variable : tipo lista_de_variables {System.out.println("DECLARO VARIABLE con TIPO ");}
+declaracion_de_variable : tipo lista_de_variables {//System.out.println("VARIABLE BIEN DECLARADA con TIPO!! ");
+												   //Token t = (Token)yyval.obj;	
+												   //System.out.println("yyval SAPE! "+t.getLexema());
+												   Token tipo = (Token)$1.obj;
+												   Token variable = (Token)$2.obj;
+												   System.out.println("\n Sintactico  ->  VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+"  "+variable.getLexema()+"\n");
+												   
+												   //String tipo = (Token)$1.obj.getLexema();
+												   //String lexema = (Token)$2.obj.getLexema(); 
+								   				   System.out.println("\n----------------------------------------\n");
+								   
+												   }
 				        ;
 
 
@@ -117,7 +128,7 @@ tipo : INTEGER
 //SENTENCIAS EJECUTABLES
 
 		
-sentencia_ejecutable : asignacion {System.out.println("SENTENCIA EJECUTABLE -> ASIGNACION! ");}
+sentencia_ejecutable : asignacion //{System.out.println("SENTENCIA EJECUTABLE -> ASIGNACION! ");}
 					 | clausula_de_seleccion {System.out.println("CLAUSULA de SELECCION  IF ");}
 		   			 | sentencia_de_control 
 		   			 | sentencia_de_salida 
@@ -129,10 +140,29 @@ sentencia_ejecutable : asignacion {System.out.println("SENTENCIA EJECUTABLE -> A
 //si existe -> hago la asignacion
 //si no existe sacudo un error de que falta inicializar
 
-asignacion : ID '=' expresion ';' {System.out.println("HAGO ASIGNACION -> asigno la EXPRESION! "+(Token)$1.obj.getLexema()); }
+asignacion : ID '=' expresion ';' {System.out.println("OJO!!! checkear antes que exista el lexema en la Tabla de Simbolos");
+								   //String lexema = (Token)$1.obj.getLexema();
+								   //Token tt = (Token)obj;
+								   Token id = (Token)$1.obj;
+								   System.out.println("EXISTE ID EN TSYM?? a ver, mostrala ");
+								   tabla.mostrarSimbolos();
+								   Token op = (Token)$2.obj;
+								   Token expr = (Token)$3.obj;
+								   //es valida esta impleentacion? o consumo  memoria al crear tokens?
+								   
+								   System.out.println("\n Sintactico -> COMO??  "+id.getLexema()+" , "+expr.getLexema()+"\n");
+								   
+								   //String expr = (Token)$2.obj.getLexema(); 
+								   //System.out.println("\n Sintactico  ->  HAGO ASIGNACION  "+lexema+" = "+expr+"\n");
+								   
+								   //tabla.mostrarSimbolos();
+								   //tabla.mostrarSimbolos();
+								   System.out.println("\n ------------------------------------ \n"); 
+								   }
 								//checkeo semantico dentro de las reglas
 								//asignacion.ptr = crear_terceto(=, ID.ptr, EXPRESION.ptr); } //$1, $$ etc.. y genero el terceto
 		   ;
+		   
 //expr.ptr nro de terceto que tiene la expresion
 
 
@@ -207,7 +237,8 @@ factor : CTE //{System.out.println("llega CTE! -> voy a regla factor \n"); }
        
        | '-' factor 
        
-       | ID  //{System.out.println("llega ID! -> voy a regla factor "); }
+       | ID  //{System.out.println("llega ID! -> voy a regla factor "); 
+       		 // tabla.mostrarSimbolos();} no muestra nada!!
        		 //factor.ptr = ID.ptr; }
        ;
 	   	

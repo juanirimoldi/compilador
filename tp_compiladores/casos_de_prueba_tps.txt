@@ -1,7 +1,7 @@
 x = 5 ;
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
 bazo = -5 ; %%no toma bien el -
-
+h = w ;
 %%integers  !!chekear rangos!
 INTEGER xy ;
 xy = 777 ;
