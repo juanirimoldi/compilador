@@ -395,7 +395,7 @@ final static String yyrule[] = {
 "factor : ID",
 };
 
-//#line 248 "gramaticaIncremental.y"
+//#line 252 "gramaticaIncremental.y"
 	   	
 
 
@@ -616,7 +616,7 @@ case 8:
 												   /*System.out.println("yyval SAPE! "+t.getLexema());*/
 												   Token tipo = (Token)val_peek(1).obj;
 												   Token variable = (Token)val_peek(0).obj;
-												   System.out.println("\n Sintactico  ->  VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+"  "+variable.getLexema()+"\n");
+												   System.out.println("\n Sintactico  ->  VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+" "+variable.getLexema()+"\n");
 												   
 												   /*String tipo = (Token)$1.obj.getLexema();*/
 												   /*String lexema = (Token)$2.obj.getLexema(); */
@@ -630,18 +630,22 @@ case 22:
 break;
 case 26:
 //#line 143 "gramaticaIncremental.y"
-{System.out.println("OJO!!! checkear antes que exista el lexema en la Tabla de Simbolos");
-								   /*String lexema = (Token)$1.obj.getLexema();*/
-								   /*Token tt = (Token)obj;*/
+{/*System.out.println("OJO!!! checkear antes que exista el lexema en la Tabla de Simbolos");*/
 								   Token id = (Token)val_peek(3).obj;
-								   System.out.println("EXISTE ID EN TSYM?? a ver, mostrala ");
+								   
+								   System.out.println("OJO!!! checkear antes que "+ id.getLexema() +" exista el lexema en la Tabla de Simbolos");
+								   System.out.println("EXISTE?? a ver, mostrala ");
 								   tabla.mostrarSimbolos();
+								   
 								   Token op = (Token)val_peek(2).obj;
 								   Token expr = (Token)val_peek(1).obj;
 								   /*es valida esta impleentacion? o consumo  memoria al crear tokens?*/
 								   
 								   System.out.println("\n Sintactico -> COMO??  "+id.getLexema()+" , "+expr.getLexema()+"\n");
 								   
+								   System.out.println("Tabla -> addToken() ");
+								   /*tabla.addToken(id);*/
+								   /*tabla.mostrarSimbolos();*/
 								   /*String expr = (Token)$2.obj.getLexema(); */
 								   /*System.out.println("\n Sintactico  ->  HAGO ASIGNACION  "+lexema+" = "+expr+"\n");*/
 								   
@@ -651,22 +655,22 @@ case 26:
 								   }
 break;
 case 35:
-//#line 185 "gramaticaIncremental.y"
+//#line 189 "gramaticaIncremental.y"
 {System.out.println("\n\nBLOQUE DE MULTIPLES SENTENCIAS!!\n\n");}
 break;
 case 36:
-//#line 189 "gramaticaIncremental.y"
+//#line 193 "gramaticaIncremental.y"
 {System.out.println("\n\nSENTENCIA DE CONTROL!!\n\n");}
 break;
 case 41:
-//#line 214 "gramaticaIncremental.y"
+//#line 218 "gramaticaIncremental.y"
 {System.out.println("EXPRESION SUMA  + "); }
 break;
 case 42:
-//#line 217 "gramaticaIncremental.y"
+//#line 221 "gramaticaIncremental.y"
 {System.out.println("EXPRESION RESTA  -  "); }
 break;
-//#line 590 "Parser.java"
+//#line 594 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

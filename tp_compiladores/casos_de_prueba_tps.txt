@@ -1,32 +1,101 @@
+%%IDENTIFICADORES bien siempre que esten separados por espacio 
+
 x = 5 ;
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
-bazo = -5 ; %%no toma bien el -
-h = w ;
-%%integers  !!chekear rangos!
+%%b = -5 ; %%no toma bien el -
+
+
+%% CONSTANTES
+
+%% INTEGERs
+
+INTEGER x ;
+x = 55 ;
+
+INTEGER x_i ;
+x_i = 66666 ;
+
 INTEGER xy ;
 xy = 777 ;
 xy = 9889 ;
 abc = 10 ;
+
+
 y = x + abc ;
 b = 9 ;
 
-%%floats
+
+%%hacer un caso con valores fuera de rango! x > a (2 a la 15) -1
+%%otro con x < a (-2 a la 15)
+
+
+%%VER!! antes de hacer la sentencia ejecutable, debe checkear antes en la tabla de simbolos
+
+
+%%FLOATs
+
+FLOAT ff ;
+ff = .2 ;
 g = 5.7 ;
 dd = .6666 ;
 f = x + b ; 
-%%hasta aca reconoce bien
+
 
 %%1.55  no reconoce 1.55!!
 
-IF ( x + 5 > 9 ) { ff = 8 ; } END_IF  %%sape
 
+%%FLOATS flasheros
 %%1.
 ego = .6 ;
-rrr = 3.f-5 ;
-klan = 2.f+34 ;
-p2p = 2.5f-1 ;
+rrr = 3.f-5 ;  %%falta agregar el 3. 
+klan = 2.f+34 ;  %%falta el 2.
+p2p = 2.5f-1 ;  %%p2p bien ID, falta el 2.
 %%inte = 15. ; %%VER!!! no agrega el lexema! y agrega mal el tipo
 
-%%LOOP { x++ } UNTIL ( x > 9 ) 
+%%NO RECONOCE MANTISA NEGATIVA!
+%%CONSIDERAR RANGO 1.17...-f38 < x < 3.4...f+38  U  -3.4...f+38 < x  
+
+
+%% CADENAS DE CARACTERES -> bien y mal definidas
 %%chain = "sape" ;
+
+%% CADENAS MULTILINEA
+%% cadena = "que onda esto" ;  %%error de sintaxis! no reconoce regla en el sintactico
+%%c2 = "esto deberia 
+%%      viajar"
+
+
+%% COMENTARIOS BIEN Y MAL DEFINIDOS
+%% este es un comentario bien defnido
+
+
+%% OPERADORES ARITMETICOS  + , - , * , /
+
+w = x + b ;
+
+w2 = x - b ;
+
+
+%% OPERADOR DE ASIGNACION  = 
+
+%% funciona para biding de tipo estatico y dinamico. !!VER!!
+
+
+%% COMPARADORES  >= , <= , > , < , == , !=
+
+
+
+%% LLAVES, PARENTESIS Y PUNTUACION
+%% reconoce bien en las sentencias de control y las de iteracion
+
+
+%% SENTENCIAS DE CONTROL
+IF ( x + 5 > 9 ) { ff = 8 ; } END_IF  %%bieeen
+
+
+
+%% SENTENCIAS DE ITERACION
+LOOP { x = x + 1 ; } UNTIL ( x > 9 ) 
+
+
 %%-1.2 ;

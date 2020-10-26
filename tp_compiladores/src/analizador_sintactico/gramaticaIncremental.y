@@ -77,7 +77,7 @@ declaracion_de_variable : tipo lista_de_variables {//System.out.println("VARIABL
 												   //System.out.println("yyval SAPE! "+t.getLexema());
 												   Token tipo = (Token)$1.obj;
 												   Token variable = (Token)$2.obj;
-												   System.out.println("\n Sintactico  ->  VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+"  "+variable.getLexema()+"\n");
+												   System.out.println("\n Sintactico  ->  VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+" "+variable.getLexema()+"\n");
 												   
 												   //String tipo = (Token)$1.obj.getLexema();
 												   //String lexema = (Token)$2.obj.getLexema(); 
@@ -140,18 +140,23 @@ sentencia_ejecutable : asignacion //{System.out.println("SENTENCIA EJECUTABLE ->
 //si existe -> hago la asignacion
 //si no existe sacudo un error de que falta inicializar
 
-asignacion : ID '=' expresion ';' {System.out.println("OJO!!! checkear antes que exista el lexema en la Tabla de Simbolos");
-								   //String lexema = (Token)$1.obj.getLexema();
-								   //Token tt = (Token)obj;
+asignacion : ID '=' expresion ';' {//System.out.println("OJO!!! checkear antes que exista el lexema en la Tabla de Simbolos");
 								   Token id = (Token)$1.obj;
-								   System.out.println("EXISTE ID EN TSYM?? a ver, mostrala ");
+								   
+								   System.out.println("OJO!!! checkear que  "+ id.getLexema() +"  exista en la Tabla de Simbolos");
+								   System.out.println("EXISTE?? a ver, mostrala ");
 								   tabla.mostrarSimbolos();
+								   
 								   Token op = (Token)$2.obj;
 								   Token expr = (Token)$3.obj;
 								   //es valida esta impleentacion? o consumo  memoria al crear tokens?
 								   
-								   System.out.println("\n Sintactico -> COMO??  "+id.getLexema()+" , "+expr.getLexema()+"\n");
 								   
+								   System.out.println("\n Sintactico -> asigno igual. COMO??   "+id.getLexema()+" "+op.getLexema()+" "+expr.getLexema()+"\n");
+								   
+								   //System.out.println("Tabla -> addToken() ");
+								   //tabla.addToken(id);
+								   //tabla.mostrarSimbolos();
 								   //String expr = (Token)$2.obj.getLexema(); 
 								   //System.out.println("\n Sintactico  ->  HAGO ASIGNACION  "+lexema+" = "+expr+"\n");
 								   
@@ -211,8 +216,12 @@ parametro_ejecutable : ID':'ID  //para las invocaciones a parametros!!
 // si llego a la raiz -> lista bien escrita -> se lo entrego  a generador de coigo para hacer asembler
 
 
-expresion : expresion '+' termino {System.out.println("EXPRESION SUMA  + "); }
-						//		   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
+expresion : expresion '+' termino {System.out.println("EXPRESION SUMA  + "); 
+								   Token op1 = (Token)$1.obj;
+								   Token op2 = (Token)$2.obj;
+								   System.out.println("SUMO ->  "+op1.getLexema()+" + "+op2.getLexema()); 
+								   //expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr);
+								   }
 	  	  
 	  	  | expresion '-' termino {System.out.println("EXPRESION RESTA  -  "); }
 			      		//		   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
