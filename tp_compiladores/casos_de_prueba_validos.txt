@@ -1,0 +1,34 @@
+x = 5 ;
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
+
+INTEGER x ;
+x = 55 ;
+
+INTEGER x_i ;
+x_i = 66666 ;
+
+%%FLOATs
+
+FLOAT ff ;
+ff = .2 ;
+
+%% este es un comentario bien defnido
+
+
+%% OPERADORES ARITMETICOS  + , - , * , /
+
+w = x + b ;
+
+w2 = x - b ;
+
+
+%% SENTENCIAS DE CONTROL
+IF ( x + 5 > 9 ) { ff = 8 ; } END_IF  %%bieeen
+
+
+%% SENTENCIAS DE ITERACION
+%%LOOP {  } UNTIL ( x > 9 ) 
+
+
+%% PROCEDIMIENTO
+PROC proced ( INTEGER x ) NI = 2 { yyy = 99 ; } 
