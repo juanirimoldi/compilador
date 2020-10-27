@@ -2,7 +2,10 @@
 
 x = 5 ;
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
-b = -5 ; %%no toma bien el -
+abc_30 = 30 ; 
+abc+ 
+abc_30+ 
+b = -5 ; 
 
 
 %% CONSTANTES

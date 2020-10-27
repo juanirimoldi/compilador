@@ -48,7 +48,7 @@ public class LlegaTokenValido extends AccionSemantica {
 		}
 		
 		
-		if ((c == ';') || (c == ',')) {
+		if ((c == ';') | (c == ',') | (c == ':')) {
 			super.tipo_token = "PUNT";
 			super.buffer += c;
 		} 
