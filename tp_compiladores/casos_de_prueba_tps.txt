@@ -1,15 +1,15 @@
-%%IDENTIFICADORES bien siempre que esten separados por espacio 
+%%IDENTIFICADORES bien si estan separados por espacio 
 
 x = 5 ;
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
-%%b = -5 ; %%no toma bien el -
+b = -5 ; %%no toma bien el -
 
 
 %% CONSTANTES
 
 %% INTEGERs
 
-INTEGER x ;
+INTEGER x ; %%declaracion de variable encontrada
 x = 55 ;
 
 INTEGER x_i ;
@@ -46,6 +46,7 @@ f = x + b ;
 
 %%FLOATS flasheros
 %%1.
+%%-1.2 ;
 ego = .6 ;
 rrr = 3.f-5 ;  %%falta agregar el 3. 
 klan = 2.f+34 ;  %%falta el 2.
@@ -90,12 +91,18 @@ w2 = x - b ;
 
 
 %% SENTENCIAS DE CONTROL
-IF ( x + 5 > 9 ) { ff = 8 ; } END_IF  %%bieeen
+IF ( x + 5 > 9 ) { ff = 8 ; } END_IF %%; %%bieeen fañlta ; !!!
 
 
 
 %% SENTENCIAS DE ITERACION
-LOOP { x = x + 1 ; } UNTIL ( x > 9 ) 
+%%LOOP { x = x + 6 ; } UNTIL ( x > 9 ) %%;
 
 
-%%-1.2 ;
+%% PROCEDIMIENTO
+PROC proced ( INTEGER x ) NI = 2 { yyy = 99 ; } 
+
+PROC f1 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 { x = y + z ; }
+
+
+

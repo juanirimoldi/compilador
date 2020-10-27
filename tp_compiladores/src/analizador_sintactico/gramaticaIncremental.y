@@ -33,8 +33,10 @@ import analizador_lexico.*;
 	FLOAT
 		
 	/* Comparadores */
-	MAYORIGUAL
+	MENOR
+	MAYOR
 	MENORIGUAL
+	MAYORIGUAL
 	IGUAL
 	DISTINTO
 	//PUNT
@@ -56,8 +58,12 @@ lista_de_sentencias : sentencia //{System.out.println("SENTENCIA SIMPLE! ");}
 		    		;
 
 
-sentencia : sentencia_declarativa  //{System.out.println("SENTENCIA DECLARATIVA CORRECTA ");}
-		  | sentencia_ejecutable // {System.out.println("SENTENCIA EJECUTABLE ");}
+sentencia : sentencia_declarativa  {System.out.println("\n SENTENCIA DECLARATIVA CORRECTA \n");
+								   	System.out.println("\n----------------------------------------\n");
+									}
+		  | sentencia_ejecutable  {System.out.println("\n SENTENCIA EJECUTABLE CORRECTA \n");
+		    	   				   System.out.println("\n----------------------------------------\n");
+		  						   }
 	  	  ;
 
 
@@ -67,21 +73,25 @@ sentencia : sentencia_declarativa  //{System.out.println("SENTENCIA DECLARATIVA 
 //SENTENCIAS DECLARATIVAS
 
 //aca los ; andan
-sentencia_declarativa : declaracion_de_variable ';' //{System.out.println("VARIABLE DECLARADA! ");}
-				      | declaracion_de_procedimiento  {System.out.println("DECLARO PROCEDIMIENTO ");}
+sentencia_declarativa : declaracion_de_variable //{System.out.println("VARIABLE DECLARADA! ");
+								   				 //System.out.println("\n----------------------------------------\n");
+												 //}
+				      | declaracion_de_procedimiento // {System.out.println("PROCEDIMIENTO DECLARADO! ");
+				      								  // System.out.println("\n----------------------------------------\n");
+				      								   //}
 				      ;
 
 		
-declaracion_de_variable : tipo lista_de_variables {//System.out.println("VARIABLE BIEN DECLARADA con TIPO!! ");
+declaracion_de_variable : tipo lista_de_variables ';' {//System.out.println("VARIABLE BIEN DECLARADA con TIPO!! ");
 												   //Token t = (Token)yyval.obj;	
 												   //System.out.println("yyval SAPE! "+t.getLexema());
 												   Token tipo = (Token)$1.obj;
 												   Token variable = (Token)$2.obj;
-												   System.out.println("\n Sintactico  ->  VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+" "+variable.getLexema()+"\n");
+												   System.out.println("\n Sintactico  ->  Linea: "+tipo.getNroLinea()+"  ,  VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+" "+variable.getLexema()+"\n");
 												   
 												   //String tipo = (Token)$1.obj.getLexema();
 												   //String lexema = (Token)$2.obj.getLexema(); 
-								   				   System.out.println("\n----------------------------------------\n");
+								   				   //System.out.println("\n----------------------------------------\n");
 								   
 												   }
 				        ;
@@ -128,11 +138,11 @@ tipo : INTEGER
 //SENTENCIAS EJECUTABLES
 
 		
-sentencia_ejecutable : asignacion //{System.out.println("SENTENCIA EJECUTABLE -> ASIGNACION! ");}
-					 | clausula_de_seleccion {System.out.println("CLAUSULA de SELECCION  IF ");}
+sentencia_ejecutable : asignacion //{System.out.println("Sintactico  ->  SENTENCIA EJECUTABLE -> ASIGNACION! ");}
+					 | clausula_de_seleccion {System.out.println("\n Sintactico  ->  CLAUSULA de SELECCION EJECUTADA CORRECTAMENTE \n");}
 		   			 | sentencia_de_control 
 		   			 | sentencia_de_salida 
-		   			 | invocacion 
+		   			 | invocacion {System.out.println("\n INVOCO TERRIBLE PROCEDURE \n");}
 					 ;
 
 
@@ -140,19 +150,20 @@ sentencia_ejecutable : asignacion //{System.out.println("SENTENCIA EJECUTABLE ->
 //si existe -> hago la asignacion
 //si no existe sacudo un error de que falta inicializar
 
-asignacion : ID '=' expresion ';' {//System.out.println("OJO!!! checkear antes que exista el lexema en la Tabla de Simbolos");
+asignacion : ID '=' expresion ';' {//System.out.println("Existe el lexema en la Tabla de Simbolos");
 								   Token id = (Token)$1.obj;
-								   
-								   System.out.println("OJO!!! checkear que  "+ id.getLexema() +"  exista en la Tabla de Simbolos");
-								   System.out.println("EXISTE?? a ver, mostrala ");
-								   tabla.mostrarSimbolos();
+								   int linea = id.getNroLinea();
+								   //System.out.println("\n OJO!! Existe  "+ id.getLexema() +"  en Tabla de Simbolos ??");
+								   //System.out.println("EXISTE?? a ver, mostrala ");
+								   //tipo de binding?
+								   //tabla.mostrarSimbolos();
 								   
 								   Token op = (Token)$2.obj;
 								   Token expr = (Token)$3.obj;
 								   //es valida esta impleentacion? o consumo  memoria al crear tokens?
 								   
 								   
-								   System.out.println("\n Sintactico -> asigno igual. COMO??   "+id.getLexema()+" "+op.getLexema()+" "+expr.getLexema()+"\n");
+								   System.out.println("\n Sintactico ->  Linea: "+ linea+"  ,  ASIGNACION DETECTADA   "+id.getLexema()+" "+op.getLexema()+" "+expr.getLexema()+"\n");
 								   
 								   //System.out.println("Tabla -> addToken() ");
 								   //tabla.addToken(id);
@@ -162,7 +173,7 @@ asignacion : ID '=' expresion ';' {//System.out.println("OJO!!! checkear antes q
 								   
 								   //tabla.mostrarSimbolos();
 								   //tabla.mostrarSimbolos();
-								   System.out.println("\n ------------------------------------ \n"); 
+								   //System.out.println("\n ------------------------------------ \n"); 
 								   }
 								//checkeo semantico dentro de las reglas
 								//asignacion.ptr = crear_terceto(=, ID.ptr, EXPRESION.ptr); } //$1, $$ etc.. y genero el terceto
@@ -177,7 +188,13 @@ clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE bloque_de
 		     		  ;
 					
 						
-condicion : expresion '>' expresion
+condicion : expresion '>' expresion {//System.out.println("\n Sintactico  ->  COMPARACION!!\n");
+									 Token op1 = (Token)$1.obj;
+									 int linea = op1.getNroLinea();
+ 								     Token op2 = (Token)$2.obj;
+ 								     Token op3 = (Token)$3.obj;
+ 								     System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  COMPARACION  ->  "+op1.getLexema()+" "+op2.getLexema()+" "+op3.getLexema()+"\n");
+									}
 	  	  | expresion '<' expresion
 	  	  | expresion MAYORIGUAL expresion
 	  	  | expresion MENORIGUAL expresion
@@ -193,8 +210,14 @@ bloque_de_sentencias : '{' lista_de_sentencias '}' {System.out.println("\n\nBLOQ
 
 sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')' {System.out.println("\n\nSENTENCIA DE CONTROL!!\n\n");}
 		             ;
+		             
+//LOOP bloque_de_sentencias ERROR -> puede faltar LOOP , until , ( , ) , etc
+//UNTIL ... error
+//TOKEN ERROR! 
 
-					
+//checkear tambien IF y PROC!! hacer sentencias de errror!!!
+//asignacion con lado izq o der faltante
+// = 3 ; , x = ;					
 sentencia_de_salida : OUT '(' CADENA ')'
 				    ;
 					
@@ -204,7 +227,7 @@ invocacion : ID '(' parametro_ejecutable ')'
 		  
 
 //!!!VER!!! 		  
-parametro_ejecutable : ID':'ID  //para las invocaciones a parametros!!
+parametro_ejecutable : ID ':' ID  //para las invocaciones a parametros!!
 		   		     | parametro_ejecutable ',' ID':'ID
 		     		 ;
 		 			
@@ -216,10 +239,12 @@ parametro_ejecutable : ID':'ID  //para las invocaciones a parametros!!
 // si llego a la raiz -> lista bien escrita -> se lo entrego  a generador de coigo para hacer asembler
 
 
-expresion : expresion '+' termino {System.out.println("EXPRESION SUMA  + "); 
+expresion : expresion '+' termino {//System.out.println("\n EXPRESION SUMA  "); 
 								   Token op1 = (Token)$1.obj;
+								   int linea = op1.getNroLinea();
 								   Token op2 = (Token)$2.obj;
-								   System.out.println("SUMO ->  "+op1.getLexema()+" + "+op2.getLexema()); 
+								   Token op3 = (Token)$3.obj;
+								   System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  EXPRESION SUMA  ->  "+op1.getLexema()+" "+op2.getLexema()+" "+op3.getLexema()+"\n"); 
 								   //expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr);
 								   }
 	  	  
@@ -244,7 +269,15 @@ termino : termino '*' factor //{System.out.println("TERMINO..");}
 factor : CTE //{System.out.println("llega CTE! -> voy a regla factor \n"); }
 			 // factor.ptr = CTE.ptr; }
        
-       | '-' factor 
+       | '-'CTE {//System.out.println("CTE negativa! \n"); 
+       			 Token op1 = (Token)$1.obj;
+				 int linea = op1.getNroLinea();
+				 Token op2 = (Token)$2.obj;
+				 System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  CTE NEGATIVA!  ->  "+op1.getLexema()+" "+op2.getLexema()+"\n");
+				 } 
+       			//va a tsym y va haccia constante a negativa. recheckear los rangos!!!
+       
+       //| '-' factor 
        
        | ID  //{System.out.println("llega ID! -> voy a regla factor "); 
        		 // tabla.mostrarSimbolos();} no muestra nada!!

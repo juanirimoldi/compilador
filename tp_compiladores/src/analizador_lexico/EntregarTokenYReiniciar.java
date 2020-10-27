@@ -23,7 +23,7 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		this.linea_actual = nro_linea;
 		//defino los tipos de token simples que puede entregar al sintactico
 		if (c == '=') {  super.tipo_token = "IGUAL"; };
-		if ((c == ';') || (c == ',')) { super.tipo_token = "PUNT"; };
+		if ((c == ';') | (c == ':') | (c == ',')) { super.tipo_token = "PUNT"; };
 		if ((c == '+') || (c == '-') || (c == '*') || (c == '/')) { super.tipo_token = "OP"; }
 		
 		
@@ -32,7 +32,7 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 			super.tipo_token="PALABRA_RESERVADA" ;
 		}
 		
-		if (super.buffer.equals("IF") | super.buffer.equals("ELSE") | super.buffer.equals("END_IF")) {
+		if (super.buffer.equals("IF") | super.buffer.equals("ELSE") | super.buffer.equals("END_IF") | super.buffer.equals("PROC") | super.buffer.equals("NI") | super.buffer.equals("REF")) {
 			super.tipo_token="PALABRA_RESERVADA" ;
 		}
 		

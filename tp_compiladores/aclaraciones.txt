@@ -51,7 +51,9 @@ linea x -> IF reconocido
 
 
 
+
 consultas:
+
 
 en que momento doy de alta en la Tsym!!??
 porque el lexico lo reconoce... pero la semantica enq ue momento se define?

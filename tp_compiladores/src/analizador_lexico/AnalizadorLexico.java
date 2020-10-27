@@ -80,11 +80,13 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[0][18] = -1; //llega '}'  ->  voy a Ef 
 		this.matriz_transicion_estados[0][19] = -1; //llega ','  ->  voy a Ef 
 		this.matriz_transicion_estados[0][20] = -1; //llega ; -> voy a Ef
+		//this.matriz_transicion_estados[0][20] = -1; //llega : -> voy a Ef
+		
 		this.matriz_transicion_estados[0][21] = 10; //llega % -> voy a E10
 		this.matriz_transicion_estados[0][22] = 12; //llega " -> voy a E12
 		this.matriz_transicion_estados[0][23] = 0; //llega \n -> ciclo en E0
 		this.matriz_transicion_estados[0][24] = 0; //a E0 llega otro caracter -> ciclo en E0
-		
+		//falta : y listo..
 		
 		
 		
@@ -143,6 +145,7 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[2][18] = 0; //llega '}'  ->  voy a Ef 
 		this.matriz_transicion_estados[2][19] = 0; //llega ','  ->  voy a Ef 
 		this.matriz_transicion_estados[2][20] = 0; //llega ; -> voy a Ef
+		
 		this.matriz_transicion_estados[2][21] = 0; //llega % -> limpio y reinicio
 		this.matriz_transicion_estados[2][22] = 0; //llega " -> limpio y reinicio
 		this.matriz_transicion_estados[2][23] = 0; //llega \n -> !!ERROR!! CTE\n -> no cierra sentencia
@@ -173,9 +176,10 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[3][17] = 0; //llega '{'  ->  voy a Ef 
 		this.matriz_transicion_estados[3][18] = 0; //llega '}'  ->  voy a Ef 
 		this.matriz_transicion_estados[3][19] = 0; //llega ','  ->  voy a Ef 
-		this.matriz_transicion_estados[3][20] = 0; //llega un ; -> descarto y reinicio
-		this.matriz_transicion_estados[3][21] = 0; //llega un % -> descarto y reinicio
-		this.matriz_transicion_estados[3][22] = 0; //llega un " -> descarto y reinicio
+		this.matriz_transicion_estados[3][20] = 0; //llega ; -> descarto y reinicio
+		
+		this.matriz_transicion_estados[3][21] = 0; //llega % -> descarto y reinicio
+		this.matriz_transicion_estados[3][22] = 0; //llega " -> descarto y reinicio
 		this.matriz_transicion_estados[3][23] = 0; //llega \n -> descarto
 		this.matriz_transicion_estados[3][24] = 0; //llega otro caracter -> descarto y voy a EF
 		
@@ -190,12 +194,12 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[4][3] = 0; //llega una i -> descarto y reinicio
 		this.matriz_transicion_estados[4][4] = 0; //llega un . -> descarto y voy a E0
 		this.matriz_transicion_estados[4][5] = 0; //llega una f -> descarto y reinicio
-		this.matriz_transicion_estados[4][6] = 0; //llega un blanco ' ' -> descarto y voy a E0
-		this.matriz_transicion_estados[4][7] = 0; //llega un + -> descarto y reinicio
-		this.matriz_transicion_estados[4][8] = 0; //llega una - -> descarto y reinicio
-		this.matriz_transicion_estados[4][9] = 0; //llega una * -> descarto y reinicio
-		this.matriz_transicion_estados[4][10] = 0; //llega una / -> descarto y reinicio				
-		this.matriz_transicion_estados[4][11] = 0; //llega un = -> descarto y reinicio, muestr error lexico!!
+		this.matriz_transicion_estados[4][6] = 0; //llega blanco ' ' -> descarto y voy a E0
+		this.matriz_transicion_estados[4][7] = 0; //llega + -> descarto y reinicio
+		this.matriz_transicion_estados[4][8] = 0; //llega - -> descarto y reinicio
+		this.matriz_transicion_estados[4][9] = 0; //llega * -> descarto y reinicio
+		this.matriz_transicion_estados[4][10] = 0; //llega / -> descarto y reinicio				
+		this.matriz_transicion_estados[4][11] = 0; //llega = -> descarto y reinicio, muestr error lexico!!
 		this.matriz_transicion_estados[4][12] = 0; //llega '<'  ->  voy a Ef 
 		this.matriz_transicion_estados[4][13] = 0; //llega '>'  ->  voy a Ef 
 		this.matriz_transicion_estados[4][14] = 0; //llega '!'  ->  voy a Ef 
@@ -204,9 +208,9 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[4][17] = 0; //llega '{'  ->  voy a Ef 
 		this.matriz_transicion_estados[4][18] = 0; //llega '}'  ->  voy a Ef 
 		this.matriz_transicion_estados[4][19] = 0; //llega ','  ->  voy a Ef 
-		this.matriz_transicion_estados[4][20] = 0; //llega un ; -> descarto y reinicio
-		this.matriz_transicion_estados[4][21] = 0; //llega un % -> descarto y reinicio
-		this.matriz_transicion_estados[4][22] = 0; //llega un " -> descarto y reinicio		
+		this.matriz_transicion_estados[4][20] = 0; //llega ; -> descarto y reinicio
+		this.matriz_transicion_estados[4][21] = 0; //llega % -> descarto y reinicio
+		this.matriz_transicion_estados[4][22] = 0; //llega " -> descarto y reinicio		
 		this.matriz_transicion_estados[4][23] = 0; //llega \n -> descarto y reinicio
 		this.matriz_transicion_estados[4][24] = 0; //llega otro caracter -> descarto y reinicio
 
@@ -235,8 +239,8 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[5][17] = 0; //llega '{'  ->   
 		this.matriz_transicion_estados[5][18] = 0; //llega '}'  ->   
 		this.matriz_transicion_estados[5][19] = 0; //llega ','  ->   
-		
 		this.matriz_transicion_estados[5][20] = 0; //llega ; -> voy a EF
+		
 		this.matriz_transicion_estados[5][21] = 0; //llega % -> limpio y reinicio
 		this.matriz_transicion_estados[5][22] = 0; //llega " -> limpio y reinicio			
 		this.matriz_transicion_estados[5][23] = 0; //llega \n -> descarto y reinicio
@@ -1170,6 +1174,15 @@ public class AnalizadorLexico {
 	
 		int nro_columna=23; //inicializo con otro caracter
 		
+		/*
+		if (c == 'i') { 
+			nro_columna=3;
+		} else if (c == 'f') {
+			nro_columna=5;
+		} else if (Character.isLowerCase(c) | Character.isLetter(c)) { 
+			nro_columna=0; 
+		} 
+		*/
 		
 		if (Character.isLowerCase(c)) { nro_columna=0; }; 
 		if (Character.isLetter(c)) { nro_columna=0; };
