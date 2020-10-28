@@ -1,10 +1,10 @@
-%%IDENTIFICADORES bien si estan separados por espacio 
+%%IDENTIFICADORES  
 
 x = 5 ;
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
 abc_30 = 30 ; 
 abc+ 
-abc_30+ 
+abc_30+  
 b = -5 ; 
 
 
@@ -12,7 +12,7 @@ b = -5 ;
 
 %% INTEGERs
 
-INTEGER x ; %%declaracion de variable encontrada
+INTEGER x ; 
 x = 55 ;
 
 INTEGER x_i ;
@@ -44,19 +44,17 @@ dd = .6666 ;
 f = x + b ; 
 
 
-%%1.55  no reconoce 1.55!!
-
 
 %%FLOATS flasheros
-%%1.
-%%-1.2 ;
-ego = .6 ;
-rrr = 3.f-5 ;  %%falta agregar el 3. 
-klan = 2.f+34 ;  %%falta el 2.
-p2p = 2.5f-1 ;  %%p2p bien ID, falta el 2.
-%%inte = 15. ; %%VER!!! no agrega el lexema! y agrega mal el tipo
+f1 = 1. ;
+f2 = 1.55 ;
+f3 = -1.2 ;
+f4 = .6 ;
+rrr = 3.f-5 ;   
+klan = 2.f+34 ; 
+p2p = 2.5f-1 ;  
+inte = 15. ; 
 
-%%NO RECONOCE MANTISA NEGATIVA!
 %%CONSIDERAR RANGO 1.17...-f38 < x < 3.4...f+38  U  -3.4...f+38 < x  
 
 
@@ -64,7 +62,7 @@ p2p = 2.5f-1 ;  %%p2p bien ID, falta el 2.
 %%chain = "sape" ;
 
 %% CADENAS MULTILINEA
-%% cadena = "que onda esto" ;  %%error de sintaxis! no reconoce regla en el sintactico
+%%cadena = "que onda esto" ;  %%error de sintaxis! no reconoce regla en el sintactico
 %%c2 = "esto deberia 
 %%      viajar"
 
@@ -106,6 +104,5 @@ IF ( x + 5 > 9 ) { ff = 8 ; } END_IF %%; %%bieeen fañlta ; !!!
 PROC proced ( INTEGER x ) NI = 2 { yyy = 99 ; } 
 
 PROC f1 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 { x = y + z ; }
-
 
 
