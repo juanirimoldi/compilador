@@ -1,11 +1,14 @@
 %%IDENTIFICADORES  
 
 x = 5 ;
+q = 33333 ; 
+tt = -44444 ;
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 99 ;
 abc_30 = 30 ; 
 abc+ 
 abc_30+  
 b = -5 ; 
+sabe_21 = 7 ;
 
 
 %% CONSTANTES
@@ -90,7 +93,7 @@ w2 = x - b ;
 
 
 %% SENTENCIAS DE CONTROL
-IF ( x + 5 > 9 ) { ff = 8 ; } END_IF %%; %%bieeen fañlta ; !!!
+IF ( x + 5 > 9 ) { ff = 8 ; } END_IF ; %%bieeen 
 
 
 
@@ -99,8 +102,9 @@ LOOP { x = x + 6 ; } UNTIL ( x > 9 ) ;
 
 
 %% PROCEDIMIENTO
-PROC proced ( INTEGER x ) NI = 2 { yyy = 99 ; } 
+PROC proced ( INTEGER x ) NI = 2 { yyy = 99 ; } ;
 
-PROC f1 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 { x = y + z ; }
+PROC f1 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 { x = y + z ; } ;
 
+proced ( a : b ) ;
 

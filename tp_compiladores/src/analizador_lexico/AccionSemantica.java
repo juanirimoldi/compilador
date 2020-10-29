@@ -7,7 +7,7 @@ public abstract class AccionSemantica {
 	protected static String buffer; 
 	protected static String tipo_token;
 	protected static String tipo_variable;
-	//protected static boolean token_valido=false;
+	protected static boolean token_valido=false;
 
 	
 	public abstract void ejecutar(char c, int nro_linea);

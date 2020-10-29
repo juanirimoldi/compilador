@@ -58,10 +58,10 @@ lista_de_sentencias : sentencia //{System.out.println("SENTENCIA SIMPLE! ");}
 		    		;
 
 
-sentencia : sentencia_declarativa  {System.out.println("\n SENTENCIA DECLARATIVA CORRECTA \n");
+sentencia : sentencia_declarativa ';' {System.out.println("\n SENTENCIA DECLARATIVA CORRECTA \n");
 								   	System.out.println("\n----------------------------------------\n");
 									}
-		  | sentencia_ejecutable  {System.out.println("\n SENTENCIA EJECUTABLE CORRECTA \n");
+		  | sentencia_ejecutable ';' {System.out.println("\n SENTENCIA EJECUTABLE CORRECTA \n");
 		    	   				   System.out.println("\n----------------------------------------\n");
 		  						   }
 	  	  ;
@@ -82,7 +82,7 @@ sentencia_declarativa : declaracion_de_variable //{System.out.println("VARIABLE 
 				      ;
 
 		
-declaracion_de_variable : tipo lista_de_variables ';' {//System.out.println("VARIABLE BIEN DECLARADA con TIPO!! ");
+declaracion_de_variable : tipo lista_de_variables  {//System.out.println("VARIABLE BIEN DECLARADA con TIPO!! ");
 												   //Token t = (Token)yyval.obj;	
 												   //System.out.println("yyval SAPE! "+t.getLexema());
 												   Token tipo = (Token)$1.obj;
@@ -150,7 +150,8 @@ sentencia_ejecutable : asignacion //{System.out.println("Sintactico  ->  SENTENC
 //si existe -> hago la asignacion
 //si no existe sacudo un error de que falta inicializar
 
-asignacion : ID '=' expresion ';' {//System.out.println("Existe el lexema en la Tabla de Simbolos");
+
+asignacion : ID '=' expresion  {//System.out.println("Existe el lexema en la Tabla de Simbolos");
 								   Token id = (Token)$1.obj;
 								   int linea = id.getNroLinea();
 								   //System.out.println("\n OJO!! Existe  "+ id.getLexema() +"  en Tabla de Simbolos ??");
@@ -208,7 +209,7 @@ bloque_de_sentencias : '{' lista_de_sentencias '}' {System.out.println("\n\nBLOQ
 				     ;
 					
 
-sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')' ';' {System.out.println("\n\nSENTENCIA DE CONTROL!!\n\n");}
+sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'  {System.out.println("\n\nSENTENCIA DE CONTROL!!\n\n");}
 		             ;
 		             
 //LOOP bloque_de_sentencias ERROR -> puede faltar LOOP , until , ( , ) , etc

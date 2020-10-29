@@ -15,6 +15,7 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 	//Accion Semantica Final 
 	public EntregarTokenYReiniciar(TablaDeSimbolos tds){
 		this.tds = tds;
+		this.t = null;
 	}
 	
 	
@@ -42,8 +43,10 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 		
 		//int id_tipo = this.tt.getIdTipo(super.tipo_buffer); 
 		//System.out.println("ID TIPO TOKEN -> "+id_tipo);
-		this.t = new Token(super.buffer, super.tipo_token, nro_linea, super.tipo_variable);//, id_tipo);
 		
+		//if (super.token_valido) {
+		this.t = new Token(super.buffer, super.tipo_token, nro_linea, super.tipo_variable);//, id_tipo);
+		//}
 		//la sacudo, en la tabla de simbolos decide si la guarda o no
 		//this.tds.addToken(t);
 		
