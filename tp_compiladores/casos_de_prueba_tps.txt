@@ -59,11 +59,12 @@ inte = 15. ;
 
 
 %% CADENAS DE CARACTERES -> bien y mal definidas
-%%chain = "sape" ;
+%%cadena = "yeah nigga" ;  %%el lexico la reconoce bien. el sintactico?
+%%cad2 = "no yeah mfkr ; %%tira el error lexico
 
 %% CADENAS MULTILINEA
-%%cadena = "que onda esto" ;  %%error de sintaxis! no reconoce regla en el sintactico
-%%c2 = "esto deberia 
+%%cadena = "que onda esto" ;  %%reconoce el token, pero no reconoce regla en el sintactico
+%%c2 = "esto deberia -  %%esto no anda
 %%      viajar"
 
 

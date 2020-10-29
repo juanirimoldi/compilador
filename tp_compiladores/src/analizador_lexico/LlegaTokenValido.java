@@ -14,6 +14,9 @@ public class LlegaTokenValido extends AccionSemantica {
 		//System.out.println("LLEGA TOKEN VALIDO!! "+super.buffer+" , char "+c);	
 		
 		if (ascii == 32){
+			if (super.tipo_variable.equals("CADENA")){
+				super.buffer += c;
+			}
 			//System.out.println("ESPACIO EN BLANCO -> "+ascii);
 			//continue;
 		} else if (ascii == 61) {
@@ -66,7 +69,7 @@ public class LlegaTokenValido extends AccionSemantica {
 		if (super.tipo_token.equals("ID")) {
 			//System.out.println("TOKEN ID VALIDO -> " + super.buffer+" , "+super.buffer.length());
 			if (super.buffer.length() > this.id_long_max) {
-				System.out.println("\n WARNING!!!! TE CEBASTE.. -> " + super.buffer+" , "+super.buffer.length());
+				System.out.println("\n WARNING!!!! te pasaste.. -> " + super.buffer+" , "+super.buffer.length());
 				super.buffer = super.buffer.substring(0, id_long_max);
 				System.out.println("TRUNCADO -> " + super.buffer+" , "+super.buffer.length());
 

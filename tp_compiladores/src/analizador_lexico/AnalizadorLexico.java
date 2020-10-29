@@ -1153,17 +1153,8 @@ public class AnalizadorLexico {
 	
 	public int getColumnaCaracter(char c) {
 	
-		int nro_columna=23; //inicializo con otro caracter
+		int nro_columna=25; //inicializo con otro caracter
 		
-		/*
-		if (c == 'i') { 
-			nro_columna=3;
-		} else if (c == 'f') {
-			nro_columna=5;
-		} else if (Character.isLowerCase(c) | Character.isLetter(c)) { 
-			nro_columna=0; 
-		} 
-		*/
 		
 		if (Character.isLowerCase(c)) { nro_columna=0; }; 
 		if (Character.isLetter(c)) { nro_columna=0; };
@@ -1244,7 +1235,6 @@ public class AnalizadorLexico {
 	
 	
 	public void asociarTablaDeSimbolos(TablaDeSimbolos tds) {
-		System.out.println("asocio algo?");
 		this.tds = tds;
 	}
 }

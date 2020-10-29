@@ -253,6 +253,8 @@ expresion : expresion '+' termino {//System.out.println("\n EXPRESION SUMA  ");
 	  	  
 	  	  | termino  //{System.out.println("soy terrible TERMINO -> voy a regla EXPRESION "); }
 	  	  			 // expresion.ptr = termino.ptr	}
+	  	  			 
+	  	  //| CADENA //{System.out.println("EXPRESION -> CADENA! ");
 	  	  ;
 
 
@@ -262,6 +264,8 @@ termino : termino '*' factor //{System.out.println("TERMINO..");}
 		
 		| factor //{System.out.println("soy factor -> voy a regla TERMINO");}
 				 // termino.ptr = factor.ptr}
+		
+		//| CADENA //{System.out.println("termino -> CADENA! ");
 		;
 		
 		
@@ -282,6 +286,8 @@ factor : CTE //{System.out.println("llega CTE! -> voy a regla factor \n"); }
        | ID  //{System.out.println("llega ID! -> voy a regla factor "); 
        		 // tabla.mostrarSimbolos();} no muestra nada!!
        		 //factor.ptr = ID.ptr; }
+       		  
+       //| CADENA //{System.out.println("llega CADENA! -> voy a regla factor "); 
        ;
 	   	
 

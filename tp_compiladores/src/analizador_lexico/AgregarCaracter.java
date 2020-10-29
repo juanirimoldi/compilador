@@ -7,6 +7,13 @@ public class AgregarCaracter extends AccionSemantica {
 		//System.out.println("AS2 -> Agrego caracter "+c);
 		super.buffer += c;
 		
+		
+		//si el prier caracter es un digito y viene un punto -> cambio tipo de variable a FLOAT
+		if (Character.isDigit(super.buffer.charAt(0)) & (c == '.')) {
+			super.tipo_variable = "FLOAT";
+		}
+		
+		
 		if (super.tipo_token.equals("COMENT")) {
 			if (c == '\n') {
 				//System.out.println("Si el tipo es COMMENT y el caracter un salto d linea ");

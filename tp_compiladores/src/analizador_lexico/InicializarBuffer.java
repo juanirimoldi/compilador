@@ -31,7 +31,7 @@ public class InicializarBuffer extends AccionSemantica {
 						}
 		
 		if (c == '"') { super.tipo_token = "CADENA"; 
-						super.buffer += c;
+						//super.buffer += c;
 		}
 
 		
