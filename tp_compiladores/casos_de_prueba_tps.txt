@@ -58,18 +58,19 @@ inte = 15. ;
 %%CONSIDERAR RANGO 1.17...-f38 < x < 3.4...f+38  U  -3.4...f+38 < x  
 
 
-%% CADENAS DE CARACTERES -> bien y mal definidas
-%%cadena = "yeah nigga" ;  %%el lexico la reconoce bien. el sintactico?
-%%cad2 = "no yeah mfkr ; %%tira el error lexico
+%% CADENAS DE CARACTERES
+cadena = "yeah nigga" ;  
+%%cad2 = "no yeah ; %%tira el error en el lexico, falla en el sintactico. hacer regla de error!
+
 
 %% CADENAS MULTILINEA
-%%cadena = "que onda esto" ;  %%reconoce el token, pero no reconoce regla en el sintactico
 %%c2 = "esto deberia -  %%esto no anda
-%%      viajar"
+%%      andar"
 
 
 %% COMENTARIOS BIEN Y MAL DEFINIDOS
 %% este es un comentario bien defnido
+%% %este esta mal definido  reconoce error el lexico pero falla la regla del sintactico
 
 
 %% OPERADORES ARITMETICOS  + , - , * , /
@@ -78,10 +79,6 @@ w = x + b ;
 
 w2 = x - b ;
 
-
-%% OPERADOR DE ASIGNACION  = 
-
-%% funciona para biding de tipo estatico y dinamico. !!VER!!
 
 
 %% COMPARADORES  >= , <= , > , < , == , !=
@@ -98,7 +95,7 @@ IF ( x + 5 > 9 ) { ff = 8 ; } END_IF %%; %%bieeen fañlta ; !!!
 
 
 %% SENTENCIAS DE ITERACION
-%%LOOP { x = x + 6 ; } UNTIL ( x > 9 ) %%;
+LOOP { x = x + 6 ; } UNTIL ( x > 9 ) ;
 
 
 %% PROCEDIMIENTO

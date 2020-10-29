@@ -36,6 +36,10 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 			super.tipo_token="PALABRA_RESERVADA" ;
 		}
 		
+		if (super.buffer.equals("LOOP") | super.buffer.equals("UNTIL")) {
+			super.tipo_token="PALABRA_RESERVADA" ;
+		}
+		
 		//int id_tipo = this.tt.getIdTipo(super.tipo_buffer); 
 		//System.out.println("ID TIPO TOKEN -> "+id_tipo);
 		this.t = new Token(super.buffer, super.tipo_token, nro_linea, super.tipo_variable);//, id_tipo);

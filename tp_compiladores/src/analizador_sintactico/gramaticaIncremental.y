@@ -208,7 +208,7 @@ bloque_de_sentencias : '{' lista_de_sentencias '}' {System.out.println("\n\nBLOQ
 				     ;
 					
 
-sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')' {System.out.println("\n\nSENTENCIA DE CONTROL!!\n\n");}
+sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')' ';' {System.out.println("\n\nSENTENCIA DE CONTROL!!\n\n");}
 		             ;
 		             
 //LOOP bloque_de_sentencias ERROR -> puede faltar LOOP , until , ( , ) , etc
@@ -254,7 +254,7 @@ expresion : expresion '+' termino {//System.out.println("\n EXPRESION SUMA  ");
 	  	  | termino  //{System.out.println("soy terrible TERMINO -> voy a regla EXPRESION "); }
 	  	  			 // expresion.ptr = termino.ptr	}
 	  	  			 
-	  	  //| CADENA //{System.out.println("EXPRESION -> CADENA! ");
+	  	  | CADENA //{System.out.println("EXPRESION -> CADENA! ");
 	  	  ;
 
 
