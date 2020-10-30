@@ -1,158 +1,308 @@
-//DECLARATIONS
-
 %{
 import java.lang.Math;
 import java.io.*;
 import java.util.StringTokenizer;  //????
+//package analizador_sintactico;
 
-//package analizador_lexico;
 import analizador_lexico.*;
-
 %}
 
-//en lexico
+
 %token
-		ID
-		CTE
-		CADENA
-		ASIG
-		// Palabras reservadas
-		IF
-		THEN
-		ELSE
-		END_IF
-		BEGIN
-		END
-		INTEGER
-		DOUBLE
-		WHILE
-		//CASE 
-		DO
-		RETURN 
-		PRINT
+	ID
+	CTE
+	CADENA
+	
+	/* Palabras reservadas */
+	IF
+	THEN
+	ELSE
+	END_IF
+	PROC
+	RETURN
+	NI
+	REF
+	OUT
+	
+	/* Sentencias de Control*/
+	LOOP
+	UNTIL
+	
+	/* Tipo de Constantes */
+	INTEGER
+	FLOAT
 		
-		/* Comparadores */
-		MAYORIGUAL
-		MENORIGUAL
-		IGUAL
-		DISTINTO
-		EOF
-//%%
+	/* Comparadores */
+	MENOR
+	MAYOR
+	MENORIGUAL
+	MAYORIGUAL
+	IGUAL
+	DISTINTO
+	//PUNT
+	EOF
 
-
-/* YACC Declarations */
-%token ID, CTE
-%left '-' '+'
-%left '*' '/'
-%left NEG /* negation--unary minus */
-%right '^' /* exponentiation */
-
-
-
-
-//ACTIONS
-
-
-/* Grammar follows */
-%%
-
-input: /* empty string */
- | input line
- ;
-
-line: '\n'
- | exp '\n' { System.out.println(" " + $1.dval + " "); }
- ;
-
-exp: CTE { $$ = $1; }
- | exp '+' exp { $$ = new ParserVal($1.dval + $3.dval); } //{println pra debuguear -> por ej encontro if}
- | exp '-' exp { $$ = new ParserVal($1.dval - $3.dval); } //{linea x -> asignacion, etc +  errores
- | exp '*' exp { $$ = new ParserVal($1.dval * $3.dval); }
- | exp '/' exp { $$ = new ParserVal($1.dval / $3.dval); }
- | '-' exp %prec NEG { $$ = new ParserVal(-$2.dval); }
- | exp '^' exp { $$ = new ParserVal(Math.pow($1.dval, $3.dval)); }
- | '(' exp ')' { $$ = $2; }
- ;
-
+%start programa
 
 
 %%
 
 
 
-// CODE
+programa : lista_de_sentencias {System.out.println("\n LLEGO A RAIZ! -> termino programa \n ");}
+		 ;
 
 
-/*
-// JOSE MASSA
-
-// CARACTER DE SINCRONIZACION -> ;
-// ; -> "SEGURO" QUE CIERRA UNA REGLA
+lista_de_sentencias : sentencia //{System.out.println("SENTENCIA SIMPLE! ");}
+		   		    | lista_de_sentencias sentencia //{System.out.println("LISTA DE SENTENCIAS RECURSIVA \n ");}
+		    		;
 
 
-EJEMPLO 
-
-// LINEA 5 -> ASIGNACION ENCONTRADA
-// LINEA 9 -> ASIGNACION CORRECTA ENCONTRADA
-// LINEA 14 -> ERROR SINTACTICO. ESTRUCTURA DE ASIGNACION MAL ESCRITA
-
-
-//EJ. 
-el fuente es:
-int x;
-x=1;
-
-//LEXICO
-la salida del compilador seria
-linea 1 token palabra reservada int
-liena 1 token identificador x
-
-//SINTACTICO
-linea 1 declaración (sintatctico)
-linea 2 asignacion
-
-//TODO DE UNA
-linea 1 declaración (sintatctico)
-linea 2 token identifcador x
-linea 2 token =
-linea 2 constante 1
-linea 2 asignacion
-
-// CONSIDERAR CTE NEGATIVA!
+sentencia : sentencia_declarativa ';' //{System.out.println("\n SENTENCIA DECLARATIVA CORRECTA \n");
+								   	  // System.out.println("\n----------------------------------------\n");
+									  //}
+		  | sentencia_ejecutable ';' //{System.out.println("\n SENTENCIA EJECUTABLE CORRECTA \n");
+		    	   				     // System.out.println("\n----------------------------------------\n");
+		  						     //}
+	  	  ;
 
 
-SI -> en linea 2: x = ;
-//EL LEXICO DICE QUE EN LINEA 2 HASTA EL =
-//EL SINTACTICO DICE LINEA 2 -> ASIGNACION INCORRECTA
-
-//ACA DEFINIR BIEN LAS REGLAS DE ERROR!!!
-
-//PARA CASO DE ERROR
-linea 2 token id. x
-linea 2 token =
-error linea 2 caracter inválidi -> ERROR LEXICO
 
 
-//CUANDO HAY TOKEN INVALIDO -> SINTACTICO PUDE NUEVO TOKEN A LEXICO
-// LE DEVUELVE ; -> RECIBE DOBLE ; -> OTRO ERROR SINTACTICO
-// CUALQUIER ERROR (LEXICO O SINTACTIC) AVISA A ETAPAS POSTERIORES QUE NO HAY QUE HGACER NADA
 
-TIP -> HACERLO ANDAR CON EL TOKEN ERROR
+//SENTENCIAS DECLARATIVAS
 
-*/
+//aca los ; andan
+sentencia_declarativa : declaracion_de_variable {System.out.println("\n VARIABLE DECLARADA CORRECTAMENTE \n ");
+								   				 System.out.println("\n----------------------------------------\n");
+												 }
+				      | declaracion_de_procedimiento {System.out.println("\n PROCEDIMIENTO DECLARADO CORRECTAMENTE \n ");
+				      								  System.out.println("\n----------------------------------------\n");
+				      								  }
+				      ;
+
+		
+declaracion_de_variable : tipo lista_de_variables  {//System.out.println("VARIABLE BIEN DECLARADA con TIPO!! ");
+												   //Token t = (Token)yyval.obj;	
+												   //System.out.println("yyval SAPE! "+t.getLexema());
+												   Token tipo = (Token)$1.obj;
+												   Token variable = (Token)$2.obj;
+												   System.out.println("\n Sintactico  ->  Linea: "+tipo.getNroLinea()+"  ,  VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+" "+variable.getLexema()+"\n");
+												   
+												   //String tipo = (Token)$1.obj.getLexema();
+												   //String lexema = (Token)$2.obj.getLexema(); 
+								   				   //System.out.println("\n----------------------------------------\n");
+								   
+												   }
+				        ;
 
 
+//clase para generar tercetos!
+
+//!!!VER!!!
+declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'
+						     | PROC ID '(' ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'
+			     			 ;
+			
+			
+cuerpo_del_procedimiento : lista_de_sentencias
+			 			 //| lista_de_sentencias declaracion_de_procedimiento !!VER!! esto no reduce nunca
+			 			 ;			
+
+
+//numero maximo de parametros = 3 . puede no haber parametros!!   !!VER!!
+
+lista_de_parametros : parametro_declarado ',' parametro_declarado ',' parametro_declarado
+		    		| parametro_declarado ',' parametro_declarado
+		    		| parametro_declarado 
+				    ;
+
+
+parametro_declarado : tipo ID
+				    | REF tipo ID
+		    		;
+
+
+lista_de_variables : lista_de_variables ',' ID
+		   		   | ID
+		  		   ;
+
+
+tipo : INTEGER
+     | FLOAT
+     ;
+
+
+
+
+
+//SENTENCIAS EJECUTABLES
+
+		
+sentencia_ejecutable : asignacion //{System.out.println("Sintactico  ->  SENTENCIA EJECUTABLE -> ASIGNACION! ");}
+					 | clausula_de_seleccion {System.out.println("\n Sintactico  ->  CLAUSULA de SELECCION EJECUTADA CORRECTAMENTE \n");}
+		   			 | sentencia_de_control 
+		   			 | sentencia_de_salida 
+		   			 | invocacion {System.out.println("\n INVOCO TERRIBLE PROCEDURE \n");}
+					 ;
+
+
+//al hacer la asignacion debo checkear si la variable existe en la tabla de simbolos!!
+//si existe -> hago la asignacion
+//si no existe sacudo un error de que falta inicializar
+
+
+asignacion : ID '=' expresion  {//System.out.println("Existe el lexema en la Tabla de Simbolos");
+								   Token id = (Token)$1.obj;
+								   int linea = id.getNroLinea();
+								   //System.out.println("\n OJO!! Existe  "+ id.getLexema() +"  en Tabla de Simbolos ??");
+								   //System.out.println("EXISTE?? a ver, mostrala ");
+								   //tipo de binding?
+								   //tabla.mostrarSimbolos();
+								   
+								   Token op = (Token)$2.obj;
+								   Token expr = (Token)$3.obj;
+								   //es valida esta impleentacion? o consumo  memoria al crear tokens?
+								   
+								   
+								   System.out.println("\n Sintactico ->  Linea: "+ linea+"  ,  ASIGNACION DETECTADA   "+id.getLexema()+" "+op.getLexema()+" "+expr.getLexema()+"\n");
+								   
+								   //System.out.println("Tabla -> addToken() ");
+								   //tabla.addToken(id);
+								   //tabla.mostrarSimbolos();
+								   //String expr = (Token)$2.obj.getLexema(); 
+								   //System.out.println("\n Sintactico  ->  HAGO ASIGNACION  "+lexema+" = "+expr+"\n");
+								   
+								   //tabla.mostrarSimbolos();
+								   //tabla.mostrarSimbolos();
+								   System.out.println("\n ------------------------------------ \n"); 
+								   }
+								//checkeo semantico dentro de las reglas
+								//asignacion.ptr = crear_terceto(=, ID.ptr, EXPRESION.ptr); } //$1, $$ etc.. y genero el terceto
+		   ;
+		   
+//expr.ptr nro de terceto que tiene la expresion
+
+
+
+clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF					
+		      		  | IF '(' condicion ')' bloque_de_sentencias END_IF
+		     		  ;
+					
+						
+condicion : expresion '>' expresion {//System.out.println("\n Sintactico  ->  COMPARACION!!\n");
+									 Token op1 = (Token)$1.obj;
+									 int linea = op1.getNroLinea();
+ 								     Token op2 = (Token)$2.obj;
+ 								     Token op3 = (Token)$3.obj;
+ 								     System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  COMPARACION  ->  "+op1.getLexema()+" "+op2.getLexema()+" "+op3.getLexema()+"\n");
+									}
+	  	  | expresion '<' expresion
+	  	  | expresion MAYORIGUAL expresion
+	  	  | expresion MENORIGUAL expresion
+	  	  | expresion IGUAL expresion
+	  	  | expresion DISTINTO expresion
+	  	  ;
+
+
+//bloque_de_sentencias : '{' sentencia '}' {System.out.println("\n\nBLOQUE DE 1 SOLA SENTENCIA!!\n\n");}
+bloque_de_sentencias : '{' lista_de_sentencias '}' {System.out.println("\n\nBLOQUE DE MULTIPLES SENTENCIAS!!\n\n");}
+				     ;
+					
+
+sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'  {System.out.println("\n SENTENCIA DE CONTROL DETECTADA \n");}
+		             ;
+		             
+
+//checkear tambien IF y PROC!! hacer sentencias de errror!!!
+//asignacion con lado izq o der faltante
+// = 3 ; , x = ;					
+sentencia_de_salida : OUT '(' CADENA ')'
+				    ;
+					
+					
+invocacion : ID '(' parametro_ejecutable ')'
+	   	   ;
+		  
+
+//!!!VER!!! 		  
+parametro_ejecutable : ID ':' ID  //para las invocaciones a parametros!!
+		   		     | parametro_ejecutable ',' ID':'ID
+		     		 ;
+		 			
+					
+					
+					
+//terceto -> clase con lista de objetios terceto
+// a = b -> checkeo semantico! tiene que existir a y tiene que existir b -> chequeos semanticos dentro de las llaves
+// si llego a la raiz -> lista bien escrita -> se lo entrego  a generador de coigo para hacer asembler
+
+
+expresion : expresion '+' termino {//System.out.println("\n EXPRESION SUMA  "); 
+								   Token op1 = (Token)$1.obj;
+								   int linea = op1.getNroLinea();
+								   Token op2 = (Token)$2.obj;
+								   Token op3 = (Token)$3.obj;
+								   System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  EXPRESION SUMA  ->  "+op1.getLexema()+" "+op2.getLexema()+" "+op3.getLexema()+"\n"); 
+								   //expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr);
+								   }
+	  	  
+	  	  | expresion '-' termino {System.out.println("EXPRESION RESTA  -  "); }
+			      		//		   expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr); }
+	  	  
+	  	  | termino  //{System.out.println("soy terrible TERMINO -> voy a regla EXPRESION "); }
+	  	  			 // expresion.ptr = termino.ptr	}
+	  	  			 
+	  	  | CADENA //{System.out.println("EXPRESION -> CADENA! ");
+	  	  ;
+
+
+termino : termino '*' factor //{System.out.println("TERMINO..");}
+		
+		| termino '/' factor
+		
+		| factor //{System.out.println("soy factor -> voy a regla TERMINO");}
+				 // termino.ptr = factor.ptr}
+		
+		//| CADENA //{System.out.println("termino -> CADENA! ");
+		;
+		
+		
+		
+factor : CTE //{System.out.println("llega CTE! -> voy a regla factor \n"); }
+			 // factor.ptr = CTE.ptr; }
+       
+       | '-'CTE {//System.out.println("CTE negativa! \n"); 
+       			 Token op1 = (Token)$1.obj;
+				 int linea = op1.getNroLinea();
+				 Token op2 = (Token)$2.obj;
+				 System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  CTE NEGATIVA!  ->  "+op1.getLexema()+" "+op2.getLexema()+"\n");
+				 } 
+       			//va a tsym y va haccia constante a negativa. recheckear los rangos!!!
+       
+       //| '-' factor 
+       
+       | ID  //{System.out.println("llega ID! -> voy a regla factor "); 
+       		 // tabla.mostrarSimbolos();} no muestra nada!!
+       		 //factor.ptr = ID.ptr; }
+       		  
+       //| CADENA //{System.out.println("llega CADENA! -> voy a regla factor "); 
+       ;
+	   	
+
+
+%%
+	   	
 
 
 //CODE
 
 
+
 AnalizadorLexico lexico;
+TablaDeSimbolos tabla;
 
 
-String ins;
-StringTokenizer st;
-boolean newline;
 
 
 void yyerror(String s)
@@ -161,117 +311,35 @@ void yyerror(String s)
 }
 
 
-/*  YYLEX DE DOCUMENTACION
-int yylex()
-{
-String s;
-int tok;
-Double d;
- //System.out.print("yylex ");
- if (!st.hasMoreTokens())
- if (!newline)
- {
- newline=true;
- return '\n'; //So we look like classic YACC example
- }
- else
- return 0;
- s = st.nextToken();
- //System.out.println("tok:"+s);
- try
- {
- d = Double.valueOf(s); //this may fail
- yylval = new ParserVal(d.doubleValue()); //SEE BELOW
- tok = NUM;
- }
- catch (Exception e)
- {
- tok = s.charAt(0);//if not float, return char
- }
- return tok;
-}
-*/
 
+private int yylex() {
+	Token token=lexico.getToken();
+	//System.out.println("\n Dentro del Sintactico...\n");
 
-int yylex()   //YYLEX NUESTRO
-{
-	String s;
-	int tok;
-	Double d;
-	//System.out.print("yylex ");
-	//if (!st.hasMoreTokens())
-		//if (!newline)
-		//{
-			//newline=true;
-			//return '\n'; //So we look like classic YACC example
-		//}
-	//else
-	 //return 0;
- 
- 
- //s = st.nextToken(); //ACA!!!
- //s = lexico.yylex(); //aca devuelve Token
-//if (s != null) {
-if (lexico.quedanTokens()) {
-//System.out.println("El lexico No tiene simbolos que procesar!!");
-	s = lexico.getToken().getLexema();
-
-	this.lexico.mostrarTablaSimbolos();
-//s = lexico.yylex().getTipo(); //aca que tengo que devolver id?
- 
-	try
-	{
-		d = Double.valueOf(s);/*this may fail*/
-		yylval = new ParserVal(d.doubleValue()); //SEE BELOW
-		tok = NUM;  //NUM es tipo token
+	if (token!=null){
+		tabla.addToken(token);
+		
+	    yylval = new ParserVal(token); //var para obtener el token de la tabla
+	    return token.getIdTipo(); //acceso a la entrada que devolvumos
 	}
-	catch (Exception e)
-	{
-		System.out.println("EXCEPCION!!!");
-		tok = s.charAt(0);/*if not float, return char*/
-	}
-	return tok;
-	}
-return 0;
+	//lexico devuelve i de token! y lexico en yylval lo asocie con la tabla de simbolos
+	return 0;
 }
 
-
-
-void dotest()
-{
-BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
- System.out.println("BYACC/J Calculator Demo");
- System.out.println("Note: Since this example uses the StringTokenizer");
- System.out.println("for simplicity, you will need to separate the items");
- System.out.println("with spaces, i.e.: '( 3 + 5 ) * 2'");
- while (true)
- {
- System.out.print("expression:");
- try
- {
- ins = in.readLine();
- }
- catch (Exception e)
- {
- }
- st = new StringTokenizer(ins);
- newline=false;
- yyparse();
- }
-}
 
 
 
 
 public static void main(String args[]) {
- 	TablaTokens tt = new TablaTokens();
-	TablaSimbolos ts = new TablaSimbolos();
+ 	String direccion_codigo = "casos_de_prueba_tps.txt";
 	
- 	AnalizadorLexico lexico = new AnalizadorLexico(tt, ts);
-	lexico.abrirCargarArchivo();
-	//lexico.mostrarTablaSimbolos(); //esta vacia!! te
-	//lexico.getToken();
+ 	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
+	al.abrirCargarArchivo();
+	TablaDeSimbolos tds = new TablaDeSimbolos();
+
 	
-	Parser par = new Parser(false, lexico);
- 	par.dotest();
+	Parser par = new Parser(false, al, tds);
+ 	par.yyparse();
+ 	
+ 	tds.mostrarSimbolos();
 }

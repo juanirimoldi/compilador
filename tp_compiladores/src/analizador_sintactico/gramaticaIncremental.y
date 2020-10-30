@@ -58,12 +58,12 @@ lista_de_sentencias : sentencia //{System.out.println("SENTENCIA SIMPLE! ");}
 		    		;
 
 
-sentencia : sentencia_declarativa ';' {System.out.println("\n SENTENCIA DECLARATIVA CORRECTA \n");
-								   	System.out.println("\n----------------------------------------\n");
-									}
-		  | sentencia_ejecutable ';' {System.out.println("\n SENTENCIA EJECUTABLE CORRECTA \n");
-		    	   				   System.out.println("\n----------------------------------------\n");
-		  						   }
+sentencia : sentencia_declarativa ';' //{System.out.println("\n SENTENCIA DECLARATIVA CORRECTA \n");
+								   	  // System.out.println("\n----------------------------------------\n");
+									  //}
+		  | sentencia_ejecutable ';' //{System.out.println("\n SENTENCIA EJECUTABLE CORRECTA \n");
+		    	   				     // System.out.println("\n----------------------------------------\n");
+		  						     //}
 	  	  ;
 
 
@@ -73,12 +73,12 @@ sentencia : sentencia_declarativa ';' {System.out.println("\n SENTENCIA DECLARAT
 //SENTENCIAS DECLARATIVAS
 
 //aca los ; andan
-sentencia_declarativa : declaracion_de_variable //{System.out.println("VARIABLE DECLARADA! ");
-								   				 //System.out.println("\n----------------------------------------\n");
-												 //}
-				      | declaracion_de_procedimiento // {System.out.println("PROCEDIMIENTO DECLARADO! ");
-				      								  // System.out.println("\n----------------------------------------\n");
-				      								   //}
+sentencia_declarativa : declaracion_de_variable {System.out.println("\n VARIABLE DECLARADA CORRECTAMENTE \n ");
+								   				 System.out.println("\n----------------------------------------\n");
+												 }
+				      | declaracion_de_procedimiento {System.out.println("\n PROCEDIMIENTO DECLARADO CORRECTAMENTE \n ");
+				      								  System.out.println("\n----------------------------------------\n");
+				      								  }
 				      ;
 
 		
@@ -97,6 +97,8 @@ declaracion_de_variable : tipo lista_de_variables  {//System.out.println("VARIAB
 				        ;
 
 
+//clase para generar tercetos!
+
 //!!!VER!!!
 declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'
 						     | PROC ID '(' ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'
@@ -108,8 +110,7 @@ cuerpo_del_procedimiento : lista_de_sentencias
 			 			 ;			
 
 
-//numero maximo de parametros = 3		 		
-//puede no haber parametros!!   !!VER!!
+//numero maximo de parametros = 3 . puede no haber parametros!!   !!VER!!
 
 lista_de_parametros : parametro_declarado ',' parametro_declarado ',' parametro_declarado
 		    		| parametro_declarado ',' parametro_declarado
@@ -174,7 +175,7 @@ asignacion : ID '=' expresion  {//System.out.println("Existe el lexema en la Tab
 								   
 								   //tabla.mostrarSimbolos();
 								   //tabla.mostrarSimbolos();
-								   //System.out.println("\n ------------------------------------ \n"); 
+								   System.out.println("\n ------------------------------------ \n"); 
 								   }
 								//checkeo semantico dentro de las reglas
 								//asignacion.ptr = crear_terceto(=, ID.ptr, EXPRESION.ptr); } //$1, $$ etc.. y genero el terceto
@@ -209,12 +210,9 @@ bloque_de_sentencias : '{' lista_de_sentencias '}' {System.out.println("\n\nBLOQ
 				     ;
 					
 
-sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'  {System.out.println("\n\nSENTENCIA DE CONTROL!!\n\n");}
+sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'  {System.out.println("\n SENTENCIA DE CONTROL DETECTADA \n");}
 		             ;
 		             
-//LOOP bloque_de_sentencias ERROR -> puede faltar LOOP , until , ( , ) , etc
-//UNTIL ... error
-//TOKEN ERROR! 
 
 //checkear tambien IF y PROC!! hacer sentencias de errror!!!
 //asignacion con lado izq o der faltante

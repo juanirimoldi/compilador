@@ -462,7 +462,7 @@ public class AnalizadorLexico {
 		this.matriz_transicion_estados[12][16] = 0; //llega un ) -> !!ERROR!! deben ser caracteres
 		this.matriz_transicion_estados[12][17] = 0; //llega un { -> !!ERROR!! deben ser caracteres
 		this.matriz_transicion_estados[12][18] = 0; //llega un } -> !!ERROR!! deben ser caracteres
-		this.matriz_transicion_estados[12][19] = 0; //llega un , -> !!ERROR!! deben ser caracteres
+		this.matriz_transicion_estados[12][19] = 12; //llega un , -> !!ERROR!! deben ser caracteres
 		this.matriz_transicion_estados[12][20] = 0; //llega un ; -> !!ERROR!! deben ser caracteres
 		this.matriz_transicion_estados[12][21] = 0; //llega un : -> !!ERROR!! deben ser caracteres
 		this.matriz_transicion_estados[12][22] = 0; //llega un % -> !!ERROR!! deben ser caracteres
@@ -951,12 +951,12 @@ public class AnalizadorLexico {
 		this.matriz_acciones_semanticas[12][16] = ASErr; //llega ) -> !!ERROR!! ")
 		this.matriz_acciones_semanticas[12][17] = ASErr; //llega { -> !!ERROR!! "{
 		this.matriz_acciones_semanticas[12][18] = ASErr; //llega } -> !!ERROR!! "}
-		this.matriz_acciones_semanticas[12][19] = ASErr; //llega , -> !!ERROR!! ",
+		this.matriz_acciones_semanticas[12][19] = AS2; //llega , -> !!ERROR!! ",
 		this.matriz_acciones_semanticas[12][20] = ASErr; //llega ; -> !!ERROR!! ";
 		this.matriz_acciones_semanticas[12][21] = ASErr; //llega : -> !!ERROR!! ";
 		this.matriz_acciones_semanticas[12][22] = ASErr; //llega % -> !!ERROR!! "% 
 		this.matriz_acciones_semanticas[12][23] = AS3; //llega " -> SI! cierre de cadena o cadena vacia ""
-		this.matriz_acciones_semanticas[12][24] = ASErr; //llega \n ->  !!ERROR!! antes del salto de linea debe haber un -
+		this.matriz_acciones_semanticas[12][24] = AS2; //llega \n ->  !!ERROR!! antes del salto de linea debe haber un -
 		this.matriz_acciones_semanticas[12][25] = ASErr; //llega otro caracter -> 
 
 		

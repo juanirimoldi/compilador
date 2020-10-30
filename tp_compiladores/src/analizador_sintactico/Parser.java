@@ -396,7 +396,7 @@ final static String yyrule[] = {
 "factor : ID",
 };
 
-//#line 297 "gramaticaIncremental.y"
+//#line 295 "gramaticaIncremental.y"
 	   	
 
 
@@ -436,7 +436,7 @@ private int yylex() {
 
 
 public static void main(String args[]) throws IllegalArgumentException, IllegalAccessException {
- 	String direccion_codigo = "casos_de_prueba_tps.txt";
+ 	String direccion_codigo = "casos_prueba.txt";
 	
  	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
 	al.abrirCargarArchivo();
@@ -606,17 +606,17 @@ case 1:
 //#line 52 "gramaticaIncremental.y"
 {System.out.println("\n LLEGO A RAIZ! -> termino programa \n ");}
 break;
-case 4:
-//#line 61 "gramaticaIncremental.y"
-{System.out.println("\n SENTENCIA DECLARATIVA CORRECTA \n");
-								   	System.out.println("\n----------------------------------------\n");
-									}
+case 6:
+//#line 76 "gramaticaIncremental.y"
+{System.out.println("\n VARIABLE DECLARADA CORRECTAMENTE \n ");
+								   				 System.out.println("\n----------------------------------------\n");
+												 }
 break;
-case 5:
-//#line 64 "gramaticaIncremental.y"
-{System.out.println("\n SENTENCIA EJECUTABLE CORRECTA \n");
-		    	   				   System.out.println("\n----------------------------------------\n");
-		  						   }
+case 7:
+//#line 79 "gramaticaIncremental.y"
+{System.out.println("\n PROCEDIMIENTO DECLARADO CORRECTAMENTE \n ");
+				      								  System.out.println("\n----------------------------------------\n");
+				      								  }
 break;
 case 8:
 //#line 85 "gramaticaIncremental.y"
@@ -634,15 +634,15 @@ case 8:
 												   }
 break;
 case 22:
-//#line 142 "gramaticaIncremental.y"
+//#line 143 "gramaticaIncremental.y"
 {System.out.println("\n Sintactico  ->  CLAUSULA de SELECCION EJECUTADA CORRECTAMENTE \n");}
 break;
 case 25:
-//#line 145 "gramaticaIncremental.y"
+//#line 146 "gramaticaIncremental.y"
 {System.out.println("\n INVOCO TERRIBLE PROCEDURE \n");}
 break;
 case 26:
-//#line 154 "gramaticaIncremental.y"
+//#line 155 "gramaticaIncremental.y"
 {/*System.out.println("Existe el lexema en la Tabla de Simbolos");*/
 								   Token id = (Token)val_peek(2).obj;
 								   int linea = id.getNroLinea();
@@ -666,11 +666,11 @@ case 26:
 								   
 								   /*tabla.mostrarSimbolos();*/
 								   /*tabla.mostrarSimbolos();*/
-								   /*System.out.println("\n ------------------------------------ \n"); */
+								   System.out.println("\n ------------------------------------ \n"); 
 								   }
 break;
 case 29:
-//#line 192 "gramaticaIncremental.y"
+//#line 193 "gramaticaIncremental.y"
 {/*System.out.println("\n Sintactico  ->  COMPARACION!!\n");*/
 									 Token op1 = (Token)val_peek(2).obj;
 									 int linea = op1.getNroLinea();
@@ -680,15 +680,15 @@ case 29:
 									}
 break;
 case 35:
-//#line 208 "gramaticaIncremental.y"
+//#line 209 "gramaticaIncremental.y"
 {System.out.println("\n\nBLOQUE DE MULTIPLES SENTENCIAS!!\n\n");}
 break;
 case 36:
-//#line 212 "gramaticaIncremental.y"
-{System.out.println("\n\nSENTENCIA DE CONTROL!!\n\n");}
+//#line 213 "gramaticaIncremental.y"
+{System.out.println("\n SENTENCIA DE CONTROL DETECTADA \n");}
 break;
 case 41:
-//#line 243 "gramaticaIncremental.y"
+//#line 241 "gramaticaIncremental.y"
 {/*System.out.println("\n EXPRESION SUMA  "); */
 								   Token op1 = (Token)val_peek(2).obj;
 								   int linea = op1.getNroLinea();
@@ -699,11 +699,11 @@ case 41:
 								   }
 break;
 case 42:
-//#line 252 "gramaticaIncremental.y"
+//#line 250 "gramaticaIncremental.y"
 {System.out.println("EXPRESION RESTA  -  "); }
 break;
 case 49:
-//#line 277 "gramaticaIncremental.y"
+//#line 275 "gramaticaIncremental.y"
 {/*System.out.println("CTE negativa! \n"); */
        			 Token op1 = (Token)val_peek(1).obj;
 				 int linea = op1.getNroLinea();
