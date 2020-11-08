@@ -1143,7 +1143,7 @@ public class AnalizadorLexico {
 				
 				this.ultima_pos = this.pos_actual; 
 				
-				System.out.println("\n Lexico  ->  Linea: "+ titi.getNroLinea() + " , Token: "+ titi.getLexema()+" ,  tipo: "+titi.getTipo()+" \n");
+				//System.out.println("\n Lexico  ->  Linea: "+ titi.getNroLinea() + " , Token: "+ titi.getLexema()+" ,  tipo: "+titi.getTipo()+" \n");
 				}
 		}
 		return titi;

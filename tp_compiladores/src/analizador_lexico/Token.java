@@ -6,7 +6,9 @@ public class Token {
 	private int nro_linea;
 	private int id_tipo;
 	private String tipo_var;
-
+	private String ambito;
+	private int valor;
+	
 	
 	public Token(String l, String t, int linea, String tipo_var) {//, int id_tipo) {
 		this.lexema = l;
@@ -14,6 +16,7 @@ public class Token {
 		this.nro_linea = linea;
 		//this.id_tipo = id_tipo;
 		this.tipo_var=tipo_var;
+		this.ambito="";
 	}
 	
 	
@@ -43,5 +46,27 @@ public class Token {
 	
 	public String getTipoVar() {
 		return this.tipo_var;
+	}
+	
+	public void setAmbito(String a) {
+		this.ambito=a;
+	}
+	
+	public String getAmbito() {
+		return this.ambito;
+	}
+	
+	public void setLexema(String l) {
+		this.lexema=l;
+	}
+	
+	public void setValor(String val) {
+		if (this.tipo.equals("ID")) {
+			this.valor=Integer.parseInt(val);
+		}
+	}
+	
+	public int getValor() {
+		return this.valor;
 	}
 }

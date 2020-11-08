@@ -154,6 +154,8 @@ sentencia_ejecutable : asignacion //{System.out.println("Sintactico  ->  SENTENC
 
 asignacion : ID '=' expresion  {//System.out.println("Existe el lexema en la Tabla de Simbolos");
 								   Token id = (Token)$1.obj;
+								   Token total = (Token)$$.obj;
+								   System.out.println("\n\n\n token total -> "+total.getLexema()+"\n\n\n");
 								   int linea = id.getNroLinea();
 								   //System.out.println("\n OJO!! Existe  "+ id.getLexema() +"  en Tabla de Simbolos ??");
 								   //System.out.println("EXISTE?? a ver, mostrala ");

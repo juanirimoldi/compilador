@@ -14,15 +14,6 @@ public class TablaDeSimbolos {
 	private Hashtable<String, Token> TSimbolos;
 	
 	
-	//contendra un registro para cada ID, CTE o CADENA de caracteres
-	//con campos para registrar la info relevante de cada simbolo (atributo)
-	
-	//ej token -> PalabraReservada - IF
-	//			  ID , plazo
-	//			  ID , tasa
-	//			  CTE , 123
-	
-	//ej. x(lexema), ID, 
 	
 	public TablaDeSimbolos() throws IllegalArgumentException, IllegalAccessException {
 		this.tdt = new TablaDeTipos();
@@ -82,9 +73,32 @@ public class TablaDeSimbolos {
 	public boolean existe(String b) {
 		//this.mostrarTokens();
 		//System.out.println("Existe " + b + " en la Hash???? "+this.id_tipo.contains(b));
-		return this.TSimbolos.contains(b);
+		return this.TSimbolos.containsKey(b);
+		//this.TSimbolos.con
 	}
 	
+	
+	public boolean correctamenteDefinido(Token t) {
+		if (this.existe(t.getLexema())) {
+			if (t.getAmbito().isBlank()) {
+				System.out.println("NO tiene ambito definido -> no esta inicializada correctamente");
+				return false;
+			} else {
+				System.out.println("Simbolo  "+t.getLexema() +"  correctamente definido en TSym,  en ambito  "+t.getAmbito());
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	public Token getSimbolo(String key) {
+		return this.TSimbolos.get(key);
+	}
+	
+	public void modificarValor(String k, String val) {
+		this.TSimbolos.get(k).setValor(val);
+	}
 	
 	public void mostrarSimbolos() {
 		System.out.println("\n\n Tabla de SImbolos \n");
@@ -95,7 +109,7 @@ public class TablaDeSimbolos {
 		Enumeration enumeration = this.TSimbolos.elements();
 		while (enumeration.hasMoreElements()) {
 			Token t = (Token)enumeration.nextElement();
-			System.out.println(enumeration_keys.nextElement() + " 	, "+t.getTipo()+ " 	, "+t.getTipoVar());
+			System.out.println(enumeration_keys.nextElement() + " 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getAmbito()+"	,  "+t.getValor());
 		}
 		System.out.println("\n");
 	}

@@ -396,7 +396,7 @@ final static String yyrule[] = {
 "factor : ID",
 };
 
-//#line 295 "gramaticaIncremental.y"
+//#line 334 "gramaticaIncremental.y"
 	   	
 
 
@@ -406,7 +406,7 @@ final static String yyrule[] = {
 
 AnalizadorLexico lexico;
 TablaDeSimbolos tabla;
-
+String ambito;
 
 
 
@@ -422,6 +422,10 @@ private int yylex() {
 	//System.out.println("\n Dentro del Sintactico...\n");
 
 	if (token!=null){
+		if (tabla.existe(token.getLexema())){
+			System.out.println("EXISTE TOKEN EN TABLA! apunto a la tabla de simbolos ");
+			token = tabla.getSimbolo(token.getLexema());
+		}
 		tabla.addToken(token);
 		
 	    yylval = new ParserVal(token); //var para obtener el token de la tabla
@@ -436,19 +440,19 @@ private int yylex() {
 
 
 public static void main(String args[]) throws IllegalArgumentException, IllegalAccessException {
- 	String direccion_codigo = "casos_prueba.txt";
+ 	String direccion_codigo = "casos_prueba_tercetos.txt";
 	
  	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
 	al.abrirCargarArchivo();
 	TablaDeSimbolos tds = new TablaDeSimbolos();
-
+	String a = "main";
 	
-	Parser par = new Parser(false, al, tds);
+	Parser par = new Parser(false, al, tds, a);
  	par.yyparse();
  	
  	tds.mostrarSimbolos();
 }
-//#line 377 "Parser.java"
+//#line 381 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -606,10 +610,22 @@ case 1:
 //#line 52 "gramaticaIncremental.y"
 {System.out.println("\n LLEGO A RAIZ! -> termino programa \n ");}
 break;
+case 4:
+//#line 61 "gramaticaIncremental.y"
+{/*System.out.println("\n SENTENCIA DECLARATIVA CORRECTA \n");*/
+								   	   System.out.println("\n----------------------------------------\n");
+									  }
+break;
+case 5:
+//#line 64 "gramaticaIncremental.y"
+{/*System.out.println("\n SENTENCIA EJECUTABLE CORRECTA \n");*/
+		    	   				       System.out.println("\n----------------------------------------\n");
+		  						     }
+break;
 case 6:
 //#line 76 "gramaticaIncremental.y"
-{System.out.println("\n VARIABLE DECLARADA CORRECTAMENTE \n ");
-								   				 System.out.println("\n----------------------------------------\n");
+{/*System.out.println("\n VARIABLE DECLARADA CORRECTAMENTE \n ");*/
+								   				 /*System.out.println("\n----------------------------------------\n");*/
 												 }
 break;
 case 7:
@@ -622,88 +638,139 @@ case 8:
 //#line 85 "gramaticaIncremental.y"
 {/*System.out.println("VARIABLE BIEN DECLARADA con TIPO!! ");*/
 												   /*Token t = (Token)yyval.obj;	*/
-												   /*System.out.println("yyval SAPE! "+t.getLexema());*/
+												   /*System.out.println("yyval SAPE! "+t.getLexema());												   */
 												   Token tipo = (Token)val_peek(1).obj;
 												   Token variable = (Token)val_peek(0).obj;
-												   System.out.println("\n Sintactico  ->  Linea: "+tipo.getNroLinea()+"  ,  VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+" "+variable.getLexema()+"\n");
+												   System.out.println("\n POR DEFECTO AGREGO A TSYM  ->  "+ variable.getLexema() +"\n");
+												   System.out.println("\n VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+" "+variable.getLexema()+"\n");
+												   variable.setAmbito(ambito); 
 												   
+												   System.out.println("\n La dejo en la TSym, y le agrego el ambito -> "+ambito+"\n");
+												   /*System.out.println("ambito -> "+ambito); */
+												   tabla.mostrarSimbolos();
 												   /*String tipo = (Token)$1.obj.getLexema();*/
 												   /*String lexema = (Token)$2.obj.getLexema(); */
 								   				   /*System.out.println("\n----------------------------------------\n");*/
 								   
 												   }
 break;
-case 22:
-//#line 143 "gramaticaIncremental.y"
-{System.out.println("\n Sintactico  ->  CLAUSULA de SELECCION EJECUTADA CORRECTAMENTE \n");}
-break;
 case 25:
-//#line 146 "gramaticaIncremental.y"
+//#line 151 "gramaticaIncremental.y"
 {System.out.println("\n INVOCO TERRIBLE PROCEDURE \n");}
 break;
 case 26:
-//#line 155 "gramaticaIncremental.y"
-{/*System.out.println("Existe el lexema en la Tabla de Simbolos");*/
-								   Token id = (Token)val_peek(2).obj;
-								   int linea = id.getNroLinea();
-								   /*System.out.println("\n OJO!! Existe  "+ id.getLexema() +"  en Tabla de Simbolos ??");*/
-								   /*System.out.println("EXISTE?? a ver, mostrala ");*/
-								   /*tipo de binding?*/
-								   /*tabla.mostrarSimbolos();*/
+//#line 160 "gramaticaIncremental.y"
+{  Token id = (Token)val_peek(2).obj;
+								  int linea = id.getNroLinea();
+								  System.out.println("Llega ID "+id.getLexema()+" a la asignacion");
+								  System.out.println("\n ASIGNACION!  correctamente inicializada  "+ id.getLexema() +"  en Tabla de Simbolos ??");
+								  
+								  tabla.mostrarSimbolos();
+								  
+								  Token op = (Token)val_peek(1).obj;
+								  Token expr = (Token)val_peek(0).obj;
+								  
 								   
-								   Token op = (Token)val_peek(1).obj;
-								   Token expr = (Token)val_peek(0).obj;
-								   /*es valida esta impleentacion? o consumo  memoria al crear tokens?*/
-								   
-								   
-								   System.out.println("\n Sintactico ->  Linea: "+ linea+"  ,  ASIGNACION DETECTADA   "+id.getLexema()+" "+op.getLexema()+" "+expr.getLexema()+"\n");
-								   
-								   /*System.out.println("Tabla -> addToken() ");*/
-								   /*tabla.addToken(id);*/
-								   /*tabla.mostrarSimbolos();*/
-								   /*String expr = (Token)$2.obj.getLexema(); */
-								   /*System.out.println("\n Sintactico  ->  HAGO ASIGNACION  "+lexema+" = "+expr+"\n");*/
-								   
-								   /*tabla.mostrarSimbolos();*/
-								   /*tabla.mostrarSimbolos();*/
-								   System.out.println("\n ------------------------------------ \n"); 
+								  if (tabla.correctamenteDefinido(id)){
+								  	System.out.println("\n CREO TERCETO ASIGNACION  ->  ( "+op.getLexema()+" , "+id.getLexema()+" , "+expr.getLexema()+" )  \n\n");
+								  } else {
+								  	System.out.println("\n EL ID  "+id.getLexema()+" no esta correctamente definido. cancelo la asignacion  \n");
+								  	/*como no se puede alterar la TSym desde las reglas, la agrego sin ambito y luego la elimino?*/
+								  }
+								  
+								  /* System.out.println("\n ------------------------------------ \n"); */
 								   }
 break;
+case 27:
+//#line 188 "gramaticaIncremental.y"
+{ System.out.println("\n\n ESTOY DENTRO DEL IF!! \n\n");
+																									  Token f = (Token)yyval.obj;
+																									  Token f2 = (Token)val_peek(6).obj;
+																									  System.out.println("\n\n tengo algun parametro??"+ f.getLexema() +" algo mas? "+f2.getLexema()+"\n\n");
+																									  
+																									}
+break;
 case 29:
-//#line 193 "gramaticaIncremental.y"
+//#line 200 "gramaticaIncremental.y"
 {/*System.out.println("\n Sintactico  ->  COMPARACION!!\n");*/
+									 /*popner aca condicion de salto*/
+									 /*ya sea IF o LOOP, la cond va a seguir ejecutandose*/
+									 /*codigo que haaga la comparacion */
+									 /*si es falso, en IF salta a else*/
+									 
 									 Token op1 = (Token)val_peek(2).obj;
 									 int linea = op1.getNroLinea();
  								     Token op2 = (Token)val_peek(1).obj;
  								     Token op3 = (Token)val_peek(0).obj;
- 								     System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  COMPARACION  ->  "+op1.getLexema()+" "+op2.getLexema()+" "+op3.getLexema()+"\n");
+ 								     System.out.println("\n 1. TERCETO COMPARACION  ->  ( "+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+" ) \n");
 									}
 break;
-case 35:
-//#line 209 "gramaticaIncremental.y"
-{System.out.println("\n\nBLOQUE DE MULTIPLES SENTENCIAS!!\n\n");}
+case 30:
+//#line 212 "gramaticaIncremental.y"
+{Token op1 = (Token)val_peek(2).obj;
+									 int linea = op1.getNroLinea();
+ 								     Token op2 = (Token)val_peek(1).obj;
+ 								     Token op3 = (Token)val_peek(0).obj;
+ 								     System.out.println("\n 1. TERCETO COMPARACION  ->  ( "+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+" ) \n");
+									}
 break;
 case 36:
-//#line 213 "gramaticaIncremental.y"
+//#line 230 "gramaticaIncremental.y"
 {System.out.println("\n SENTENCIA DE CONTROL DETECTADA \n");}
 break;
 case 41:
-//#line 241 "gramaticaIncremental.y"
-{/*System.out.println("\n EXPRESION SUMA  "); */
+//#line 258 "gramaticaIncremental.y"
+{/*System.out.println("2. agregar la operacion que se realizo  "); */
 								   Token op1 = (Token)val_peek(2).obj;
 								   int linea = op1.getNroLinea();
 								   Token op2 = (Token)val_peek(1).obj;
 								   Token op3 = (Token)val_peek(0).obj;
-								   System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  EXPRESION SUMA  ->  "+op1.getLexema()+" "+op2.getLexema()+" "+op3.getLexema()+"\n"); 
+								   /*System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  EXPRESION SUMA  ->  "+op1.getLexema()+" "+op2.getLexema()+" "+op3.getLexema()+"\n"); */
+								   System.out.println("\n CREAR TERCETO SUMA  ->  ("+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+") \n\n"); 
 								   /*expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr);*/
 								   }
 break;
 case 42:
-//#line 250 "gramaticaIncremental.y"
-{System.out.println("EXPRESION RESTA  -  "); }
+//#line 268 "gramaticaIncremental.y"
+{/*System.out.println("2. agregar la expresion que se realizo  "); */
+	  	  						   Token op1 = (Token)val_peek(2).obj;
+								   int linea = op1.getNroLinea();
+								   Token op2 = (Token)val_peek(1).obj;
+								   Token op3 = (Token)val_peek(0).obj;
+								   /*System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  EXPRESION SUMA  ->  "+op1.getLexema()+" "+op2.getLexema()+" "+op3.getLexema()+"\n"); */
+								   System.out.println("\n CREAR TERCETO RESTA  ->  ("+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+") \n\n"); 
+								   }
+break;
+case 43:
+//#line 278 "gramaticaIncremental.y"
+{/*System.out.println("\n\n soy terrible TERMINO \n\n"); }*/
+	  	  			 /*Token expr = (Token)$$.obj;*/
+	  	  			 /*System.out.println("\n\n TERMINO -> "+ expr.getLexema() +" \n\n");*/
+	  	  			 }
+break;
+case 45:
+//#line 289 "gramaticaIncremental.y"
+{/*System.out.println("2. agregar operacion que se realizo -> *");*/
+								/*$$ = $1 + $3*/
+							  Token op1 = (Token)val_peek(2).obj;
+							  int linea = op1.getNroLinea();
+							  Token op2 = (Token)val_peek(1).obj;
+							  Token op3 = (Token)val_peek(0).obj;
+							  System.out.println("\n TERCETO MULTIPLICACION  ->  ( "+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+" ) \n"); 
+							  }
+break;
+case 46:
+//#line 298 "gramaticaIncremental.y"
+{System.out.println("2. agregar operacion que se realizo -> /");}
+break;
+case 48:
+//#line 311 "gramaticaIncremental.y"
+{Token factor = (Token)yyval.obj; 
+	   		  System.out.println("\n Llega CTE  "+ factor.getLexema() +"  la apunto con $$?? \n");
+       		  }
 break;
 case 49:
-//#line 275 "gramaticaIncremental.y"
+//#line 315 "gramaticaIncremental.y"
 {/*System.out.println("CTE negativa! \n"); */
        			 Token op1 = (Token)val_peek(1).obj;
 				 int linea = op1.getNroLinea();
@@ -711,7 +778,13 @@ case 49:
 				 System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  CTE NEGATIVA!  ->  "+op1.getLexema()+" "+op2.getLexema()+"\n");
 				 }
 break;
-//#line 635 "Parser.java"
+case 50:
+//#line 324 "gramaticaIncremental.y"
+{Token factor = (Token)yyval.obj; 
+	   		  System.out.println("llega FACTOR ID!??!  creo puntero -> "+ factor.getLexema() +"\n");
+       		  }
+break;
+//#line 708 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
@@ -784,11 +857,12 @@ public Parser()
  * Create a parser, setting the debug to true or false.
  * @param debugMe true for debugging, false for no debug.
  */
-public Parser(boolean debugMe, AnalizadorLexico al, TablaDeSimbolos tds)
+public Parser(boolean debugMe, AnalizadorLexico al, TablaDeSimbolos tds, String a)
 {
   yydebug=debugMe;
   lexico=al;
   tabla=tds;
+  ambito=a;
 }
 //###############################################################
 
