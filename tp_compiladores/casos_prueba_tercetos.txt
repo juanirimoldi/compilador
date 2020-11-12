@@ -5,7 +5,7 @@ INTEGER y ;
 INTEGER z ;
 
 
-y = 99 ;
+y = 99 + 3 ;
 z = 1 ;
 
 w = 89 ;
@@ -17,7 +17,10 @@ x = y + z ;
 %%(5, =, x, [4])
 
 
-IF ( x + 5 < 9 ) { ff = 8 ; } END_IF ; 
+%%IF ( x + 5 < 9 ) { ff = 8 ; } END_IF ; 
+
+IF ( x + 5 < 9 ) { INTEGER fff ; fff = 8 ; } END_IF ; 
+
 
 %%terceto comparacion (<, [6], 9 )
 %%a donde saltar si hay salto -> 

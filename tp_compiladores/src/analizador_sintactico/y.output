@@ -32,46 +32,51 @@
   20       | FLOAT
 
   21  sentencia_ejecutable : asignacion
-  22                       | clausula_de_seleccion
-  23                       | sentencia_de_control
-  24                       | sentencia_de_salida
-  25                       | invocacion
+  22                       | sentencia_de_control
+  23                       | sentencia_de_salida
+  24                       | invocacion
 
-  26  asignacion : ID '=' expresion
+  25  asignacion : ID '=' expresion
 
-  27  clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF
-  28                        | IF '(' condicion ')' bloque_de_sentencias END_IF
+  26  sentencia_de_control : IF condicion_IF cuerpo_IF END_IF
 
-  29  condicion : expresion '>' expresion
-  30            | expresion '<' expresion
-  31            | expresion MAYORIGUAL expresion
-  32            | expresion MENORIGUAL expresion
-  33            | expresion IGUAL expresion
-  34            | expresion DISTINTO expresion
+  27  condicion_IF : '(' condicion ')'
 
-  35  bloque_de_sentencias : '{' lista_de_sentencias '}'
+  28  cuerpo_IF : bloque_de_sentencias entra_ELSE bloque_de_sentencias
+  29            | bloque_de_sentencias
 
-  36  sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
+  30  entra_ELSE : ELSE
 
-  37  sentencia_de_salida : OUT '(' CADENA ')'
+  31  condicion : expresion '>' expresion
+  32            | expresion '<' expresion
+  33            | expresion MAYORIGUAL expresion
+  34            | expresion MENORIGUAL expresion
+  35            | expresion IGUAL expresion
+  36            | expresion DISTINTO expresion
 
-  38  invocacion : ID '(' parametro_ejecutable ')'
+  37  bloque_de_sentencias : '{' lista_de_sentencias '}'
 
-  39  parametro_ejecutable : ID ':' ID
-  40                       | parametro_ejecutable ',' ID ':' ID
+  38  sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')'
 
-  41  expresion : expresion '+' termino
-  42            | expresion '-' termino
-  43            | termino
-  44            | CADENA
+  39  sentencia_de_salida : OUT '(' CADENA ')'
 
-  45  termino : termino '*' factor
-  46          | termino '/' factor
-  47          | factor
+  40  invocacion : ID '(' parametro_ejecutable ')'
 
-  48  factor : CTE
-  49         | '-' CTE
-  50         | ID
+  41  parametro_ejecutable : ID ':' ID
+  42                       | parametro_ejecutable ',' ID ':' ID
+
+  43  expresion : expresion '+' termino
+  44            | expresion '-' termino
+  45            | termino
+  46            | CADENA
+
+  47  termino : termino '*' factor
+  48          | termino '/' factor
+  49          | factor
+
+  50  factor : CTE
+  51         | '-' CTE
+  52         | ID
 
 state 0
 	$accept : . programa $end  (0)
@@ -94,27 +99,27 @@ state 0
 	declaracion_de_procedimiento  goto 14
 	tipo  goto 15
 	asignacion  goto 16
-	clausula_de_seleccion  goto 17
-	sentencia_de_control  goto 18
-	sentencia_de_salida  goto 19
-	invocacion  goto 20
+	sentencia_de_control  goto 17
+	sentencia_de_salida  goto 18
+	invocacion  goto 19
 
 
 state 1
-	asignacion : ID . '=' expresion  (26)
-	invocacion : ID . '(' parametro_ejecutable ')'  (38)
+	asignacion : ID . '=' expresion  (25)
+	invocacion : ID . '(' parametro_ejecutable ')'  (40)
 
-	'('  shift 21
-	'='  shift 22
+	'('  shift 20
+	'='  shift 21
 	.  error
 
 
 state 2
-	clausula_de_seleccion : IF . '(' condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF  (27)
-	clausula_de_seleccion : IF . '(' condicion ')' bloque_de_sentencias END_IF  (28)
+	sentencia_de_control : IF . condicion_IF cuerpo_IF END_IF  (26)
 
-	'('  shift 23
+	'('  shift 22
 	.  error
+
+	condicion_IF  goto 23
 
 
 state 3
@@ -126,14 +131,14 @@ state 3
 
 
 state 4
-	sentencia_de_salida : OUT . '(' CADENA ')'  (37)
+	sentencia_de_salida : OUT . '(' CADENA ')'  (39)
 
 	'('  shift 25
 	.  error
 
 
 state 5
-	sentencia_de_control : LOOP . bloque_de_sentencias UNTIL '(' condicion ')'  (36)
+	sentencia_de_control : LOOP . bloque_de_sentencias UNTIL '(' condicion ')'  (38)
 
 	'{'  shift 26
 	.  error
@@ -179,10 +184,9 @@ state 9
 	declaracion_de_procedimiento  goto 14
 	tipo  goto 15
 	asignacion  goto 16
-	clausula_de_seleccion  goto 17
-	sentencia_de_control  goto 18
-	sentencia_de_salida  goto 19
-	invocacion  goto 20
+	sentencia_de_control  goto 17
+	sentencia_de_salida  goto 18
+	invocacion  goto 19
 
 
 state 10
@@ -233,31 +237,25 @@ state 16
 
 
 state 17
-	sentencia_ejecutable : clausula_de_seleccion .  (22)
+	sentencia_ejecutable : sentencia_de_control .  (22)
 
 	.  reduce 22
 
 
 state 18
-	sentencia_ejecutable : sentencia_de_control .  (23)
+	sentencia_ejecutable : sentencia_de_salida .  (23)
 
 	.  reduce 23
 
 
 state 19
-	sentencia_ejecutable : sentencia_de_salida .  (24)
+	sentencia_ejecutable : invocacion .  (24)
 
 	.  reduce 24
 
 
 state 20
-	sentencia_ejecutable : invocacion .  (25)
-
-	.  reduce 25
-
-
-state 21
-	invocacion : ID '(' . parametro_ejecutable ')'  (38)
+	invocacion : ID '(' . parametro_ejecutable ')'  (40)
 
 	ID  shift 33
 	.  error
@@ -265,8 +263,8 @@ state 21
 	parametro_ejecutable  goto 34
 
 
-state 22
-	asignacion : ID '=' . expresion  (26)
+state 21
+	asignacion : ID '=' . expresion  (25)
 
 	ID  shift 35
 	CTE  shift 36
@@ -279,9 +277,8 @@ state 22
 	factor  goto 41
 
 
-state 23
-	clausula_de_seleccion : IF '(' . condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF  (27)
-	clausula_de_seleccion : IF '(' . condicion ')' bloque_de_sentencias END_IF  (28)
+state 22
+	condicion_IF : '(' . condicion ')'  (27)
 
 	ID  shift 35
 	CTE  shift 36
@@ -295,23 +292,33 @@ state 23
 	factor  goto 41
 
 
+state 23
+	sentencia_de_control : IF condicion_IF . cuerpo_IF END_IF  (26)
+
+	'{'  shift 26
+	.  error
+
+	cuerpo_IF  goto 44
+	bloque_de_sentencias  goto 45
+
+
 state 24
 	declaracion_de_procedimiento : PROC ID . '(' lista_de_parametros ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'  (9)
 	declaracion_de_procedimiento : PROC ID . '(' ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'  (10)
 
-	'('  shift 44
+	'('  shift 46
 	.  error
 
 
 state 25
-	sentencia_de_salida : OUT '(' . CADENA ')'  (37)
+	sentencia_de_salida : OUT '(' . CADENA ')'  (39)
 
-	CADENA  shift 45
+	CADENA  shift 47
 	.  error
 
 
 state 26
-	bloque_de_sentencias : '{' . lista_de_sentencias '}'  (35)
+	bloque_de_sentencias : '{' . lista_de_sentencias '}'  (37)
 
 	ID  shift 1
 	IF  shift 2
@@ -322,7 +329,7 @@ state 26
 	FLOAT  shift 7
 	.  error
 
-	lista_de_sentencias  goto 46
+	lista_de_sentencias  goto 48
 	sentencia  goto 10
 	sentencia_declarativa  goto 11
 	sentencia_ejecutable  goto 12
@@ -330,16 +337,15 @@ state 26
 	declaracion_de_procedimiento  goto 14
 	tipo  goto 15
 	asignacion  goto 16
-	clausula_de_seleccion  goto 17
-	sentencia_de_control  goto 18
-	sentencia_de_salida  goto 19
-	invocacion  goto 20
+	sentencia_de_control  goto 17
+	sentencia_de_salida  goto 18
+	invocacion  goto 19
 
 
 state 27
-	sentencia_de_control : LOOP bloque_de_sentencias . UNTIL '(' condicion ')'  (36)
+	sentencia_de_control : LOOP bloque_de_sentencias . UNTIL '(' condicion ')'  (38)
 
-	UNTIL  shift 47
+	UNTIL  shift 49
 	.  error
 
 
@@ -371,140 +377,156 @@ state 32
 	declaracion_de_variable : tipo lista_de_variables .  (8)
 	lista_de_variables : lista_de_variables . ',' ID  (17)
 
-	','  shift 48
+	','  shift 50
 	';'  reduce 8
 
 
 state 33
-	parametro_ejecutable : ID . ':' ID  (39)
+	parametro_ejecutable : ID . ':' ID  (41)
 
-	':'  shift 49
+	':'  shift 51
 	.  error
 
 
 state 34
-	invocacion : ID '(' parametro_ejecutable . ')'  (38)
-	parametro_ejecutable : parametro_ejecutable . ',' ID ':' ID  (40)
+	invocacion : ID '(' parametro_ejecutable . ')'  (40)
+	parametro_ejecutable : parametro_ejecutable . ',' ID ':' ID  (42)
 
-	')'  shift 50
-	','  shift 51
+	')'  shift 52
+	','  shift 53
 	.  error
 
 
 state 35
-	factor : ID .  (50)
+	factor : ID .  (52)
+
+	.  reduce 52
+
+
+state 36
+	factor : CTE .  (50)
 
 	.  reduce 50
 
 
-state 36
-	factor : CTE .  (48)
-
-	.  reduce 48
-
-
 state 37
-	expresion : CADENA .  (44)
+	expresion : CADENA .  (46)
 
-	.  reduce 44
+	.  reduce 46
 
 
 state 38
-	factor : '-' . CTE  (49)
+	factor : '-' . CTE  (51)
 
-	CTE  shift 52
+	CTE  shift 54
 	.  error
 
 
 state 39
-	asignacion : ID '=' expresion .  (26)
-	expresion : expresion . '+' termino  (41)
-	expresion : expresion . '-' termino  (42)
+	asignacion : ID '=' expresion .  (25)
+	expresion : expresion . '+' termino  (43)
+	expresion : expresion . '-' termino  (44)
 
-	'+'  shift 53
-	'-'  shift 54
-	';'  reduce 26
+	'+'  shift 55
+	'-'  shift 56
+	';'  reduce 25
 
 
 state 40
-	expresion : termino .  (43)
-	termino : termino . '*' factor  (45)
-	termino : termino . '/' factor  (46)
+	expresion : termino .  (45)
+	termino : termino . '*' factor  (47)
+	termino : termino . '/' factor  (48)
 
-	'*'  shift 55
-	'/'  shift 56
-	MENORIGUAL  reduce 43
-	MAYORIGUAL  reduce 43
-	IGUAL  reduce 43
-	DISTINTO  reduce 43
-	';'  reduce 43
-	')'  reduce 43
-	'>'  reduce 43
-	'<'  reduce 43
-	'+'  reduce 43
-	'-'  reduce 43
+	'*'  shift 57
+	'/'  shift 58
+	MENORIGUAL  reduce 45
+	MAYORIGUAL  reduce 45
+	IGUAL  reduce 45
+	DISTINTO  reduce 45
+	';'  reduce 45
+	')'  reduce 45
+	'>'  reduce 45
+	'<'  reduce 45
+	'+'  reduce 45
+	'-'  reduce 45
 
 
 state 41
-	termino : factor .  (47)
+	termino : factor .  (49)
 
-	.  reduce 47
+	.  reduce 49
 
 
 state 42
-	condicion : expresion . '>' expresion  (29)
-	condicion : expresion . '<' expresion  (30)
-	condicion : expresion . MAYORIGUAL expresion  (31)
-	condicion : expresion . MENORIGUAL expresion  (32)
-	condicion : expresion . IGUAL expresion  (33)
-	condicion : expresion . DISTINTO expresion  (34)
-	expresion : expresion . '+' termino  (41)
-	expresion : expresion . '-' termino  (42)
+	condicion : expresion . '>' expresion  (31)
+	condicion : expresion . '<' expresion  (32)
+	condicion : expresion . MAYORIGUAL expresion  (33)
+	condicion : expresion . MENORIGUAL expresion  (34)
+	condicion : expresion . IGUAL expresion  (35)
+	condicion : expresion . DISTINTO expresion  (36)
+	expresion : expresion . '+' termino  (43)
+	expresion : expresion . '-' termino  (44)
 
-	MENORIGUAL  shift 57
-	MAYORIGUAL  shift 58
-	IGUAL  shift 59
-	DISTINTO  shift 60
-	'>'  shift 61
-	'<'  shift 62
-	'+'  shift 53
-	'-'  shift 54
+	MENORIGUAL  shift 59
+	MAYORIGUAL  shift 60
+	IGUAL  shift 61
+	DISTINTO  shift 62
+	'>'  shift 63
+	'<'  shift 64
+	'+'  shift 55
+	'-'  shift 56
 	.  error
 
 
 state 43
-	clausula_de_seleccion : IF '(' condicion . ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF  (27)
-	clausula_de_seleccion : IF '(' condicion . ')' bloque_de_sentencias END_IF  (28)
+	condicion_IF : '(' condicion . ')'  (27)
 
-	')'  shift 63
+	')'  shift 65
 	.  error
 
 
 state 44
-	declaracion_de_procedimiento : PROC ID '(' . lista_de_parametros ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'  (9)
-	declaracion_de_procedimiento : PROC ID '(' . ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'  (10)
+	sentencia_de_control : IF condicion_IF cuerpo_IF . END_IF  (26)
 
-	REF  shift 64
-	INTEGER  shift 6
-	FLOAT  shift 7
-	')'  shift 65
+	END_IF  shift 66
 	.  error
-
-	tipo  goto 66
-	lista_de_parametros  goto 67
-	parametro_declarado  goto 68
 
 
 state 45
-	sentencia_de_salida : OUT '(' CADENA . ')'  (37)
+	cuerpo_IF : bloque_de_sentencias . entra_ELSE bloque_de_sentencias  (28)
+	cuerpo_IF : bloque_de_sentencias .  (29)
 
-	')'  shift 69
-	.  error
+	ELSE  shift 67
+	END_IF  reduce 29
+
+	entra_ELSE  goto 68
 
 
 state 46
+	declaracion_de_procedimiento : PROC ID '(' . lista_de_parametros ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'  (9)
+	declaracion_de_procedimiento : PROC ID '(' . ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'  (10)
+
+	REF  shift 69
+	INTEGER  shift 6
+	FLOAT  shift 7
+	')'  shift 70
+	.  error
+
+	tipo  goto 71
+	lista_de_parametros  goto 72
+	parametro_declarado  goto 73
+
+
+state 47
+	sentencia_de_salida : OUT '(' CADENA . ')'  (39)
+
+	')'  shift 74
+	.  error
+
+
+state 48
 	lista_de_sentencias : lista_de_sentencias . sentencia  (3)
-	bloque_de_sentencias : '{' lista_de_sentencias . '}'  (35)
+	bloque_de_sentencias : '{' lista_de_sentencias . '}'  (37)
 
 	ID  shift 1
 	IF  shift 2
@@ -513,7 +535,7 @@ state 46
 	LOOP  shift 5
 	INTEGER  shift 6
 	FLOAT  shift 7
-	'}'  shift 70
+	'}'  shift 75
 	.  error
 
 	sentencia  goto 28
@@ -523,170 +545,99 @@ state 46
 	declaracion_de_procedimiento  goto 14
 	tipo  goto 15
 	asignacion  goto 16
-	clausula_de_seleccion  goto 17
-	sentencia_de_control  goto 18
-	sentencia_de_salida  goto 19
-	invocacion  goto 20
-
-
-state 47
-	sentencia_de_control : LOOP bloque_de_sentencias UNTIL . '(' condicion ')'  (36)
-
-	'('  shift 71
-	.  error
-
-
-state 48
-	lista_de_variables : lista_de_variables ',' . ID  (17)
-
-	ID  shift 72
-	.  error
+	sentencia_de_control  goto 17
+	sentencia_de_salida  goto 18
+	invocacion  goto 19
 
 
 state 49
-	parametro_ejecutable : ID ':' . ID  (39)
+	sentencia_de_control : LOOP bloque_de_sentencias UNTIL . '(' condicion ')'  (38)
 
-	ID  shift 73
+	'('  shift 76
 	.  error
 
 
 state 50
-	invocacion : ID '(' parametro_ejecutable ')' .  (38)
+	lista_de_variables : lista_de_variables ',' . ID  (17)
 
-	.  reduce 38
+	ID  shift 77
+	.  error
 
 
 state 51
-	parametro_ejecutable : parametro_ejecutable ',' . ID ':' ID  (40)
+	parametro_ejecutable : ID ':' . ID  (41)
 
-	ID  shift 74
+	ID  shift 78
 	.  error
 
 
 state 52
-	factor : '-' CTE .  (49)
+	invocacion : ID '(' parametro_ejecutable ')' .  (40)
 
-	.  reduce 49
+	.  reduce 40
 
 
 state 53
-	expresion : expresion '+' . termino  (41)
+	parametro_ejecutable : parametro_ejecutable ',' . ID ':' ID  (42)
 
-	ID  shift 35
-	CTE  shift 36
-	'-'  shift 38
+	ID  shift 79
 	.  error
-
-	termino  goto 75
-	factor  goto 41
 
 
 state 54
-	expresion : expresion '-' . termino  (42)
+	factor : '-' CTE .  (51)
 
-	ID  shift 35
-	CTE  shift 36
-	'-'  shift 38
-	.  error
-
-	termino  goto 76
-	factor  goto 41
+	.  reduce 51
 
 
 state 55
-	termino : termino '*' . factor  (45)
+	expresion : expresion '+' . termino  (43)
 
 	ID  shift 35
 	CTE  shift 36
 	'-'  shift 38
 	.  error
 
-	factor  goto 77
+	termino  goto 80
+	factor  goto 41
 
 
 state 56
-	termino : termino '/' . factor  (46)
+	expresion : expresion '-' . termino  (44)
 
 	ID  shift 35
 	CTE  shift 36
 	'-'  shift 38
 	.  error
 
-	factor  goto 78
+	termino  goto 81
+	factor  goto 41
 
 
 state 57
-	condicion : expresion MENORIGUAL . expresion  (32)
+	termino : termino '*' . factor  (47)
 
 	ID  shift 35
 	CTE  shift 36
-	CADENA  shift 37
 	'-'  shift 38
 	.  error
 
-	expresion  goto 79
-	termino  goto 40
-	factor  goto 41
+	factor  goto 82
 
 
 state 58
-	condicion : expresion MAYORIGUAL . expresion  (31)
+	termino : termino '/' . factor  (48)
 
 	ID  shift 35
 	CTE  shift 36
-	CADENA  shift 37
 	'-'  shift 38
 	.  error
 
-	expresion  goto 80
-	termino  goto 40
-	factor  goto 41
+	factor  goto 83
 
 
 state 59
-	condicion : expresion IGUAL . expresion  (33)
-
-	ID  shift 35
-	CTE  shift 36
-	CADENA  shift 37
-	'-'  shift 38
-	.  error
-
-	expresion  goto 81
-	termino  goto 40
-	factor  goto 41
-
-
-state 60
-	condicion : expresion DISTINTO . expresion  (34)
-
-	ID  shift 35
-	CTE  shift 36
-	CADENA  shift 37
-	'-'  shift 38
-	.  error
-
-	expresion  goto 82
-	termino  goto 40
-	factor  goto 41
-
-
-state 61
-	condicion : expresion '>' . expresion  (29)
-
-	ID  shift 35
-	CTE  shift 36
-	CADENA  shift 37
-	'-'  shift 38
-	.  error
-
-	expresion  goto 83
-	termino  goto 40
-	factor  goto 41
-
-
-state 62
-	condicion : expresion '<' . expresion  (30)
+	condicion : expresion MENORIGUAL . expresion  (34)
 
 	ID  shift 35
 	CTE  shift 36
@@ -699,70 +650,157 @@ state 62
 	factor  goto 41
 
 
+state 60
+	condicion : expresion MAYORIGUAL . expresion  (33)
+
+	ID  shift 35
+	CTE  shift 36
+	CADENA  shift 37
+	'-'  shift 38
+	.  error
+
+	expresion  goto 85
+	termino  goto 40
+	factor  goto 41
+
+
+state 61
+	condicion : expresion IGUAL . expresion  (35)
+
+	ID  shift 35
+	CTE  shift 36
+	CADENA  shift 37
+	'-'  shift 38
+	.  error
+
+	expresion  goto 86
+	termino  goto 40
+	factor  goto 41
+
+
+state 62
+	condicion : expresion DISTINTO . expresion  (36)
+
+	ID  shift 35
+	CTE  shift 36
+	CADENA  shift 37
+	'-'  shift 38
+	.  error
+
+	expresion  goto 87
+	termino  goto 40
+	factor  goto 41
+
+
 state 63
-	clausula_de_seleccion : IF '(' condicion ')' . bloque_de_sentencias ELSE bloque_de_sentencias END_IF  (27)
-	clausula_de_seleccion : IF '(' condicion ')' . bloque_de_sentencias END_IF  (28)
+	condicion : expresion '>' . expresion  (31)
+
+	ID  shift 35
+	CTE  shift 36
+	CADENA  shift 37
+	'-'  shift 38
+	.  error
+
+	expresion  goto 88
+	termino  goto 40
+	factor  goto 41
+
+
+state 64
+	condicion : expresion '<' . expresion  (32)
+
+	ID  shift 35
+	CTE  shift 36
+	CADENA  shift 37
+	'-'  shift 38
+	.  error
+
+	expresion  goto 89
+	termino  goto 40
+	factor  goto 41
+
+
+state 65
+	condicion_IF : '(' condicion ')' .  (27)
+
+	.  reduce 27
+
+
+state 66
+	sentencia_de_control : IF condicion_IF cuerpo_IF END_IF .  (26)
+
+	.  reduce 26
+
+
+state 67
+	entra_ELSE : ELSE .  (30)
+
+	.  reduce 30
+
+
+state 68
+	cuerpo_IF : bloque_de_sentencias entra_ELSE . bloque_de_sentencias  (28)
 
 	'{'  shift 26
 	.  error
 
-	bloque_de_sentencias  goto 85
+	bloque_de_sentencias  goto 90
 
 
-state 64
+state 69
 	parametro_declarado : REF . tipo ID  (16)
 
 	INTEGER  shift 6
 	FLOAT  shift 7
 	.  error
 
-	tipo  goto 86
+	tipo  goto 91
 
 
-state 65
+state 70
 	declaracion_de_procedimiento : PROC ID '(' ')' . NI '=' CTE '{' cuerpo_del_procedimiento '}'  (10)
 
-	NI  shift 87
+	NI  shift 92
 	.  error
 
 
-state 66
+state 71
 	parametro_declarado : tipo . ID  (15)
 
-	ID  shift 88
+	ID  shift 93
 	.  error
 
 
-state 67
+state 72
 	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros . ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'  (9)
 
-	')'  shift 89
+	')'  shift 94
 	.  error
 
 
-state 68
+state 73
 	lista_de_parametros : parametro_declarado . ',' parametro_declarado ',' parametro_declarado  (12)
 	lista_de_parametros : parametro_declarado . ',' parametro_declarado  (13)
 	lista_de_parametros : parametro_declarado .  (14)
 
-	','  shift 90
+	','  shift 95
 	')'  reduce 14
 
 
-state 69
-	sentencia_de_salida : OUT '(' CADENA ')' .  (37)
+state 74
+	sentencia_de_salida : OUT '(' CADENA ')' .  (39)
+
+	.  reduce 39
+
+
+state 75
+	bloque_de_sentencias : '{' lista_de_sentencias '}' .  (37)
 
 	.  reduce 37
 
 
-state 70
-	bloque_de_sentencias : '{' lista_de_sentencias '}' .  (35)
-
-	.  reduce 35
-
-
-state 71
-	sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' . condicion ')'  (36)
+state 76
+	sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' . condicion ')'  (38)
 
 	ID  shift 35
 	CTE  shift 36
@@ -771,298 +809,267 @@ state 71
 	.  error
 
 	expresion  goto 42
-	condicion  goto 91
+	condicion  goto 96
 	termino  goto 40
 	factor  goto 41
 
 
-state 72
+state 77
 	lista_de_variables : lista_de_variables ',' ID .  (17)
 
 	.  reduce 17
 
 
-state 73
-	parametro_ejecutable : ID ':' ID .  (39)
-
-	.  reduce 39
-
-
-state 74
-	parametro_ejecutable : parametro_ejecutable ',' ID . ':' ID  (40)
-
-	':'  shift 92
-	.  error
-
-
-state 75
-	expresion : expresion '+' termino .  (41)
-	termino : termino . '*' factor  (45)
-	termino : termino . '/' factor  (46)
-
-	'*'  shift 55
-	'/'  shift 56
-	MENORIGUAL  reduce 41
-	MAYORIGUAL  reduce 41
-	IGUAL  reduce 41
-	DISTINTO  reduce 41
-	';'  reduce 41
-	')'  reduce 41
-	'>'  reduce 41
-	'<'  reduce 41
-	'+'  reduce 41
-	'-'  reduce 41
-
-
-state 76
-	expresion : expresion '-' termino .  (42)
-	termino : termino . '*' factor  (45)
-	termino : termino . '/' factor  (46)
-
-	'*'  shift 55
-	'/'  shift 56
-	MENORIGUAL  reduce 42
-	MAYORIGUAL  reduce 42
-	IGUAL  reduce 42
-	DISTINTO  reduce 42
-	';'  reduce 42
-	')'  reduce 42
-	'>'  reduce 42
-	'<'  reduce 42
-	'+'  reduce 42
-	'-'  reduce 42
-
-
-state 77
-	termino : termino '*' factor .  (45)
-
-	.  reduce 45
-
-
 state 78
-	termino : termino '/' factor .  (46)
+	parametro_ejecutable : ID ':' ID .  (41)
 
-	.  reduce 46
+	.  reduce 41
 
 
 state 79
-	condicion : expresion MENORIGUAL expresion .  (32)
-	expresion : expresion . '+' termino  (41)
-	expresion : expresion . '-' termino  (42)
+	parametro_ejecutable : parametro_ejecutable ',' ID . ':' ID  (42)
 
-	'+'  shift 53
-	'-'  shift 54
-	')'  reduce 32
+	':'  shift 97
+	.  error
 
 
 state 80
-	condicion : expresion MAYORIGUAL expresion .  (31)
-	expresion : expresion . '+' termino  (41)
-	expresion : expresion . '-' termino  (42)
+	expresion : expresion '+' termino .  (43)
+	termino : termino . '*' factor  (47)
+	termino : termino . '/' factor  (48)
 
-	'+'  shift 53
-	'-'  shift 54
-	')'  reduce 31
+	'*'  shift 57
+	'/'  shift 58
+	MENORIGUAL  reduce 43
+	MAYORIGUAL  reduce 43
+	IGUAL  reduce 43
+	DISTINTO  reduce 43
+	';'  reduce 43
+	')'  reduce 43
+	'>'  reduce 43
+	'<'  reduce 43
+	'+'  reduce 43
+	'-'  reduce 43
 
 
 state 81
-	condicion : expresion IGUAL expresion .  (33)
-	expresion : expresion . '+' termino  (41)
-	expresion : expresion . '-' termino  (42)
+	expresion : expresion '-' termino .  (44)
+	termino : termino . '*' factor  (47)
+	termino : termino . '/' factor  (48)
 
-	'+'  shift 53
-	'-'  shift 54
-	')'  reduce 33
+	'*'  shift 57
+	'/'  shift 58
+	MENORIGUAL  reduce 44
+	MAYORIGUAL  reduce 44
+	IGUAL  reduce 44
+	DISTINTO  reduce 44
+	';'  reduce 44
+	')'  reduce 44
+	'>'  reduce 44
+	'<'  reduce 44
+	'+'  reduce 44
+	'-'  reduce 44
 
 
 state 82
-	condicion : expresion DISTINTO expresion .  (34)
-	expresion : expresion . '+' termino  (41)
-	expresion : expresion . '-' termino  (42)
+	termino : termino '*' factor .  (47)
 
-	'+'  shift 53
-	'-'  shift 54
-	')'  reduce 34
+	.  reduce 47
 
 
 state 83
-	condicion : expresion '>' expresion .  (29)
-	expresion : expresion . '+' termino  (41)
-	expresion : expresion . '-' termino  (42)
+	termino : termino '/' factor .  (48)
 
-	'+'  shift 53
-	'-'  shift 54
-	')'  reduce 29
+	.  reduce 48
 
 
 state 84
-	condicion : expresion '<' expresion .  (30)
-	expresion : expresion . '+' termino  (41)
-	expresion : expresion . '-' termino  (42)
+	condicion : expresion MENORIGUAL expresion .  (34)
+	expresion : expresion . '+' termino  (43)
+	expresion : expresion . '-' termino  (44)
 
-	'+'  shift 53
-	'-'  shift 54
-	')'  reduce 30
+	'+'  shift 55
+	'-'  shift 56
+	')'  reduce 34
 
 
 state 85
-	clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias . ELSE bloque_de_sentencias END_IF  (27)
-	clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias . END_IF  (28)
+	condicion : expresion MAYORIGUAL expresion .  (33)
+	expresion : expresion . '+' termino  (43)
+	expresion : expresion . '-' termino  (44)
 
-	ELSE  shift 93
-	END_IF  shift 94
-	.  error
+	'+'  shift 55
+	'-'  shift 56
+	')'  reduce 33
 
 
 state 86
-	parametro_declarado : REF tipo . ID  (16)
+	condicion : expresion IGUAL expresion .  (35)
+	expresion : expresion . '+' termino  (43)
+	expresion : expresion . '-' termino  (44)
 
-	ID  shift 95
-	.  error
+	'+'  shift 55
+	'-'  shift 56
+	')'  reduce 35
 
 
 state 87
-	declaracion_de_procedimiento : PROC ID '(' ')' NI . '=' CTE '{' cuerpo_del_procedimiento '}'  (10)
+	condicion : expresion DISTINTO expresion .  (36)
+	expresion : expresion . '+' termino  (43)
+	expresion : expresion . '-' termino  (44)
 
-	'='  shift 96
-	.  error
+	'+'  shift 55
+	'-'  shift 56
+	')'  reduce 36
 
 
 state 88
+	condicion : expresion '>' expresion .  (31)
+	expresion : expresion . '+' termino  (43)
+	expresion : expresion . '-' termino  (44)
+
+	'+'  shift 55
+	'-'  shift 56
+	')'  reduce 31
+
+
+state 89
+	condicion : expresion '<' expresion .  (32)
+	expresion : expresion . '+' termino  (43)
+	expresion : expresion . '-' termino  (44)
+
+	'+'  shift 55
+	'-'  shift 56
+	')'  reduce 32
+
+
+state 90
+	cuerpo_IF : bloque_de_sentencias entra_ELSE bloque_de_sentencias .  (28)
+
+	.  reduce 28
+
+
+state 91
+	parametro_declarado : REF tipo . ID  (16)
+
+	ID  shift 98
+	.  error
+
+
+state 92
+	declaracion_de_procedimiento : PROC ID '(' ')' NI . '=' CTE '{' cuerpo_del_procedimiento '}'  (10)
+
+	'='  shift 99
+	.  error
+
+
+state 93
 	parametro_declarado : tipo ID .  (15)
 
 	.  reduce 15
 
 
-state 89
+state 94
 	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' . NI '=' CTE '{' cuerpo_del_procedimiento '}'  (9)
 
-	NI  shift 97
+	NI  shift 100
 	.  error
 
 
-state 90
+state 95
 	lista_de_parametros : parametro_declarado ',' . parametro_declarado ',' parametro_declarado  (12)
 	lista_de_parametros : parametro_declarado ',' . parametro_declarado  (13)
 
-	REF  shift 64
+	REF  shift 69
 	INTEGER  shift 6
 	FLOAT  shift 7
 	.  error
 
-	tipo  goto 66
-	parametro_declarado  goto 98
+	tipo  goto 71
+	parametro_declarado  goto 101
 
 
-state 91
-	sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion . ')'  (36)
+state 96
+	sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion . ')'  (38)
 
-	')'  shift 99
+	')'  shift 102
 	.  error
 
 
-state 92
-	parametro_ejecutable : parametro_ejecutable ',' ID ':' . ID  (40)
+state 97
+	parametro_ejecutable : parametro_ejecutable ',' ID ':' . ID  (42)
 
-	ID  shift 100
+	ID  shift 103
 	.  error
 
 
-state 93
-	clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE . bloque_de_sentencias END_IF  (27)
-
-	'{'  shift 26
-	.  error
-
-	bloque_de_sentencias  goto 101
-
-
-state 94
-	clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias END_IF .  (28)
-
-	.  reduce 28
-
-
-state 95
+state 98
 	parametro_declarado : REF tipo ID .  (16)
 
 	.  reduce 16
 
 
-state 96
+state 99
 	declaracion_de_procedimiento : PROC ID '(' ')' NI '=' . CTE '{' cuerpo_del_procedimiento '}'  (10)
 
-	CTE  shift 102
+	CTE  shift 104
 	.  error
-
-
-state 97
-	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI . '=' CTE '{' cuerpo_del_procedimiento '}'  (9)
-
-	'='  shift 103
-	.  error
-
-
-state 98
-	lista_de_parametros : parametro_declarado ',' parametro_declarado . ',' parametro_declarado  (12)
-	lista_de_parametros : parametro_declarado ',' parametro_declarado .  (13)
-
-	','  shift 104
-	')'  reduce 13
-
-
-state 99
-	sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')' .  (36)
-
-	.  reduce 36
 
 
 state 100
-	parametro_ejecutable : parametro_ejecutable ',' ID ':' ID .  (40)
+	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI . '=' CTE '{' cuerpo_del_procedimiento '}'  (9)
 
-	.  reduce 40
+	'='  shift 105
+	.  error
 
 
 state 101
-	clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias . END_IF  (27)
+	lista_de_parametros : parametro_declarado ',' parametro_declarado . ',' parametro_declarado  (12)
+	lista_de_parametros : parametro_declarado ',' parametro_declarado .  (13)
 
-	END_IF  shift 105
-	.  error
+	','  shift 106
+	')'  reduce 13
 
 
 state 102
-	declaracion_de_procedimiento : PROC ID '(' ')' NI '=' CTE . '{' cuerpo_del_procedimiento '}'  (10)
+	sentencia_de_control : LOOP bloque_de_sentencias UNTIL '(' condicion ')' .  (38)
 
-	'{'  shift 106
-	.  error
+	.  reduce 38
 
 
 state 103
-	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' . CTE '{' cuerpo_del_procedimiento '}'  (9)
+	parametro_ejecutable : parametro_ejecutable ',' ID ':' ID .  (42)
 
-	CTE  shift 107
-	.  error
+	.  reduce 42
 
 
 state 104
+	declaracion_de_procedimiento : PROC ID '(' ')' NI '=' CTE . '{' cuerpo_del_procedimiento '}'  (10)
+
+	'{'  shift 107
+	.  error
+
+
+state 105
+	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' . CTE '{' cuerpo_del_procedimiento '}'  (9)
+
+	CTE  shift 108
+	.  error
+
+
+state 106
 	lista_de_parametros : parametro_declarado ',' parametro_declarado ',' . parametro_declarado  (12)
 
-	REF  shift 64
+	REF  shift 69
 	INTEGER  shift 6
 	FLOAT  shift 7
 	.  error
 
-	tipo  goto 66
-	parametro_declarado  goto 108
+	tipo  goto 71
+	parametro_declarado  goto 109
 
 
-state 105
-	clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF .  (27)
-
-	.  reduce 27
-
-
-state 106
+state 107
 	declaracion_de_procedimiento : PROC ID '(' ')' NI '=' CTE '{' . cuerpo_del_procedimiento '}'  (10)
 
 	ID  shift 1
@@ -1074,35 +1081,34 @@ state 106
 	FLOAT  shift 7
 	.  error
 
-	lista_de_sentencias  goto 109
+	lista_de_sentencias  goto 110
 	sentencia  goto 10
 	sentencia_declarativa  goto 11
 	sentencia_ejecutable  goto 12
 	declaracion_de_variable  goto 13
 	declaracion_de_procedimiento  goto 14
 	tipo  goto 15
-	cuerpo_del_procedimiento  goto 110
+	cuerpo_del_procedimiento  goto 111
 	asignacion  goto 16
-	clausula_de_seleccion  goto 17
-	sentencia_de_control  goto 18
-	sentencia_de_salida  goto 19
-	invocacion  goto 20
-
-
-state 107
-	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE . '{' cuerpo_del_procedimiento '}'  (9)
-
-	'{'  shift 111
-	.  error
+	sentencia_de_control  goto 17
+	sentencia_de_salida  goto 18
+	invocacion  goto 19
 
 
 state 108
+	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE . '{' cuerpo_del_procedimiento '}'  (9)
+
+	'{'  shift 112
+	.  error
+
+
+state 109
 	lista_de_parametros : parametro_declarado ',' parametro_declarado ',' parametro_declarado .  (12)
 
 	.  reduce 12
 
 
-state 109
+state 110
 	lista_de_sentencias : lista_de_sentencias . sentencia  (3)
 	cuerpo_del_procedimiento : lista_de_sentencias .  (11)
 
@@ -1122,20 +1128,19 @@ state 109
 	declaracion_de_procedimiento  goto 14
 	tipo  goto 15
 	asignacion  goto 16
-	clausula_de_seleccion  goto 17
-	sentencia_de_control  goto 18
-	sentencia_de_salida  goto 19
-	invocacion  goto 20
-
-
-state 110
-	declaracion_de_procedimiento : PROC ID '(' ')' NI '=' CTE '{' cuerpo_del_procedimiento . '}'  (10)
-
-	'}'  shift 112
-	.  error
+	sentencia_de_control  goto 17
+	sentencia_de_salida  goto 18
+	invocacion  goto 19
 
 
 state 111
+	declaracion_de_procedimiento : PROC ID '(' ')' NI '=' CTE '{' cuerpo_del_procedimiento . '}'  (10)
+
+	'}'  shift 113
+	.  error
+
+
+state 112
 	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE '{' . cuerpo_del_procedimiento '}'  (9)
 
 	ID  shift 1
@@ -1147,39 +1152,38 @@ state 111
 	FLOAT  shift 7
 	.  error
 
-	lista_de_sentencias  goto 109
+	lista_de_sentencias  goto 110
 	sentencia  goto 10
 	sentencia_declarativa  goto 11
 	sentencia_ejecutable  goto 12
 	declaracion_de_variable  goto 13
 	declaracion_de_procedimiento  goto 14
 	tipo  goto 15
-	cuerpo_del_procedimiento  goto 113
+	cuerpo_del_procedimiento  goto 114
 	asignacion  goto 16
-	clausula_de_seleccion  goto 17
-	sentencia_de_control  goto 18
-	sentencia_de_salida  goto 19
-	invocacion  goto 20
+	sentencia_de_control  goto 17
+	sentencia_de_salida  goto 18
+	invocacion  goto 19
 
 
-state 112
+state 113
 	declaracion_de_procedimiento : PROC ID '(' ')' NI '=' CTE '{' cuerpo_del_procedimiento '}' .  (10)
 
 	.  reduce 10
 
 
-state 113
+state 114
 	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE '{' cuerpo_del_procedimiento . '}'  (9)
 
-	'}'  shift 114
+	'}'  shift 115
 	.  error
 
 
-state 114
+state 115
 	declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE '{' cuerpo_del_procedimiento '}' .  (9)
 
 	.  reduce 9
 
 
-39 terminals, 24 nonterminals
-51 grammar rules, 115 states
+39 terminals, 26 nonterminals
+53 grammar rules, 116 states

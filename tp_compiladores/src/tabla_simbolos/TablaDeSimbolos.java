@@ -84,7 +84,7 @@ public class TablaDeSimbolos {
 				System.out.println("NO tiene ambito definido -> no esta inicializada correctamente");
 				return false;
 			} else {
-				System.out.println("Simbolo  "+t.getLexema() +"  correctamente definido en TSym,  en ambito  "+t.getAmbito());
+				System.out.println("\n\n Simbolo  "+t.getLexema() +"  correctamente definido en TSym,  en ambito  "+t.getAmbito()+"\n");
 				return true;
 			}
 		}
@@ -96,9 +96,10 @@ public class TablaDeSimbolos {
 		return this.TSimbolos.get(key);
 	}
 	
-	public void modificarValor(String k, String val) {
-		this.TSimbolos.get(k).setValor(val);
-	}
+	
+	//public void modificarValor(String k, String val) {
+	//	this.TSimbolos.get(k).setValor(val);
+	//}
 	
 	public void mostrarSimbolos() {
 		System.out.println("\n\n Tabla de SImbolos \n");
@@ -109,7 +110,7 @@ public class TablaDeSimbolos {
 		Enumeration enumeration = this.TSimbolos.elements();
 		while (enumeration.hasMoreElements()) {
 			Token t = (Token)enumeration.nextElement();
-			System.out.println(enumeration_keys.nextElement() + " 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getAmbito()+"	,  "+t.getValor());
+			System.out.println(enumeration_keys.nextElement() + " 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getAmbito());//+"	,  "+t.getValor());
 		}
 		System.out.println("\n");
 	}

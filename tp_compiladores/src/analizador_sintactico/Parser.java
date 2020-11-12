@@ -191,87 +191,89 @@ public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
     0,    1,    1,    2,    2,    3,    3,    5,    6,    6,
    10,    9,    9,    9,   11,   11,    8,    8,    7,    7,
-    4,    4,    4,    4,    4,   12,   13,   13,   18,   18,
-   18,   18,   18,   18,   19,   14,   15,   16,   20,   20,
-   17,   17,   17,   17,   21,   21,   21,   22,   22,   22,
+    4,    4,    4,    4,   12,   13,   17,   18,   18,   21,
+   19,   19,   19,   19,   19,   19,   20,   13,   14,   15,
+   22,   22,   16,   16,   16,   16,   23,   23,   23,   24,
+   24,   24,
 };
 final static short yylen[] = {                            2,
     1,    1,    2,    2,    2,    1,    1,    2,   11,   10,
     1,    5,    3,    1,    2,    3,    3,    1,    1,    1,
-    1,    1,    1,    1,    1,    3,    8,    6,    3,    3,
-    3,    3,    3,    3,    3,    6,    4,    4,    3,    5,
-    3,    3,    1,    1,    3,    3,    1,    1,    2,    1,
+    1,    1,    1,    1,    3,    4,    3,    3,    1,    1,
+    3,    3,    3,    3,    3,    3,    3,    6,    4,    4,
+    3,    5,    3,    3,    1,    1,    3,    3,    1,    1,
+    2,    1,
 };
 final static short yydefred[] = {                         0,
     0,    0,    0,    0,    0,   19,   20,    0,    0,    2,
-    0,    0,    6,    7,    0,   21,   22,   23,   24,   25,
+    0,    0,    6,    7,    0,   21,   22,   23,   24,    0,
     0,    0,    0,    0,    0,    0,    0,    3,    4,    5,
-   18,    0,    0,    0,   50,   48,   44,    0,    0,    0,
-   47,    0,    0,    0,    0,    0,    0,    0,    0,   38,
-    0,   49,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,   37,   35,
-    0,   17,   39,    0,    0,    0,   45,   46,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,   15,    0,    0,
-    0,    0,    0,   28,   16,    0,    0,    0,   36,   40,
-    0,    0,    0,    0,   27,    0,    0,   12,    0,    0,
-    0,   10,    0,    9,
+   18,    0,    0,    0,   52,   50,   46,    0,    0,    0,
+   49,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,   40,    0,   51,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,   27,   26,   30,    0,    0,    0,
+    0,    0,    0,   39,   37,    0,   17,   41,    0,    0,
+    0,   47,   48,    0,    0,    0,    0,    0,    0,   28,
+    0,    0,   15,    0,    0,    0,    0,   16,    0,    0,
+    0,   38,   42,    0,    0,    0,    0,    0,   12,    0,
+    0,    0,   10,    0,    9,
 };
 final static short yydgoto[] = {                          8,
-  109,   10,   11,   12,   13,   14,   15,   32,   67,  110,
-   68,   16,   17,   18,   19,   20,   42,   43,   27,   34,
-   40,   41,
+  110,   10,   11,   12,   13,   14,   15,   32,   72,  111,
+   73,   16,   17,   18,   19,   42,   23,   44,   43,   27,
+   68,   34,   40,   41,
 };
-final static short yysindex[] = {                      -200,
-  -15,  -10, -240,   -4,  -89,    0,    0,    0, -200,    0,
-  -17,    3,    0,    0, -208,    0,    0,    0,    0,    0,
- -198,  -42,  -42,   30, -181, -200, -188,    0,    0,    0,
-    0,   37,   25,    6,    0,    0,    0, -174,   20,   -9,
-    0,  -23,   44,  -40,   45, -117,   47, -169, -168,    0,
- -167,    0,  -39,  -39,  -39,  -39,  -42,  -42,  -42,  -42,
-  -42,  -42,  -89, -205, -175, -165,   52,   50,    0,    0,
-  -42,    0,    0,   38,   -9,   -9,    0,    0,   20,   20,
-   20,   20,   20,   20, -189, -162,   36,    0, -166, -227,
-   57, -158,  -89,    0,    0, -157,   41,   59,    0,    0,
- -159,  -18, -152, -227,    0, -200,  -16,    0, -200,  -13,
- -200,    0,  -12,    0,
+final static short yysindex[] = {                      -194,
+  -15,    8, -205,   13,  -62,    0,    0,    0, -194,    0,
+    9,   10,    0,    0, -190,    0,    0,    0,    0, -186,
+  -42,  -42,  -62,   32, -183, -194, -191,    0,    0,    0,
+    0,   36,   23,    3,    0,    0,    0, -176,    6,   -2,
+    0,  -23,   42, -179, -177,  -40,   45, -117,   47, -169,
+ -168,    0, -167,    0,  -39,  -39,  -39,  -39,  -42,  -42,
+  -42,  -42,  -42,  -42,    0,    0,    0,  -62, -239, -175,
+ -165,   52,   50,    0,    0,  -42,    0,    0,   37,   -2,
+   -2,    0,    0,    6,    6,    6,    6,    6,    6,    0,
+ -161,   38,    0, -166, -237,   56, -159,    0, -157,   41,
+   59,    0,    0,  -19, -153, -237, -194,  -17,    0, -194,
+  -18, -194,    0,  -16,    0,
 };
 final static short yyrindex[] = {                         0,
     0,    0,    0,    0,    0,    0,    0,    0,  108,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,   51,    0,    0,    0,    0,    0,    0,   55,  -41,
+    0,   51,    0,    0,    0,    0,    0,    0,   54,  -41,
+    0,    0,    0,    0, -152,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,   68,    0,    0,
-    0,    0,    0,    0,  -36,  -31,    0,    0,   74,   75,
-   76,   77,   78,   79,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,   80,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,   -3,    0,
-    0,    0,    0,    0,
+    0,    0,   73,    0,    0,    0,    0,    0,    0,  -36,
+  -31,    0,    0,   74,   75,   76,   77,   78,   79,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+   80,    0,    0,    0,    0,    0,    0,    0,    0,   -3,
+    0,    0,    0,    0,    0,
 };
 final static short yygindex[] = {                         0,
-   32,    2,    0,    0,    0,    0,  -29,    0,    0,   12,
-  -63,    0,    0,    0,    0,    0,   -6,   53,  -50,    0,
-   23,   24,
+   17,    2,    0,    0,    0,    0,  -33,    0,    0,   11,
+  -68,    0,    0,    0,    0,   -5,    0,    0,   48,   -8,
+    0,    0,  -14,    7,
 };
 final static int YYTABLESIZE=255;
 static short yytable[];
 static { yytable();}
 static void yytable(){
-yytable = new short[]{                         43,
-   65,   43,   38,   43,   41,   38,   41,   70,   41,   42,
-   28,   42,   85,   42,   66,   39,   24,   43,   43,   53,
-   43,   54,   41,   41,   21,   41,   98,   42,   42,   23,
-   42,    9,   55,   26,   86,   25,   62,   56,   61,   64,
-  108,   29,  101,    6,    7,   22,   50,   28,   31,   51,
-   79,   80,   81,   82,   83,   84,    1,   46,   33,    2,
-   66,   30,   53,    3,   54,    6,    7,    4,    5,   44,
-    6,    7,   93,   94,   66,   75,   76,   45,   77,   78,
-   48,   47,   49,   52,   63,   69,   71,   72,   73,   74,
-   87,   88,   89,   90,   95,   92,   96,   99,  100,   97,
-  102,  103,  104,  105,  106,  107,  111,    1,   14,    8,
-   28,  112,  114,   26,   32,   31,   33,   34,   29,   30,
-   13,   11,  113,   91,    0,    0,    0,    0,    0,    0,
+yytable = new short[]{                         45,
+   70,   45,   38,   45,   43,   38,   43,   75,   43,   44,
+   28,   44,   71,   44,   45,   39,    9,   45,   45,   55,
+   45,   56,   43,   43,   20,   43,  101,   44,   44,   69,
+   44,    6,    7,    6,    7,   91,   64,  109,   63,   57,
+   80,   81,   48,   52,   58,   21,   53,   22,   55,   28,
+   56,   24,   25,   84,   85,   86,   87,   88,   89,   90,
+   26,   71,    1,   82,   83,    2,   31,   29,   30,    3,
+   33,   46,   71,    4,    5,   47,    6,    7,   49,   50,
+   51,   54,   65,   66,   67,   74,   76,   77,   78,   79,
+   92,   93,   94,   95,   97,   98,  102,  103,   99,  100,
+  104,  105,  106,  107,  108,  112,  113,    1,  115,    8,
+   29,   28,   25,   14,   34,   33,   35,   36,   31,   32,
+   13,   11,  114,   96,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    1,
     0,    0,    2,    0,    0,    0,    3,    0,    0,    0,
     4,    5,    0,    6,    7,    0,    0,    0,    0,    0,
@@ -281,10 +283,10 @@ yytable = new short[]{                         43,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,   35,   36,   37,   35,   36,    0,
-    0,    0,    0,    0,    0,    0,   64,    0,    0,    0,
-    6,    7,    0,   43,   43,   43,   43,    0,   41,   41,
-   41,   41,    0,   42,   42,   42,   42,    0,    0,    0,
-    0,   57,   58,   59,   60,
+    0,    0,    0,    0,    0,    0,   69,    0,    0,    0,
+    6,    7,    0,   45,   45,   45,   45,    0,   43,   43,
+   43,   43,    0,   44,   44,   44,   44,    0,    0,    0,
+    0,   59,   60,   61,   62,
 };
 }
 static short yycheck[];
@@ -292,18 +294,18 @@ static { yycheck(); }
 static void yycheck() {
 yycheck = new short[] {                         41,
    41,   43,   45,   45,   41,   45,   43,  125,   45,   41,
-    9,   43,   63,   45,   44,   22,  257,   59,   60,   43,
-   62,   45,   59,   60,   40,   62,   90,   59,   60,   40,
-   62,    0,   42,  123,   64,   40,   60,   47,   62,  267,
-  104,   59,   93,  271,  272,   61,   41,   46,  257,   44,
-   57,   58,   59,   60,   61,   62,  257,   26,  257,  260,
-   90,   59,   43,  264,   45,  271,  272,  268,  269,   40,
-  271,  272,  262,  263,  104,   53,   54,  259,   55,   56,
-   44,  270,   58,  258,   41,   41,   40,  257,  257,  257,
-  266,  257,   41,   44,  257,   58,   61,   41,  257,  266,
-  258,   61,   44,  263,  123,  258,  123,    0,   41,   59,
-  109,  125,  125,   59,   41,   41,   41,   41,   41,   41,
-   41,  125,  111,   71,   -1,   -1,   -1,   -1,   -1,   -1,
+    9,   43,   46,   45,   23,   21,    0,   59,   60,   43,
+   62,   45,   59,   60,   40,   62,   95,   59,   60,  267,
+   62,  271,  272,  271,  272,   69,   60,  106,   62,   42,
+   55,   56,   26,   41,   47,   61,   44,   40,   43,   48,
+   45,  257,   40,   59,   60,   61,   62,   63,   64,   68,
+  123,   95,  257,   57,   58,  260,  257,   59,   59,  264,
+  257,   40,  106,  268,  269,  259,  271,  272,  270,   44,
+   58,  258,   41,  263,  262,   41,   40,  257,  257,  257,
+  266,  257,   41,   44,   58,  257,   41,  257,   61,  266,
+  258,   61,   44,  123,  258,  123,  125,    0,  125,   59,
+  263,  110,   59,   41,   41,   41,   41,   41,   41,   41,
+   41,  125,  112,   76,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  257,
    -1,   -1,  260,   -1,   -1,   -1,  264,   -1,   -1,   -1,
   268,  269,   -1,  271,  272,   -1,   -1,   -1,   -1,   -1,
@@ -365,13 +367,15 @@ final static String yyrule[] = {
 "tipo : INTEGER",
 "tipo : FLOAT",
 "sentencia_ejecutable : asignacion",
-"sentencia_ejecutable : clausula_de_seleccion",
 "sentencia_ejecutable : sentencia_de_control",
 "sentencia_ejecutable : sentencia_de_salida",
 "sentencia_ejecutable : invocacion",
 "asignacion : ID '=' expresion",
-"clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias ELSE bloque_de_sentencias END_IF",
-"clausula_de_seleccion : IF '(' condicion ')' bloque_de_sentencias END_IF",
+"sentencia_de_control : IF condicion_IF cuerpo_IF END_IF",
+"condicion_IF : '(' condicion ')'",
+"cuerpo_IF : bloque_de_sentencias entra_ELSE bloque_de_sentencias",
+"cuerpo_IF : bloque_de_sentencias",
+"entra_ELSE : ELSE",
 "condicion : expresion '>' expresion",
 "condicion : expresion '<' expresion",
 "condicion : expresion MAYORIGUAL expresion",
@@ -396,7 +400,7 @@ final static String yyrule[] = {
 "factor : ID",
 };
 
-//#line 334 "gramaticaIncremental.y"
+//#line 442 "gramaticaIncremental.y"
 	   	
 
 
@@ -406,7 +410,10 @@ final static String yyrule[] = {
 
 AnalizadorLexico lexico;
 TablaDeSimbolos tabla;
+ListaTercetos lista;
 String ambito;
+boolean isToken=true;
+int nro_terceto = 1;
 
 
 
@@ -422,8 +429,10 @@ private int yylex() {
 	//System.out.println("\n Dentro del Sintactico...\n");
 
 	if (token!=null){
+		System.out.println("\n Llega token "+token.getLexema()+"\n");
+	
 		if (tabla.existe(token.getLexema())){
-			System.out.println("EXISTE TOKEN EN TABLA! apunto a la tabla de simbolos ");
+			System.out.println("\n EXISTE TOKEN  "+ token.getLexema() +"  EN TSYM! apunto al simbolo en la tabla \n");
 			token = tabla.getSimbolo(token.getLexema());
 		}
 		tabla.addToken(token);
@@ -447,12 +456,18 @@ public static void main(String args[]) throws IllegalArgumentException, IllegalA
 	TablaDeSimbolos tds = new TablaDeSimbolos();
 	String a = "main";
 	
-	Parser par = new Parser(false, al, tds, a);
+	ListaTercetos l = new ListaTercetos();
+	
+	
+	Parser par = new Parser(false, al, tds, l, a);
  	par.yyparse();
  	
+ 	
  	tds.mostrarSimbolos();
+ 	
+ 	l.mostrarTercetos();
 }
-//#line 381 "Parser.java"
+//#line 396 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -636,16 +651,17 @@ case 7:
 break;
 case 8:
 //#line 85 "gramaticaIncremental.y"
-{/*System.out.println("VARIABLE BIEN DECLARADA con TIPO!! ");*/
-												   /*Token t = (Token)yyval.obj;	*/
+{/*Token t = (Token)yyval.obj;	*/
 												   /*System.out.println("yyval SAPE! "+t.getLexema());												   */
 												   Token tipo = (Token)val_peek(1).obj;
 												   Token variable = (Token)val_peek(0).obj;
-												   System.out.println("\n POR DEFECTO AGREGO A TSYM  ->  "+ variable.getLexema() +"\n");
-												   System.out.println("\n VARIABLE BIEN DEFINIDA  "+tipo.getLexema()+" "+variable.getLexema()+"\n");
+												   /*System.out.println("Linea "+tipo.getNroLinea()+"  ,  "+tipo.getLexema()+" "+variable.getLexema());*/
+												   System.out.println("\n REGLA DECLARATIVA!! -> POR DEFECTO AGREGO  "+ variable.getLexema() +"  A TSYM   \n");
+												   
+												   System.out.println("\n VARIABLE BIEN DEFINIDA   ->   "+tipo.getLexema()+" "+variable.getLexema()+"\n");
 												   variable.setAmbito(ambito); 
 												   
-												   System.out.println("\n La dejo en la TSym, y le agrego el ambito -> "+ambito+"\n");
+												   System.out.println("\n Le agrego el ambito -> "+ambito+"\n");
 												   /*System.out.println("ambito -> "+ambito); */
 												   tabla.mostrarSimbolos();
 												   /*String tipo = (Token)$1.obj.getLexema();*/
@@ -654,49 +670,82 @@ case 8:
 								   
 												   }
 break;
-case 25:
-//#line 151 "gramaticaIncremental.y"
+case 24:
+//#line 153 "gramaticaIncremental.y"
 {System.out.println("\n INVOCO TERRIBLE PROCEDURE \n");}
 break;
-case 26:
-//#line 160 "gramaticaIncremental.y"
+case 25:
+//#line 159 "gramaticaIncremental.y"
 {  Token id = (Token)val_peek(2).obj;
 								  int linea = id.getNroLinea();
-								  System.out.println("Llega ID "+id.getLexema()+" a la asignacion");
-								  System.out.println("\n ASIGNACION!  correctamente inicializada  "+ id.getLexema() +"  en Tabla de Simbolos ??");
+								  /*System.out.println("\n Llega ID "+id.getLexema()+" a la asignacion \n");*/
+								  System.out.println("\n REGLA ASIGNACION!  Esta correctamente inicializada  "+ id.getLexema() +"  en Tabla de Simbolos ?");
 								  
 								  tabla.mostrarSimbolos();
 								  
 								  Token op = (Token)val_peek(1).obj;
-								  Token expr = (Token)val_peek(0).obj;
+								  /*Token expr = (Token)$3.obj;*/
+								  /*Token expr = (Token)$$.obj;*/
+								  yyval = val_peek(0); /*a pesar de la asignacion, $$ sigue apuntando al primer valor*/
 								  
-								   
-								  if (tabla.correctamenteDefinido(id)){
-								  	System.out.println("\n CREO TERCETO ASIGNACION  ->  ( "+op.getLexema()+" , "+id.getLexema()+" , "+expr.getLexema()+" )  \n\n");
+								  
+								  
+								  /*System.out.println("\n EXPRESION $$ -> "+ ((Token)$$.obj).getLexema() +"\n");*/
+								  /*System.out.println("\n EXPRESION $1 -> "+ ((Token)$1.obj).getLexema() +"\n");*/
+								  /*System.out.println("\n EXPRESION $3 -> "+ ((Token)$3.obj).getLexema() +"\n");*/
+							
+								  if (isToken) { 
+								  	System.out.println("\n EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
+							
+								  	if (tabla.correctamenteDefinido(id)){
+								  		System.out.println("\n SI, esta bien definido"+ id.getLexema()+"\n");
+								  		/*tabla.modificarValor(id.getLexema(), expr.getLexema());*/
+								  		System.out.println("\n CREO TERCETO ASIGNACION  ->  ( "+op.getLexema()+" , "+id.getLexema()+" , "+((Token)yyval.obj).getLexema()+" )  \n\n");
+								  	} else {
+								  		System.out.println("\n EL ID  "+id.getLexema()+" no esta correctamente definido. cancelo la asignacion  \n");
+								  		/*como no se puede alterar la TSym desde las reglas, la agrego sin ambito y luego la elimino?*/
+								  	}
 								  } else {
-								  	System.out.println("\n EL ID  "+id.getLexema()+" no esta correctamente definido. cancelo la asignacion  \n");
-								  	/*como no se puede alterar la TSym desde las reglas, la agrego sin ambito y luego la elimino?*/
+							      	System.out.println("\n ASIGNACION de EXPRESION $$ TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() +"\n");
+								  	
+								  	/*EL ERROR ES QUE CONSIDERO COMO TERCETO A UN TOKEN!!!*/
+								  	
+								  	System.out.println("\n CREO TERCETO ASIGNACION! con terceto ->  ( "+op.getLexema()+" , "+yyval.obj+" ) \n");
 								  }
 								  
+								  isToken=true;
 								  /* System.out.println("\n ------------------------------------ \n"); */
 								   }
 break;
+case 26:
+//#line 206 "gramaticaIncremental.y"
+{System.out.println("SENTENCIA DE CONTROL!");}
+break;
 case 27:
-//#line 188 "gramaticaIncremental.y"
-{ System.out.println("\n\n ESTOY DENTRO DEL IF!! \n\n");
-																									  Token f = (Token)yyval.obj;
-																									  Token f2 = (Token)val_peek(6).obj;
-																									  System.out.println("\n\n tengo algun parametro??"+ f.getLexema() +" algo mas? "+f2.getLexema()+"\n\n");
-																									  
-																									}
+//#line 210 "gramaticaIncremental.y"
+{System.out.println("\n ENTRO EN CONDICION IF!! \n");}
+break;
+case 28:
+//#line 214 "gramaticaIncremental.y"
+{System.out.println("\n CUERPAZO DEL IF! \n");}
 break;
 case 29:
-//#line 200 "gramaticaIncremental.y"
+//#line 215 "gramaticaIncremental.y"
+{System.out.println("...THEN -> BLOQUE DE SENTENCIAS SIMPLE");}
+break;
+case 30:
+//#line 219 "gramaticaIncremental.y"
+{System.out.println("\n ENTRO AL ELSE!! dentro del IF \n");}
+break;
+case 31:
+//#line 244 "gramaticaIncremental.y"
 {/*System.out.println("\n Sintactico  ->  COMPARACION!!\n");*/
 									 /*popner aca condicion de salto*/
 									 /*ya sea IF o LOOP, la cond va a seguir ejecutandose*/
 									 /*codigo que haaga la comparacion */
 									 /*si es falso, en IF salta a else*/
+									 
+									 /*dejo lugar en blanco y guarno el nro de terceto*/
 									 
 									 Token op1 = (Token)val_peek(2).obj;
 									 int linea = op1.getNroLinea();
@@ -705,33 +754,84 @@ case 29:
  								     System.out.println("\n 1. TERCETO COMPARACION  ->  ( "+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+" ) \n");
 									}
 break;
-case 30:
-//#line 212 "gramaticaIncremental.y"
-{Token op1 = (Token)val_peek(2).obj;
-									 int linea = op1.getNroLinea();
- 								     Token op2 = (Token)val_peek(1).obj;
- 								     Token op3 = (Token)val_peek(0).obj;
- 								     System.out.println("\n 1. TERCETO COMPARACION  ->  ( "+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+" ) \n");
+case 32:
+//#line 259 "gramaticaIncremental.y"
+{
+	  	  							if (isToken) { 
+ 									  	System.out.println("\n EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
+ 									  	Token op1 = (Token)val_peek(2).obj;
+ 										 /*int linea = op1.getNroLinea();*/
+ 	 								     Token op2 = (Token)val_peek(1).obj;
+ 	 								     Token op3 = (Token)val_peek(0).obj;
+ 									  	 System.out.println("CREA TERCETO COMPARACION con TOKENS  ->  ( "+op2.getLexema()+" , "+yyval.obj + " , " + op3.getLexema());
+ 	 								     
+ 									  } else {
+ 								      	System.out.println("\n COMPARACION de EXPRESION $$ con TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() +" , "+((Terceto)yyval.obj).getOperando2()+"\n");
+ 									  	Token op3 = (Token)val_peek(0).obj;
+ 								      	System.out.println("\n CREA TERCETO COMPARACION con TERCETO  ->  (  <  ,  "+yyval.obj + "  ,  " + op3.getLexema());
+ 	 								    /* Terceto ter = new Terceto(this.nro_terceto, op2.getLexema(), op1.getLexema(), op3.getLexema());*/
+ 									   	/* this.lista.agregarTerceto(ter); */
+ 									   	/* this.lista.mostrarTercetos();*/
+ 									   	/* this.nro_terceto++;*/
+ 									   	 
+ 									  	/*System.out.println("\n CREO TERCETO ASIGNACION! con terceto ->  ( "+op.getLexema()+" , "+yyval.obj+" ) \n");*/
+ 									  }
+ 									  
+ 									  isToken=true;
+	  	  							/*
+	  	  							Token op1 = (Token)$1.obj;
+									 //int linea = op1.getNroLinea();
+ 								     Token op2 = (Token)$2.obj;
+ 								     Token op3 = (Token)$3.obj;
+ 								     System.out.println("CREA TERCETO COMPARACION ->  ( "+op2.getLexema()+" , "+$$.obj + " , " + op3.getLexema());
+ 								     Terceto ter = new Terceto(this.nro_terceto, op2.getLexema(), op1.getLexema(), op3.getLexema());
+								   	 this.lista.agregarTerceto(ter); 
+								   	 this.lista.mostrarTercetos();
+								   	 this.nro_terceto++;
+								   	 //apunto a terceto!
+								     $$.obj = ter ;
+								     this.isToken=false;
+								     */
 									}
 break;
-case 36:
-//#line 230 "gramaticaIncremental.y"
+case 37:
+//#line 305 "gramaticaIncremental.y"
+{/*System.out.println("\n NO-BODY !\n");*/
+													}
+break;
+case 38:
+//#line 311 "gramaticaIncremental.y"
 {System.out.println("\n SENTENCIA DE CONTROL DETECTADA \n");}
 break;
-case 41:
-//#line 258 "gramaticaIncremental.y"
-{/*System.out.println("2. agregar la operacion que se realizo  "); */
-								   Token op1 = (Token)val_peek(2).obj;
+case 43:
+//#line 340 "gramaticaIncremental.y"
+{Token op1 = (Token)val_peek(2).obj;
 								   int linea = op1.getNroLinea();
 								   Token op2 = (Token)val_peek(1).obj;
 								   Token op3 = (Token)val_peek(0).obj;
-								   /*System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  EXPRESION SUMA  ->  "+op1.getLexema()+" "+op2.getLexema()+" "+op3.getLexema()+"\n"); */
-								   System.out.println("\n CREAR TERCETO SUMA  ->  ("+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+") \n\n"); 
-								   /*expresion.ptr = crear_terceto(+, expresion.ptr, termino.ptr);*/
+								   
+								   /*System.out.println("\n que onda $$ ?? "+(Token)$$.obj+" \n"); */
+								   /*ACA!!*/
+								   /*$$ = (Token)$1.obj + (Token)$3.obj ;*/
+								   
+								   yyval=val_peek(2);
+	   		  					   /*System.out.println("\n EXPRESION SUMA!  "+ ((Token)$$.obj).getLexema() +"  la apunto con $$?? \n");*/
+	   		  					   
+	   		  					   /*creo el terceto y apunto a la suma!!*/
+								   
+								   /*System.out.println("\n que onda $$ procesado ?? "+((Token)$$.obj).getLexema()+" \n");*/
+								   System.out.println("\n CREA TERCETO SUMA  ->  ("+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+") \n\n");
+								   Terceto ter = new Terceto(this.nro_terceto, op2.getLexema(), op1.getLexema(), op3.getLexema());
+								   this.lista.agregarTerceto(ter); 
+								   this.lista.mostrarTercetos();
+								   this.nro_terceto++;
+								   /*apunto a terceto!*/
+								   yyval.obj = ter ;
+								   this.isToken=false;
 								   }
 break;
-case 42:
-//#line 268 "gramaticaIncremental.y"
+case 44:
+//#line 365 "gramaticaIncremental.y"
 {/*System.out.println("2. agregar la expresion que se realizo  "); */
 	  	  						   Token op1 = (Token)val_peek(2).obj;
 								   int linea = op1.getNroLinea();
@@ -741,15 +841,17 @@ case 42:
 								   System.out.println("\n CREAR TERCETO RESTA  ->  ("+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+") \n\n"); 
 								   }
 break;
-case 43:
-//#line 278 "gramaticaIncremental.y"
+case 45:
+//#line 376 "gramaticaIncremental.y"
 {/*System.out.println("\n\n soy terrible TERMINO \n\n"); }*/
 	  	  			 /*Token expr = (Token)$$.obj;*/
-	  	  			 /*System.out.println("\n\n TERMINO -> "+ expr.getLexema() +" \n\n");*/
+	  	  			 yyval=val_peek(0);
+	  	  			 
+	  	  			 /*System.out.println("\n\n EXPRESION SIMPLE -> TERMINO -> "+ ((Token)$$.obj).getLexema() +" \n\n");*/
 	  	  			 }
 break;
-case 45:
-//#line 289 "gramaticaIncremental.y"
+case 47:
+//#line 389 "gramaticaIncremental.y"
 {/*System.out.println("2. agregar operacion que se realizo -> *");*/
 								/*$$ = $1 + $3*/
 							  Token op1 = (Token)val_peek(2).obj;
@@ -759,32 +861,48 @@ case 45:
 							  System.out.println("\n TERCETO MULTIPLICACION  ->  ( "+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+" ) \n"); 
 							  }
 break;
-case 46:
-//#line 298 "gramaticaIncremental.y"
+case 48:
+//#line 398 "gramaticaIncremental.y"
 {System.out.println("2. agregar operacion que se realizo -> /");}
 break;
-case 48:
-//#line 311 "gramaticaIncremental.y"
+case 49:
+//#line 400 "gramaticaIncremental.y"
+{/*System.out.println("1. agregar el ID o CTE que interviene en la asignacion u operacion (Ref a Tsym)");*/
+				  /*Token factor = (Token)$$.obj;*/
+				  /*System.out.println("\n\n FACTOR -> "+factor.getLexema() +" , "+factor.getTipo()+"\n\n");}*/
+				  yyval=val_peek(0);
+	   		  	  /*System.out.println("\n REGLA TERMINO -> Llega FACTOR!  "+ ((Token)$$.obj).getLexema() +"  la apunto con $$?? \n");*/
+				 /* termino.ptr = factor.ptr*/
+				 }
+break;
+case 50:
+//#line 413 "gramaticaIncremental.y"
 {Token factor = (Token)yyval.obj; 
-	   		  System.out.println("\n Llega CTE  "+ factor.getLexema() +"  la apunto con $$?? \n");
+	   		  /*System.out.println("\n Llega CTE  "+ factor.getLexema() +"  la apunto con $$?? \n");*/
+	   		  
+	   		  /*(Token)$$.obj = (Token)$1.obj ;*/
+	   		  /*VER!!! no puede convertir tipo Token a ParserVal*/
+	   		  yyval=val_peek(0);
+	   		  /*System.out.println("\n REGLA FACTOR -> Llega CTE!  "+ ((Token)$$.obj).getLexema() +"  la apunto con $$?? \n");*/
+	   		  /*System.out.println("\n que onda cte $$??? "+ $$.getLexema() +" \n");*/
        		  }
 break;
-case 49:
-//#line 315 "gramaticaIncremental.y"
+case 51:
+//#line 423 "gramaticaIncremental.y"
 {/*System.out.println("CTE negativa! \n"); */
        			 Token op1 = (Token)val_peek(1).obj;
 				 int linea = op1.getNroLinea();
 				 Token op2 = (Token)val_peek(0).obj;
-				 System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  CTE NEGATIVA!  ->  "+op1.getLexema()+" "+op2.getLexema()+"\n");
+				 /*System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  CTE NEGATIVA!  ->  "+op1.getLexema()+" "+op2.getLexema()+"\n");*/
 				 }
 break;
-case 50:
-//#line 324 "gramaticaIncremental.y"
-{Token factor = (Token)yyval.obj; 
-	   		  System.out.println("llega FACTOR ID!??!  creo puntero -> "+ factor.getLexema() +"\n");
+case 52:
+//#line 432 "gramaticaIncremental.y"
+{/*Token factor = (Token)$$.obj; */
+	   		  /*System.out.println("llega FACTOR ID!??!  creo puntero -> "+ factor.getLexema() +"\n");*/
        		  }
 break;
-//#line 708 "Parser.java"
+//#line 826 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
@@ -857,11 +975,12 @@ public Parser()
  * Create a parser, setting the debug to true or false.
  * @param debugMe true for debugging, false for no debug.
  */
-public Parser(boolean debugMe, AnalizadorLexico al, TablaDeSimbolos tds, String a)
+public Parser(boolean debugMe, AnalizadorLexico al, TablaDeSimbolos tds, ListaTercetos l, String a)
 {
   yydebug=debugMe;
   lexico=al;
   tabla=tds;
+  lista=l;
   ambito=a;
 }
 //###############################################################

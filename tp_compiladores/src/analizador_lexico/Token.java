@@ -60,6 +60,7 @@ public class Token {
 		this.lexema=l;
 	}
 	
+	/*
 	public void setValor(String val) {
 		if (this.tipo.equals("ID")) {
 			this.valor=Integer.parseInt(val);
@@ -69,4 +70,5 @@ public class Token {
 	public int getValor() {
 		return this.valor;
 	}
+	*/
 }
