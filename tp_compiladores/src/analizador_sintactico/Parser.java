@@ -865,10 +865,10 @@ case 32:
  								      		
  								      		Terceto op3 = (Terceto)val_peek(0).obj;
 
-	 								      	pos_ultimo_terceto = this.nro_terceto;
+	 								      	//pos_ultimo_terceto = this.nro_terceto;
 	 								      	
 	 								      	
-	 								      	String pos_terc1 = "["+pos_ultimo_terceto+"]";
+	 								      	String pos_terc1 = "["+(pos_ultimo_terceto-1)+"]";
 	 								      	
 	 								      	
 	 									   	
@@ -935,9 +935,9 @@ case 33:
  								      		
  								      		Terceto op3 = (Terceto)val_peek(0).obj;
 
-	 								      	pos_ultimo_terceto = this.nro_terceto;
+	 								      	//pos_ultimo_terceto = this.nro_terceto;
 	 									   	
-	 								      	String pos_terc1 = "["+pos_ultimo_terceto+"]";
+	 								      	String pos_terc1 = "["+(pos_ultimo_terceto-1)+"]";
 	 								      	
 	 								      	
 	 									   	
