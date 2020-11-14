@@ -33,4 +33,13 @@ public class Terceto {
 	public String getOperando2() {
 		return this.operando2;
 	}
+	
+	
+	public void setOperando1(String val) {
+		this.operando1=val;
+	}
+	
+	public void setOperando2(String val) {
+		this.operando2=val;
+	}
 }

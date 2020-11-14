@@ -19,69 +19,31 @@ x = y + z ;
 
 %%IF ( x + 5 < 9 ) { ff = 8 ; } END_IF ; 
 
-IF ( x + 5 < 9 ) { INTEGER fff ; fff = 8 ; } END_IF ; 
+%%IF ( x + 5 < 9 ) { INTEGER fff ; fff = 8 ; } END_IF ; 
 
 
 %%terceto comparacion (<, [6], 9 )
 %%a donde saltar si hay salto -> 
 
 
-IF ( a > 0 ) { k = k * 5 ; } ELSE { j = j - 3 ; } END_IF ;
+IF ( a > 0 ) { INTEGER k ; k = k * 5 ; } ELSE { INTEGER j ; j = j - 3 ; } END_IF ;
 
 
-(1, > a, 0)
-(2, saltarsifalso, [ ])
-(3, *, k, 5)
-(4, =, k, [3])
-hay que volver atrás y poner en los corchetes del terceto 2 el número 5
-(5, -, j, 3)
-(6, =, j, [5])
+%%SALIDA
+%%(1, > a, 0)
+%%(2, saltarsifalso, [ ])
+%%(3, *, k, 5)
+%%(4, =, k, [3])
+%%hay que volver atrás y poner en los corchetes del terceto 2 el número 5
+%%(5, -, j, 3)
+%%(6, =, j, [5]) 
+
+INTEGER a ;
+a = 5 ;
+
+INTEGER b ;
+b = 8 ;
+
+IF ( a - b > c + 1 ) { a = b + c ; } ELSE { a = b - c ; } END_IF ;
 
 
-
-
-
-%%ej jose
-
-void f() { 
-    void g() {
-          void h() { x = y}
-       r = s;
-       h();
-     }
-   z = w;
-   g();
- }
- 
- 
- (comienzo,f)
- (2, =, z, w)
- (3, INV, g@f)
- (4, Fin, f)
- 
- %%termino alista de tercetos de programa principal
-
- (5, comienzo, g)
- (6, =, r, s)
- (7,INV, h@g@f) 
- (8,fin,g)
- 
- (9,comienzo,h)
- (10, = x , y)
- (11, fin, h)
-
-%%crear terceto que avisa que arranca procedimiento
-
- 
- con esta lista se genera el assembler
- 
- mov w, z
-call g@f
-
-terceto 5 -> ret
-g: 
-
-mov r, s
-call h@g@f
-ret
- 
