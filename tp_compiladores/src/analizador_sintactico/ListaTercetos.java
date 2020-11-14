@@ -51,6 +51,11 @@ public class ListaTercetos {
 	}
 	
 	
+	public ArrayList<Terceto> getListaTercetos(){
+		return this.lista_tercetos;
+	}
+	
+	
 	public void mostrarTercetos() {
 		System.out.println("\n Tercetos \n");
 		for (Terceto t : lista_tercetos) {

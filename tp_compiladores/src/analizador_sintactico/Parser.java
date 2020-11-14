@@ -470,6 +470,10 @@ public static void main(String args[]) throws IllegalArgumentException, IllegalA
  	tds.mostrarSimbolos();
  	
  	l.mostrarTercetos();
+ 	
+ 	GeneradorCodigo gcod = new GeneradorCodigo(l);
+ 	
+ 	gcod.generarCodigo();
 }
 //#line 400 "Parser.java"
 //###############################################################

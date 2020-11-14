@@ -342,14 +342,10 @@ condicion : expresion '>' expresion {if (isToken) {
  								      		
  								      		Terceto op3 = (Terceto)$3.obj;
 
-	 								      	pos_ultimo_terceto = this.nro_terceto;
 	 								      	
 	 								      	
-	 								      	String pos_terc1 = "["+pos_ultimo_terceto+"]";
+	 								      	String pos_terc1 = "["+(pos_ultimo_terceto-1)+"]";
 	 								      	
-	 								      	
-	 									   	
-	 									   	//this.nro_terceto++;
 	 									   	
 	 									   	
 	 								      	String pos_terc2 = "["+pos_ultimo_terceto+"]";
@@ -411,14 +407,11 @@ condicion : expresion '>' expresion {if (isToken) {
  								      		
  								      		Terceto op3 = (Terceto)$3.obj;
 
-	 								      	pos_ultimo_terceto = this.nro_terceto;
-	 									   	
-	 								      	String pos_terc1 = "["+pos_ultimo_terceto+"]";
 	 								      	
-	 								      	
-	 									   	
+	 								      	String pos_terc1 = "["+(pos_ultimo_terceto-1)+"]";
 	 									   	
 	 								      	String pos_terc2 = "["+pos_ultimo_terceto+"]";
+	 									  	 
 	 									  	 
 	 								      	System.out.println("\n CREA TERCETOS COMPARACION con TERCETO y TERCETO ->  (  <  ,  "+pos_terc1 + "  ,  " + pos_terc2);//op3.getOperando2());
 	 	 								    
