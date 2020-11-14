@@ -1,0 +1,122 @@
+		             
+
+//checkear tambien IF y PROC!! hacer sentencias de errror!!!
+//asignacion con lado izq o der faltante
+// = 3 ; , x = ;
+
+
+%%ej jose
+
+
+void f() { 
+    void g() {
+          void h() { x = y}
+       r = s;
+       h();
+     }
+   z = w;
+   g();
+ }
+ 
+ 
+ (comienzo,f)
+ (2, =, z, w)
+ (3, INV, g@f)
+ (4, Fin, f)
+ 
+ %%termino alista de tercetos de programa principal
+
+ (5, comienzo, g)
+ (6, =, r, s)
+ (7,INV, h@g@f) 
+ (8,fin,g)
+ 
+ (9,comienzo,h)
+ (10, = x , y)
+ (11, fin, h)
+
+%%crear terceto que avisa que arranca procedimiento
+
+ 
+ con esta lista se genera el assembler
+ 
+ mov w, z
+call g@f
+
+terceto 5 -> ret
+g: 
+
+mov r, s
+call h@g@f
+ret
+ 
+ 
+ -------------------------------
+ 
+ 
+ mul ax,_300
+mov ax,_300
+mul _5
+jc mensajeoverflow
+
+mov _var1,AX
+
+en la parte de .data
+_5 DW 5
+
+var1 = 300*5
+mensajeoverflow:
+invoke MessaBeox...
+
+
+
+
+void f() {x=3;}
+@f:
+mov _x,_3
+ret
+f()
+CALL @f
+
+
+
+
+mov @aux1,3
+en .data 
+@aux1 dw 1
+
+
+
+
+----------------------------------
+
+
+EN .DATA VUELCO LA TSYM CON LA SINTAXIS DEL ASEMBLER
+
+
+ENSAMBLADOR -> GENERA ARCHIVO DE TEXT CON STRINGS QUE SON LOS ASM
+
+
+PARTE 4 -> TOMA LISTA TERCETOS + TSYM  Y  GENERA CODIGO
+
+
+mov ax, 99
+add ax, 3
+mov _y, ax
+
+TERCETO 4 Y 5
+mov ax, _y
+add ax, _z
+mov _x, ax
+
+
+
+la parte 4 leeria esa lista
+y tendría por ej. :
+t = Terceto(i)
+if t.operador ="+" then {
+	insertar("mov ax, t.operando1)
+	insertar("add ax, t.operando2")
+	insertar inserta el string en un archivo .asm que hay que crear vacio
+	
+	
