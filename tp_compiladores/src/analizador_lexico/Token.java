@@ -7,6 +7,7 @@ public class Token {
 	private int id_tipo;
 	private String tipo_var;
 	private String ambito;
+	private String uso="";
 	private int valor;
 	
 	
@@ -58,6 +59,15 @@ public class Token {
 	
 	public void setLexema(String l) {
 		this.lexema=l;
+	}
+	
+	
+	public void setUso(String u) {
+		this.uso=u;
+	}
+	
+	public String getUso() {
+		return this.uso;
 	}
 	
 	/*

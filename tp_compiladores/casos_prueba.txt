@@ -127,4 +127,16 @@ PROC proced ( INTEGER x ) NI = 2 {
 		hefe = f ;
 		} ;
 	} ;
+	
+	
+PROC proctor ( INTEGER x ) NI = 2 { 
+	INTEGER yyy ;
+	yyy = 99 ; 
+	PROC proc2 ( FLOAT f ) NI = 1 {
+		pero = x + y ; 
+		lpm = 5555 ;
+		hefe = f ;
+		} ;
+	} ;
+
 								  

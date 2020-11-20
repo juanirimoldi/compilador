@@ -71,22 +71,32 @@ public class TablaDeSimbolos {
 	
 	
 	public boolean existe(String b) {
-		//this.mostrarTokens();
 		//System.out.println("Existe " + b + " en la Hash???? "+this.id_tipo.contains(b));
 		return this.TSimbolos.containsKey(b);
-		//this.TSimbolos.con
 	}
 	
 	
 	public boolean correctamenteDefinido(Token t) {
 		if (this.existe(t.getLexema())) {
+			//si el lexema tiene un @ -> return correcto
+			if (t.getLexema().contains("@")) {
+				System.out.println("\n\n Simbolo  "+t.getLexema() +"  correctamente definido en TSym,  en ambito  "+t.getAmbito()+"\n");
+				return true;
+			} else {
+				System.out.println(t.getLexema()+" NO tiene ambito definido -> no esta inicializada correctamente");
+				return false;
+			}
+			/*
+			//estaes la forma vieja de comparar ambito...
 			if (t.getAmbito().isBlank()) {
-				System.out.println("NO tiene ambito definido -> no esta inicializada correctamente");
+				//System.out.println("ERROR! ");
+				System.out.println(t.getLexema()+" NO tiene ambito definido -> no esta inicializada correctamente");
 				return false;
 			} else {
 				System.out.println("\n\n Simbolo  "+t.getLexema() +"  correctamente definido en TSym,  en ambito  "+t.getAmbito()+"\n");
 				return true;
 			}
+		*/
 		}
 		return false;
 	}
@@ -96,7 +106,9 @@ public class TablaDeSimbolos {
 		return this.TSimbolos.get(key);
 	}
 	
-	
+	public void eliminarSimbolo(String key) {
+		this.TSimbolos.remove(key);
+	}
 	//public void modificarValor(String k, String val) {
 	//	this.TSimbolos.get(k).setValor(val);
 	//}
@@ -110,7 +122,7 @@ public class TablaDeSimbolos {
 		Enumeration enumeration = this.TSimbolos.elements();
 		while (enumeration.hasMoreElements()) {
 			Token t = (Token)enumeration.nextElement();
-			System.out.println(enumeration_keys.nextElement() + " 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getAmbito());//+"	,  "+t.getValor());
+			System.out.println(enumeration_keys.nextElement() + " 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());//+"	,  "+t.getValor());
 		}
 		System.out.println("\n");
 	}

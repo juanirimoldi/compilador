@@ -5,6 +5,8 @@ public class Terceto {
 	private String operador;
 	private String operando1;
 	private String operando2;
+	
+	private String var_aux;
 
 	
 	public Terceto(int id, String op, String op1, String op2) {
@@ -41,5 +43,17 @@ public class Terceto {
 	
 	public void setOperando2(String val) {
 		this.operando2=val;
+	}
+	
+	public void setVarAux(String var) {
+		this.var_aux=var;
+	}
+	
+	public String getVarAux() {
+		return this.var_aux;
+	}
+	
+	public void mostrar() {
+		System.out.println(this.id+"  ( "+this.operador+" , "+this.operando1+" , "+this.operando2+" ) \n");
 	}
 }

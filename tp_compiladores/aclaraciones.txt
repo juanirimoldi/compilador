@@ -120,3 +120,20 @@ if t.operador ="+" then {
 	insertar inserta el string en un archivo .asm que hay que crear vacio
 	
 	
+serguimiento de registros -> registros libres EAx, EBX
+como a veces piso registros -> hay que moverlos a otro lado
+
+probarlo con ine -> genera los .exe
+
+
+controles en t.ej
+
+antes de cada div -> div es 0??
+
+overflow -> antes de mul -> salto a instr Jump overflow
+
+
+
+controlar IF anidados!	
+
+es mejor no poner el salto BI

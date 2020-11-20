@@ -189,133 +189,140 @@ public final static short DISTINTO=278;
 public final static short EOF=279;
 public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
-    0,    1,    1,    2,    2,    3,    3,    5,    6,    6,
-   10,    9,    9,    9,   11,   11,    8,    8,    7,    7,
-    4,    4,    4,    4,    4,   12,   13,   18,   19,   19,
-   22,   20,   20,   20,   20,   20,   20,   21,   14,   15,
-   16,   23,   23,   17,   17,   17,   17,   24,   24,   24,
-   25,   25,   25,
+    0,    1,    1,    2,    2,    3,    3,    5,    6,    9,
+   10,   10,   11,   12,   13,   13,   13,   14,   14,    8,
+    8,    7,    7,    4,    4,    4,    4,    4,   15,   15,
+   16,   21,   22,   22,   25,   17,   26,   27,   28,   29,
+   23,   23,   23,   23,   23,   23,   24,   18,   19,   30,
+   30,   20,   20,   20,   20,   31,   31,   31,   32,   32,
+   32,
 };
 final static short yylen[] = {                            2,
-    1,    1,    2,    2,    2,    1,    1,    2,   11,   10,
-    1,    5,    3,    1,    2,    3,    3,    1,    1,    1,
-    1,    1,    1,    1,    1,    3,    4,    3,    1,    3,
-    1,    3,    3,    3,    3,    3,    3,    3,    6,    4,
-    4,    3,    5,    3,    3,    1,    1,    3,    3,    1,
-    1,    2,    1,
+    1,    1,    2,    2,    2,    1,    1,    2,    4,    2,
+    3,    2,    3,    3,    5,    3,    1,    2,    3,    3,
+    1,    1,    1,    1,    1,    1,    1,    1,    3,    6,
+    4,    3,    1,    3,    1,    4,    1,    1,    1,    3,
+    3,    3,    3,    3,    3,    3,    3,    4,    4,    3,
+    5,    3,    3,    1,    1,    3,    3,    1,    1,    2,
+    1,
 };
 final static short yydefred[] = {                         0,
-    0,    0,    0,    0,    0,   19,   20,    0,    0,    2,
-    0,    0,    6,    7,    0,   21,   22,   23,   24,   25,
-    0,    0,    0,    0,    0,    0,    0,    0,    3,    4,
-    5,   18,    0,    0,    0,   53,   51,   47,    0,    0,
-    0,   50,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,   41,    0,   52,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,   28,   27,   31,    0,    0,
-    0,    0,    0,    0,   40,   38,    0,   17,   42,    0,
-    0,    0,   48,   49,    0,    0,    0,    0,    0,    0,
-   30,    0,    0,   15,    0,    0,    0,    0,   16,    0,
-    0,    0,   39,   43,    0,    0,    0,    0,    0,   12,
-    0,    0,    0,   10,    0,    9,
+    0,    0,    0,    0,   37,   22,   23,    0,    0,    2,
+    0,    0,    6,    7,    0,    0,   24,   25,   26,   27,
+   28,    0,    0,    0,    0,    0,   10,    0,    3,    4,
+    5,   21,    0,    0,    0,    0,   38,    0,    0,    0,
+   61,   59,   55,    0,    0,    0,    0,   58,    0,    0,
+    0,    0,    0,    0,    0,   12,    0,    0,    0,    0,
+    0,    0,   39,    0,    0,   49,    0,    0,   60,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,   32,
+   31,   35,    0,   48,   20,    0,   18,   11,    0,    0,
+    0,    9,   47,    0,   36,   50,    0,    0,    0,    0,
+   56,   57,    0,    0,    0,    0,    0,    0,   34,   19,
+    0,   13,    0,    0,    0,    0,    0,   14,   40,   51,
+   15,
 };
 final static short yydgoto[] = {                          8,
-  111,   10,   11,   12,   13,   14,   15,   33,   73,  112,
-   74,   16,   17,   18,   19,   20,   43,   24,   45,   44,
-   28,   69,   35,   41,   42,
+    9,   10,   11,   12,   13,   14,   15,   33,   16,   35,
+   61,   92,   58,   59,   17,   18,   19,   20,   21,   49,
+   26,   51,   50,   37,   83,   22,   38,   64,   95,   40,
+   47,   48,
 };
-final static short yysindex[] = {                      -219,
-  -15,  -13, -194,   -7,  -58,    0,    0,    0, -219,    0,
-   11,   15,    0,    0, -182,    0,    0,    0,    0,    0,
- -181,  -42,  -42,  -58,   37, -180, -219, -192,    0,    0,
-    0,    0,   36,   24,   23,    0,    0,    0, -177,   -3,
-   19,    0,  -23,   42, -179, -176,  -40,   44, -117,   47,
- -169, -168,    0, -167,    0,  -39,  -39,  -39,  -39,  -42,
-  -42,  -42,  -42,  -42,  -42,    0,    0,    0,  -58, -224,
- -175, -165,   52,   50,    0,    0,  -42,    0,    0,   38,
-   19,   19,    0,    0,   -3,   -3,   -3,   -3,   -3,   -3,
-    0, -162,   39,    0, -164, -237,   56, -159,    0, -157,
-   43,   55,    0,    0,  -20, -153, -237, -219,  -17,    0,
- -219,  -18, -219,    0,  -16,    0,
+final static short yysindex[] = {                      -215,
+   -6,   -5, -214,   12,    0,    0,    0,    0, -215,    0,
+    8,   10,    0,    0, -197,   24,    0,    0,    0,    0,
+    0,  -53, -186,  -37,  -34,  -53,    0, -185,    0,    0,
+    0,    0,   37,  -40, -184, -215,    0, -187,   26,    3,
+    0,    0,    0, -213, -173,    5,    4,    0,  -23,   45,
+ -175, -172,   48, -166, -213,    0, -165,   52,   50,   34,
+  -27, -112,    0,   57, -159,    0, -156,   61,    0,  -39,
+  -39,  -39,  -39,  -34,  -34,  -34,  -34,  -34,  -34,    0,
+    0,    0,  -53,    0,    0, -154,    0,    0, -231, -153,
+ -215,    0,    0,  -34,    0,    0,   46,  -34,    4,    4,
+    0,    0,    5,    5,    5,    5,    5,    5,    0,    0,
+   62,    0,  -95,   66, -149,    5, -231,    0,    0,    0,
+    0,
 };
 final static short yyrindex[] = {                         0,
-    0,    0,    0,    0,    0,    0,    0,    0,  108,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,  109,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,   51,    0,    0,    0,    0,    0,    0,   53,
-  -41,    0,    0,    0,    0, -152,    0,    0,    0,    0,
+    0,    0,   51,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,   53,  -41,    0,    0,    0,
+    0, -152,    0,    0,    0,    0,    0,    0,   72,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,   73,    0,    0,    0,    0,    0,    0,
-  -36,  -31,    0,    0,   74,   75,   76,   77,   78,   79,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,   80,    0,    0,    0,    0,    0,    0,    0,    0,
-   -2,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,  -36,  -31,
+    0,    0,   73,   74,   75,   76,   77,   79,    0,    0,
+   80,    0,    0,    0,    0,    8,    0,    0,    0,    0,
+    0,
 };
 final static short yygindex[] = {                         0,
-   17,    2,    0,    0,    0,    0,  -34,    0,    0,    9,
-  -64,    0,    0,    0,    0,    0,   -6,    0,    0,   48,
-   -9,    0,    0,   12,   13,
+   -4,    6,    0,    0,    0,    0,  -17,    0,    0,    0,
+    0,    0,    0,  -56,    0,    0,    0,    0,    0,    1,
+    0,    0,   28,  -10,    0,    0,    0,    0,    0,    0,
+   -8,   -7,
 };
 final static int YYTABLESIZE=255;
 static short yytable[];
 static { yytable();}
 static void yytable(){
-yytable = new short[]{                         46,
-   71,   46,   39,   46,   44,   39,   44,   76,   44,   45,
-   29,   45,   72,   45,   46,   40,    9,   46,   46,   56,
-   46,   57,   44,   44,   21,   44,   23,   45,   45,   70,
-   45,  102,   26,    6,    7,   92,   65,    1,   64,   56,
-    2,   57,  110,   49,    3,   22,    6,    7,    4,    5,
-   29,    6,    7,   85,   86,   87,   88,   89,   90,   91,
-   58,   72,   25,   53,   27,   59,   54,   81,   82,   30,
-   83,   84,   72,   31,   32,   34,   47,   50,   48,   51,
-   55,   52,   66,   67,   75,   68,   77,   78,   79,   80,
-   93,   94,   95,   96,   99,   98,  103,  104,  107,  100,
-  105,  101,  108,  106,  109,  113,  114,    1,  116,    8,
-   29,   26,   29,   14,   35,   34,   36,   37,   32,   33,
-   13,  115,   11,    0,   97,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    1,
-    0,    0,    2,    0,    0,    0,    3,    0,    0,    0,
-    4,    5,    0,    6,    7,    0,    0,    0,    0,    0,
+yytable = new short[]{                         54,
+   56,   54,   44,   54,   52,   45,   52,   45,   52,   53,
+   45,   53,   93,   53,   29,   52,   57,   54,   54,   70,
+   54,   71,   52,   52,   46,   52,   68,   53,   53,  118,
+   53,   62,  111,   23,   25,   55,   79,   86,   78,    6,
+    7,    1,   27,   66,    2,   72,   67,   70,    3,   71,
+   73,   28,    4,    5,   24,    6,    7,    6,    7,   32,
+  121,   99,  100,   34,  101,  102,   30,   29,   31,   36,
+   39,   57,  109,   53,  103,  104,  105,  106,  107,  108,
+   54,   60,   63,   65,   69,   80,  113,   81,   84,   82,
+   85,   87,   88,   89,   90,   91,   94,   96,  116,   57,
+   97,   98,  110,  115,  112,  117,  119,  120,    1,    8,
+   33,   29,   17,   44,   43,   45,   46,   41,   29,   42,
+   16,  114,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    1,    0,    0,    2,    0,    0,
+    0,    3,    0,    0,    0,    4,    5,    0,    6,    7,
+    0,    1,    0,    0,    2,    0,    0,    0,    3,    0,
+    0,    0,    4,    5,    0,    6,    7,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,   36,   37,   38,   36,   37,    0,
-    0,    0,    0,    0,    0,    0,   70,    0,    0,    0,
-    6,    7,    0,   46,   46,   46,   46,    0,   44,   44,
-   44,   44,    0,   45,   45,   45,   45,    0,    0,    0,
-    0,   60,   61,   62,   63,
+    0,    0,    0,    0,    0,    0,    0,   41,   42,   41,
+   42,   43,   41,   42,   43,    0,   55,    0,    0,    0,
+    6,    7,    0,   54,   54,   54,   54,    0,   52,   52,
+   52,   52,    0,   53,   53,   53,   53,    0,    0,    0,
+    0,   74,   75,   76,   77,
 };
 }
 static short yycheck[];
 static { yycheck(); }
 static void yycheck() {
 yycheck = new short[] {                         41,
-   41,   43,   45,   45,   41,   45,   43,  125,   45,   41,
-    9,   43,   47,   45,   24,   22,    0,   59,   60,   43,
-   62,   45,   59,   60,   40,   62,   40,   59,   60,  267,
-   62,   96,   40,  271,  272,   70,   60,  257,   62,   43,
-  260,   45,  107,   27,  264,   61,  271,  272,  268,  269,
-   49,  271,  272,   60,   61,   62,   63,   64,   65,   69,
-   42,   96,  257,   41,  123,   47,   44,   56,   57,   59,
-   58,   59,  107,   59,  257,  257,   40,  270,  259,   44,
-  258,   58,   41,  263,   41,  262,   40,  257,  257,  257,
-  266,  257,   41,   44,  257,   58,   41,  257,   44,   61,
-  258,  266,  123,   61,  258,  123,  125,    0,  125,   59,
-  263,   59,  111,   41,   41,   41,   41,   41,   41,   41,
-   41,  113,  125,   -1,   77,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  257,
-   -1,   -1,  260,   -1,   -1,   -1,  264,   -1,   -1,   -1,
-  268,  269,   -1,  271,  272,   -1,   -1,   -1,   -1,   -1,
+   41,   43,   40,   45,   41,   45,   43,   45,   45,   41,
+   45,   43,  125,   45,    9,   26,   34,   59,   60,   43,
+   62,   45,   59,   60,   24,   62,   44,   59,   60,  125,
+   62,   36,   89,   40,   40,  267,   60,   55,   62,  271,
+  272,  257,  257,   41,  260,   42,   44,   43,  264,   45,
+   47,   40,  268,  269,   61,  271,  272,  271,  272,  257,
+  117,   70,   71,   40,   72,   73,   59,   62,   59,  123,
+  257,   89,   83,  259,   74,   75,   76,   77,   78,   79,
+   44,  266,  270,   58,  258,   41,   91,  263,   41,  262,
+  257,  257,   41,   44,   61,  123,   40,  257,   98,  117,
+  257,   41,  257,   58,  258,   44,   41,  257,    0,   59,
+  263,   59,   41,   41,   41,   41,   41,   41,  113,   41,
+   41,   94,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,  257,   -1,   -1,  260,   -1,   -1,
+   -1,  264,   -1,   -1,   -1,  268,  269,   -1,  271,  272,
+   -1,  257,   -1,   -1,  260,   -1,   -1,   -1,  264,   -1,
+   -1,   -1,  268,  269,   -1,  271,  272,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,  257,  258,  259,  257,  258,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,  267,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,  257,  258,  257,
+  258,  259,  257,  258,  259,   -1,  267,   -1,   -1,   -1,
   271,  272,   -1,  275,  276,  277,  278,   -1,  275,  276,
   277,  278,   -1,  275,  276,  277,  278,   -1,   -1,   -1,
    -1,  275,  276,  277,  278,
@@ -354,9 +361,12 @@ final static String yyrule[] = {
 "sentencia_declarativa : declaracion_de_variable",
 "sentencia_declarativa : declaracion_de_procedimiento",
 "declaracion_de_variable : tipo lista_de_variables",
-"declaracion_de_procedimiento : PROC ID '(' lista_de_parametros ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'",
-"declaracion_de_procedimiento : PROC ID '(' ')' NI '=' CTE '{' cuerpo_del_procedimiento '}'",
-"cuerpo_del_procedimiento : lista_de_sentencias",
+"declaracion_de_procedimiento : declaracion_PROC_ID lista_parametros_PROC cant_invocaciones_PROC cuerpo_PROC",
+"declaracion_PROC_ID : PROC ID",
+"lista_parametros_PROC : '(' lista_de_parametros ')'",
+"lista_parametros_PROC : '(' ')'",
+"cant_invocaciones_PROC : NI '=' CTE",
+"cuerpo_PROC : '{' lista_de_sentencias '}'",
 "lista_de_parametros : parametro_declarado ',' parametro_declarado ',' parametro_declarado",
 "lista_de_parametros : parametro_declarado ',' parametro_declarado",
 "lista_de_parametros : parametro_declarado",
@@ -372,11 +382,17 @@ final static String yyrule[] = {
 "sentencia_ejecutable : sentencia_de_salida",
 "sentencia_ejecutable : invocacion",
 "asignacion : ID '=' expresion",
+"asignacion : ID '=' '(' tipo ')' expresion",
 "sentencia_de_control : IF condicion_IF cuerpo_IF END_IF",
 "condicion_IF : '(' condicion ')'",
 "cuerpo_IF : bloque_de_sentencias",
 "cuerpo_IF : bloque_de_sentencias entra_ELSE bloque_de_sentencias",
 "entra_ELSE : ELSE",
+"sentencia_de_iteracion : comienzo_LOOP cuerpo_LOOP entra_UNTIL condicion_LOOP",
+"comienzo_LOOP : LOOP",
+"cuerpo_LOOP : bloque_de_sentencias",
+"entra_UNTIL : UNTIL",
+"condicion_LOOP : '(' condicion ')'",
 "condicion : expresion '>' expresion",
 "condicion : expresion '<' expresion",
 "condicion : expresion MAYORIGUAL expresion",
@@ -384,7 +400,6 @@ final static String yyrule[] = {
 "condicion : expresion IGUAL expresion",
 "condicion : expresion DISTINTO expresion",
 "bloque_de_sentencias : '{' lista_de_sentencias '}'",
-"sentencia_de_iteracion : LOOP bloque_de_sentencias UNTIL '(' condicion ')'",
 "sentencia_de_salida : OUT '(' CADENA ')'",
 "invocacion : ID '(' parametro_ejecutable ')'",
 "parametro_ejecutable : ID ':' ID",
@@ -401,7 +416,7 @@ final static String yyrule[] = {
 "factor : ID",
 };
 
-//#line 593 "gramaticaIncremental.y"
+//#line 751 "gramaticaIncremental.y"
 	   	
 
 
@@ -412,7 +427,10 @@ final static String yyrule[] = {
 AnalizadorLexico lexico;
 TablaDeSimbolos tabla;
 ListaTercetos lista;
+
 String ambito;
+String ambito_proc;
+
 boolean isToken=true;
 
 int nro_terceto = 0;
@@ -421,6 +439,14 @@ int pos_ultimo_terceto = 0;
 int pos_BF = 0;
 int pos_BI = 0;
 
+int pos_comienzo_loop = 0;
+int pos_comienzo_condicion_loop=0;
+
+
+void nameManglin()
+{
+ 
+}
 
 
 void yyerror(String s)
@@ -467,15 +493,15 @@ public static void main(String args[]) throws IllegalArgumentException, IllegalA
  	par.yyparse();
  	
  	
+ 	//aca hago una limpieza de tsym de los ID que no tengan @
  	tds.mostrarSimbolos();
  	
  	l.mostrarTercetos();
  	
- 	GeneradorCodigo gcod = new GeneradorCodigo(l);
- 	
- 	gcod.generarCodigo();
+ 	//GeneradorCodigo gc = new GeneradorCodigo(l);
+ 	//gc.generarCodigo();
 }
-//#line 400 "Parser.java"
+//#line 429 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -665,46 +691,136 @@ case 8:
 												   System.out.println("\n REGLA DECLARATIVA DETECTADA !! -> por defecto agrego  "+ variable.getLexema() +"  a TSym   \n");
 												   
 												   System.out.println("\n VARIABLE BIEN DEFINIDA   ->   "+tipo.getLexema()+" "+variable.getLexema()+"\n");
-												   variable.setAmbito(ambito); 
+												   /*variable.setAmbito(ambito); */
 												   
-												   System.out.println("\n Le agrego el ambito -> "+ambito+"\n");
+												   String nombre = variable.getLexema()+"@"+ambito;
 												   
-												   /*tabla.mostrarSimbolos();*/
+												   variable.setLexema(nombre);
+												   /*name mangling! cambiar variable por variable@main*/
 												   
+												   System.out.println("\n Le hago name mangling con el ambito -> "+ambito+"\n");
+												   
+												   /*remuevo variable vieja????????*/
+												   /*this.tabla.eliminarSimbolo($2);*/
+												   
+												   /*aca le agrego uso a variable!*/
 												   }
 break;
-case 25:
-//#line 146 "gramaticaIncremental.y"
+case 9:
+//#line 111 "gramaticaIncremental.y"
+{
+																											System.out.println("\n\n PROC CORRECTAMENTE DECLARADO \n\n");
+																											}
+break;
+case 10:
+//#line 117 "gramaticaIncremental.y"
+{
+								System.out.println("\n CREO TERCETO PROC -> ( PROC , $$.obj.getLexema() ID , -- ) \n");
+								
+								String pos_str = "["+pos_ultimo_terceto+"]";
+ 								
+ 								/*Token id = (Token)$2.obj;*/
+ 								  
+ 								/*$$ = $3; //a pesar de la asignacion, $$ sigue apuntando al primer valor*/
+ 								Token id = (Token)val_peek(0).obj ;
+ 								
+ 								String nombre = id.getLexema()+"@"+ambito;
+												   
+							 	id.setLexema(nombre);
+								/*aca hacer name mangling! cambiar variable por variable@main*/
+												     	  	 
+ 								this.ambito_proc = id.getLexema();
+ 								  	    
+ 	 							Terceto ter = new Terceto(this.nro_terceto, "PROC", id.getLexema() , "--" );
+ 								this.lista.agregarTerceto(ter);
+ 								   
+ 								/*this.pos_BF = this.nro_terceto; //marco posicion del terceto BF !*/
+ 								
+ 								
+ 								/*aca le completo el atributo uso al token proced  */
+ 								
+ 								  
+ 								pos_ultimo_terceto = this.nro_terceto;
+ 					
+ 								this.lista.mostrarTercetos();
+ 					     		  
+ 					     		this.nro_terceto++;
+								}
+break;
+case 11:
+//#line 152 "gramaticaIncremental.y"
+{System.out.println("\n ACA LE DOY SEMANTICA A LA LISTA DE PARAMETROS \n");
+													/*aclarar reglas de pasaje de parametros*/
+													/*COPIAR POR EJ X E Y -> */
+													/*para cada parametro se debe registrar: */
+													/*	tipo */
+													/*	forma de pasaje -> REF , copia-valor por defecto*/
+													}
+break;
+case 13:
+//#line 164 "gramaticaIncremental.y"
+{
+									/*ACA CHECKEO QUE CTE SEA < 4*/
+									/*para este proc -> asigno la cantidad de invocaciones que puede efectuar -> CTE*/
+					   				System.out.println("ACA CHECKEO QUE CTE SEA < 4 , y la cant de invocaciones al PROC");
+					   				/*CTE debe ser de tipo entero (1, 2, 3, 4 )*/
+					   				
+					   				/*checkeo nro y tipo de parametros en la invocacion*/
+					   				/*nro de invocaciones efectuadas por cada procedimiento*/
+					   				}
+break;
+case 14:
+//#line 176 "gramaticaIncremental.y"
+{
+											/*ACA CREO LAS VARIABLES DEL CUERPO DE ACUERDO AL AMBITO DONDE SE ENCUENTRA*/
+											System.out.println("\n CREO LAS VARIABLES DE ACUERDO AL AMBITO DEFINIDO DEL PROC \n");
+											
+											/*dentro de la lista de sentencias, si defino una variable debo agregar el ambito*/
+											}
+break;
+case 17:
+//#line 191 "gramaticaIncremental.y"
+{ System.out.println("\n\n 1 solo parametro \n\n"); }
+break;
+case 28:
+//#line 222 "gramaticaIncremental.y"
 {System.out.println("\n   \n");}
 break;
-case 26:
-//#line 152 "gramaticaIncremental.y"
+case 29:
+//#line 228 "gramaticaIncremental.y"
 {  Token id = (Token)val_peek(2).obj;
 								  int linea = id.getNroLinea();
-								  /*System.out.println("\n Llega ID "+id.getLexema()+" a la asignacion \n");*/
-								  System.out.println("\n REGLA ASIGNACION!!  Esta correctamente inicializada  "+ id.getLexema() +"  en Tabla de Simbolos ?");
 								  
-								  /*tabla.mostrarSimbolos();*/
+								  System.out.println("\n REGLA ASIGNACION!!  Esta correctamente inicializada  "+ id.getLexema() +"  en Tabla de Simbolos ? \n");
+								  
 								  
 								  Token op = (Token)val_peek(1).obj;
 								
 								  yyval = val_peek(0); /*a pesar de la asignacion, $$ sigue apuntando al primer valor*/
 								  
 								  
+								  /*ACA!! VER CONVERSIONES EXPLICITAS!*/
+								  /*primero checkea tipo de ID*/
+								  /*despues checkea tipo de $$(expr)*/
 								  
-								  /*System.out.println("\n EXPRESION $$ -> "+ ((Token)$$.obj).getLexema() +"\n");*/
-								  /*System.out.println("\n EXPRESION $1 -> "+ ((Token)$1.obj).getLexema() +"\n");*/
-								  /*System.out.println("\n EXPRESION $3 -> "+ ((Token)$3.obj).getLexema() +"\n");*/
-							
+								  /*solo se podran efectuar operaciones entre dos operandos de distinto tipo si se convierte el operando de tipo entero al tipo de punto flotante*/
+								  /*caso contrario -> ERROR*/
+								  
+								  /*si lado izq es tipo entero y lado der != tipo -->> ERROR de compatibilidad de tipos*/
+								  
+								  
+								  
 								  if (isToken) { 
-								  	System.out.println("\n EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
+								  	/*System.out.println("\n EXPRESION $$ TOKEN!!  -> "+ ((Token)$$.obj).getLexema() +"\n");*/
 							
 								  	if (tabla.correctamenteDefinido(id)){
-								  		System.out.println("\n SI, esta bien definido"+ id.getLexema()+"\n");
+								  		System.out.println("\n SI, esta bien definido "+ id.getLexema()+"\n");
 								  		System.out.println("\n CREO TERCETO ASIGNACION  ->  ( "+op.getLexema()+" , "+id.getLexema()+" , "+((Token)yyval.obj).getLexema()+" )  \n\n");
 								  		Terceto ter = new Terceto(this.nro_terceto, op.getLexema(), id.getLexema(), ((Token)val_peek(0).obj).getLexema());
  									   	this.lista.agregarTerceto(ter); 
+ 									   	
  									   	this.lista.mostrarTercetos();
+ 									   	
  									   	this.nro_terceto++;
 								  		
 								  	} else {
@@ -716,7 +832,7 @@ case 26:
 								  	
 								  } else {
 								  
-							      	System.out.println("\n ASIGNACION de EXPRESION $$ TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() + " , " +((Terceto)yyval.obj).getOperando2() +"\n");
+							      	/*System.out.println("\n ASIGNACION de EXPRESION $$ TERCETO!!  -> "+ ((Terceto)$$.obj).getOperando1() + " , " +((Terceto)$$.obj).getOperando2() +"\n");*/
 								  	
 								  	String pos_str = "["+pos_ultimo_terceto+"]";
 								  	
@@ -724,7 +840,9 @@ case 26:
 								  	
 								  	Terceto ter = new Terceto(this.nro_terceto, "=", id.getLexema(), pos_str);
  									this.lista.agregarTerceto(ter); 
+ 								  	
  								  	this.lista.mostrarTercetos();
+ 								   	
  								   	this.nro_terceto++;
 								  	
 								  }
@@ -733,27 +851,26 @@ case 26:
 						
 							   }
 break;
-case 27:
-//#line 211 "gramaticaIncremental.y"
-{System.out.println("SENTENCIA DE CONTROL!");
-														 System.out.println("aca COMPLETO TERCETOS BI  ");	
-														 
-														 
-														 /*aca completo terceto incondicional BI!*/
-														 
-														 /*Terceto tt = (Terceto)$$.obj; //referencio BI*/
-														 /*tt.setOperando1(this.nro_terceto);*/
+case 30:
+//#line 291 "gramaticaIncremental.y"
+{
+		   								/*conversion explicita!*/
+		   								/*si no reconoce el tipo -> error de compatibilidad */
+		   								}
+break;
+case 31:
+//#line 301 "gramaticaIncremental.y"
+{System.out.println("SENTENCIA DE CONTROL! aca completo tercetos BI");					 
 														 
 														 this.lista.completarTerceto(pos_BI, this.nro_terceto);
-														 
 														 }
 break;
-case 28:
-//#line 226 "gramaticaIncremental.y"
+case 32:
+//#line 308 "gramaticaIncremental.y"
 {
 								  String pos_str = "["+pos_ultimo_terceto+"]";
  								  
- 								  System.out.println("\n ACA CREO EL TERCETO SALTO por FALSO ->  ( BF , "+pos_str +" ,   )  \n");				
+ 								  System.out.println("\n CREO EL TERCETO SALTO por FALSO ->  ( BF , "+pos_str +" ,   )  \n");				
  								  	  	 
  								  	    
  	 							  Terceto ter = new Terceto(this.nro_terceto, "BF", pos_str, " " );
@@ -761,39 +878,35 @@ case 28:
  								   
  								  this.pos_BF = this.nro_terceto; /*marco posicion del terceto BF !*/
  								  
- 								  /*lo referencio??*/
- 								  /*$$=ter;*/
- 					
+ 								  
  								  pos_ultimo_terceto = this.nro_terceto;
  					
  								  this.lista.mostrarTercetos();
+ 					     		  
  					     		  this.nro_terceto++;
  									   	
 								  }
 break;
-case 29:
-//#line 249 "gramaticaIncremental.y"
-{System.out.println("\n 2. THEN -> CUERPO DEL IF! \n");
+case 33:
+//#line 330 "gramaticaIncremental.y"
+{/*System.out.println("\n 2. THEN -> CUERPO DEL IF! \n");*/
 								  System.out.println("\n COMPLETAR TERCETO INCOMPLETO  \n");
 								  System.out.println("\n CREAR TERCETO BI (salto incondicional) \n");
-								  /*desapilar terceto?*/
-								  /*completar el terceto??*/
-								  /*crear terceto incompleto  ->  (BI,  ,  -- ) 	*/
-									}
+								  }
 break;
-case 30:
-//#line 256 "gramaticaIncremental.y"
-{System.out.println("...ELSE ");
-		  														  System.out.println("\n 3. COMPLETAR TERCETOS BF y BI ??!! \n ");
+case 34:
+//#line 335 "gramaticaIncremental.y"
+{/*System.out.println("...ELSE ");*/
+		  														  /*System.out.println("\n 3. COMPLETAR TERCETOS BF y BI  \n ");*/
 		  														  }
 break;
-case 31:
-//#line 262 "gramaticaIncremental.y"
-{System.out.println("\n ENTRO AL ELSE!!  ->  ACAA!! \n");
+case 35:
+//#line 341 "gramaticaIncremental.y"
+{/*System.out.println("\n ENTRA AL ELSE \n");*/
 				   
 				   String pos_str = "["+pos_ultimo_terceto+"]";
  					
- 					/*VER!!				  	 */
+ 					
  					System.out.println("\n CREA TERCETO SALTO INCONDICIONAL  ->  (  BI  ,   ,  -- ) ");
  	 								    
  	 				Terceto ter = new Terceto(this.nro_terceto, "BI", " " , "--");
@@ -801,47 +914,123 @@ case 31:
  					
  					this.pos_BI = this.nro_terceto;
  					
- 					/*aca completo BF!! ya tengo la posicion, que es pos_BF*/
+ 					pos_ultimo_terceto = this.nro_terceto;
+ 					
  					
  					this.lista.mostrarTercetos();
  									   	
- 					pos_ultimo_terceto = this.nro_terceto;
- 									   	
+ 									   
+ 					/*aca completo BF! ya tengo la posicion, que es pos_BF*/
  					
- 					
- 					/*completo el BF y referencio??*/
- 					/*Terceto tt = (Terceto)$$.obj;*/
- 					/*tt.setOperando2(this.nro_terceto);*/
-					
-					
-					/*referencio BI*/
-					/*$$=ter;*/
-					
-					
-					/*para modificarlo debo referenciarlo!! con $$ 	algo asi...			*/
- 					/*Terceto tt = $$.obj;*/
- 					/*tt.setOperando2();*/
  					this.lista.completarTerceto(pos_BF, this.nro_terceto+1);
 				   
 				   	this.nro_terceto++; /*sgte al terceto BI*/
  					
 				   }
 break;
-case 32:
-//#line 305 "gramaticaIncremental.y"
+case 36:
+//#line 373 "gramaticaIncremental.y"
+{/*System.out.println("\n SENTENCIA DE CONTROL DETECTADA \n");*/
+																				System.out.println("\n TERMINA CORRECTAMENTE REGLA DE ITERACION... \n");
+					  															}
+break;
+case 37:
+//#line 379 "gramaticaIncremental.y"
+{
+					  System.out.println("\n aca marco el comienzo de la sentencia loop! \n");
+					  this.pos_comienzo_loop=this.nro_terceto;
+					 }
+break;
+case 38:
+//#line 386 "gramaticaIncremental.y"
+{									
+									System.out.println("3. CUERPO/BLOQUE DEL WHILE ");
+								    System.out.println("\n COMPLETAR TERCETO INCOMPLETO  \n");
+								    System.out.println("\n CREAR TERCETO BI (salto incondicional) \n");
+								    
+								    /*aca ya termine el cuerpo...*/
+								    
+								    /*ACA creo el BI incompleto ?*/
+
+								    String pos_str = "["+pos_ultimo_terceto+"]";
+ 					
+ 					
+				 					/*System.out.println("\n CREA TERCETO SALTO INCONDICIONAL  ->  (  BI  ,   ,  -- ) ");*/
+				 	 								    
+				 	 				/*Terceto ter = new Terceto(this.nro_terceto, "BI", " " , "--");*/
+				 					/*this.lista.agregarTerceto(ter); */
+				 					
+				 					/*this.pos_BI = this.nro_terceto;*/
+				 					
+				 					/*pos_ultimo_terceto = this.nro_terceto;*/
+				 					
+				 					
+				 					/*this.lista.mostrarTercetos();*/
+				 									   	
+				 									   
+				 					/*aca completo BF! ya tengo la posicion, que es pos_BF*/
+				 					
+				 					/*this.lista.completarTerceto(pos_BF, this.nro_terceto+1);*/
+								   
+								   	/*this.nro_terceto++; //sgte al terceto BI*/
+ 					
+								    /*avanzo el terceto...*/
+								    }
+break;
+case 39:
+//#line 423 "gramaticaIncremental.y"
+{ /*aca entra en condicion!!*/
+						/*aca seria el comienzo de la condicion!*/
+					System.out.println("\n QUE ONDA?? el UNTIL... \n");
+					this.pos_comienzo_condicion_loop = this.pos_ultimo_terceto+1;
+					System.out.println("\n COMIENZO DE CONDICION... "+this.pos_comienzo_condicion_loop +"\n");						 
+					}
+break;
+case 40:
+//#line 432 "gramaticaIncremental.y"
+{
+									/*ejecuto la condicion, igual que condicionIF...*/
+									/*aca comienza la condicion?? apilo el nro de terceto*/
+									/*o termina la condicion???*/
+									/*aca creo terceto incompleto para BF??*/
+									
+									/*ACAA creo el BF , en blanco?*/
+									
+									String pos_str = "["+this.pos_comienzo_loop+"]";
+ 								    String pos_sgte = "["+(pos_ultimo_terceto+2)+"]";
+ 								    
+ 								    System.out.println("\n CREO EL TERCETO SALTO por FALSO ->  ( BF , "+pos_str +" , "+ pos_sgte +" )  \n");				
+ 								  	  	 
+ 								  	    
+ 	 							    Terceto ter = new Terceto(this.nro_terceto, "BF", pos_str, pos_sgte );
+ 								    this.lista.agregarTerceto(ter);
+ 								   
+ 								    this.pos_BF = this.nro_terceto; /*marco posicion del terceto BF !*/
+ 								  
+ 								  
+ 								    pos_ultimo_terceto = this.nro_terceto;
+ 					
+ 								    this.lista.mostrarTercetos();
+ 					     		    
+ 					     		    this.nro_terceto++;
+ 					     		    
+ 					    			}
+break;
+case 41:
+//#line 465 "gramaticaIncremental.y"
 {if (isToken) { 
- 									  	System.out.println("\n COMPARACION de EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
- 									  	Token op1 = (Token)val_peek(2).obj;
- 										 /*int linea = op1.getNroLinea();*/
- 	 								     Token op2 = (Token)val_peek(1).obj;
+ 									  	 Token op1 = (Token)val_peek(2).obj;
+ 										 Token op2 = (Token)val_peek(1).obj;
  	 								     Token op3 = (Token)val_peek(0).obj;
- 									  	 System.out.println("CREA TERCETO COMPARACION con TOKENS  ->  (  >  , " +yyval.obj + " , " + op3.getLexema());
+ 									  	 
+ 									  	 System.out.println("CREA TERCETO COMPARACION con TOKEN  ->  (  >  , " +((Token)yyval.obj).getLexema() + " , " + op3.getLexema()+" )  \n");
  	 								     
  	 								     Terceto ter = new Terceto(this.nro_terceto, ">", op1.getLexema(), op3.getLexema());
  									   	 this.lista.agregarTerceto(ter); 
  									   	 pos_ultimo_terceto = this.nro_terceto;
  									   	 
  									   	 this.lista.mostrarTercetos();
+ 									   	 
  									   	 this.nro_terceto++;
  									   	 
  									  } else {
@@ -859,6 +1048,7 @@ case 32:
  	 	 								    
  	 	 								    Terceto ter = new Terceto(this.nro_terceto, ">", pos_str, op3.getLexema());/*op3.getOperando2());*/
  	 									   	this.lista.agregarTerceto(ter); 
+ 	 									   
  	 									   	this.lista.mostrarTercetos();
  	 									   	
  	 									   	pos_ultimo_terceto = this.nro_terceto;
@@ -869,22 +1059,18 @@ case 32:
  								      		
  								      		Terceto op3 = (Terceto)val_peek(0).obj;
 
-	 								      	//pos_ultimo_terceto = this.nro_terceto;
-	 								      	
-	 								      	
+	 								      
 	 								      	String pos_terc1 = "["+(pos_ultimo_terceto-1)+"]";
-	 								      	
-	 								      	
-	 									   	
-	 									   	/*this.nro_terceto++;*/
-	 									   	
 	 									   	
 	 								      	String pos_terc2 = "["+pos_ultimo_terceto+"]";
+	 									  	
 	 									  	 
-	 								      	System.out.println("\n CREA TERCETOS COMPARACION con TERCETO y TERCETO ->  (  >  ,  "+pos_terc1 + "  ,  " + pos_terc2);/*op3.getOperando2());*/
+	 								      	System.out.println("\n CREA TERCETOS COMPARACION con TERCETO y TERCETO ->  (  >  ,  "+pos_terc1 + "  ,  " + pos_terc2+" ) \n");/*op3.getOperando2());*/
+	 	 								    
 	 	 								    
 	 	 								    Terceto ter = new Terceto(this.nro_terceto, ">", pos_terc1, pos_terc2);/*op3.getOperando2());*/
 	 									   	this.lista.agregarTerceto(ter); 
+	 									   	
 	 									   	this.lista.mostrarTercetos();
 	 									   	
 	 									   	pos_ultimo_terceto = this.nro_terceto;
@@ -896,23 +1082,24 @@ case 32:
  									  isToken=true;
 									}
 break;
-case 33:
-//#line 373 "gramaticaIncremental.y"
+case 42:
+//#line 530 "gramaticaIncremental.y"
 {
 	  	  							if (isToken) { 
  									  	System.out.println("\n COMPARACION de EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
  									  	Token op1 = (Token)val_peek(2).obj;
- 										 /*int linea = op1.getNroLinea();*/
- 	 								     Token op2 = (Token)val_peek(1).obj;
- 	 								     Token op3 = (Token)val_peek(0).obj;
- 									  	 System.out.println("CREA TERCETO COMPARACION con TOKENS  ->  (  <  , "+yyval.obj + " , " + op3.getLexema());
+ 										Token op2 = (Token)val_peek(1).obj;
+ 	 								    Token op3 = (Token)val_peek(0).obj;
+ 									  	
+ 									  	System.out.println("CREA TERCETO COMPARACION con TOKENS  ->  (  <  , "+yyval.obj + " , " + op3.getLexema());
  	 								     
- 	 								     Terceto ter = new Terceto(this.nro_terceto, "<", op1.getLexema(), op3.getLexema());
- 									   	 this.lista.agregarTerceto(ter); 
- 									   	 pos_ultimo_terceto = this.nro_terceto;
+ 	 								    Terceto ter = new Terceto(this.nro_terceto, "<", op1.getLexema(), op3.getLexema());
+ 									   	this.lista.agregarTerceto(ter); 
+ 									   	pos_ultimo_terceto = this.nro_terceto;
  									   	 
- 									   	 this.lista.mostrarTercetos();
- 									   	 this.nro_terceto++;
+ 									   	this.lista.mostrarTercetos();
+ 									   	 
+ 									   	this.nro_terceto++;
  									   	 
  									  } else {
  									  
@@ -929,6 +1116,7 @@ case 33:
  	 	 								    
  	 	 								    Terceto ter = new Terceto(this.nro_terceto, "<", pos_str, op3.getLexema());/*op3.getOperando2());*/
  	 									   	this.lista.agregarTerceto(ter); 
+ 	 									   	
  	 									   	this.lista.mostrarTercetos();
  	 									   	
  	 									   	pos_ultimo_terceto = this.nro_terceto;
@@ -939,19 +1127,17 @@ case 33:
  								      		
  								      		Terceto op3 = (Terceto)val_peek(0).obj;
 
-	 								      	//pos_ultimo_terceto = this.nro_terceto;
-	 									   	
+	 								      	
 	 								      	String pos_terc1 = "["+(pos_ultimo_terceto-1)+"]";
-	 								      	
-	 								      	
-	 									   	
 	 									   	
 	 								      	String pos_terc2 = "["+pos_ultimo_terceto+"]";
+	 									  	 
 	 									  	 
 	 								      	System.out.println("\n CREA TERCETOS COMPARACION con TERCETO y TERCETO ->  (  <  ,  "+pos_terc1 + "  ,  " + pos_terc2);/*op3.getOperando2());*/
 	 	 								    
 	 	 								    Terceto ter = new Terceto(this.nro_terceto, "<", pos_terc1, pos_terc2);/*op3.getOperando2());*/
 	 									   	this.lista.agregarTerceto(ter); 
+	 									   	
 	 									   	this.lista.mostrarTercetos();
 	 									   	
 	 									   	pos_ultimo_terceto = this.nro_terceto;
@@ -963,21 +1149,24 @@ case 33:
  									  isToken=true;
 									}
 break;
-case 38:
-//#line 447 "gramaticaIncremental.y"
-{/*System.out.println("\n NO-BODY !\n");*/
+case 47:
+//#line 604 "gramaticaIncremental.y"
+{
 												    }
 break;
-case 39:
-//#line 453 "gramaticaIncremental.y"
-{System.out.println("\n SENTENCIA DE CONTROL DETECTADA \n");}
-break;
-case 44:
-//#line 474 "gramaticaIncremental.y"
+case 52:
+//#line 627 "gramaticaIncremental.y"
 {Token op1 = (Token)val_peek(2).obj;
 								   int linea = op1.getNroLinea();
 								   Token op2 = (Token)val_peek(1).obj;
 								   Token op3 = (Token)val_peek(0).obj;
+								   
+								   
+								   /*ACA HACER CHECKEO DE TIPOS! CONVERSION EXPLICITA*/
+								   /*PRIMERO GENERO TERCETO QUE CONVIERTE EL TIPO DE Y -> TERCETO CONVERSION*/
+								   /*GUARDO EL TERCETO EN VAR AUX*/
+								   
+								   /*C/CONVERSION EXPLICITA GENERA TERCETO*/
 								   
 								   
 								   /*$$=$1;*/
@@ -987,15 +1176,17 @@ case 44:
 								   Terceto ter = new Terceto(this.nro_terceto, op2.getLexema(), op1.getLexema(), op3.getLexema());
 								   this.lista.agregarTerceto(ter); 
 								   pos_ultimo_terceto = this.nro_terceto;
+								   
 								   this.lista.mostrarTercetos();
+								   
 								   this.nro_terceto++;
 								   /*apunto a terceto!?*/
 								   yyval.obj = ter ;
 								   this.isToken=false;
 								   }
 break;
-case 45:
-//#line 495 "gramaticaIncremental.y"
+case 53:
+//#line 657 "gramaticaIncremental.y"
 {Token op1 = (Token)val_peek(2).obj;
 								   int linea = op1.getNroLinea();
 								   Token op2 = (Token)val_peek(1).obj;
@@ -1009,15 +1200,17 @@ case 45:
 								   Terceto ter = new Terceto(this.nro_terceto, op2.getLexema(), op1.getLexema(), op3.getLexema());
 								   this.lista.agregarTerceto(ter); 
 								   pos_ultimo_terceto = this.nro_terceto;
+								   
 								   this.lista.mostrarTercetos();
+								   
 								   this.nro_terceto++;
 								   /*apunto a terceto!?*/
 								   yyval.obj = ter ;
 								   this.isToken=false; /*no apunto al token, apunto a terceto*/
 								   }
 break;
-case 46:
-//#line 516 "gramaticaIncremental.y"
+case 54:
+//#line 680 "gramaticaIncremental.y"
 {/*System.out.println("\n\n soy terrible TERMINO \n\n"); }*/
 	  	  			 /*Token expr = (Token)$$.obj;*/
 	  	  			 yyval=val_peek(0);
@@ -1025,8 +1218,8 @@ case 46:
 	  	  			 /*System.out.println("\n\n EXPRESION SIMPLE -> TERMINO -> "+ ((Token)$$.obj).getLexema() +" \n\n");*/
 	  	  			 }
 break;
-case 48:
-//#line 529 "gramaticaIncremental.y"
+case 56:
+//#line 692 "gramaticaIncremental.y"
 {
 							  Token op1 = (Token)val_peek(2).obj;
 							  int linea = op1.getNroLinea();
@@ -1035,46 +1228,41 @@ case 48:
 							  
 							  System.out.println("\n TERCETO MULTIPLICACION  ->  ( "+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+" ) \n");
 							  
-							  /*System.out.println("\n CREA TERCETO MULTIPLICACION  ->  ("+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+") \n\n");*/
 							  
 							  Terceto ter = new Terceto(this.nro_terceto, "*" , op1.getLexema(), op3.getLexema());
 							  this.lista.agregarTerceto(ter); 
 							  pos_ultimo_terceto = this.nro_terceto;
+							  
 							  this.lista.mostrarTercetos();
+							  
 							  this.nro_terceto++;
-								 /*apunto a terceto!?*/
+							  /*apunto a terceto!?*/
 							  yyval.obj = ter ;
 							  this.isToken=false; 
 							  }
 break;
-case 49:
-//#line 549 "gramaticaIncremental.y"
+case 57:
+//#line 713 "gramaticaIncremental.y"
 {System.out.println("2. agregar operacion que se realizo -> /");}
 break;
-case 50:
-//#line 551 "gramaticaIncremental.y"
-{/*System.out.println("1. agregar el ID o CTE que interviene en la asignacion u operacion (Ref a Tsym)");*/
-				  /*Token factor = (Token)$$.obj;*/
-				  /*System.out.println("\n\n FACTOR -> "+factor.getLexema() +" , "+factor.getTipo()+"\n\n");}*/
-				  yyval=val_peek(0);
+case 58:
+//#line 715 "gramaticaIncremental.y"
+{
+				  yyval=val_peek(0); 	/* termino.ptr = factor.ptr*/
+				  
 	   		  	  /*System.out.println("\n REGLA TERMINO -> Llega FACTOR!  "+ ((Token)$$.obj).getLexema() +"  la apunto con $$?? \n");*/
-				 /* termino.ptr = factor.ptr*/
 				 }
 break;
-case 51:
-//#line 564 "gramaticaIncremental.y"
+case 59:
+//#line 726 "gramaticaIncremental.y"
 {Token factor = (Token)yyval.obj; 
 	   		  /*System.out.println("\n Llega CTE  "+ factor.getLexema() +"  la apunto con $$?? \n");*/
-	   		  
-	   		  /*(Token)$$.obj = (Token)$1.obj ;*/
-	   		  /*VER!!! no puede convertir tipo Token a ParserVal*/
 	   		  yyval=val_peek(0);
 	   		  /*System.out.println("\n REGLA FACTOR -> Llega CTE!  "+ ((Token)$$.obj).getLexema() +"  la apunto con $$?? \n");*/
-	   		  /*System.out.println("\n que onda cte $$??? "+ $$.getLexema() +" \n");*/
-       		  }
+	   		  }
 break;
-case 52:
-//#line 574 "gramaticaIncremental.y"
+case 60:
+//#line 732 "gramaticaIncremental.y"
 {/*System.out.println("CTE negativa! \n"); */
        			 Token op1 = (Token)val_peek(1).obj;
 				 int linea = op1.getNroLinea();
@@ -1082,13 +1270,13 @@ case 52:
 				 /*System.out.println("\n Sintactico  ->  Linea: "+linea+"  ,  CTE NEGATIVA!  ->  "+op1.getLexema()+" "+op2.getLexema()+"\n");*/
 				 }
 break;
-case 53:
-//#line 583 "gramaticaIncremental.y"
+case 61:
+//#line 741 "gramaticaIncremental.y"
 {/*Token factor = (Token)$$.obj; */
 	   		  /*System.out.println("llega FACTOR ID!??!  creo puntero -> "+ factor.getLexema() +"\n");*/
        		  }
 break;
-//#line 1008 "Parser.java"
+//#line 1199 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

@@ -47,3 +47,12 @@ b = 8 ;
 IF ( a - b > c + 1 ) { a = b + c ; } ELSE { a = b - c ; } END_IF ;
 
 
+LOOP { a = b + c ; c = d - 3 ; } UNTIL ( a + b > c - d ) ;
+
+
+PROC proced ( INTEGER m ) NI = 2 { yyy = 99 + m ; } ;
+
+PROC f1 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 { x = y + z ; } ;
+
+
+			
