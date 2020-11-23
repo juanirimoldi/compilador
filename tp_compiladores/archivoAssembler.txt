@@ -1,0 +1,36 @@
+MOV EAX , 17
+ADD EAX , 3
+MOV EAX , y@main
+ADD EAX , z@main
+MOV EAX , x@main
+ADD EAX , 5
+MOV EBX , x@main
+ADD EBX , 5
+MOV EBX , k@main
+MUL EBX , y@main
+MOV EBX , j@main
+SUB EBX , 3
+MOV EBX , k@main@main
+MUL EBX , y@main
+MOV EBX , j@main@main
+SUB EBX , 3
+MOV EBX , a@main
+SUB EBX , b@main
+MOV ECX , c
+ADD ECX , 1
+MOV EDX , b@main
+ADD EDX , c
+MOV EDX , b@main
+SUB EDX , c
+MOV EDX , b@main
+ADD EDX , c
+MOV EDX , d
+SUB EDX , 3
+MOV EDX , a@main
+ADD EDX , b@main
+MOV  , c
+SUB  , d
+MOV  , 99
+ADD  , m
+MOV  , y@main
+ADD  , z@main
