@@ -12,31 +12,42 @@ w = 89 ;
 
 x = y + z ;
 
-%%(3, =, x, y)
-%%(4, +, y, z)
-%%(5, =, x, [4])
 
 
-%%IF ( x + 5 < 9 ) { ff = 8 ; } END_IF ; 
+IF ( x + 5 < 9 ) { ff = 8 ; } END_IF ; 
 
-%%IF ( x + 5 < 9 ) { INTEGER fff ; fff = 8 ; } END_IF ; 
-
-
-%%terceto comparacion (<, [6], 9 )
-%%a donde saltar si hay salto -> 
+IF ( x + 5 < 9 ) { INTEGER fff ; fff = 8 ; } END_IF ; 
 
 
-IF ( a > 0 ) { INTEGER k ; k = k * 5 ; } ELSE { INTEGER j ; j = j - 3 ; } END_IF ;
+
+IF ( ww > 0 ) { 
+	IF ( b > 8 ) { 
+		y = b ; 
+	} END_IF ; 
+	
+	INTEGER k ; 
+	k = k * y ; 
+} ELSE { 
+	INTEGER j ; 
+	j = j - 3 ; 
+} END_IF ;
 
 
-%%SALIDA
-%%(1, > a, 0)
-%%(2, saltarsifalso, [ ])
-%%(3, *, k, 5)
-%%(4, =, k, [3])
-%%hay que volver atrás y poner en los corchetes del terceto 2 el número 5
-%%(5, -, j, 3)
-%%(6, =, j, [5]) 
+
+IF ( ww > 0 ) { 
+	INTEGER k ; 
+	k = k * y ; 
+} ELSE { 
+	IF ( b > 8 ) { 
+		y = b ; 
+	} END_IF ; 
+	
+	INTEGER j ; 
+	j = j - 3 ; 
+} END_IF ;
+
+
+
 
 INTEGER a ;
 a = 5 ;
@@ -45,6 +56,7 @@ INTEGER b ;
 b = 8 ;
 
 IF ( a - b > c + 1 ) { a = b + c ; } ELSE { a = b - c ; } END_IF ;
+
 
 
 LOOP { a = b + c ; c = d - 3 ; } UNTIL ( a + b > c - d ) ;

@@ -1,9 +1,17 @@
 package analizador_sintactico;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GeneradorCodigo {
 	private ListaTercetos tercetos;
+	
+	private TablaRegistros t_reg;
+	
+	private int reg_actual;
 	
 	private ArrayList<String> instrucciones_asmb;
 	
@@ -14,12 +22,14 @@ public class GeneradorCodigo {
 	public GeneradorCodigo(ListaTercetos t) {
 		this.tercetos = t;
 		this.instrucciones_asmb = new ArrayList<String> ();
+		this.t_reg = new TablaRegistros();
 	}
+	
 	
 	public void generarCodigo() {
 		System.out.println("");
 		for (Terceto t : tercetos.getListaTercetos()) {
-			this.generarInstrucciones(t);
+			this.crearInstrucciones(t);
 		}
 	}
 	
@@ -30,66 +40,149 @@ public class GeneradorCodigo {
 		
 		//String mov1 = "MOV R1 , "+t.getOperando1();
 		//System.out.println(mov1);
-		
-		String opera = "";
+		//int reg;
+		String instruccion = "";
 		
 		if (t.getOperador().equals("+")) {
-			String mov1 = "MOV R1 , "+t.getOperando1();
+			//int getRegistroLibre();
+			reg_actual = t_reg.getRegistroLibre();
+			String nombre_reg = t_reg.getNombreReg(reg_actual);
+			
+			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			
+			String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
 			System.out.println(mov1);
-			opera = "ADD R1 , "; 	
-			opera += t.getOperando2();
+			this.instrucciones_asmb.add(mov1);
+			
+			
+			instruccion = "ADD "+nombre_reg+" , "; 	
+			instruccion += t.getOperando2();
+			
+			System.out.println(instruccion);
+			this.instrucciones_asmb.add(instruccion);
+			
+			/*
+			String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
+			t.setVarAux(this.var_aux+this.id_var_aux);
+			this.id_var_aux++;
+			System.out.println(mov2);
+			*/
 			};
 		
 		if (t.getOperador().equals("-")) {
-			opera = "SUB R1 , "; 	
-			String mov1 = "MOV R1 , "+t.getOperando1();
+			reg_actual = t_reg.getRegistroLibre();
+			String nombre_reg = t_reg.getNombreReg(reg_actual);
+			
+			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			
+			String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+			
 			System.out.println(mov1);
-			opera += t.getOperando2();
-			};
+			this.instrucciones_asmb.add(mov1);
+			
+			
+			instruccion = "SUB "+nombre_reg+" , "; 	
+			instruccion += t.getOperando2();
+			
+			System.out.println(instruccion);
+			this.instrucciones_asmb.add(instruccion);
+			/*
+			String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
+			t.setVarAux(this.var_aux+this.id_var_aux);
+			this.id_var_aux++;
+			System.out.println(mov2);
+
+			*/
+		};
 		
 		if (t.getOperador().equals("*")) {
-			opera = "MUL R1 , ";  
-			String mov1 = "MOV R1 , "+t.getOperando1();
+			reg_actual = t_reg.getRegistroLibre();
+			String nombre_reg = t_reg.getNombreReg(reg_actual);
+			
+			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			
+			String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
 			System.out.println(mov1);
-			opera += t.getOperando2();};
+			this.instrucciones_asmb.add(mov1);
+			
+			
+			instruccion = "MUL "+nombre_reg+" , "; 	
+			instruccion += t.getOperando2();
+			
+			System.out.println(instruccion);
+			this.instrucciones_asmb.add(instruccion);
+			
+			/*
+			String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
+			t.setVarAux(this.var_aux+this.id_var_aux);
+			this.id_var_aux++;
+			System.out.println(mov2);
+
+			 */
+		};
 		
 		if (t.getOperador().equals("/")) {
-			opera = "DIV R1 , "; 	
-			String mov1 = "MOV R1 , "+t.getOperando1();
+						
+			reg_actual = t_reg.getRegistroLibre();
+			String nombre_reg = t_reg.getNombreReg(reg_actual);
+			
+			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			
+			String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
 			System.out.println(mov1);
-			opera += t.getOperando2();};
+			this.instrucciones_asmb.add(mov1);
+			
+			instruccion = "DIV "+nombre_reg+" , "; 	
+			instruccion += t.getOperando2();
+			
+			System.out.println(instruccion);
+			this.instrucciones_asmb.add(instruccion);
+				
+			/*
+			String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
+			t.setVarAux(this.var_aux+this.id_var_aux);
+			this.id_var_aux++;
+			System.out.println(mov2);
+
+			*/
+		};
 		
 		
-			//if (t.getOperador().equals("=")) {opera = " "; };
+		
+		if (t.getOperador().equals("=")) {
+			String mov = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
+			System.out.println(mov);	
+			this.t_reg.liberarRegistro(reg_actual);
+			//aca libero reg actual!!!
+		}
 		
 		
+		//System.out.println(instruccion);
 		
-		System.out.println(opera);
 		
-		
-		String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
-		t.setVarAux(this.var_aux+this.id_var_aux);
-		this.id_var_aux++;
-		System.out.println(mov2);
-		//String op = ""
 		System.out.println("\n\n");
 	}
 	
 	
-	public void generarInstrucciones(Terceto t) {
-		
-		//t.mostrar();
-		//System.out.println("CODIGO GENERADO POR TERCETO ");
-		
-		this.crearInstrucciones(t);
-		/*
-		if (t.getOperador().equals("*")) { 
-			
-		};
-		if (t.getOperador().equals("/")) { };
-		if (t.getOperador().equals("+")) { };
-		if (t.getOperador().equals("-")) { };
-		*/
+	public void mostrarCodigoAssembler() {
+		for (String cod : instrucciones_asmb) {
+			System.out.println(cod);
+		}
 	}
+	
+	
+	public void crearArchivoAssembler() throws IOException {
+		String ruta = "archivo.txt";
+	    File f = new File(ruta);
+	    FileWriter fw = new FileWriter(f);
+	    BufferedWriter escritura = new BufferedWriter(fw);
+	    for (String str : instrucciones_asmb) {
+	    //for(int i=0;i<Lista.size();i++){
+	        escritura.write(str);
+	        escritura.newLine();
 
+	    }
+	    escritura.close();
+
+	}
 }

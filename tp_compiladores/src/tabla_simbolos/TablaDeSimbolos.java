@@ -80,7 +80,7 @@ public class TablaDeSimbolos {
 		if (this.existe(t.getLexema())) {
 			//si el lexema tiene un @ -> return correcto
 			if (t.getLexema().contains("@")) {
-				System.out.println("\n\n Simbolo  "+t.getLexema() +"  correctamente definido en TSym,  en ambito  "+t.getAmbito()+"\n");
+				System.out.println("\n\n Simbolo  "+t.getLexema() +"  correctamente definido en TSym \n");
 				return true;
 			} else {
 				System.out.println(t.getLexema()+" NO tiene ambito definido -> no esta inicializada correctamente");
