@@ -497,7 +497,8 @@ public static void main(String args[]) throws IllegalArgumentException, IllegalA
  	gc.generarCodigo();
  	
  	gc.crearArchivoAssembler();
- 	//gc.mostrarCodigoAssembler();
+ 	
+ 	gc.mostrarCodigoAssembler();
 }
 //#line 425 "Parser.java"
 //###############################################################

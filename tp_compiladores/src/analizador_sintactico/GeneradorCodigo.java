@@ -172,7 +172,7 @@ public class GeneradorCodigo {
 	
 	
 	public void crearArchivoAssembler() throws IOException {
-		String ruta = "archivo.txt";
+		String ruta = "archivoAssembler.txt";
 	    File f = new File(ruta);
 	    FileWriter fw = new FileWriter(f);
 	    BufferedWriter escritura = new BufferedWriter(fw);
