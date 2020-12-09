@@ -137,3 +137,52 @@ overflow -> antes de mul -> salto a instr Jump overflow
 controlar IF anidados!	
 
 es mejor no poner el salto BI
+
+
+
+se libera cuando cuadni genera la instr..
+a=1 , x a a
+
+expr todas sobre la pila del coporcesador
+
+
+
+
+//primero instalo wine y despues de moodle asm32
+
+
+desargo en moodele asm32
+
+ejecuto instalador de sm32
+
+cd .wine/drive/masn32 
+
+wine qeditor.exe
+ 
+ 
+ //para generar el .exe -> proyecto -> build all
+ 
+ 
+cuando ejectuas y no da error -> podes ir a proyect y ejecturalo
+
+
++, -, *, /  
+
+loop y procedimiento -> INVOCACION!! es lo importante para evaluar la ejecucion
+
+
+
+loop -> JUMP
+
+procedimiento -> CALL y cuando termina RET
+
+
+instrucciones especiales para invocacion a procedimiento
+
+
+invocacion -> CALL
+
+
+RET! -> cuando termina el proc devuelve el RET
+aclarar al final de cada procedimineot que terina con un RET -> avisa que termina en 
+cuando tengo un CALL

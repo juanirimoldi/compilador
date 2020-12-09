@@ -90,4 +90,16 @@ public class TablaRegistros {
 		return out;
 	}
 	
+	
+	public void mostrarRegistrosLibres() {
+		String line = "";
+		
+		if (this.EAX) { line += " EAX "; };
+		if (this.EBX) { line += " EBX "; };
+		if (this.ECX) { line += " ECX "; };
+		if (this.EDX) { line += " EDX "; };
+		
+		System.out.println("Registros libres -> "+line);
+		System.out.println();
+	}
 }

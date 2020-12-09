@@ -83,20 +83,9 @@ public class TablaDeSimbolos {
 				System.out.println("\n\n Simbolo  "+t.getLexema() +"  correctamente definido en TSym \n");
 				return true;
 			} else {
-				System.out.println(t.getLexema()+" NO tiene ambito definido -> no esta inicializada correctamente");
+				System.out.println("\n ERROR -> "+t.getLexema()+" NO tiene ambito definido -> no esta inicializada correctamente");
 				return false;
 			}
-			/*
-			//estaes la forma vieja de comparar ambito...
-			if (t.getAmbito().isBlank()) {
-				//System.out.println("ERROR! ");
-				System.out.println(t.getLexema()+" NO tiene ambito definido -> no esta inicializada correctamente");
-				return false;
-			} else {
-				System.out.println("\n\n Simbolo  "+t.getLexema() +"  correctamente definido en TSym,  en ambito  "+t.getAmbito()+"\n");
-				return true;
-			}
-		*/
 		}
 		return false;
 	}
@@ -109,20 +98,30 @@ public class TablaDeSimbolos {
 	public void eliminarSimbolo(String key) {
 		this.TSimbolos.remove(key);
 	}
-	//public void modificarValor(String k, String val) {
-	//	this.TSimbolos.get(k).setValor(val);
-	//}
+	
 	
 	public void mostrarSimbolos() {
 		System.out.println("\n\n Tabla de SImbolos \n");
-
+		String tab1 = "	";
+		String tab2 = "		";
+		
 		System.out.println("Lexema	, Token	");
 		Enumeration enumeration_keys = this.TSimbolos.keys();
 		
 		Enumeration enumeration = this.TSimbolos.elements();
 		while (enumeration.hasMoreElements()) {
 			Token t = (Token)enumeration.nextElement();
-			System.out.println(enumeration_keys.nextElement() + " 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());//+"	,  "+t.getValor());
+			String llave = enumeration_keys.nextElement().toString();
+			
+			//System.out.println(enumeration_keys.nextElement() +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+			//System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+			
+			if (llave.length() > 7) {
+				System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+			} else {
+				System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+			}
+			
 		}
 		System.out.println("\n");
 	}

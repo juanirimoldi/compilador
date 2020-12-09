@@ -37,7 +37,7 @@ public class GeneradorCodigo {
 	public void crearInstrucciones(Terceto t) {
 		String var_aux = "";
 		t.mostrar();
-		
+		t_reg.mostrarRegistrosLibres();
 		//String mov1 = "MOV R1 , "+t.getOperando1();
 		//System.out.println(mov1);
 		//int reg;
@@ -165,6 +165,7 @@ public class GeneradorCodigo {
 	
 	
 	public void mostrarCodigoAssembler() {
+		System.out.println();
 		for (String cod : instrucciones_asmb) {
 			System.out.println(cod);
 		}
