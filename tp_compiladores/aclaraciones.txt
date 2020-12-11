@@ -186,3 +186,13 @@ invocacion -> CALL
 RET! -> cuando termina el proc devuelve el RET
 aclarar al final de cada procedimineot que terina con un RET -> avisa que termina en 
 cuando tengo un CALL
+
+
+
+/.wine/drive_c/masm32$ wine qeditor.exe
+
+
+DUDAS:
+
+ccon que instruccion defino < y > ? CMP?? en que formato?
+

@@ -38,13 +38,12 @@ public class GeneradorCodigo {
 		String var_aux = "";
 		t.mostrar();
 		t_reg.mostrarRegistrosLibres();
-		//String mov1 = "MOV R1 , "+t.getOperando1();
-		//System.out.println(mov1);
-		//int reg;
+		
 		String instruccion = "";
 		
+		
 		if (t.getOperador().equals("+")) {
-			//int getRegistroLibre();
+			
 			reg_actual = t_reg.getRegistroLibre();
 			String nombre_reg = t_reg.getNombreReg(reg_actual);
 			
@@ -148,6 +147,54 @@ public class GeneradorCodigo {
 		};
 		
 		
+		if (t.getOperador().equals("<")) {
+			//int getRegistroLibre();
+			reg_actual = t_reg.getRegistroLibre();
+			String nombre_reg = t_reg.getNombreReg(reg_actual);
+			
+			//CMP??
+			System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			
+			//String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+			//System.out.println(mov1);
+			//this.instrucciones_asmb.add(mov1);
+			
+			
+			instruccion = "CMP "+nombre_reg+" , "; 	
+			instruccion += t.getOperando2();
+			
+			System.out.println(instruccion);
+			this.instrucciones_asmb.add(instruccion);
+			
+			};
+		
+			
+		if (t.getOperador().equals(">")) {
+			//int getRegistroLibre();
+			//reg_actual = t_reg.getRegistroLibre();
+			//String nombre_reg = t_reg.getNombreReg(reg_actual);
+				
+			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+				
+			//String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+			//System.out.println(mov1);
+			//this.instrucciones_asmb.add(mov1);
+				
+				
+			//instruccion = "ADD "+nombre_reg+" , "; 	
+			//instruccion += t.getOperando2();
+				
+			//System.out.println(instruccion);
+			//this.instrucciones_asmb.add(instruccion);
+				
+			/*
+			String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
+			t.setVarAux(this.var_aux+this.id_var_aux);
+			this.id_var_aux++;
+			System.out.println(mov2);
+			*/
+			};
+				
 		
 		if (t.getOperador().equals("=")) {
 			String mov = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
@@ -157,11 +204,92 @@ public class GeneradorCodigo {
 		}
 		
 		
+		if (t.getOperador().equals("BI")) {
+			reg_actual = t_reg.getRegistroLibre();
+			String nombre_reg = t_reg.getNombreReg(reg_actual);
+			
+			System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			
+			//String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+			//System.out.println(mov1);
+			//this.instrucciones_asmb.add(mov1);
+			
+			
+			//instruccion = "ADD "+nombre_reg+" , "; 	
+			//instruccion += t.getOperando2();
+			
+			//System.out.println(instruccion);
+			//this.instrucciones_asmb.add(instruccion);
+			
+			/*
+			String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
+			t.setVarAux(this.var_aux+this.id_var_aux);
+			this.id_var_aux++;
+			System.out.println(mov2);
+			*/
+			};
+		
+			
+		if (t.getOperador().equals("BF")) {
+			//int getRegistroLibre();
+			reg_actual = t_reg.getRegistroLibre();
+			String nombre_reg = t_reg.getNombreReg(reg_actual);
+				
+			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+				
+			//String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+			//System.out.println(mov1);
+			//this.instrucciones_asmb.add(mov1);
+				
+				
+			//instruccion = "ADD "+nombre_reg+" , "; 	
+			//instruccion += t.getOperando2();
+				
+			//System.out.println(instruccion);
+			//this.instrucciones_asmb.add(instruccion);
+				
+			/*
+			String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
+			t.setVarAux(this.var_aux+this.id_var_aux);
+			this.id_var_aux++;
+			System.out.println(mov2);
+			*/
+			};
+		
+				
+				
+		if (t.getOperador().equals("PROC")) {
+			//int getRegistroLibre();
+			reg_actual = t_reg.getRegistroLibre();
+			String nombre_reg = t_reg.getNombreReg(reg_actual);
+				
+			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+				
+			//String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+			//System.out.println(mov1);
+			//this.instrucciones_asmb.add(mov1);
+				
+					
+			//instruccion = "ADD "+nombre_reg+" , "; 	
+			//instruccion += t.getOperando2();
+					
+			//System.out.println(instruccion);
+			//this.instrucciones_asmb.add(instruccion);
+					
+			/*
+			String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
+			t.setVarAux(this.var_aux+this.id_var_aux);
+			this.id_var_aux++;
+			System.out.println(mov2);
+			*/
+			};
+				
 		//System.out.println(instruccion);
 		
 		
 		System.out.println("\n\n");
 	}
+	
 	
 	
 	public void mostrarCodigoAssembler() {

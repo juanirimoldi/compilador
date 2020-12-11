@@ -9,6 +9,7 @@ public class Token {
 	private String ambito;
 	private String uso="";
 	private int valor;
+	private int cantInvocaciones;
 	
 	
 	public Token(String l, String t, int linea, String tipo_var) {//, int id_tipo) {
@@ -68,6 +69,15 @@ public class Token {
 	
 	public String getUso() {
 		return this.uso;
+	}
+	
+	public void setCantInvocaciones(int c) {
+		System.out.println("por casualidad entro aca??");
+		this.cantInvocaciones=c;
+	}
+	
+	public int getCantInvocaciones() {
+		return this.cantInvocaciones;
 	}
 	
 	/*

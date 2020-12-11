@@ -91,12 +91,15 @@ declaracion_de_variable : tipo lista_de_variables  {Token tipo = (Token)$1.obj;
 												   variable.setLexema(nombre);
 												   //name mangling! cambiar variable por variable@ambito
 												   
+												   //aca hay error al declarar variables dentro del IF!
+												   
+												   
 												   System.out.println("\n Hago name mangling con el ambito -> "+ambito+"\n");
 												   
 												   variable.setUso("variable");
 												   
-												   this.desapilarAmbito();			   
-												   }
+												   
+												  }
 				        ;
 
 
@@ -108,7 +111,31 @@ declaracion_de_procedimiento : declaracion_PROC_ID lista_parametros_PROC cant_in
 																																																					
 																											//desapilo ambito temporal de ambito, de der a izq hasta enontrar @
 																											//aplico funcion que agarre el strin ambito y le quite lo anterior al @
-																											desapilarAmbito();
+																											
+																											
+																											//libero la variable invocacion a procedimiento
+																											//aca hacer todo lo relativo a la cant de invocaciones
+																											
+																											/*
+																											Token proced = (Token)this.tabla.getSimbolo(this.proc_invoc);
+																											
+																											if (this.tabla.existe(proced.getLexema())){
+																			   									//veo si el atributo uso == procedimiento
+																			   									System.out.println("ENTRO ACA!!???");
+																			   									if (proced.getUso().equals("procedimiento")){
+																			   										System.out.println("y aca????");
+																			   										proced.setCantInvocaciones(5);
+																			   										((Token)$$.obj).setCantInvocaciones(6);
+																			   									}
+									   																		}
+					   				
+					   																						*/
+					   																						
+					   																						desapilarAmbito();
+																																
+																											this.proc_invoc = "";
+																											
+																											this.cant_invoc = 0;
 																											}
 
 
@@ -126,10 +153,19 @@ declaracion_PROC_ID : PROC ID {
 								id.setUso("procedimiento");
 										
 								this.ambito = nombre ;
+										
 												     	  	 
- 								this.ambito_temporal = id.getLexema();
+ 								this.proc_invoc = nombre;
  								
- 								//aca le apilo a ambito el ambito temporal  	    
+ 								//System.out.println("tupla -> "+id.getLexema()+" , "+this.cant_invoc);
+ 								//id.setCantInvocaciones(this.cant_invoc);
+ 								//this.cant_invoc = 0;
+ 								
+ 								//pruebo referenciandolo..
+ 								//$$=$2;
+ 								//no funciona. habra que buscarlo en la tabla de simbolos a partir de su ID
+ 								//con proc_invoc
+ 								
  								  	    
  	 							Terceto ter = new Terceto(this.nro_terceto, "PROC", id.getLexema() , "--" );
  								this.lista.agregarTerceto(ter);
@@ -163,13 +199,35 @@ lista_parametros_PROC : '(' lista_de_parametros ')' {System.out.println("\n ACA 
 					  
 
 cant_invocaciones_PROC : NI '=' CTE {
-									//ACA CHECKEO QUE CTE SEA < 4
 									//para este proc -> asigno la cantidad de invocaciones que puede efectuar -> CTE
 					   				System.out.println("ACA CHECKEO QUE CTE SEA < 4 , y la cant de invocaciones al PROC");
 					   				//CTE debe ser de tipo entero (1, 2, 3, 4 )
 					   				
+					   				//Token proced = (Token)this.tabla.getSimbolo(this.proc_invoc);
+					   				
+					   				//Token proced = (Token)$$.obj;
+					   				
+					   				Token cte = (Token)$3.obj;
+					   				
+					   				this.cant_invoc = Integer.parseInt(cte.getLexema()); 
+					   				
+					   				//System.out.println("cantidad de invocaciones -> "+cant_invoc);
+					   				
+					   				/*
+					   				//si esta correctamente declarado en la tsym
+					   				if (this.tabla.existe(proced.getLexema())){
+					   					//veo si el atributo uso == procedimiento
+					   					System.out.println("ENTRO ACA!!");
+					   					if (proced.getUso().equals("procedimiento")){
+					   						System.out.println("y aca????");
+					   						proced.setCantInvocaciones(5);
+					   						((Token)$$.obj).setCantInvocaciones(6);
+					   					}
+					   				}
+					   				
 					   				//checkeo nro y tipo de parametros en la invocacion
 					   				//nro de invocaciones efectuadas por cada procedimiento
+					   				*/
 					   				}
 					   ;
 			
@@ -190,7 +248,7 @@ cuerpo_PROC : '{' lista_de_sentencias '}' {
 
 lista_de_parametros : parametro_declarado ',' parametro_declarado ',' parametro_declarado
 		    		| parametro_declarado ',' parametro_declarado
-		    		| parametro_declarado { System.out.println("\n\n 1 solo parametro \n\n"); 
+		    		| parametro_declarado { System.out.println("\n\n 1 parametro \n\n"); 
 		    								
 		    							   }
 																												
@@ -223,7 +281,7 @@ sentencia_ejecutable : asignacion
 		   			 | sentencia_de_control
 		   			 | sentencia_de_iteracion 
 		   			 | sentencia_de_salida 
-		   			 | invocacion {System.out.println("\n   \n");}
+		   			 | invocacion 
 					 ;
 
 
@@ -246,18 +304,18 @@ asignacion : ID '=' expresion  {  Token id = (Token)$1.obj;
 								  	//System.out.println("\n EXPRESION $$ TOKEN!!  -> "+ ((Token)$$.obj).getLexema() +"\n");
 							
 								  	if (tabla.correctamenteDefinido(id)){
-								  		//System.out.println("\n SI, esta bien definido "+ id.getLexema()+"\n");
+								  		
 								  		System.out.println("\n CREO TERCETO ASIGNACION  ->  ( "+op.getLexema()+" , "+id.getLexema()+" , "+((Token)$$.obj).getLexema()+" )  \n\n");
+								  		
 								  		Terceto ter = new Terceto(this.nro_terceto, op.getLexema(), id.getLexema(), ((Token)$3.obj).getLexema());
  									   	this.lista.agregarTerceto(ter); 
  									   	
- 									   	this.lista.mostrarTercetos();
+ 									   	//this.lista.mostrarTercetos();
  									   	
  									   	this.nro_terceto++;
 								  		
 								  	} else {
 								  	
-								  		//System.out.println("\n EL ID  "+id.getLexema()+" no esta correctamente definido. cancelo la asignacion  \n");
 								  		System.out.println("\n a "+id.getLexema()+"  no le agrego ambito porque no es valido \n");
 								  	}
 								  	
@@ -272,7 +330,7 @@ asignacion : ID '=' expresion  {  Token id = (Token)$1.obj;
 								  	Terceto ter = new Terceto(this.nro_terceto, "=", id.getLexema(), pos_str);
  									this.lista.agregarTerceto(ter); 
  								  	
- 								  	this.lista.mostrarTercetos();
+ 								  	//this.lista.mostrarTercetos();
  								   	
  								   	this.nro_terceto++;
 								  	
@@ -358,6 +416,15 @@ asignacion : ID '=' expresion  {  Token id = (Token)$1.obj;
 sentencia_de_control : IF condicion_IF cuerpo_IF END_IF {System.out.println("\n SENTENCIA DE CONTROL!  completo tercetos BI \n");					 
 														 
 														 this.lista.completarTerceto(pos_BI, this.nro_terceto);
+														 
+														 //this.desapilarAmbito();
+														 
+														 //o aca ? completo BF para if sin ELSE ? -> ya tengo la posicion, que es pos_BF
+ 					
+ 														//this.lista.completarTerceto(pos_BF, this.nro_terceto+1);
+				   
+				  						  				//this.nro_terceto++; //sgte al terceto BI
+					
 														 }
 				     ;						
 
@@ -376,7 +443,9 @@ condicion_IF : '(' condicion ')' {
  								  
  								  pos_ultimo_terceto = this.nro_terceto;
  					
- 								  this.lista.mostrarTercetos();
+ 								  //this.lista.mostrarTercetos();
+ 					     		  
+ 					     		  //this.ambito = "ambIF";
  					     		  
  					     		  this.nro_terceto++;
  									   	
@@ -385,8 +454,12 @@ condicion_IF : '(' condicion ')' {
 
 
 cuerpo_IF : bloque_de_sentencias {
-
-								  }
+								//aca completo BF para if sin ELSE ? -> ya tengo la posicion, que es pos_BF
+ 					
+ 								this.lista.completarTerceto(pos_BF, this.nro_terceto); //antes +1
+				   
+				   				//this.nro_terceto++; //sgte al terceto BI
+								 }
 									
 		  | bloque_de_sentencias entra_ELSE bloque_de_sentencias {
 		  														  }
@@ -407,7 +480,7 @@ entra_ELSE : ELSE {
  					pos_ultimo_terceto = this.nro_terceto;
  					
  					
- 					this.lista.mostrarTercetos();
+ 					//this.lista.mostrarTercetos();
  									   	
  									   
  					//aca completo BF! ya tengo la posicion, que es pos_BF
@@ -504,7 +577,7 @@ condicion_LOOP : '(' condicion ')' {
  								  
  								    pos_ultimo_terceto = this.nro_terceto;
  					
- 								    this.lista.mostrarTercetos();
+ 								    //this.lista.mostrarTercetos();
  					     		    
  					     		    this.nro_terceto++;
  					     		    
@@ -527,7 +600,7 @@ condicion : expresion '>' expresion {if (isToken) {
  									   	 this.lista.agregarTerceto(ter); 
  									   	 pos_ultimo_terceto = this.nro_terceto;
  									   	 
- 									   	 this.lista.mostrarTercetos();
+ 									   	 //this.lista.mostrarTercetos();
  									   	 
  									   	 this.nro_terceto++;
  									   	 
@@ -547,7 +620,7 @@ condicion : expresion '>' expresion {if (isToken) {
  	 	 								    Terceto ter = new Terceto(this.nro_terceto, ">", pos_str, op3.getLexema());//op3.getOperando2());
  	 									   	this.lista.agregarTerceto(ter); 
  	 									   
- 	 									   	this.lista.mostrarTercetos();
+ 	 									   	//this.lista.mostrarTercetos();
  	 									   	
  	 									   	pos_ultimo_terceto = this.nro_terceto;
  	 									   	
@@ -569,7 +642,7 @@ condicion : expresion '>' expresion {if (isToken) {
 	 	 								    Terceto ter = new Terceto(this.nro_terceto, ">", pos_terc1, pos_terc2);//op3.getOperando2());
 	 									   	this.lista.agregarTerceto(ter); 
 	 									   	
-	 									   	this.lista.mostrarTercetos();
+	 									   	//this.lista.mostrarTercetos();
 	 									   	
 	 									   	pos_ultimo_terceto = this.nro_terceto;
 	 									   	
@@ -594,7 +667,7 @@ condicion : expresion '>' expresion {if (isToken) {
  									   	this.lista.agregarTerceto(ter); 
  									   	pos_ultimo_terceto = this.nro_terceto;
  									   	 
- 									   	this.lista.mostrarTercetos();
+ 									   	//this.lista.mostrarTercetos();
  									   	 
  									   	this.nro_terceto++;
  									   	 
@@ -614,7 +687,7 @@ condicion : expresion '>' expresion {if (isToken) {
  	 	 								    Terceto ter = new Terceto(this.nro_terceto, "<", pos_str, op3.getLexema());//op3.getOperando2());
  	 									   	this.lista.agregarTerceto(ter); 
  	 									   	
- 	 									   	this.lista.mostrarTercetos();
+ 	 									   	//this.lista.mostrarTercetos();
  	 									   	
  	 									   	pos_ultimo_terceto = this.nro_terceto;
  	 									   	
@@ -635,7 +708,7 @@ condicion : expresion '>' expresion {if (isToken) {
 	 	 								    Terceto ter = new Terceto(this.nro_terceto, "<", pos_terc1, pos_terc2);//op3.getOperando2());
 	 									   	this.lista.agregarTerceto(ter); 
 	 									   	
-	 									   	this.lista.mostrarTercetos();
+	 									   	//this.lista.mostrarTercetos();
 	 									   	
 	 									   	pos_ultimo_terceto = this.nro_terceto;
 	 									   	
@@ -663,7 +736,7 @@ condicion : expresion '>' expresion {if (isToken) {
  									   	this.lista.agregarTerceto(ter); 
  									   	pos_ultimo_terceto = this.nro_terceto;
  									   	 
- 									   	this.lista.mostrarTercetos();
+ 									   	//this.lista.mostrarTercetos();
  									   	 
  									   	this.nro_terceto++;
  									   	 
@@ -683,7 +756,7 @@ condicion : expresion '>' expresion {if (isToken) {
  	 	 								    Terceto ter = new Terceto(this.nro_terceto, "<", pos_str, op3.getLexema());//op3.getOperando2());
  	 									   	this.lista.agregarTerceto(ter); 
  	 									   	
- 	 									   	this.lista.mostrarTercetos();
+ 	 									   	//this.lista.mostrarTercetos();
  	 									   	
  	 									   	pos_ultimo_terceto = this.nro_terceto;
  	 									   	
@@ -704,7 +777,7 @@ condicion : expresion '>' expresion {if (isToken) {
 	 	 								    Terceto ter = new Terceto(this.nro_terceto, "<", pos_terc1, pos_terc2);//op3.getOperando2());
 	 									   	this.lista.agregarTerceto(ter); 
 	 									   	
-	 									   	this.lista.mostrarTercetos();
+	 									   	//this.lista.mostrarTercetos();
 	 									   	
 	 									   	pos_ultimo_terceto = this.nro_terceto;
 	 									   	
@@ -714,7 +787,7 @@ condicion : expresion '>' expresion {if (isToken) {
  									  
  									  isToken=true;
 									}
-						  	  }
+						  	  //}
 	  	  
 	  	  | expresion DISTINTO expresion
 	  	  ;
@@ -734,7 +807,17 @@ sentencia_de_salida : OUT '(' CADENA ')'
 					
 					
 invocacion : ID '(' parametro_ejecutable ')' {//ACAAAA VER QUE ONDA respecot a la incovacion de proced
-	   	   									 
+	   	   									 Token id = (Token)$1.obj;
+	   	   									 System.out.println("\n\n INVOCACION -> "+ id.getLexema() +"\n\n");
+	   	   									 if (tabla.correctamenteDefinido(id)){
+								  		
+								  				System.out.println("\n PROCEDIMIENTO "+ id.getLexema()+" CORRECTAMENTE DEFINIDO  \n\n");
+								  				//le resto uno a NI, la cantidad de invocaciones
+															  		
+								  			 } else {
+								  	
+								  			 	System.out.println("\n PROCEDIMIENTO "+id.getLexema()+"  no es valido \n");
+								  			 	}
 	   	   									 }
 	   	   									 
 	   	   ;
@@ -743,9 +826,12 @@ invocacion : ID '(' parametro_ejecutable ')' {//ACAAAA VER QUE ONDA respecot a l
 		  
 parametro_ejecutable : ID ':' ID  
 								{
-								////para las invocaciones a parametros!!
+								Token id1 = (Token)$1.obj; //formal ?
+								Token id2 = (Token)$3.obj; // real?
+								System.out.println("\n PARAMETROS EJECUTABLES ->  formal : "+id1.getLexema()+"  ,   real : "+id2.getLexema()+"\n ");
 								}
 								//faltaria REF!
+								
 		   		     | parametro_ejecutable ',' ID':'ID
 		     		 ;
 		 			
@@ -774,7 +860,7 @@ expresion : expresion '+' termino {Token op1 = (Token)$1.obj;
 								   this.lista.agregarTerceto(ter); 
 								   pos_ultimo_terceto = this.nro_terceto;
 								   
-								   this.lista.mostrarTercetos();
+								   //this.lista.mostrarTercetos();
 								   
 								   this.nro_terceto++;
 								   //apunto a terceto!?
@@ -797,7 +883,7 @@ expresion : expresion '+' termino {Token op1 = (Token)$1.obj;
 								   this.lista.agregarTerceto(ter); 
 								   pos_ultimo_terceto = this.nro_terceto;
 								   
-								   this.lista.mostrarTercetos();
+								   //this.lista.mostrarTercetos();
 								   
 								   this.nro_terceto++;
 								   //apunto a terceto
@@ -829,7 +915,7 @@ termino : termino '*' factor {
 							  this.lista.agregarTerceto(ter); 
 							  pos_ultimo_terceto = this.nro_terceto;
 							  
-							  this.lista.mostrarTercetos();
+							  //this.lista.mostrarTercetos();
 							  
 							  this.nro_terceto++;
 							  //apunto a terceto!?
@@ -850,7 +936,7 @@ termino : termino '*' factor {
 							  this.lista.agregarTerceto(ter); 
 							  pos_ultimo_terceto = this.nro_terceto;
 							  
-							  this.lista.mostrarTercetos();
+							  //this.lista.mostrarTercetos();
 							  
 							  this.nro_terceto++;
 							  //apunto a terceto
@@ -907,6 +993,7 @@ ListaTercetos lista;
 
 String ambito;
 String ambito_temporal;
+String proc_invoc;
 
 boolean isToken=true;
 
@@ -919,15 +1006,15 @@ int pos_BI = 0;
 int pos_comienzo_loop = 0;
 int pos_comienzo_condicion_loop=0;
 
+int cant_invoc = 0;
 
 
 void desapilarAmbito() {
-	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	System.out.println("\n\n ACA!! reduzco pila  "+ this.ambito +" \n\n"); 
+	System.out.println("\n\n ACA!! desapilo  "+ this.ambito +" \n\n"); 
+	
 	int corte = 0;
 	
 	for (int i = 0; i < this.ambito.length(); i++) {
-		System.out.println("Letra -> "+ambito.charAt(i));
 		if (ambito.charAt(i) == '@') {
 			corte = i;
 			break;
@@ -936,9 +1023,7 @@ void desapilarAmbito() {
 	}
 	
 	this.ambito = this.ambito.substring(corte+1, ambito.length());
-	System.out.println("\n\n reduccion ->  "+ this.ambito +" \n\n"); 
 	
-	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 }
 
 

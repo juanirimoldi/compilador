@@ -21,7 +21,7 @@ IF ( x + 5 < 9 ) { INTEGER fff ; fff = 8 ; } END_IF ;
 
 
 IF ( ww > 0 ) { 
-	IF ( b > 8 ) { 
+	IF ( b1 > 8 ) { 
 		y = b ; 
 	} END_IF ; 
 	
@@ -38,7 +38,7 @@ IF ( ww > 0 ) {
 	INTEGER k ; 
 	k = k * y ; 
 } ELSE { 
-	IF ( b > 8 ) { 
+	IF ( b2 > 8 ) { 
 		y = b ; 
 	} END_IF ; 
 	
@@ -74,6 +74,22 @@ PROC f1 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 {
 	f1a = 100 ;
 		
 	} ;
+
+
+PROC f2 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 { 
+	x = y + z ; 
+	INTEGER f2a ;
+	f2a = 1000 ;
+	
+	PROC fn ( INTEGER x , FLOAT y ) NI = 1 {
+		INTEGER fnnn ;
+		fnnn = x ;
+		} ;	
+	
+	IF ( a > 8 ) { a = a + 1 ; } END_IF ;
+	
+	} ;
+
 
 
 proced ( a : x ) ;  %%asi invoca bien. falta la semantica de la invocacion

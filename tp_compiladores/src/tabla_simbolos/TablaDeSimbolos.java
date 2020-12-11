@@ -117,8 +117,17 @@ public class TablaDeSimbolos {
 			//System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
 			
 			if (llave.length() > 7) {
-				System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+				
+				if (this.getSimbolo(llave).getUso().equals("procedimiento")) {
+					System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+" , "+t.getCantInvocaciones());
+					
+				}else {
+				
+					System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+				}
+
 			} else {
+				
 				System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
 			}
 			
