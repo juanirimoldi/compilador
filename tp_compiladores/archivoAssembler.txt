@@ -1,36 +1,220 @@
-MOV EAX , 17
+
+.MODEL small 
+
+.STACK 200h  
+
+.DATA 
+
+k@main@main 	, ID 	, STRING	,  variable
+fff@main 		, ID 	, STRING	,  variable
+1000 		, CTE 	, INTEGER	,  
+99 		, CTE 	, INTEGER	,  
+fn@f2@main 	, ID 	, STRING	,  procedimiento
+ww@main 		, ID 	, STRING	,  variable
+f2a@f2@main 	, ID 	, STRING	,  variable
+100 		, CTE 	, INTEGER	,  
+proced@main 	, ID 	, STRING	,  procedimiento
+f1@main 		, ID 	, STRING	,  procedimiento
+x@main 		, ID 	, STRING	,  variable
+f2@main 		, ID 	, STRING	,  procedimiento
+a@main 		, ID 	, STRING	,  variable
+y@main 		, ID 	, STRING	,  variable
+b@main 		, ID 	, STRING	,  variable
+f1a@f1@main 	, ID 	, STRING	,  variable
+j@main 		, ID 	, STRING	,  variable
+9 		, CTE 	, INTEGER	,  
+z@main 		, ID 	, STRING	,  variable
+8 		, CTE 	, INTEGER	,  
+89 		, CTE 	, INTEGER	,  
+c@main 		, ID 	, STRING	,  variable
+5 		, CTE 	, INTEGER	,  
+k@main 		, ID 	, STRING	,  variable
+j@main@main 	, ID 	, STRING	,  variable
+3 		, CTE 	, INTEGER	,  
+fnnn@fn@f2@main 	, ID 	, STRING	,  variable
+2 		, CTE 	, INTEGER	,  
+1 		, CTE 	, INTEGER	,  
+22 		, CTE 	, INTEGER	,  
+0 		, CTE 	, INTEGER	,  
+d@main 		, ID 	, STRING	,  variable
+
+.CODE 
++ , 99 , 3
+= , y@main , [0]
+= , z@main , 1
++ , y@main , z@main
+= , x@main , [3]
++ , x@main , 5
+< , [5] , 9
+BF , [6] , 8
++ , x@main , 5
+< , [8] , 9
+BF , [9] , 12
+= , fff@main , 8
+= , ww@main , 8
+> , ww@main , 0
+BF , [13] ,  
+> , b1 , 8
+BF , [15] , 21
+= , y@main , b
+* , k@main , y@main
+= , k@main , [18]
+BI , 23 , --
+- , j@main , 3
+= , j@main , [21]
+< , ww@main , 0
+BF , [23] , 28
+* , k@main@main , y@main
+= , k@main@main , [25]
+BI , 33 , --
+> , b2 , 8
+BF , [28] , 31
+= , y@main , b
+- , j@main@main , 3
+= , j@main@main , [31]
+= , a@main , 5
+= , b@main , 8
+= , c@main , 9
+- , a@main , b@main
++ , c@main , 1
+> , [36] , [37]
+BF , [38] , 43
++ , b@main , c@main
+= , a@main , [40]
+BI , 45 , --
+- , b@main , c@main
+= , a@main , [43]
+= , d@main , 2
++ , b@main , c@main
+= , a@main , [46]
+- , d@main , 3
+= , c@main , [48]
++ , a@main , b@main
+- , c@main , d@main
+> , [50] , [51]
+BF , [46] , [54]
+PROC , proced@main , --
++ , 99 , m
+= , yyy , [55]
+PROC , f1@main , --
++ , y@main , z@main
+= , x@main , [58]
+= , f1a@f1@main , 100
+PROC , f2@main , --
++ , y@main , z@main
+= , x@main , [62]
+= , f2a@f2@main , 1000
+PROC , fn@f2@main , --
+= , fnnn@fn@f2@main , x@main
+CALL , proced@main , --
++ , 22 , a@main
+= , b@main , [68]
+- , a@main , b@main
+= , c@main , [70]
+
+START: 
+
+MOV EAX , 99
 ADD EAX , 3
+MOV y@main , EAX
+MOV EAX , 1
+MOV z@main , EAX
 MOV EAX , y@main
 ADD EAX , z@main
+MOV x@main , EAX
 MOV EAX , x@main
 ADD EAX , 5
-MOV EBX , x@main
-ADD EBX , 5
-MOV EBX , k@main
-MUL EBX , y@main
-MOV EBX , j@main
-SUB EBX , 3
-MOV EBX , k@main@main
-MUL EBX , y@main
-MOV EBX , j@main@main
-SUB EBX , 3
-MOV EBX , a@main
-SUB EBX , b@main
-MOV ECX , c
-ADD ECX , 1
-MOV EDX , b@main
-ADD EDX , c
-MOV EDX , b@main
-SUB EDX , c
-MOV EDX , b@main
-ADD EDX , c
-MOV EDX , d
-SUB EDX , 3
-MOV EDX , a@main
-ADD EDX , b@main
-MOV  , c
-SUB  , d
-MOV  , 99
-ADD  , m
-MOV  , y@main
-ADD  , z@main
+CMP EAX , 9
+JL etiqueta
+CMP EAX , 9
+JL etiqueta
+CMP EAX , 
+JL etiqueta
+MOV EAX , x@main
+ADD EAX , 5
+CMP EAX , 9
+JL etiqueta
+CMP EAX , 9
+JL etiqueta
+CMP EAX , 
+JL etiqueta
+MOV EAX , 8
+MOV fff@main , EAX
+MOV EAX , 8
+MOV ww@main , EAX
+MOV EAX , b
+MOV y@main , EAX
+MOV EAX , k@main
+MUL EAX , y@main
+MOV k@main , EAX
+MOV EAX , j@main
+SUB EAX , 3
+MOV j@main , EAX
+MOV EAX , k@main@main
+MUL EAX , y@main
+MOV k@main@main , EAX
+MOV EAX , b
+MOV y@main , EAX
+MOV EAX , j@main@main
+SUB EAX , 3
+MOV j@main@main , EAX
+MOV EAX , 5
+MOV a@main , EAX
+MOV EAX , 8
+MOV b@main , EAX
+MOV EAX , 9
+MOV c@main , EAX
+MOV EAX , a@main
+SUB EAX , b@main
+MOV EBX , c@main
+ADD EBX , 1
+CMP EBX , EAX
+JG etiqueta
+MOV EAX , b@main
+ADD EAX , c@main
+MOV a@main , EAX
+MOV EAX , b@main
+SUB EAX , c@main
+MOV a@main , EAX
+MOV EAX , 2
+MOV d@main , EAX
+MOV EAX , b@main
+ADD EAX , c@main
+MOV a@main , EAX
+MOV EAX , d@main
+SUB EAX , 3
+MOV c@main , EAX
+MOV EAX , a@main
+ADD EAX , b@main
+MOV EBX , c@main
+SUB EBX , d@main
+CMP EBX , EAX
+JG etiqueta
+proced@main : 
+MOV EAX , 99
+ADD EAX , m
+MOV yyy , EAX
+f1@main : 
+MOV EAX , y@main
+ADD EAX , z@main
+MOV x@main , EAX
+MOV EAX , 100
+MOV f1a@f1@main , EAX
+f2@main : 
+MOV EAX , y@main
+ADD EAX , z@main
+MOV x@main , EAX
+MOV EAX , 1000
+MOV f2a@f2@main , EAX
+fn@f2@main : 
+MOV EAX , x@main
+MOV fnnn@fn@f2@main , EAX
+CALL proced@main
+MOV EAX , 22
+ADD EAX , a@main
+MOV b@main , EAX
+MOV EAX , a@main
+SUB EAX , b@main
+MOV c@main , EAX
+
+END START 

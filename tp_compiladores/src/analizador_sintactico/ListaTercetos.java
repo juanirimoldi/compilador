@@ -35,17 +35,34 @@ public class ListaTercetos {
 
 			this.lista_tercetos.get(pos).setOperando2(val);
 			
-		} else {
+		} //else {
 			
 			//System.out.println("\n MODIFICO EL TERCETO BF? -> valor "+ val+ "  en pos "+pos+"\n");
+		if (this.lista_tercetos.get(pos).getOperador().equals("BI")) {
 			this.lista_tercetos.get(pos).setOperando1(val);
 		}
+		
 	
 	}
 	
 	
 	public ArrayList<Terceto> getListaTercetos(){
 		return this.lista_tercetos;
+	}
+	
+	
+	public String getListaTercetosString() {
+		String aux = "";
+		
+		for (Terceto t : lista_tercetos) {
+			//aux += t.getId()+" , "+t.getOperador()+" , "+t.getOperando1()+" , "+t.getOperando2()+"\n";
+			aux += t.getOperador()+" , "+t.getOperando1()+" , "+t.getOperando2()+"\n";
+			
+			//System.out.println(t.getId()+" , "+t.getOperador()+" , "+t.getOperando1()+" , "+t.getOperando2());
+			
+		}
+		
+		return aux;
 	}
 	
 	

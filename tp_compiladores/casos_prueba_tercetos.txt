@@ -19,6 +19,15 @@ IF ( x + 5 < 9 ) { ff = 8 ; } END_IF ;
 IF ( x + 5 < 9 ) { INTEGER fff ; fff = 8 ; } END_IF ; 
 
 
+%%aca ocupo 3 registros.. -> cuando los libero?
+
+
+%%aca hay un error! para ww no completa el BF
+%%debe ser por tener un IF simple adentro de un IF - ELSE
+%%entonces solo cierra
+
+INTEGER ww ; 
+ww = 8 ;
 
 IF ( ww > 0 ) { 
 	IF ( b1 > 8 ) { 
@@ -33,8 +42,8 @@ IF ( ww > 0 ) {
 } END_IF ;
 
 
-%%aca hay un error! no desapila ambito!
-IF ( ww > 0 ) { 
+
+IF ( ww < 0 ) { 
 	INTEGER k ; 
 	k = k * y ; 
 } ELSE { 
@@ -47,6 +56,9 @@ IF ( ww > 0 ) {
 } END_IF ;
 
 
+%%este problema pasa solo si se define un IF simple dentro del primer cuerpo
+%%si se define dentro del cuerpo sgte al ELSE anda bien
+
 
 
 INTEGER a ;
@@ -55,8 +67,15 @@ a = 5 ;
 INTEGER b ;
 b = 8 ;
 
+INTEGER c ;
+c = 9 ;
+
+
 IF ( a - b > c + 1 ) { a = b + c ; } ELSE { a = b - c ; } END_IF ;
 
+
+INTEGER d ;
+d = 2 ;
 
 
 LOOP { a = b + c ; c = d - 3 ; } UNTIL ( a + b > c - d ) ;
@@ -86,8 +105,6 @@ PROC f2 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 {
 		fnnn = x ;
 		} ;	
 	
-	IF ( a > 8 ) { a = a + 1 ; } END_IF ;
-	
 	} ;
 
 
@@ -95,3 +112,7 @@ PROC f2 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 {
 proced ( a : x ) ;  %%asi invoca bien. falta la semantica de la invocacion
 			
 			
+%% a = 9 + 7 * 6 ;
+b = 22 + a ;
+
+c = a - b ;

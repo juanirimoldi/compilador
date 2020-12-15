@@ -416,7 +416,7 @@ final static String yyrule[] = {
 "factor : ID",
 };
 
-//#line 983 "gramaticaIncremental.y"
+//#line 988 "gramaticaIncremental.y"
 	   	
 
 
@@ -447,7 +447,7 @@ int cant_invoc = 0;
 
 
 void desapilarAmbito() {
-	System.out.println("\n\n ACA!! desapilo  "+ this.ambito +" \n\n"); 
+	//System.out.println("\n\n desapilo  "+ this.ambito +" \n\n"); 
 	
 	int corte = 0;
 	
@@ -456,11 +456,9 @@ void desapilarAmbito() {
 			corte = i;
 			break;
 		}
-
 	}
 	
-	this.ambito = this.ambito.substring(corte+1, ambito.length());
-	
+	this.ambito = this.ambito.substring(corte+1, ambito.length());	
 }
 
 
@@ -494,7 +492,7 @@ private int yylex() {
 
 
 
-public static void main(String args[]) throws IllegalArgumentException, IllegalAccessException {
+public static void main(String args[]) throws IOException, IllegalArgumentException, IllegalAccessException {
  	String direccion_codigo = "casos_prueba_tercetos.txt";
 	
  	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
@@ -509,20 +507,29 @@ public static void main(String args[]) throws IllegalArgumentException, IllegalA
  	par.yyparse();
  	
  	
+ 	//tds.mostrarSimbolos();
+ 	
+ 	tds.removerTokensInvalidos();
+ 	
  	tds.mostrarSimbolos();
  	
  	l.mostrarTercetos();
  	
  	
- 	GeneradorCodigo gc = new GeneradorCodigo(l);
+ 	GeneradorCodigo gc = new GeneradorCodigo(tds, l);
  	
- 	//gc.generarCodigo();
+ 	gc.generarCodigo();
  	
- 	//gc.crearArchivoAssembler();
+ 	gc.crearArchivoAssembler();
  	
- 	//gc.mostrarCodigoAssembler();
+ 	gc.mostrarCodigoAssembler();
+ 	
+ 
+ 	gc.generarEstructuraProgramaAsm();
+ 	
+ 	gc.crearArchivoAssembler();
 }
-//#line 451 "Parser.java"
+//#line 449 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -744,24 +751,24 @@ case 9:
 					   																						*/
 					   																						
 					   																						desapilarAmbito();
-																																
+					   																						
+																											/*crear terceto call! o call lo creo cuando lo invoco?					*/
+																											/*o terceto ret?*/
+																											
 																											this.proc_invoc = "";
 																											
 																											this.cant_invoc = 0;
 																											}
 break;
 case 10:
-//#line 143 "gramaticaIncremental.y"
-{
-								System.out.println("\n CREO TERCETO PROC -> ( PROC , $$.obj.getLexema() ID , -- ) \n");
-								
- 								 								  
+//#line 146 "gramaticaIncremental.y"
+{											  
  								Token id = (Token)val_peek(0).obj ;
  								
  								String nombre = id.getLexema()+"@"+ambito;
 												   
 							 	id.setLexema(nombre);
-								/*name mangling! cambiar variable por variable@main*/
+								/*name mangling! cambia variable por variable@main*/
 								id.setUso("procedimiento");
 										
 								this.ambito = nombre ;
@@ -772,6 +779,12 @@ case 10:
  								/*System.out.println("tupla -> "+id.getLexema()+" , "+this.cant_invoc);*/
  								/*id.setCantInvocaciones(this.cant_invoc);*/
  								/*this.cant_invoc = 0;*/
+ 								
+ 								System.out.println("\n CREO TERCETO PROC -> ( PROC , "+id.getLexema()+" , -- ) \n");
+								
+								
+								/*en vez de setearle el nombre, lo agrego de nuevo, redefinido*/
+ 								tabla.addToken(id);
  								
  								/*pruebo referenciandolo..*/
  								/*$$=$2;*/
@@ -792,7 +805,7 @@ case 10:
 								}
 break;
 case 11:
-//#line 185 "gramaticaIncremental.y"
+//#line 191 "gramaticaIncremental.y"
 {System.out.println("\n ACA LE DOY SEMANTICA A LA LISTA DE PARAMETROS \n");
 													/*aclarar reglas de pasaje de parametros*/
 													/*COPIAR POR EJ X E Y -> */
@@ -804,7 +817,7 @@ case 11:
 													}
 break;
 case 13:
-//#line 201 "gramaticaIncremental.y"
+//#line 207 "gramaticaIncremental.y"
 {
 									/*para este proc -> asigno la cantidad de invocaciones que puede efectuar -> CTE*/
 					   				System.out.println("ACA CHECKEO QUE CTE SEA < 4 , y la cant de invocaciones al PROC");
@@ -838,7 +851,7 @@ case 13:
 					   				}
 break;
 case 14:
-//#line 235 "gramaticaIncremental.y"
+//#line 241 "gramaticaIncremental.y"
 {
 											/*ACA CREO LAS VARIABLES DEL CUERPO DE ACUERDO AL AMBITO DONDE SE ENCUENTRA*/
 											System.out.println("\n CREO LAS VARIABLES DE ACUERDO AL AMBITO DEFINIDO DEL PROC \n");
@@ -849,13 +862,17 @@ case 14:
 											}
 break;
 case 17:
-//#line 251 "gramaticaIncremental.y"
+//#line 257 "gramaticaIncremental.y"
 { System.out.println("\n\n 1 parametro \n\n"); 
 		    								
 		    							   }
 break;
+case 24:
+//#line 286 "gramaticaIncremental.y"
+{}
+break;
 case 29:
-//#line 290 "gramaticaIncremental.y"
+//#line 296 "gramaticaIncremental.y"
 {  Token id = (Token)val_peek(2).obj;
 								  
 								  /*int linea = id.getNroLinea();*/
@@ -866,8 +883,8 @@ case 29:
 								  Token op = (Token)val_peek(1).obj;
 								
 								  yyval = val_peek(0); /*desde lado izq apunto a la expresion*/
-								  								  
-								  
+								  /*$$.obj = $3 rompe todo								  */
+								  /*$$.obj = id;*/
 								  
 								  if (isToken) { 
 								  	/*System.out.println("\n EXPRESION $$ TOKEN!!  -> "+ ((Token)$$.obj).getLexema() +"\n");*/
@@ -886,6 +903,7 @@ case 29:
 								  	} else {
 								  	
 								  		System.out.println("\n a "+id.getLexema()+"  no le agrego ambito porque no es valido \n");
+								  		/*aca elimino id de la tabla de simbolos?*/
 								  	}
 								  	
 								  } else {
@@ -910,7 +928,7 @@ case 29:
 							   }
 break;
 case 30:
-//#line 344 "gramaticaIncremental.y"
+//#line 351 "gramaticaIncremental.y"
 {
 		   								/*conversion explicita!*/
 		   								/*si no reconoce el tipo -> error de compatibilidad */
@@ -976,23 +994,17 @@ case 30:
 				   						}
 break;
 case 31:
-//#line 416 "gramaticaIncremental.y"
+//#line 423 "gramaticaIncremental.y"
 {System.out.println("\n SENTENCIA DE CONTROL!  completo tercetos BI \n");					 
 														 
 														 this.lista.completarTerceto(pos_BI, this.nro_terceto);
 														 
 														 /*this.desapilarAmbito();*/
 														 
-														 /*o aca ? completo BF para if sin ELSE ? -> ya tengo la posicion, que es pos_BF*/
- 					
- 														/*this.lista.completarTerceto(pos_BF, this.nro_terceto+1);*/
-				   
-				  						  				/*this.nro_terceto++; //sgte al terceto BI*/
-					
 														 }
 break;
 case 32:
-//#line 432 "gramaticaIncremental.y"
+//#line 433 "gramaticaIncremental.y"
 {
 								  String pos_str = "["+pos_ultimo_terceto+"]";
  								  
@@ -1016,62 +1028,59 @@ case 32:
 								  }
 break;
 case 33:
-//#line 456 "gramaticaIncremental.y"
+//#line 457 "gramaticaIncremental.y"
 {
-								/*aca completo BF para if sin ELSE ? -> ya tengo la posicion, que es pos_BF*/
- 					
+								
  								this.lista.completarTerceto(pos_BF, this.nro_terceto); /*antes +1*/
 				   
-				   				/*this.nro_terceto++; //sgte al terceto BI*/
-								 }
+				   				 }
 break;
 case 34:
-//#line 464 "gramaticaIncremental.y"
+//#line 463 "gramaticaIncremental.y"
 {
 		  														  }
 break;
 case 35:
-//#line 469 "gramaticaIncremental.y"
+//#line 468 "gramaticaIncremental.y"
 {				   
 				   String pos_str = "["+pos_ultimo_terceto+"]";
  					
- 					
- 					System.out.println("\n CREA TERCETO SALTO INCONDICIONAL  ->  (  BI  ,   ,  -- ) ");
+ 				   System.out.println("\n CREA TERCETO SALTO INCONDICIONAL  ->  (  BI  ,   ,  -- ) ");
  	 								    
- 	 				Terceto ter = new Terceto(this.nro_terceto, "BI", " " , "--");
- 					this.lista.agregarTerceto(ter); 
+ 	 			   Terceto ter = new Terceto(this.nro_terceto, "BI", " " , "--");
+ 				   this.lista.agregarTerceto(ter); 
  					
- 					this.pos_BI = this.nro_terceto;
+ 				   this.pos_BI = this.nro_terceto;
  					
- 					pos_ultimo_terceto = this.nro_terceto;
+ 				   pos_ultimo_terceto = this.nro_terceto;
  					
  					
- 					/*this.lista.mostrarTercetos();*/
+ 				   /*this.lista.mostrarTercetos();*/
  									   	
  									   
- 					/*aca completo BF! ya tengo la posicion, que es pos_BF*/
+ 				   /*aca completo BF! ya tengo la posicion, que es pos_BF*/
  					
- 					this.lista.completarTerceto(pos_BF, this.nro_terceto+1);
+ 				   this.lista.completarTerceto(pos_BF, this.nro_terceto+1);
 				   
-				   	this.nro_terceto++; /*sgte al terceto BI*/
+				   this.nro_terceto++; /*sgte al terceto BI*/
  					
 				   }
 break;
 case 36:
-//#line 501 "gramaticaIncremental.y"
-{/*System.out.println("\n SENTENCIA DE CONTROL DETECTADA \n");*/
-																				System.out.println("\n TERMINA CORRECTAMENTE REGLA DE ITERACION... \n");
+//#line 499 "gramaticaIncremental.y"
+{
+																				/*System.out.println("\n TERMINA CORRECTAMENTE REGLA DE ITERACION... \n");*/
 					  															}
 break;
 case 37:
-//#line 507 "gramaticaIncremental.y"
+//#line 505 "gramaticaIncremental.y"
 {
 					  System.out.println("\n aca marco el comienzo de la sentencia loop! \n");
 					  this.pos_comienzo_loop=this.nro_terceto;
 					 }
 break;
 case 38:
-//#line 514 "gramaticaIncremental.y"
+//#line 512 "gramaticaIncremental.y"
 {									
 									System.out.println("\n COMPLETAR TERCETO INCOMPLETO  \n");
 								    System.out.println("\n CREAR TERCETO BI (salto incondicional) \n");
@@ -1105,23 +1114,16 @@ case 38:
 								    }
 break;
 case 39:
-//#line 549 "gramaticaIncremental.y"
+//#line 547 "gramaticaIncremental.y"
 { /*aca entra en condicion!!*/
 						/*aca seria el comienzo de la condicion!*/
-					System.out.println("\n QUE ONDA?? el UNTIL... \n");
 					this.pos_comienzo_condicion_loop = this.pos_ultimo_terceto+1;
-					System.out.println("\n COMIENZO DE CONDICION... "+this.pos_comienzo_condicion_loop +"\n");						 
+					System.out.println("\n COMIENZO DE CONDICION en posicion "+this.pos_comienzo_condicion_loop +"\n");						 
 					}
 break;
 case 40:
-//#line 558 "gramaticaIncremental.y"
+//#line 555 "gramaticaIncremental.y"
 {
-									/*ejecuto la condicion, igual que condicionIF...*/
-									/*aca comienza la condicion?? apilo el nro de terceto*/
-									/*o termina la condicion???*/
-									/*aca creo terceto incompleto para BF??*/
-									
-									/*ACAA creo el BF , en blanco?*/
 									
 									String pos_str = "["+this.pos_comienzo_loop+"]";
  								    String pos_sgte = "["+(pos_ultimo_terceto+2)+"]";
@@ -1144,7 +1146,7 @@ case 40:
  					    			}
 break;
 case 41:
-//#line 592 "gramaticaIncremental.y"
+//#line 583 "gramaticaIncremental.y"
 {if (isToken) { 
  									  	 Token op1 = (Token)val_peek(2).obj;
  										 Token op2 = (Token)val_peek(1).obj;
@@ -1210,10 +1212,11 @@ case 41:
 									}
 break;
 case 42:
-//#line 657 "gramaticaIncremental.y"
+//#line 648 "gramaticaIncremental.y"
 {
 	  	  							if (isToken) { 
- 									  	System.out.println("\n COMPARACION de EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
+ 									  	/*System.out.println("\n COMPARACION de EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");*/
+ 									  	
  									  	Token op1 = (Token)val_peek(2).obj;
  										Token op2 = (Token)val_peek(1).obj;
  	 								    Token op3 = (Token)val_peek(0).obj;
@@ -1230,7 +1233,7 @@ case 42:
  									   	 
  									  } else {
  									  
- 								      	System.out.println("\n COMPARACION de EXPRESION $$ con TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() +" , "+((Terceto)yyval.obj).getOperando2()+"\n");
+ 								      	/*System.out.println("\n COMPARACION de EXPRESION $$ con TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() +" , "+((Terceto)yyval.obj).getOperando2()+"\n");*/
  									  	
  									  	/*caso en que $3 es un terceto*/
  									  	String tipo_obj = val_peek(0).obj.toString();
@@ -1277,10 +1280,11 @@ case 42:
 									}
 break;
 case 45:
-//#line 726 "gramaticaIncremental.y"
+//#line 718 "gramaticaIncremental.y"
 {
 	  	   							if (isToken) { 
- 									  	System.out.println("\n COMPARACION de EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
+ 									  	/*System.out.println("\n COMPARACION de EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");*/
+ 									  	
  									  	Token op1 = (Token)val_peek(2).obj;
  										Token op2 = (Token)val_peek(1).obj;
  	 								    Token op3 = (Token)val_peek(0).obj;
@@ -1297,7 +1301,7 @@ case 45:
  									   	 
  									  } else {
  									  
- 								      	System.out.println("\n COMPARACION de EXPRESION $$ con TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() +" , "+((Terceto)yyval.obj).getOperando2()+"\n");
+ 								      	/*System.out.println("\n COMPARACION de EXPRESION $$ con TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() +" , "+((Terceto)yyval.obj).getOperando2()+"\n");*/
  									  	
  									  	/*caso en que $3 es un terceto*/
  									  	String tipo_obj = val_peek(0).obj.toString();
@@ -1344,18 +1348,29 @@ case 45:
 									}
 break;
 case 47:
-//#line 798 "gramaticaIncremental.y"
+//#line 791 "gramaticaIncremental.y"
 {
 												    }
 break;
 case 49:
-//#line 809 "gramaticaIncremental.y"
-{/*ACAAAA VER QUE ONDA respecot a la incovacion de proced*/
+//#line 802 "gramaticaIncremental.y"
+{
 	   	   									 Token id = (Token)val_peek(3).obj;
 	   	   									 System.out.println("\n\n INVOCACION -> "+ id.getLexema() +"\n\n");
+	   	   									 
 	   	   									 if (tabla.correctamenteDefinido(id)){
 								  		
 								  				System.out.println("\n PROCEDIMIENTO "+ id.getLexema()+" CORRECTAMENTE DEFINIDO  \n\n");
+								  				
+								  				System.out.println("\n CREO TERCETO CALL -> ( CALL , "+ id.getLexema()+" )  \n");
+								  				Terceto ter = new Terceto(this.nro_terceto, "CALL",id.getLexema(),"--");
+	 									   		this.lista.agregarTerceto(ter); 
+	 									   	
+	 									   		/*this.lista.mostrarTercetos();*/
+	 									   	
+	 									   		pos_ultimo_terceto = this.nro_terceto;
+	 									   	
+	 									   		this.nro_terceto++;
 								  				/*le resto uno a NI, la cantidad de invocaciones*/
 															  		
 								  			 } else {
@@ -1365,7 +1380,7 @@ case 49:
 	   	   									 }
 break;
 case 50:
-//#line 828 "gramaticaIncremental.y"
+//#line 832 "gramaticaIncremental.y"
 {
 								Token id1 = (Token)val_peek(2).obj; /*formal ?*/
 								Token id2 = (Token)val_peek(0).obj; /* real?*/
@@ -1373,7 +1388,7 @@ case 50:
 								}
 break;
 case 52:
-//#line 841 "gramaticaIncremental.y"
+//#line 845 "gramaticaIncremental.y"
 {Token op1 = (Token)val_peek(2).obj;
 								   int linea = op1.getNroLinea();
 								   Token op2 = (Token)val_peek(1).obj;
@@ -1388,7 +1403,7 @@ case 52:
 								   /*C/CONVERSION EXPLICITA GENERA TERCETO*/
 								   
 								   
-								   /*$$=$1;*/
+								   /*$$=$3;*/
 	   		  					   
 	   		  					   System.out.println("\n CREA TERCETO SUMA  ->  ("+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+") \n\n");
 								   
@@ -1399,13 +1414,14 @@ case 52:
 								   /*this.lista.mostrarTercetos();*/
 								   
 								   this.nro_terceto++;
-								   /*apunto a terceto!?*/
+								   
+								   /*apunto a terceto!! asi indico que se trabaja con un terceto*/
 								   yyval.obj = ter ;
 								   this.isToken=false;
 								   }
 break;
 case 53:
-//#line 872 "gramaticaIncremental.y"
+//#line 877 "gramaticaIncremental.y"
 {Token op1 = (Token)val_peek(2).obj;
 								   int linea = op1.getNroLinea();
 								   Token op2 = (Token)val_peek(1).obj;
@@ -1429,13 +1445,13 @@ case 53:
 								   }
 break;
 case 54:
-//#line 895 "gramaticaIncremental.y"
+//#line 900 "gramaticaIncremental.y"
 {
 	  	  			yyval=val_peek(0);
 	  	  			 }
 break;
 case 56:
-//#line 905 "gramaticaIncremental.y"
+//#line 910 "gramaticaIncremental.y"
 {
 							  Token op1 = (Token)val_peek(2).obj;
 							  int linea = op1.getNroLinea();
@@ -1458,7 +1474,7 @@ case 56:
 							  }
 break;
 case 57:
-//#line 926 "gramaticaIncremental.y"
+//#line 931 "gramaticaIncremental.y"
 {
 							  Token op1 = (Token)val_peek(2).obj;
 							  int linea = op1.getNroLinea();
@@ -1481,7 +1497,7 @@ case 57:
 							  }
 break;
 case 58:
-//#line 947 "gramaticaIncremental.y"
+//#line 952 "gramaticaIncremental.y"
 {
 				  yyval=val_peek(0); 	/* termino.ptr = factor.ptr*/
 				  
@@ -1489,7 +1505,7 @@ case 58:
 				 }
 break;
 case 59:
-//#line 958 "gramaticaIncremental.y"
+//#line 963 "gramaticaIncremental.y"
 {Token factor = (Token)yyval.obj; 
 	   		  /*System.out.println("\n Llega CTE  "+ factor.getLexema() +"  la apunto con $$?? \n");*/
 	   		  yyval=val_peek(0);
@@ -1497,7 +1513,7 @@ case 59:
 	   		  }
 break;
 case 60:
-//#line 964 "gramaticaIncremental.y"
+//#line 969 "gramaticaIncremental.y"
 {/*System.out.println("CTE negativa! \n"); */
        			 Token op1 = (Token)val_peek(1).obj;
 				 /*int linea = op1.getNroLinea();*/
@@ -1506,12 +1522,12 @@ case 60:
 				 }
 break;
 case 61:
-//#line 973 "gramaticaIncremental.y"
+//#line 978 "gramaticaIncremental.y"
 {
 	    		yyval=val_peek(0);
        		  }
 break;
-//#line 1435 "Parser.java"
+//#line 1442 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

@@ -132,7 +132,10 @@ declaracion_de_procedimiento : declaracion_PROC_ID lista_parametros_PROC cant_in
 					   																						*/
 					   																						
 					   																						desapilarAmbito();
-																																
+					   																						
+																											//crear terceto call! o call lo creo cuando lo invoco?					
+																											//o terceto ret?
+																											
 																											this.proc_invoc = "";
 																											
 																											this.cant_invoc = 0;
@@ -140,16 +143,13 @@ declaracion_de_procedimiento : declaracion_PROC_ID lista_parametros_PROC cant_in
 
 
 
-declaracion_PROC_ID : PROC ID {
-								System.out.println("\n CREO TERCETO PROC -> ( PROC , $$.obj.getLexema() ID , -- ) \n");
-								
- 								 								  
+declaracion_PROC_ID : PROC ID {											  
  								Token id = (Token)$2.obj ;
  								
  								String nombre = id.getLexema()+"@"+ambito;
 												   
 							 	id.setLexema(nombre);
-								//name mangling! cambiar variable por variable@main
+								//name mangling! cambia variable por variable@main
 								id.setUso("procedimiento");
 										
 								this.ambito = nombre ;
@@ -160,6 +160,12 @@ declaracion_PROC_ID : PROC ID {
  								//System.out.println("tupla -> "+id.getLexema()+" , "+this.cant_invoc);
  								//id.setCantInvocaciones(this.cant_invoc);
  								//this.cant_invoc = 0;
+ 								
+ 								System.out.println("\n CREO TERCETO PROC -> ( PROC , "+id.getLexema()+" , -- ) \n");
+								
+								
+								//en vez de setearle el nombre, lo agrego de nuevo, redefinido
+ 								tabla.addToken(id);
  								
  								//pruebo referenciandolo..
  								//$$=$2;
@@ -277,7 +283,7 @@ tipo : INTEGER
 //SENTENCIAS EJECUTABLES
 
 		
-sentencia_ejecutable : asignacion 
+sentencia_ejecutable : asignacion {} 
 		   			 | sentencia_de_control
 		   			 | sentencia_de_iteracion 
 		   			 | sentencia_de_salida 
@@ -297,8 +303,8 @@ asignacion : ID '=' expresion  {  Token id = (Token)$1.obj;
 								  Token op = (Token)$2.obj;
 								
 								  $$ = $3; //desde lado izq apunto a la expresion
-								  								  
-								  
+								  //$$.obj = $3 rompe todo								  
+								  //$$.obj = id;
 								  
 								  if (isToken) { 
 								  	//System.out.println("\n EXPRESION $$ TOKEN!!  -> "+ ((Token)$$.obj).getLexema() +"\n");
@@ -317,6 +323,7 @@ asignacion : ID '=' expresion  {  Token id = (Token)$1.obj;
 								  	} else {
 								  	
 								  		System.out.println("\n a "+id.getLexema()+"  no le agrego ambito porque no es valido \n");
+								  		//aca elimino id de la tabla de simbolos?
 								  	}
 								  	
 								  } else {
@@ -419,12 +426,6 @@ sentencia_de_control : IF condicion_IF cuerpo_IF END_IF {System.out.println("\n 
 														 
 														 //this.desapilarAmbito();
 														 
-														 //o aca ? completo BF para if sin ELSE ? -> ya tengo la posicion, que es pos_BF
- 					
- 														//this.lista.completarTerceto(pos_BF, this.nro_terceto+1);
-				   
-				  						  				//this.nro_terceto++; //sgte al terceto BI
-					
 														 }
 				     ;						
 
@@ -454,12 +455,10 @@ condicion_IF : '(' condicion ')' {
 
 
 cuerpo_IF : bloque_de_sentencias {
-								//aca completo BF para if sin ELSE ? -> ya tengo la posicion, que es pos_BF
- 					
+								
  								this.lista.completarTerceto(pos_BF, this.nro_terceto); //antes +1
 				   
-				   				//this.nro_terceto++; //sgte al terceto BI
-								 }
+				   				 }
 									
 		  | bloque_de_sentencias entra_ELSE bloque_de_sentencias {
 		  														  }
@@ -469,25 +468,24 @@ cuerpo_IF : bloque_de_sentencias {
 entra_ELSE : ELSE {				   
 				   String pos_str = "["+pos_ultimo_terceto+"]";
  					
- 					
- 					System.out.println("\n CREA TERCETO SALTO INCONDICIONAL  ->  (  BI  ,   ,  -- ) ");
+ 				   System.out.println("\n CREA TERCETO SALTO INCONDICIONAL  ->  (  BI  ,   ,  -- ) ");
  	 								    
- 	 				Terceto ter = new Terceto(this.nro_terceto, "BI", " " , "--");
- 					this.lista.agregarTerceto(ter); 
+ 	 			   Terceto ter = new Terceto(this.nro_terceto, "BI", " " , "--");
+ 				   this.lista.agregarTerceto(ter); 
  					
- 					this.pos_BI = this.nro_terceto;
+ 				   this.pos_BI = this.nro_terceto;
  					
- 					pos_ultimo_terceto = this.nro_terceto;
+ 				   pos_ultimo_terceto = this.nro_terceto;
  					
  					
- 					//this.lista.mostrarTercetos();
+ 				   //this.lista.mostrarTercetos();
  									   	
  									   
- 					//aca completo BF! ya tengo la posicion, que es pos_BF
+ 				   //aca completo BF! ya tengo la posicion, que es pos_BF
  					
- 					this.lista.completarTerceto(pos_BF, this.nro_terceto+1);
+ 				   this.lista.completarTerceto(pos_BF, this.nro_terceto+1);
 				   
-				   	this.nro_terceto++; //sgte al terceto BI
+				   this.nro_terceto++; //sgte al terceto BI
  					
 				   }
 		   ;		  
@@ -498,8 +496,8 @@ entra_ELSE : ELSE {
 
 
 
-sentencia_de_iteracion : comienzo_LOOP cuerpo_LOOP entra_UNTIL condicion_LOOP  {//System.out.println("\n SENTENCIA DE CONTROL DETECTADA \n");
-																				System.out.println("\n TERMINA CORRECTAMENTE REGLA DE ITERACION... \n");
+sentencia_de_iteracion : comienzo_LOOP cuerpo_LOOP entra_UNTIL condicion_LOOP  {
+																				//System.out.println("\n TERMINA CORRECTAMENTE REGLA DE ITERACION... \n");
 					  															}
 					   ;
 		             
@@ -548,20 +546,13 @@ cuerpo_LOOP : bloque_de_sentencias {
 
 entra_UNTIL : UNTIL { //aca entra en condicion!!
 						//aca seria el comienzo de la condicion!
-					System.out.println("\n QUE ONDA?? el UNTIL... \n");
 					this.pos_comienzo_condicion_loop = this.pos_ultimo_terceto+1;
-					System.out.println("\n COMIENZO DE CONDICION... "+this.pos_comienzo_condicion_loop +"\n");						 
+					System.out.println("\n COMIENZO DE CONDICION en posicion "+this.pos_comienzo_condicion_loop +"\n");						 
 					} 
 			;
 
 
 condicion_LOOP : '(' condicion ')' {
-									//ejecuto la condicion, igual que condicionIF...
-									//aca comienza la condicion?? apilo el nro de terceto
-									//o termina la condicion???
-									//aca creo terceto incompleto para BF??
-									
-									//ACAA creo el BF , en blanco?
 									
 									String pos_str = "["+this.pos_comienzo_loop+"]";
  								    String pos_sgte = "["+(pos_ultimo_terceto+2)+"]";
@@ -656,7 +647,8 @@ condicion : expresion '>' expresion {if (isToken) {
 									
 	  	  | expresion '<' expresion {
 	  	  							if (isToken) { 
- 									  	System.out.println("\n COMPARACION de EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
+ 									  	//System.out.println("\n COMPARACION de EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
+ 									  	
  									  	Token op1 = (Token)$1.obj;
  										Token op2 = (Token)$2.obj;
  	 								    Token op3 = (Token)$3.obj;
@@ -673,7 +665,7 @@ condicion : expresion '>' expresion {if (isToken) {
  									   	 
  									  } else {
  									  
- 								      	System.out.println("\n COMPARACION de EXPRESION $$ con TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() +" , "+((Terceto)yyval.obj).getOperando2()+"\n");
+ 								      	//System.out.println("\n COMPARACION de EXPRESION $$ con TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() +" , "+((Terceto)yyval.obj).getOperando2()+"\n");
  									  	
  									  	//caso en que $3 es un terceto
  									  	String tipo_obj = $3.obj.toString();
@@ -725,7 +717,8 @@ condicion : expresion '>' expresion {if (isToken) {
 	  	  
 	  	  | expresion IGUAL expresion {
 	  	   							if (isToken) { 
- 									  	System.out.println("\n COMPARACION de EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
+ 									  	//System.out.println("\n COMPARACION de EXPRESION $$ TOKEN!!  -> "+ ((Token)yyval.obj).getLexema() +"\n");
+ 									  	
  									  	Token op1 = (Token)$1.obj;
  										Token op2 = (Token)$2.obj;
  	 								    Token op3 = (Token)$3.obj;
@@ -742,7 +735,7 @@ condicion : expresion '>' expresion {if (isToken) {
  									   	 
  									  } else {
  									  
- 								      	System.out.println("\n COMPARACION de EXPRESION $$ con TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() +" , "+((Terceto)yyval.obj).getOperando2()+"\n");
+ 								      	//System.out.println("\n COMPARACION de EXPRESION $$ con TERCETO!!  -> "+ ((Terceto)yyval.obj).getOperando1() +" , "+((Terceto)yyval.obj).getOperando2()+"\n");
  									  	
  									  	//caso en que $3 es un terceto
  									  	String tipo_obj = $3.obj.toString();
@@ -806,12 +799,23 @@ sentencia_de_salida : OUT '(' CADENA ')'
 				    ;
 					
 					
-invocacion : ID '(' parametro_ejecutable ')' {//ACAAAA VER QUE ONDA respecot a la incovacion de proced
+invocacion : ID '(' parametro_ejecutable ')' {
 	   	   									 Token id = (Token)$1.obj;
 	   	   									 System.out.println("\n\n INVOCACION -> "+ id.getLexema() +"\n\n");
+	   	   									 
 	   	   									 if (tabla.correctamenteDefinido(id)){
 								  		
 								  				System.out.println("\n PROCEDIMIENTO "+ id.getLexema()+" CORRECTAMENTE DEFINIDO  \n\n");
+								  				
+								  				System.out.println("\n CREO TERCETO CALL -> ( CALL , "+ id.getLexema()+" )  \n");
+								  				Terceto ter = new Terceto(this.nro_terceto, "CALL",id.getLexema(),"--");
+	 									   		this.lista.agregarTerceto(ter); 
+	 									   	
+	 									   		//this.lista.mostrarTercetos();
+	 									   	
+	 									   		pos_ultimo_terceto = this.nro_terceto;
+	 									   	
+	 									   		this.nro_terceto++;
 								  				//le resto uno a NI, la cantidad de invocaciones
 															  		
 								  			 } else {
@@ -830,7 +834,7 @@ parametro_ejecutable : ID ':' ID
 								Token id2 = (Token)$3.obj; // real?
 								System.out.println("\n PARAMETROS EJECUTABLES ->  formal : "+id1.getLexema()+"  ,   real : "+id2.getLexema()+"\n ");
 								}
-								//faltaria REF!
+								//FALTA REF Y SU SEMANTICA
 								
 		   		     | parametro_ejecutable ',' ID':'ID
 		     		 ;
@@ -852,7 +856,7 @@ expresion : expresion '+' termino {Token op1 = (Token)$1.obj;
 								   //C/CONVERSION EXPLICITA GENERA TERCETO
 								   
 								   
-								   //$$=$1;
+								   //$$=$3;
 	   		  					   
 	   		  					   System.out.println("\n CREA TERCETO SUMA  ->  ("+op2.getLexema()+" , "+op1.getLexema()+" , "+op3.getLexema()+") \n\n");
 								   
@@ -863,7 +867,8 @@ expresion : expresion '+' termino {Token op1 = (Token)$1.obj;
 								   //this.lista.mostrarTercetos();
 								   
 								   this.nro_terceto++;
-								   //apunto a terceto!?
+								   
+								   //apunto a terceto!! asi indico que se trabaja con un terceto
 								   $$.obj = ter ;
 								   this.isToken=false;
 								   }
@@ -1010,7 +1015,7 @@ int cant_invoc = 0;
 
 
 void desapilarAmbito() {
-	System.out.println("\n\n ACA!! desapilo  "+ this.ambito +" \n\n"); 
+	//System.out.println("\n\n desapilo  "+ this.ambito +" \n\n"); 
 	
 	int corte = 0;
 	
@@ -1019,11 +1024,9 @@ void desapilarAmbito() {
 			corte = i;
 			break;
 		}
-
 	}
 	
-	this.ambito = this.ambito.substring(corte+1, ambito.length());
-	
+	this.ambito = this.ambito.substring(corte+1, ambito.length());	
 }
 
 
@@ -1072,16 +1075,25 @@ public static void main(String args[]) {
  	par.yyparse();
  	
  	
+ 	//tds.mostrarSimbolos();
+ 	
+ 	tds.removerTokensInvalidos();
+ 	
  	tds.mostrarSimbolos();
  	
  	l.mostrarTercetos();
  	
  	
- 	GeneradorCodigo gc = new GeneradorCodigo(l);
+ 	GeneradorCodigo gc = new GeneradorCodigo(tds, l);
  	
- 	//gc.generarCodigo();
+ 	gc.generarCodigo();
  	
- 	//gc.crearArchivoAssembler();
+ 	gc.crearArchivoAssembler();
  	
- 	//gc.mostrarCodigoAssembler();
+ 	gc.mostrarCodigoAssembler();
+ 	
+ 	
+ 	gc.generarArchivoAsm();
+ 	
+ 	gc.generarEstructuraPrograma();
 }

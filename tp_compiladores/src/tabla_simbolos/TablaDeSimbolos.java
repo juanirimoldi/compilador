@@ -63,10 +63,7 @@ public class TablaDeSimbolos {
 			this.TSimbolos.put(t.getLexema(), t);
 			System.out.println("APARECE UNA CADENA -> la agrego "+ t.getTipo() + " a la Tabla de Simbolos \n");
 		}
-		
-		
-		//System.out.println("NO ESISTIS -> "+ t.getTipo() + "\n");
-		
+				
 	}
 	
 	
@@ -100,8 +97,84 @@ public class TablaDeSimbolos {
 	}
 	
 	
+	public void removerTokensInvalidos() {
+		Hashtable<String, Token> t_sym = new Hashtable<String, Token> ();
+		
+		Enumeration enumeration_keys = this.TSimbolos.keys();
+		Enumeration enumeration = this.TSimbolos.elements();
+		
+		while (enumeration.hasMoreElements()) {
+			Token t = (Token)enumeration.nextElement();
+			String llave = enumeration_keys.nextElement().toString();
+			
+			//System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());			
+			if (t.getTipo().equals("CTE")) {
+				//System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());			
+				t_sym.put(llave, t);
+			}
+			
+			if ((t.getTipo().equals("ID") | t.getUso().equals("procedimiento")) && tieneNameMangling(llave)) {
+				//System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());			
+				t_sym.put(llave, t);
+			}
+			
+			//if (t.getUso().equals("procedimiento")) {
+				//System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());			
+				//t_sym.put(llave, t);
+			//}
+			
+		}
+		
+		this.TSimbolos=t_sym;
+		
+		System.out.println("\n");
+	
+	}
+	
+	
+	public boolean tieneNameMangling(String k) {
+		for (int i=0; i<k.length(); i++) {
+			if (k.charAt(i) == '@') {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	public String getTablaSimbolosString() {
+		String aux = "";
+		
+		Enumeration enumeration_keys = this.TSimbolos.keys();
+		Enumeration enumeration = this.TSimbolos.elements();
+		
+		while (enumeration.hasMoreElements()) {
+			Token t = (Token)enumeration.nextElement();
+			String llave = enumeration_keys.nextElement().toString();
+			
+			if (llave.length() > 8) {
+				
+					if (llave.length() > 16) {
+						aux += llave +" , "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+"\n";
+						//System.out.println(llave +" , "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+					} else {
+						aux += llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+"\n";
+						//System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+					}
+
+			} else {
+				aux += llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+"\n";
+				//System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+			}
+			
+		}	
+		
+		return aux;
+	}
+	
+	
 	public void mostrarSimbolos() {
-		System.out.println("\n\n Tabla de SImbolos \n");
+		System.out.println("\n\n Tabla de Simbolos \n");
 		String tab1 = "	";
 		String tab2 = "		";
 		
@@ -116,15 +189,13 @@ public class TablaDeSimbolos {
 			//System.out.println(enumeration_keys.nextElement() +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
 			//System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
 			
-			if (llave.length() > 7) {
+			if (llave.length() > 8) {
 				
-				if (this.getSimbolo(llave).getUso().equals("procedimiento")) {
-					System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+" , "+t.getCantInvocaciones());
-					
-				}else {
-				
-					System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
-				}
+					if (llave.length() > 16) {
+						System.out.println(llave +" , "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+					} else {
+						System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+					}
 
 			} else {
 				

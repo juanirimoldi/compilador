@@ -192,7 +192,73 @@ cuando tengo un CALL
 /.wine/drive_c/masm32$ wine qeditor.exe
 
 
-DUDAS:
+
+PROBLEMAS:
+
+
+
 
 ccon que instruccion defino < y > ? CMP?? en que formato?
+CMP hace la resta entre dos operandos, o registros o ambas... 
+entonces, involucra algun registro extra? si la comparacion es entre 2 variables?
 
+CMP generica -> 
+JG 
+//para los floats -> 
+
+JMP salto forzoso -> LOOP, IFs -> saltos incondicionales
+
+
+
+como era el formato de instrucciones para los PROC? 
+poner una etiqueta para identificar el proc
+
+
+CALL nombre_proc , RET ?? -> CALL para invocacion
+
+
+
+a medida que avanza el programa, voy cargando registros. en que momento los libero?
+en un IF.. los registros para guardar variables locales, cuando libero esos registros??
+
+
+
+como generar archivo .asm ??
+  
+yo lo crea con las instrucciones, pero hay que generar el template
+.MODEL small
+.STACK 200h
+.DATA
+ ??? como le paso la tsym?
+.CODE
+ ?? como le paso los tercetos?
+.START:
+ ???  
+ 
+ 
+ 
+ ejemplos
+ 
+ int a = 1;
+@a DW 1
+
+
+float b = 2.0;
+
+@b DQ
+
+
+
+
+NUEVAS DUDAS!! 
+
+las etiquetas?? no entiendo bien los saltos...
+como transformar los saltos en etiquetaas??
+
+
+el name mangling de las variables definidas dentro de procedimientos anda bien
+el name mangling para redefinir el nombre de un procedimiento no anda bien.
+anda solo para los procedimientos simples
+
+
+sentencias declarativas???
