@@ -16,3 +16,5 @@ power ( a : x , b : y ) ;
 INTEGER z ;
 
 z = a + b * 8 * c ;
+
+z = a / 0 ;

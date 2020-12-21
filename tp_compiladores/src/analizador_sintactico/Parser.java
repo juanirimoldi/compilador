@@ -512,10 +512,10 @@ private int yylex() {
 
 
 public static void main(String args[]) throws IOException, IllegalArgumentException, IllegalAccessException {
- 	//String direccion_codigo = "casos_prueba_tercetos.txt";
 	//String direccion_codigo = "casos_prueba_simple.txt";
-	String direccion_codigo = "casos_prueba_filminas.txt";
-			
+	//String direccion_codigo = "casos_prueba_filminas.txt";
+ 	String direccion_codigo = "casos_prueba_tercetos.txt";
+	//String direccion_codigo = args[0];	
 			
  	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
 	al.abrirCargarArchivo();

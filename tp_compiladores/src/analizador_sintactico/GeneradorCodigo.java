@@ -462,22 +462,28 @@ public class GeneradorCodigo {
 				{
 					//System.out.println("\n DIVIDO tokens \n");
 					
-					reg_actual = t_reg.getRegistroLibre();
-					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					if (!t.getOperando2().equals("0")) {
+						reg_actual = t_reg.getRegistroLibre();
+						String nombre_reg = t_reg.getNombreReg(reg_actual);
+						
+						String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+						
+						//System.out.println(mov1);
+						
+						this.instrucciones_asmb.add(mov1);
+						
+						
+						instruccion = "DIV "+nombre_reg+" , "; 	
+
+						instruccion += t.getOperando2();
+						
+						this.instrucciones_asmb.add(instruccion);
+						
+					} else {
+						
+						System.out.println("ERROR de EJECUCCION -> division por 0");
 					
-					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-					
-					//System.out.println(mov1);
-					
-					this.instrucciones_asmb.add(mov1);
-					
-					
-					instruccion = "DIV "+nombre_reg+" , "; 	
-					instruccion += t.getOperando2();
-					
-					//System.out.println(instruccion);
-					
-					this.instrucciones_asmb.add(instruccion);
+					}
 					
 					break;
 				}
@@ -487,15 +493,24 @@ public class GeneradorCodigo {
 					//System.out.println("\n DIVIDO Terceto y Token \n");
 					
 					
-					String nombre_reg = t_reg.getNombreReg(reg_actual);
-					
-					
-					instruccion = "DIV "+nombre_reg+" , "; 	
-					instruccion += t.getOperando2();
-					
-					//System.out.println(instruccion);
-					
-					this.instrucciones_asmb.add(instruccion);
+					if (!t.getOperando2().equals("0")) {
+						reg_actual = t_reg.getRegistroLibre();
+						String nombre_reg = t_reg.getNombreReg(reg_actual);
+						
+						String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+						
+						//System.out.println(mov1);
+						
+						this.instrucciones_asmb.add(mov1);						
+						instruccion = "DIV "+nombre_reg+" , "; 	
+
+						instruccion += t.getOperando2();
+						this.instrucciones_asmb.add(instruccion);
+						
+					} else {
+						System.out.println("ERROR de EJECUCCION -> division por 0");
+						//this.instrucciones_asmb
+					}
 					
 					break;
 				}
