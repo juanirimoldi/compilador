@@ -27,9 +27,6 @@ public class ListaTercetos {
 		String val = Integer.toString(valor);
 		
 		
-		//System.out.println("\n MODIFICO LISTA DE TERCETOS \n");
-	
-		
 		if (this.lista_tercetos.get(pos).getOperador().equals("BF")) {
 			//System.out.println("\n MODIFICO EL TERCETO BF? -> valor "+ val+ "  en pos "+pos+"\n");
 

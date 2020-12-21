@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import analizador_lexico.Token;
 import tabla_simbolos.TablaDeSimbolos;
 
 public class GeneradorCodigo {
@@ -21,8 +22,8 @@ public class GeneradorCodigo {
 	
 	//archivo .asm generado, en formato String
 	private String archivo_asm = "";
-	//private String var_aux = "@aux";
-	//private int id_var_aux=1;
+
+	
 	
 	
 	public GeneradorCodigo(TablaDeSimbolos tds, ListaTercetos t) {
@@ -42,9 +43,9 @@ public class GeneradorCodigo {
 	
 	
 	public void crearInstrucciones(Terceto t) {
-		String var_aux = "";
-		t.mostrar();
-		t_reg.mostrarRegistrosLibres();
+		//String var_aux = "";
+		//t.mostrar();
+		//t_reg.mostrarRegistrosLibres();
 		
 		//checkear si son opeaciones entre enteros o con pto flotante!!
 		
@@ -54,88 +55,525 @@ public class GeneradorCodigo {
 		
 		if (t.getOperador().equals("+")) {
 			
-			reg_actual = t_reg.getRegistroLibre();
-			String nombre_reg = t_reg.getNombreReg(reg_actual);
+			int tipo_op = 0;
+			
+			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
+				//primer operando es un registro y el segundo no
+				tipo_op=1;
+			}
+			
+			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
+				//primer operando NO es un registro y el segundo si lo es
+				tipo_op=2;
+			}
+			
+			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) == '['){
+				//los dos operandos son registros
+				tipo_op=3;
+			}
 			
 			
-			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			switch(tipo_op) {
+				case 0:
+				{
+					//System.out.println("\n SUMO tokens \n");
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+					
+					//System.out.println(mov1);
+					
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					instruccion = "ADD "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+					
+					break;
+				}
+				
+				case 1:
+				{
+										
+					//System.out.println("\n SUMO Registro y Token \n");
+					
+					
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+										
+					instruccion = "ADD "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					this.instrucciones_asmb.add(instruccion);
+					
+					break;
+				}
+				
+				case 2:
+				{
+										
+					//System.out.println("\n SUMO Token y Terceto \n");
+
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					
+					instruccion = "ADD "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					this.instrucciones_asmb.add(instruccion);
+					
+					break;
+				}
+				
+				case 3:
+				{
+					//aca tengo que liberar los 2 registros!!!
+					//System.out.println("\n SUMO Terceto y Terceto \n");
+
+					String nombre_reg1 = t_reg.getNombreReg(reg_actual);
+					String nombre_reg2 = "";
+					int id_reg2 = 0;
+					
+					//caso en que usa 2 registros en simultaneo
+					if (nombre_reg1.charAt(1)=='B') {
+						nombre_reg2 = "EAX";
+						id_reg2 = 1;
+					}
+					
+					if (nombre_reg1.charAt(1)=='C') {
+						nombre_reg2 = "EBX";
+						id_reg2 = 2;
+					}
+					
+										
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					String mov1 = "MOV "+nombre_reg+" , "+nombre_reg2;//t.getOperando1();
+					
+					//System.out.println(mov1);
+					
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					instruccion = "ADD "+nombre_reg+" , "+nombre_reg2; 	
+					
+					
+					//System.out.println(instruccion);
+					this.instrucciones_asmb.add(instruccion);
+				
+					
+					this.t_reg.liberarRegistro(reg_actual);
+					this.t_reg.liberarRegistro(id_reg2);
+				}
+			}
 			
-			String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-			System.out.println(mov1);
-			this.instrucciones_asmb.add(mov1);
+		};
 			
 			
-			instruccion = "ADD "+nombre_reg+" , "; 	
-			instruccion += t.getOperando2();
-			
-			System.out.println(instruccion);
-			this.instrucciones_asmb.add(instruccion);
-			
-			};
 		
 			
 		if (t.getOperador().equals("-")) {
-			reg_actual = t_reg.getRegistroLibre();
-			String nombre_reg = t_reg.getNombreReg(reg_actual);
 			
-			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			int tipo_op = 0;
 			
-			String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
+				//si elprimer operando es un registro y el segundo no
+				tipo_op=1;
+			}
 			
-			System.out.println(mov1);
-			this.instrucciones_asmb.add(mov1);
+			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
+				//si elprimer operando NO es un registro y el segundo si lo es
+				tipo_op=2;
+			}
+			
+			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) == '['){
+				//si los dos operandos son registros
+				tipo_op=3;
+			}
 			
 			
-			instruccion = "SUB "+nombre_reg+" , "; 	
-			instruccion += t.getOperando2();
-			
-			System.out.println(instruccion);
-			this.instrucciones_asmb.add(instruccion);
-			
+			switch(tipo_op) {
+				case 0:
+				{
+					//System.out.println("\n RESTA tokens \n");
+					
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+					
+					//System.out.println(mov1);
+					
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					instruccion = "SUB "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					this.instrucciones_asmb.add(instruccion);
+					
+					break;
+				}
+				
+				case 1:
+				{
+					//System.out.println("\n RESTA Registro y Token \n");
+					
+					
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+										
+					instruccion = "SUB "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					this.instrucciones_asmb.add(instruccion);
+					
+					break;
+				}
+				
+				case 2:
+				{
+										
+					//System.out.println("\n RESTA Token y Terceto \n");
+
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					
+					instruccion = "ADD "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+				
+				}
+				
+				case 3:
+				{
+					//aca tengo que liberar los 2 registros!!!
+					//System.out.println("\n RESTA Terceto y Terceto \n");
+
+					String nombre_reg1 = t_reg.getNombreReg(reg_actual);
+					String nombre_reg2 = "";
+					int id_reg2 = 0;
+					
+					//caso en que usa 2 registros en simultaneo
+					if (nombre_reg1.charAt(1)=='B') {
+						nombre_reg2 = "EAX";
+						id_reg2 = 1;
+					}
+					
+					if (nombre_reg1.charAt(1)=='C') {
+						nombre_reg2 = "EBX";
+						id_reg2 = 2;
+					}
+					
+										
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					
+					String mov1 = "MOV "+nombre_reg+" , "+nombre_reg2;//t.getOperando1();
+					//System.out.println(mov1);
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					instruccion = "SUB "+nombre_reg+" , "+nombre_reg2; 	
+					//instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					this.instrucciones_asmb.add(instruccion);
+				
+					
+					this.t_reg.liberarRegistro(reg_actual);
+					this.t_reg.liberarRegistro(id_reg2);
+				}
+			}	
 		};
+		
 		
 		
 		if (t.getOperador().equals("*")) {
 			
-			reg_actual = t_reg.getRegistroLibre();
-			String nombre_reg = t_reg.getNombreReg(reg_actual);
+			int tipo_op = 0;
 			
-			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
+				//si elprimer operando es un registro y el segundo no
+				tipo_op=1;
+			}
 			
-			String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-			System.out.println(mov1);
-			this.instrucciones_asmb.add(mov1);
+			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
+				//si elprimer operando NO es un registro y el segundo si lo es
+				tipo_op=2;
+			}
+			
+			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) == '['){
+				//si los dos operandos son registros
+				tipo_op=3;
+			}
 			
 			
-			instruccion = "MUL "+nombre_reg+" , "; 	
-			instruccion += t.getOperando2();
-			
-			System.out.println(instruccion);
-			this.instrucciones_asmb.add(instruccion);
+			switch(tipo_op) {
+				case 0:
+				{
+					//System.out.println("\n MULTIPLICO tokens \n");
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+					
+					//System.out.println(mov1);
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					instruccion = "MUL "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+					
+					break;
+				}
+				
+				case 1:
+				{
+										
+					//System.out.println("\n MULTIPLICO Terceto y Token \n");
+					
+					
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					
+					instruccion = "MUL "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					this.instrucciones_asmb.add(instruccion);
+					
+					break;
+				}
+				
+				case 2:
+				{
+										
+					//System.out.println("\n MULTIPLICO Token y Terceto \n");
+
+					reg_actual = t_reg.getRegistroLibre();
+					
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+					
+					//System.out.println(mov1);
+					
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					instruccion = "MUL "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+				
+					break;
+				}
+				
+				case 3:
+				{
+					//System.out.println("\n MULTIPLICO Terceto y Terceto \n");
+
+					String nombre_reg1 = t_reg.getNombreReg(reg_actual);
+					String nombre_reg2 = "";
+					int id_reg2 = 0;
+					
+					//caso en que usa 2 registros en simultaneo
+					if (nombre_reg1.charAt(1)=='B') {
+						nombre_reg2 = "EAX";
+						id_reg2 = 1;
+					}
+					
+					if (nombre_reg1.charAt(1)=='C') {
+						nombre_reg2 = "EBX";
+						id_reg2 = 2;
+					}
+					
+										
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					
+					String mov1 = "MOV "+nombre_reg+" , "+nombre_reg2;//t.getOperando1();
+					//System.out.println(mov1);
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					instruccion = "MUL "+nombre_reg+" , "+nombre_reg2; 	
+					
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+				
+								
+					this.t_reg.liberarRegistro(reg_actual);
+					this.t_reg.liberarRegistro(id_reg2);
+				}
+			}
 			
 		};
+		
 		
 		
 		if (t.getOperador().equals("/")) {
-						
-			reg_actual = t_reg.getRegistroLibre();
-			String nombre_reg = t_reg.getNombreReg(reg_actual);
+			int tipo_op = 0;
 			
-			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
+				//si elprimer operando es un registro y el segundo no
+				tipo_op=1;
+			}
 			
-			String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-			System.out.println(mov1);
-			this.instrucciones_asmb.add(mov1);
+			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
+				//si elprimer operando NO es un registro y el segundo si lo es
+				tipo_op=2;
+			}
 			
-			instruccion = "DIV "+nombre_reg+" , "; 	
-			instruccion += t.getOperando2();
+			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) == '['){
+				//si los dos operandos son registros
+				tipo_op=3;
+			}
 			
-			System.out.println(instruccion);
-			this.instrucciones_asmb.add(instruccion);
+			
+			switch(tipo_op) {
+				case 0:
+				{
+					//System.out.println("\n DIVIDO tokens \n");
+					
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+					
+					//System.out.println(mov1);
+					
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					instruccion = "DIV "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+					
+					break;
+				}
 				
+				case 1:
+				{					
+					//System.out.println("\n DIVIDO Terceto y Token \n");
+					
+					
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					
+					instruccion = "DIV "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+					
+					break;
+				}
+				
+				case 2:
+				{
+										
+					//System.out.println("\n DIVIDO Token y Terceto \n");
+
+					reg_actual = t_reg.getRegistroLibre();
+					
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+					
+					//System.out.println(mov1);
+					
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					instruccion = "DIV "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+				
+					break;
+				}
+				
+				case 3:
+				{
+					//aca tengo que liberar los 2 registros!!!
+					//System.out.println("\n DIVIDO Terceto y Terceto \n");
+
+					String nombre_reg1 = t_reg.getNombreReg(reg_actual);
+					String nombre_reg2 = "";
+					int id_reg2 = 0;
+					
+					//caso en que usa 2 registros en simultaneo
+					if (nombre_reg1.charAt(1)=='B') {
+						nombre_reg2 = "EAX";
+						id_reg2 = 1;
+					}
+					
+					if (nombre_reg1.charAt(1)=='C') {
+						nombre_reg2 = "EBX";
+						id_reg2 = 2;
+					}
+					
+										
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					String mov1 = "MOV "+nombre_reg+" , "+nombre_reg2;//t.getOperando1();
+					
+					//System.out.println(mov1);
+					
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					instruccion = "DIV "+nombre_reg+" , "+nombre_reg2; 	
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+				
+								
+					this.t_reg.liberarRegistro(reg_actual);
+					this.t_reg.liberarRegistro(id_reg2);
+				}
+			}
+	
 		};
 		
 		
+		
+		//---------- COMPARADORES ---------------------
 		
 		if (t.getOperador().equals("<")) {
 			
@@ -149,34 +587,53 @@ public class GeneradorCodigo {
 			int tipo_op = 0;
 			
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
-				//si elprimer operando es un registro y el segundo no
+				//primer operando es un registro y el segundo no
 				tipo_op=1;
 			}
 			
 			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
-				//si elprimer operando NO es un registro y el segundo si lo es
+				//primer operando NO es un registro y el segundo si lo es
 				tipo_op=2;
 			}
 			
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) == '['){
-				//si los dos operandos son registros
+				//los dos operandos son registros
 				tipo_op=3;
 			}
 			
 			
 			switch(tipo_op) {
+				case 0:
+				{
+					instruccion = "CMP "+t.getOperando1()+" , ";
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+					this.t_reg.liberarRegistro(reg_actual);
+					
+					//System.out.println(jump);
+					
+					this.instrucciones_asmb.add(jump);	
+					
+					break;
+				}
+				
 				case 1:
 				{
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
 					instruccion = "CMP "+nombre_reg+" , ";
 					instruccion += t.getOperando2();
-					//falta JMP
-					System.out.println(instruccion);
+					
+					//System.out.println(instruccion);
 					this.instrucciones_asmb.add(instruccion);
 					this.t_reg.liberarRegistro(reg_actual);
 
-					System.out.println(jump);
+					//System.out.println(jump);
 					this.instrucciones_asmb.add(jump);
+					
+					break;
 				}
 				
 				case 2:
@@ -184,13 +641,17 @@ public class GeneradorCodigo {
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
 					instruccion = "CMP "+nombre_reg+" , ";
 					instruccion += t.getOperando2();
-					//falta JMP
-					System.out.println(instruccion);
+					
+					//System.out.println(instruccion);
+					
 					this.instrucciones_asmb.add(instruccion);
 					this.t_reg.liberarRegistro(reg_actual);
 
-					System.out.println(jump);
+					//System.out.println(jump);
+					
 					this.instrucciones_asmb.add(jump);	
+					
+					break;
 				}
 				
 				case 3:
@@ -214,12 +675,14 @@ public class GeneradorCodigo {
 					
 					instruccion = "CMP "+nombre_reg1+" , ";
 					instruccion += nombre_reg2;
-					//falta JMP
-					System.out.println(instruccion);
+					
+					//System.out.println(instruccion);
+					
 					this.instrucciones_asmb.add(instruccion);
 					
 
-					System.out.println(jump);
+					//System.out.println(jump);
+					
 					this.instrucciones_asmb.add(jump);
 					
 					
@@ -228,8 +691,8 @@ public class GeneradorCodigo {
 				}
 			}
 			
-			
 		};
+		
 		
 			
 		if (t.getOperador().equals(">")) {
@@ -242,35 +705,55 @@ public class GeneradorCodigo {
 			int tipo_op = 0;
 			
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
-				//si elprimer operando es un registro y el segundo no
+				//primer operando es un registro y el segundo no
 				tipo_op=1;
 			}
 			
 			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
-				//si elprimer operando NO es un registro y el segundo si lo es
+				//primer operando NO es un registro y el segundo si lo es
 				tipo_op=2;
 			}
 			
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) == '['){
-				//si los dos operandos son registros
+				//los dos operandos son registros
 				tipo_op=3;
 			}
 			
 			
 			switch(tipo_op) {
+				case 0:
+				{
+					instruccion = "CMP "+t.getOperando1()+" , ";
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					
+					this.instrucciones_asmb.add(instruccion);
+					this.t_reg.liberarRegistro(reg_actual);
+					
+					//System.out.println(jump);
+					
+					this.instrucciones_asmb.add(jump);	
+					
+					break;
+				}
+				
 				case 1:
 				{
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
 					instruccion = "CMP "+nombre_reg+" , ";
 					instruccion += t.getOperando2();
 					
-					System.out.println(instruccion);
+					//System.out.println(instruccion);
 					
 					this.instrucciones_asmb.add(instruccion);
 					this.t_reg.liberarRegistro(reg_actual);
 					
-					System.out.println(jump);
+					//System.out.println(jump);
+					
 					this.instrucciones_asmb.add(jump);	
+					
+					break;
 				}
 				
 				case 2:
@@ -279,13 +762,15 @@ public class GeneradorCodigo {
 					instruccion = "CMP "+nombre_reg+" , ";
 					instruccion += t.getOperando2();
 					
-					System.out.println(instruccion);
+					//System.out.println(instruccion);
 					
 					this.instrucciones_asmb.add(instruccion);
 					this.t_reg.liberarRegistro(reg_actual);
 					
-					System.out.println(jump);
+					//System.out.println(jump);
 					this.instrucciones_asmb.add(jump);		
+					
+					break;
 				}
 				
 				case 3:
@@ -310,19 +795,25 @@ public class GeneradorCodigo {
 					instruccion = "CMP "+nombre_reg1+" , ";
 					instruccion += nombre_reg2;
 					
-					System.out.println(instruccion);
+					//System.out.println(instruccion);
+					
 					this.instrucciones_asmb.add(instruccion);
 					
 					this.t_reg.liberarRegistro(reg_actual);
 					this.t_reg.liberarRegistro(id_reg2);
 					
-					System.out.println(jump);
+					//System.out.println(jump);
+					
 					this.instrucciones_asmb.add(jump);	
+					
+					break;
 				}
 			}
-				
 		};
 				
+		
+		
+		//--------------- ASIGNACIONES -----------------
 		
 		
 		if (t.getOperador().equals("=")) {
@@ -331,7 +822,7 @@ public class GeneradorCodigo {
 			
 			if (tipo_asig == 'r') { //asignacion entre var y reg
 				String mov = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
-				System.out.println(mov);
+				//System.out.println(mov);
 				this.instrucciones_asmb.add(mov);
 
 				this.t_reg.liberarRegistro(reg_actual);
@@ -342,12 +833,12 @@ public class GeneradorCodigo {
 				String nombre_reg = t_reg.getNombreReg(reg_actual);
 				String mov1 = "MOV "+nombre_reg+" , "+t.getOperando2();
 				
-				System.out.println(mov1);
+				//System.out.println(mov1);
 				this.instrucciones_asmb.add(mov1);
 				
 				
 				String mov2 = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
-				System.out.println(mov2);	
+				//System.out.println(mov2);	
 				this.instrucciones_asmb.add(mov2);
 				
 				this.t_reg.liberarRegistro(reg_actual);
@@ -356,83 +847,73 @@ public class GeneradorCodigo {
 		}
 		
 		
+		
+		//---------------- SALTOS --------------------
+		
 		if (t.getOperador().equals("BI")) {
-			//reg_actual = t_reg.getRegistroLibre();
-			//String nombre_reg = t_reg.getNombreReg(reg_actual);
 			
-			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
+			//jump incondicional 
+			String salto = "JMP "+t.getOperando1();
 			
-			//String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-			//System.out.println(mov1);
-			//this.instrucciones_asmb.add(mov1);
+			//System.out.println(salto);
 			
+			this.instrucciones_asmb.add(salto);
 			
-			//instruccion = "ADD "+nombre_reg+" , "; 	
-			//instruccion += t.getOperando2();
-			
-			//System.out.println(instruccion);
-			//this.instrucciones_asmb.add(instruccion);
-			
-			/*
-			String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
-			t.setVarAux(this.var_aux+this.id_var_aux);
-			this.id_var_aux++;
-			System.out.println(mov2);
-			*/
-			};
+		};
 		
 			
 		if (t.getOperador().equals("BF")) {
-			//int getRegistroLibre();
-			//reg_actual = t_reg.getRegistroLibre();
-			//String nombre_reg = t_reg.getNombreReg(reg_actual);
+			
+			//completar etiqueta -> JG
+			String last_instr = getUltimaInstruccion();
+			
+			last_instr = last_instr.substring(0, 3);
+			
+			if (t.getOperando2().charAt(0) == '[') {
+				last_instr += t.getOperando2().substring(1, t.getOperando2().length()-1);
+			} else {
+				last_instr += " "+t.getOperando2();
+			}
+			
+			//System.out.println(last_instr);
+			
+			this.instrucciones_asmb.add(last_instr);
 				
-			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
-				
-			//String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-			//System.out.println(mov1);
-			//this.instrucciones_asmb.add(mov1);
-				
-				
-			//instruccion = "ADD "+nombre_reg+" , "; 	
-			//instruccion += t.getOperando2();
-				
-			//System.out.println(instruccion);
-			//this.instrucciones_asmb.add(instruccion);
-				
-			/*
-			String mov2 = "MOV "+this.var_aux+this.id_var_aux+" , R1";
-			t.setVarAux(this.var_aux+this.id_var_aux);
-			this.id_var_aux++;
-			System.out.println(mov2);
-			*/
 			};
 		
-				
+		
+		//------------- PROCEDIMIENTOS -------------------
 				
 		if (t.getOperador().equals("PROC")) {
-			//int getRegistroLibre();
-			//reg_actual = t_reg.getRegistroLibre();
-			//String nombre_reg = t_reg.getNombreReg(reg_actual);
-				
-			//System.out.println("reg actuial -> "+reg_actual+" , nombre -> "+nombre_reg);
 				
 			String proc = t.getOperando1()+" : ";
-			System.out.println(proc);
+			//System.out.println(proc);
 			this.instrucciones_asmb.add(proc);
 				
 			};
 				
-			
+		
+		if (t.getOperador().equals("RET")) {
+				
+			String ret = "RET "+t.getOperando1()+" ";
+			//System.out.println(ret);
+			this.instrucciones_asmb.add(ret);
+					
+			};
+				
+		
+		
+		//---------------- INVOCACIONES ----------------
+		
 		if (t.getOperador().equals("CALL")) {
 			
 			String call = "CALL "+t.getOperando1();
-			System.out.println(call);
+			//System.out.println(call);
 			this.instrucciones_asmb.add(call);						
 		};
 			
 		
-		System.out.println("\n\n");
+		//System.out.println("\n");
 	}
 	
 	
@@ -446,16 +927,15 @@ public class GeneradorCodigo {
 	
 	
 	public void crearArchivoAssembler() throws IOException {
-		String ruta = "archivoAssembler.txt";
-	    File f = new File(ruta);
+		//String ruta = "archivoAssembler.txt";
+		String ruta = "archivoAssembler.asm";
+		
+		File f = new File(ruta);
 	    FileWriter fw = new FileWriter(f);
 	    BufferedWriter escritura = new BufferedWriter(fw);
+	    
 	    escritura.write(this.archivo_asm);
-	    //for (String str : instrucciones_asmb) {
-	    //    escritura.write(str);
-	    //    escritura.newLine();
-
-	    //}
+	   
 	    escritura.close();
 
 	}
@@ -469,9 +949,9 @@ public class GeneradorCodigo {
 		programa_asmb += "\n.MODEL small \n";
 		programa_asmb += "\n.STACK 200h  \n";
 		programa_asmb += "\n.DATA \n\n";
-		programa_asmb += this.tds.getTablaSimbolosString();
-		programa_asmb += "\n.CODE \n";
-		programa_asmb += this.tercetos.getListaTercetosString();
+		programa_asmb += this.getSentenciasDeclarativasString();
+		programa_asmb += "\n.CODE \n"; //VER SI VA en minuscula
+		//programa_asmb += this.tercetos.getListaTercetosString();
 		programa_asmb += "\nSTART: \n\n";
 		programa_asmb += this.getInstruccionesAssemblerString();
 		programa_asmb += "\nEND START \n";
@@ -504,5 +984,32 @@ public class GeneradorCodigo {
 		}
 		
 		return aux;
+	}
+	
+	
+	public String getSentenciasDeclarativasString() {
+		//recorro tabla de simbolos y creo una instruccion para el ensamblador
+		//con DB , DW o DD!! depende del tipo de datos
+		
+		String out = "";
+		
+		for (Token t : this.tds.getListaTokens()) {
+			if (t.getTipo().equals("CTE")){
+				//System.out.println("_"+t.getLexema() + " DW "+t.getLexema());//+ t.getLexema());
+				out += "_"+t.getLexema() + " DW "+t.getLexema()+"\n";
+				//si el tipo es INTEGER -> DW 
+				//si es FLOAT -> DD
+			} else {
+				//System.out.println(t.getLexema() + " DW ");//+ t.getLexema());
+				out += t.getLexema() + " DW  \n";
+			}
+		}	
+		
+		return out;
+	}
+	
+	
+	public String getUltimaInstruccion() {
+		return this.instrucciones_asmb.remove(this.instrucciones_asmb.size()-1);
 	}
 }

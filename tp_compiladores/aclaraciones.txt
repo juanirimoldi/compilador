@@ -256,9 +256,21 @@ las etiquetas?? no entiendo bien los saltos...
 como transformar los saltos en etiquetaas??
 
 
-el name mangling de las variables definidas dentro de procedimientos anda bien
-el name mangling para redefinir el nombre de un procedimiento no anda bien.
-anda solo para los procedimientos simples
+como y cuando crear el terceto RET ?? con alguna etiqueta?
+
+
 
 
 sentencias declarativas???
+
+
+en declaracion de procedimientos -> RET al final del procedimiento
+
+power@main no iria porque es proce, no variable
+
+ej c@main DW 
+
+_25 DW 25
+
+
+agregar los include!! para mostrar saliuda por pantalla

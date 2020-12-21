@@ -17,27 +17,23 @@ public class TablaRegistros {
 		
 		if (EAX == true) {
 			EAX=false;
-			System.out.println("\n ASIGNO registro 1 = EAX \n");
-			//reg_libre=1;
-			return 1;
+			//System.out.println("\n ASIGNO registro 1 = EAX \n");
+			return 1; //reg_libre=1;
 		}
 		if (EBX == true) {
 			EBX = false;
-			System.out.println("\n ASIGNO registro 2 = EBX \n");
-			//reg_libre=2;
-			return 2;
+			//System.out.println("\n ASIGNO registro 2 = EBX \n");
+			return 2; 	//reg_libre=2;
 		}
 		if (this.ECX == true) {
 			ECX=false;
-			System.out.println("\n ASIGNO registro 3 = ECX \n");
-			//reg_libre=3;
-			return 3;
+			//System.out.println("\n ASIGNO registro 3 = ECX \n");
+			return 3; //reg_libre=3;
 		}
 		if (this.EDX == true) {
 			EDX=false;
-			System.out.println("\n ASIGNO registro 4 = EDX \n");
-			//reg_libre=4;
-			return 4;
+			//System.out.println("\n ASIGNO registro 4 = EDX \n");
+			return 4; //reg_libre=4;
 		}
 		
 		return 0;
@@ -48,22 +44,22 @@ public class TablaRegistros {
 	public void liberarRegistro(int i) {
 		if (i == 1) {
 			this.EAX = true;
-			System.out.println("\n LIBERO registro 1 \n");
+			//System.out.println("\n LIBERO registro 1 \n");
 		}
 		
 		if (i == 2) {
 			this.EBX = true;
-			System.out.println("\n LIBERO registro 2 \n");
+			//System.out.println("\n LIBERO registro 2 \n");
 		}
 		
 		if (i == 3) {
 			this.ECX = true;
-			System.out.println("\n LIBERO registro 3 \n");
+			//System.out.println("\n LIBERO registro 3 \n");
 		}
 		
 		if (i == 4) {
 			this.EDX = true;
-			System.out.println("\n LIBERO registro 4 \n");
+			//System.out.println("\n LIBERO registro 4 \n");
 		}
 	}
 	
@@ -99,7 +95,7 @@ public class TablaRegistros {
 		if (this.ECX) { line += " ECX "; };
 		if (this.EDX) { line += " EDX "; };
 		
-		System.out.println("Registros libres -> "+line);
+		//System.out.println("Registros libres -> "+line);
 		System.out.println();
 	}
 }

@@ -41,19 +41,12 @@ public class EntregarTokenYReiniciar extends AccionSemantica {
 			super.tipo_token="PALABRA_RESERVADA" ;
 		}
 		
-		//int id_tipo = this.tt.getIdTipo(super.tipo_buffer); 
-		//System.out.println("ID TIPO TOKEN -> "+id_tipo);
 		
-		//if (super.token_valido) {
 		this.t = new Token(super.buffer, super.tipo_token, nro_linea, super.tipo_variable);//, id_tipo);
-		//}
-		//la sacudo, en la tabla de simbolos decide si la guarda o no
-		//this.tds.addToken(t);
-		
+				
 	
 		super.tipo_token="";
 		super.buffer = ""; //despues de entregar token lo limpio
-		//super.token_valido=false;
 	}
 	
 	

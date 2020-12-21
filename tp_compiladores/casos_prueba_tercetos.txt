@@ -19,12 +19,6 @@ IF ( x + 5 < 9 ) { ff = 8 ; } END_IF ;
 IF ( x + 5 < 9 ) { INTEGER fff ; fff = 8 ; } END_IF ; 
 
 
-%%aca ocupo 3 registros.. -> cuando los libero?
-
-
-%%aca hay un error! para ww no completa el BF
-%%debe ser por tener un IF simple adentro de un IF - ELSE
-%%entonces solo cierra
 
 INTEGER ww ; 
 ww = 8 ;
@@ -35,7 +29,7 @@ IF ( ww > 0 ) {
 	} END_IF ; 
 	
 	INTEGER k ; 
-	k = k * y ; 
+	k = k + 8 * y ; 
 } ELSE { 
 	INTEGER j ; 
 	j = j - 3 ; 
@@ -82,9 +76,7 @@ LOOP { a = b + c ; c = d - 3 ; } UNTIL ( a + b > c - d ) ;
 
 
 
-%%en la generacion de codigo assembler falta CALL y RET cuando finaliza
-
-PROC proced ( INTEGER m ) NI = 2 { yyy = 99 + m ; } ;
+PROC proced ( INTEGER m ) NI = 2 { INTEGER yyy ; yyy = 99 + m ; } ;
 
 
 PROC f1 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 { 
@@ -93,6 +85,7 @@ PROC f1 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 {
 	f1a = 100 ;
 		
 	} ;
+
 
 
 PROC f2 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 { 
@@ -109,10 +102,15 @@ PROC f2 ( INTEGER x , REF FLOAT y , FLOAT z ) NI = 2 {
 
 
 
-proced ( a : x ) ;  %%asi invoca bien. falta la semantica de la invocacion
-			
+proced ( a : x ) ;  
+
+proced ( a : x ) ;  
+
+proced ( a : x ) ;  
+
 			
 %% a = 9 + 7 * 6 ;
 b = 22 + a ;
 
 c = a - b ;
+

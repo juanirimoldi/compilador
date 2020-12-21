@@ -1210,7 +1210,7 @@ public class AnalizadorLexico {
 			//System.out.println("yylex Retorno ->  " + t.getLexema()+" , "+t.getTipo()); 
 			return t;
 		} else {
-			System.out.println("Fin de archivo!");
+			//System.out.println("Fin de archivo!");
 			this.fin = true;
 		}
 		
