@@ -1,0 +1,18 @@
+INTEGER a ;
+a = 25 ;
+
+FLOAT b ;
+b = 2.5 ;
+
+INTEGER c ;
+c = a + b ;
+
+
+PROC power ( INTEGER x , INTEGER y ) NI = 3 { a = x + y ; } ;
+
+power ( a : x , b : y ) ; 
+
+
+INTEGER z ;
+
+z = a + b * 8 * c ;

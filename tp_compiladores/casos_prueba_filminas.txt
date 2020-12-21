@@ -1,0 +1,33 @@
+INTEGER a ;
+a = 5 ;
+
+INTEGER b ;
+b = 6 ;
+
+INTEGER k ;
+k = 2 ;
+
+INTEGER j ;
+j = 8 ;
+
+
+IF ( a > 0 ) { k = k * 5 ; } ELSE { j = j - 3 ; } END_IF ;
+
+
+LOOP { a = j + k ; k = k - 3 ; } UNTIL ( a + k > a - j ) ;
+
+
+PROC proced ( INTEGER m ) NI = 2 { a = m + k ; } ;
+
+
+proced ( a : m ) ;
+
+
+
+%%INTEGER z ; 
+
+z = a + b * c - d / 9 ;
+
+
+%%INTEGER a ; falta semantica de redefinicion de variables
+
