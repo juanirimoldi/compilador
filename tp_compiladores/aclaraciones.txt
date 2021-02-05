@@ -261,16 +261,49 @@ como y cuando crear el terceto RET ?? con alguna etiqueta?
 
 
 
-sentencias declarativas???
+
+ultimas dudas:
 
 
 en declaracion de procedimientos -> RET al final del procedimiento
 
-power@main no iria porque es proce, no variable
+power@main no iria porque es proc, no variable
 
 ej c@main DW 
 
 _25 DW 25
 
 
-agregar los include!! para mostrar saliuda por pantalla
+no hay mucha documentacion, ni ejemplos
+
+
+. agregar los include!! para mostrar saliuda por pantalla
+
+
+. cambiando DW por DD funciona! porque coincide el tamaño de los registros
+pero... como hago operaciones entre enteros y flotantes?
+
+
+. si es cte -> DD , si es float -> DW
+
+
+. hacer las llamadas con pop y push ??  o con proc e invoke?
+
+
+. x e y no tienen name mangling porque son parametros.. ?
+
+
+
+pto flotante -> no usa registros de CPU. por eso -> se hacen en 3a pila del coporocesador
+
+
+
+https://home.deec.uc.pt/~jlobo/tc/artofasm/ch14/ch144.htm#HEADING4-14
+
+
+!! falta actualizar el puntero en las asignaciones!! para cuando la asignacion es una variable, o un terceto
+!! tambien falta tirar error de tipos enla suma entre float + int , e int + float
+
+
+#para evitar el conflicto entre instrucciones,se decidio agregar un flag de undone
+para retrotraer las asignaciones IMPLICITAS entre distintos tipos

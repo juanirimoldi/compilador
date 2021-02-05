@@ -42,28 +42,60 @@ public class GeneradorCodigo {
 	}
 	
 	
-	public void crearInstrucciones(Terceto t) {
-		//String var_aux = "";
-		//t.mostrar();
-		//t_reg.mostrarRegistrosLibres();
+	public boolean esPtoFlotante(String val) {
+		if (val.contains(".")) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean esPunteroPuntoFlotante(String var) {
+		//checkea si la variable es de tipo FLOAT
+		Token aux = tds.getSimbolo(var);
+		//System.out.println("QUE ONDA? "+aux.getLexema());
 		
-		//checkear si son opeaciones entre enteros o con pto flotante!!
+		//BESTIAAAA si no esta en la tsym
+		
+		String ptr = "";
+		if (aux != null) { //si existe el symbolo en la TSym
+			if (aux.getPtr() != "") { //si tiene puntero
+				ptr = tds.getSimbolo(var).getPtr();
+				//System.out.println("existo y tengo puntero "+var);
+			}
+		}
+		Token apuntado = tds.getSimbolo(ptr);
+		
+		if (ptr != "") {	
+			if (apuntado.getTipoVar().equals("FLOAT")) {
+				return true;
+			}
+		}
+	
+		return false;
+	}
+	
+	
+	public void crearInstrucciones(Terceto t) {
 		
 		
 		String instruccion = "";
 		
+		boolean isFloat = false;
+		
+		
+		// SUMA
 		
 		if (t.getOperador().equals("+")) {
 			
-			int tipo_op = 0;
+			int tipo_op = 0; //por defecto son 2 tokens
 			
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
-				//primer operando es un registro y el segundo no
+				//si primer operando es un registro y el segundo no
 				tipo_op=1;
 			}
 			
 			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
-				//primer operando NO es un registro y el segundo si lo es
+				//si primer operando NO es un registro y el segundo si lo es
 				tipo_op=2;
 			}
 			
@@ -74,38 +106,66 @@ public class GeneradorCodigo {
 			
 			
 			switch(tipo_op) {
-				case 0:
+				case 0: //suma entre 2 tokens
 				{
-					//System.out.println("\n SUMO tokens \n");
-					reg_actual = t_reg.getRegistroLibre();
-					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					if (esPtoFlotante(t.getOperando1()) && esPtoFlotante(t.getOperando2())) {
+						//hago otro juego de instrucciones
+						String fld1 = "FLD _"+t.getOperando1().replace('.', '_');
+						this.instrucciones_asmb.add(fld1);
+												
+						String fld2 = "FLD _"+t.getOperando2().replace('.', '_');
+						this.instrucciones_asmb.add(fld2);
+						
+						String fadd = "FADD ";
+						this.instrucciones_asmb.add(fadd);
+						
+						break;
+					}
 					
-					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
 					
-					//System.out.println(mov1);
+					if (!esPunteroPuntoFlotante(t.getOperando1())) { //&& !esPtoFlotante(t.getOperando2())) {
+											
+						reg_actual = t_reg.getRegistroLibre();
+						String nombre_reg = t_reg.getNombreReg(reg_actual);
+						
+						String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+						
+						
+						this.instrucciones_asmb.add(mov1);
+						
+						
+						instruccion = "ADD "+nombre_reg+" , "; 	
+						instruccion += t.getOperando2();
+						
+						//System.out.println(instruccion);
+						
+						this.instrucciones_asmb.add(instruccion);
+						
+						break;
+				} else {
+					//System.out.println("suma entre tokens puntero a tipo float "+t.getOperando1()+" , "+t.getOperando2());
 					
-					this.instrucciones_asmb.add(mov1);
-					
-					
-					instruccion = "ADD "+nombre_reg+" , "; 	
-					instruccion += t.getOperando2();
-					
-					//System.out.println(instruccion);
-					
-					this.instrucciones_asmb.add(instruccion);
-					
+					String fadd = "FADD "; // en teoria esto ahace ST(1) + ST , ajusta el puntero de pila y pone el resultado en ST
+					//es decir, FADD solo suma b@main + bb@main
+					//suma entre b y bb
+					this.instrucciones_asmb.add(fadd);
 					break;
+					}
+					
+				//aca el codigo es unreachable porque esta entre dos breaks	
 				}
 				
 				case 1:
 				{
-										
-					//System.out.println("\n SUMO Registro y Token \n");
+					//SUMO Registro y Token
+					
+					//ACAA tengo que arreglar la suma para los float
 					
 					
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
 					
-										
+					//antes tengo que agregar b@main a tope de pila, despues sumar, y despues storear
+					
 					instruccion = "ADD "+nombre_reg+" , "; 	
 					instruccion += t.getOperando2();
 					
@@ -118,7 +178,7 @@ public class GeneradorCodigo {
 				case 2:
 				{
 										
-					//System.out.println("\n SUMO Token y Terceto \n");
+					// SUMO Token y Terceto ;
 
 					reg_actual = t_reg.getRegistroLibre();
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
@@ -135,9 +195,9 @@ public class GeneradorCodigo {
 				
 				case 3:
 				{
-					//aca tengo que liberar los 2 registros!!!
-					//System.out.println("\n SUMO Terceto y Terceto \n");
-
+					// SUMO Registro y Registro 
+					//tengo que liberar los 2 registros!!?
+					
 					String nombre_reg1 = t_reg.getNombreReg(reg_actual);
 					String nombre_reg2 = "";
 					int id_reg2 = 0;
@@ -437,6 +497,8 @@ public class GeneradorCodigo {
 		};
 		
 		
+		
+		// DIVISION
 		
 		if (t.getOperador().equals("/")) {
 			int tipo_op = 0;
@@ -828,6 +890,7 @@ public class GeneradorCodigo {
 				
 		
 		
+		
 		//--------------- ASIGNACIONES -----------------
 		
 		
@@ -835,29 +898,74 @@ public class GeneradorCodigo {
 			
 			char tipo_asig = getTipoAsignacion(t); 
 			
-			if (tipo_asig == 'r') { //asignacion entre var y reg
-				String mov = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
-				//System.out.println(mov);
-				this.instrucciones_asmb.add(mov);
-
-				this.t_reg.liberarRegistro(reg_actual);
+			
+			if (tipo_asig == 'r') { //asignacion entre reg (terceto) y variable
+				
+				if (!this.esPunteroPuntoFlotante(t.getOperando1())) {
+					
+					//esto pareceria estar bien
+					
+					String mov = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
+					//System.out.println(mov);
+					this.instrucciones_asmb.add(mov);
+	
+					this.t_reg.liberarRegistro(reg_actual);
+					//}
+				} else {
+					System.out.println("ASIGNACION entre "+t.getOperando1()+" TERRIBLKE PUNTERO a FLOAT "+t.getOperando2());
+					//aca soy la asignacion entre una variable float y un terceto!
+					
+					//hago otro juego de instrucciones!
+					
+					String fst = "FST "+t.getOperando1();
+					//o creo una copia con fstp??
+					
+					this.instrucciones_asmb.add(fst);
+						
+				}
 			}
 			
+			
+			//aca hacer una sentencia de control que cheke si t.getOperando2() es FLOAT!!
+			
+			//aunque no seria correcto... ya que se generaria igual el terceto
+			
 			if (tipo_asig == 'v') { //asignacion entre 2 variables
-				reg_actual = t_reg.getRegistroLibre();
-				String nombre_reg = t_reg.getNombreReg(reg_actual);
-				String mov1 = "MOV "+nombre_reg+" , "+t.getOperando2();
+				//aca hago el linkeo!!
+				// t.getOp1() es ID, t.getOp2() es direccion de ptro
+				//System.out.println(t.getOperando1());
 				
-				//System.out.println(mov1);
-				this.instrucciones_asmb.add(mov1);
+				if (this.esPtoFlotante(t.getOperando2())) {
+					//System.out.println("que hay por aca...? "+t.getOperando1());
+					//System.out.println("y por aca...? "+t.getOperando2());
+					
+					String fld = "FLD _"+t.getOperando2().replace('.', '_');
+					this.instrucciones_asmb.add(fld);
+					
+					String fstp = "FSTP "+t.getOperando1();
+					this.instrucciones_asmb.add(fstp);
 				
-				
-				String mov2 = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
-				//System.out.println(mov2);	
-				this.instrucciones_asmb.add(mov2);
-				
-				this.t_reg.liberarRegistro(reg_actual);
-				
+					
+				} else {
+						
+						//esto parece estar bien
+						reg_actual = t_reg.getRegistroLibre();
+						String nombre_reg = t_reg.getNombreReg(reg_actual);
+						String mov1 = "MOV "+nombre_reg+" , _"+t.getOperando2();
+						
+						//System.out.println(mov1);
+						this.instrucciones_asmb.add(mov1);
+						
+						
+						//porque en las asignaciones, el operando1 siempre es varible
+						String mov2 = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
+						//System.out.println(mov2);	
+						this.instrucciones_asmb.add(mov2);
+						
+						this.t_reg.liberarRegistro(reg_actual);
+		
+					
+				}
 			}
 		}
 		
@@ -897,11 +1005,12 @@ public class GeneradorCodigo {
 			};
 		
 		
+			
 		//------------- PROCEDIMIENTOS -------------------
 				
 		if (t.getOperador().equals("PROC")) {
 				
-			String proc = t.getOperando1()+" : ";
+			String proc = "PROC "+t.getOperando1();
 			//System.out.println(proc);
 			this.instrucciones_asmb.add(proc);
 				
@@ -910,9 +1019,11 @@ public class GeneradorCodigo {
 		
 		if (t.getOperador().equals("RET")) {
 				
-			String ret = "RET "+t.getOperando1()+" ";
+			String ret = "RET ";
+			String endp = "ENDP "+t.getOperando1();
 			//System.out.println(ret);
 			this.instrucciones_asmb.add(ret);
+			this.instrucciones_asmb.add(endp);
 					
 			};
 				
@@ -922,7 +1033,7 @@ public class GeneradorCodigo {
 		
 		if (t.getOperador().equals("CALL")) {
 			
-			String call = "CALL "+t.getOperando1();
+			String call = "INVOKE "+t.getOperando1();
 			//System.out.println(call);
 			this.instrucciones_asmb.add(call);						
 		};
@@ -961,8 +1072,10 @@ public class GeneradorCodigo {
 		String programa_asmb = "";
 		
 		System.out.println();
-		programa_asmb += "\n.MODEL small \n";
-		programa_asmb += "\n.STACK 200h  \n";
+		//generar encabezado
+		//programa_asmb += "\n.MODEL small \n";
+		//programa_asmb += "\n.STACK 200h  \n";
+		programa_asmb += this.generarEncabezado();
 		programa_asmb += "\n.DATA \n\n";
 		programa_asmb += this.getSentenciasDeclarativasString();
 		programa_asmb += "\n.CODE \n"; //VER SI VA en minuscula
@@ -977,6 +1090,22 @@ public class GeneradorCodigo {
 	}
 	
 	
+	
+	public String generarEncabezado() {
+		String aux="";
+		aux += ".386 \n";
+		aux += ".MODEL flat, stdcall \n";
+		aux += "option casemap:none \n";
+		aux += "include \\masm32\\include\\windows.inc \n";
+		aux += "include \\masm32\\include\\kernel32.inc \n";
+		aux += "include \\masm32\\include\\user32.inc \n";
+		aux += "includelib \\masm32\\lib\\kernel32.lib \n";
+		aux += "includelib \\masm32\\lib\\user32.lib \n";
+		//.data
+		return aux;
+	}
+	
+	
 	public String getEstructuraPrograma() {
 		
 		return this.archivo_asm;
@@ -985,6 +1114,10 @@ public class GeneradorCodigo {
 	
 	
 	public char getTipoAsignacion(Terceto t) {
+		//si el operando 2 del Terceto es una referencia a otro Terceto 
+		//	retorno tipo 'r' (registro)
+		//sino retorno tipo 'v' (variable)
+		
 		if (t.getOperando2().charAt(0) == '[')
 			return 'r';
 		return 'v';
@@ -1003,20 +1136,33 @@ public class GeneradorCodigo {
 	
 	
 	public String getSentenciasDeclarativasString() {
-		//recorro tabla de simbolos y creo una instruccion para el ensamblador
-		//con DB , DW o DD!! depende del tipo de datos
 		
 		String out = "";
 		
 		for (Token t : this.tds.getListaTokens()) {
 			if (t.getTipo().equals("CTE")){
 				//System.out.println("_"+t.getLexema() + " DW "+t.getLexema());//+ t.getLexema());
-				out += "_"+t.getLexema() + " DW "+t.getLexema()+"\n";
-				//si el tipo es INTEGER -> DW 
-				//si es FLOAT -> DD
+				//out += "_"+t.getLexema() + " DW "+t.getLexema()+"\n";
+				
+				if (t.getTipoVar().equals("INTEGER")) {
+					out += "_"+t.getLexema() + " DW "+t.getLexema()+"\n";
+				}
+				
+				if (t.getTipoVar().equals("FLOAT")) {
+					out += "_"+t.getLexema().replace('.', '_') + " DQ "+t.getLexema()+ "\n";
+					//si es float, cambio el . por _
+				}
+				
 			} else {
+				//si el token no es CTE -> es ID o CADENA
 				//System.out.println(t.getLexema() + " DW ");//+ t.getLexema());
-				out += t.getLexema() + " DW  \n";
+				if (t.getUso().equals("procedimiento")) {
+					//nada. no lo agrego como sentencia declarativa al ID de un proc
+					continue;
+				} else {
+					
+					out += t.getLexema() + " DW ? \n";
+				}
 			}
 		}	
 		

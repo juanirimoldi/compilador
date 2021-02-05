@@ -161,13 +161,13 @@ public class TablaDeSimbolos {
 						if (t.getUso().equals("procedimiento")) {
 							System.out.println(llave +" , "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+" , "+t.getCantInvocaciones());				
 						} else {
-							System.out.println(llave +" , "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+							System.out.println(llave +" , "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+" , "+t.getPtr());
 						}
 					} else {
 						if (t.getUso().equals("procedimiento")) {
 							System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+" , "+t.getCantInvocaciones());				
 						} else {
-							System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+							System.out.println(llave +" 	, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+" , "+t.getPtr());
 						}
 					}
 
@@ -175,7 +175,7 @@ public class TablaDeSimbolos {
 				if (t.getUso().equals("procedimiento")) {
 					System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+" , "+t.getCantInvocaciones());				
 				} else {
-					System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso());
+					System.out.println(llave +" 		, "+t.getTipo()+ " 	, "+t.getTipoVar()+"	,  "+t.getUso()+" , "+t.getPtr());
 				}
 			}
 		}

@@ -8,6 +8,7 @@ public class Token {
 	private String tipo_var;
 	private String ambito;
 	private String uso="";
+	private String ptr="";
 	private int valor;
 	private int cantInvocaciones;
 	
@@ -79,6 +80,13 @@ public class Token {
 		return this.cantInvocaciones;
 	}
 	
+	public void setPtr(String s) {
+		this.ptr = s;
+	}
+	
+	public String getPtr() {
+		return ptr;
+	}
 	/*
 	public void setValor(String val) {
 		if (this.tipo.equals("ID")) {

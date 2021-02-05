@@ -52,7 +52,7 @@ programa : lista_de_sentencias {
 		 ;
 
 
-lista_de_sentencias : sentencia 
+lista_de_sentencias : sentencia {this.deshacer=false;}
 		   		    | lista_de_sentencias sentencia 
 		    		;
 
@@ -262,7 +262,7 @@ tipo : INTEGER
 //SENTENCIAS EJECUTABLES
 
 		
-sentencia_ejecutable : asignacion {} 
+sentencia_ejecutable : asignacion {}//this.deshacer=false;} 
 		   			 | sentencia_de_control
 		   			 | sentencia_de_iteracion 
 		   			 | sentencia_de_salida 
@@ -288,15 +288,23 @@ asignacion : ID '=' expresion  {  Token id = (Token)$1.obj;
 								  boolean esValido = tabla.correctamenteDefinido(id);
 								  if (esValido) {
 									  if (isToken) { 
-									  	
-									  		
-									  		Terceto ter = new Terceto(this.nro_terceto, op.getLexema(), id.getLexema(), ((Token)$3.obj).getLexema());
-	 									   	this.lista.agregarTerceto(ter); 
-	 									   	
-	 									   	//this.lista.mostrarTercetos();
-	 									   	
-	 									   	this.nro_terceto++;
-									  	
+									  	if (!deshacer){
+										  		
+										  		//modifico ID, agregandole un puntero a la direccion en la TSym 
+										  		//System.out.println("Asignacion valida! le agrego el ptr a la TSym (como la llave es el lexema, por el nombre)");
+										  		id.setPtr(((Token)$3.obj).getLexema());
+										  		
+										  		Terceto ter = new Terceto(this.nro_terceto, op.getLexema(), id.getLexema(), ((Token)$3.obj).getLexema());
+		 									   	this.lista.agregarTerceto(ter); 
+		 									   	
+		 									   	//this.lista.mostrarTercetos();
+		 									   	
+		 									   	this.nro_terceto++;
+										} else {
+											System.out.println("DESHACER ");
+									  		deshacer=false;
+									  		break;
+										}   	
 									  	//} else {
 									  	
 									  		//System.out.println("\n ERROR -> a "+id.getLexema()+"  no le agrego ambito porque no es valido \n");
@@ -325,8 +333,12 @@ asignacion : ID '=' expresion  {  Token id = (Token)$1.obj;
 								 }
 		   						}
 		   
-		   | ID '=' '('tipo')'expresion {
+		   
+		   | ID '=' '('tipo')' expresion {
 		   								//conversion explicita!
+		   								
+		   								//acaaa hay que hacer lo que dijo JOSE
+		   								
 		   								//si no reconoce el tipo -> error de compatibilidad 
 		   								//ACA!! VER CONVERSIONES EXPLICITAS!
 										//primero checkea tipo de ID
@@ -341,6 +353,8 @@ asignacion : ID '=' expresion  {  Token id = (Token)$1.obj;
 										  int linea = id.getNroLinea();
 										  
 										  System.out.println("\n REGLA ASIGNACION -> CONVERSION EXPLICITA! \n"); 
+										  System.out.println("\n WARNING! CONVERSION EXPLICITA! cambio tipo de variable de lado izq "+ id.getLexema() +"\n"); 
+										  
 										  System.out.println("\n Esta correctamente inicializada  "+ id.getLexema() +"  en Tabla de Simbolos ? \n");
 										  
 										  
@@ -355,7 +369,8 @@ asignacion : ID '=' expresion  {  Token id = (Token)$1.obj;
 									
 										  	if (tabla.correctamenteDefinido(id)){
 										  		System.out.println("\n SI, esta bien definido "+ id.getLexema()+"\n");
-										  		System.out.println("\n CREO TERCETO ASIGNACION  ->  ( "+op.getLexema()+" , "+id.getLexema()+" , "+((Token)$$.obj).getLexema()+" )  \n\n");
+										  		System.out.println("\n CREO TERCETO ASIGNACION EXPLICITA ->  ( "+op.getLexema()+" , "+id.getLexema()+" , "+((Token)$$.obj).getLexema()+" )  \n\n");
+										  		//antes cambio el tipo de variable de id.getLexema()
 										  		Terceto ter = new Terceto(this.nro_terceto, op.getLexema(), id.getLexema(), ((Token)$3.obj).getLexema());
 		 									   	this.lista.agregarTerceto(ter); 
 		 									   	
@@ -826,12 +841,102 @@ expresion : expresion '+' termino {
 								  }
 								  
 								  
+								  //la idea es cortar el checkeo de tipos en las operaciones entre Tokens
+								  //porque a (la referencia) de un terceto no se le puede checkear el tipo.
+								  //si, recorriendolo recursivamente... pero queda para un futuro
 								  if (obj1 && obj2) { //si son los dos Tokens
-	
+									
+									//System.out.println("A ver hefe... son dos tokens");
 								  	Token op1 = (Token)$1.obj;
 								  	//Token op2 = (Token)$2.obj;
 									Token op3 = (Token)$3.obj;
+									
+									String tipo_op1 = op1.getTipo();
+									String tipo_op2 = op3.getTipo();
+									
+									
+									if (tipo_op1.equals("ID") && tipo_op2.equals("ID")) {
+										
+											//System.out.println("Suma entre dos variables ID !");
+											
+											//System.out.println("op1 -> "+op1.getPtr());
+											Token ref_op1 = tabla.getSimbolo(op1.getPtr());
+											String tipo_ref_op1 = "";
+											if (ref_op1 != null) {
+												tipo_ref_op1 = ref_op1.getTipoVar();
+												//System.out.println(tipo_ref_op1);
+											}
+											
+											
+											//System.out.println("op2 -> "+op3.getPtr());
+											Token ref_op2 = tabla.getSimbolo(op3.getPtr());
+											String tipo_ref_op2 = "";
+											if (ref_op2 != null) {
+												tipo_ref_op2=ref_op2.getTipoVar();
+												//System.out.println(tipo_ref_op2);
+											}
+											
+												
+											if (tipo_ref_op1 != tipo_ref_op2) {
+												System.out.println("ERROR! asignacion de tipos!"+tipo_ref_op1+" != "+tipo_ref_op2 +"\n");
+												this.deshacer=true;
+												//rompe la + pero hace la asignacion!! ver como romper la asignacion
+												break;
+											}
+										
+									}
+									
 											  
+									/*
+									String tipoVar_op1 = op1.getTipoVar();
+									String tipoVar_op2 = op3.getTipoVar();
+									System.out.println("");
+									if (tipoVar_op1.equals("INTEGER") && tipoVar_op2.equals("INTEGER")){
+										System.out.println("\n TERCETO SUMA simple ->  ( + , "+op1.getLexema()+" , "+op3.getLexema()+" ) \n");	  
+											  
+										Terceto ter = new Terceto(this.nro_terceto, "+" , op1.getLexema(), op3.getLexema());
+										this.lista.agregarTerceto(ter); 
+										
+										pos_ultimo_terceto = this.nro_terceto;
+											  
+										//this.lista.mostrarTercetos();
+											  
+										this.nro_terceto++;
+										//apunto a terceto!?
+										$$.obj = ter ;
+										this.isToken=false;
+									
+									}		  
+									
+									
+									if (tipoVar_op1.equals("INTEGER") && tipoVar_op2.equals("FLOAT")){
+										System.out.println("\n ERROR! suma con distintso tipos \n");
+									}
+									
+									
+									if (tipoVar_op1.equals("FLOAT") && tipoVar_op2.equals("FLOAT")){
+										System.out.println("\n TERCETO SUMA flotante ->  ( + , "+op1.getLexema()+" , "+op3.getLexema()+" ) \n");	  
+											  
+										Terceto ter = new Terceto(this.nro_terceto, "+" , op1.getLexema(), op3.getLexema());
+										this.lista.agregarTerceto(ter); 
+										
+										pos_ultimo_terceto = this.nro_terceto;
+											  
+										//this.lista.mostrarTercetos();
+											  
+										this.nro_terceto++;
+										//apunto a terceto!?
+										$$.obj = ter ;
+										this.isToken=false;
+									}		  
+									
+									
+									if (tipoVar_op1.equals("FLOAT") && tipoVar_op2.equals("INTEGER")){
+										System.out.println("\n ERROR! suma con distintso tipos \n");
+									}
+									
+									*/
+									
 									//System.out.println("\n TERCETO SUMA simple ->  ( + , "+op1.getLexema()+" , "+op3.getLexema()+" ) \n");
 											  
 											  
@@ -850,7 +955,7 @@ expresion : expresion '+' termino {
 								  }
 								  
 								  
-								  if (obj1 & !obj2) { //primero Token y el 2do Terceto
+								  if (obj1 && !obj2) { //primero Token y el 2do Terceto
 								  	Token op3 = (Token)$1.obj;
 	 								String pos_str = "["+pos_ultimo_terceto+"]";
 	 	 								  	 
@@ -871,7 +976,7 @@ expresion : expresion '+' termino {
 								  }
 								  
 								  
-								  if (!obj1 & obj2) { //primero Terceto y el 2do Token
+								  if (!obj1 && obj2) { //primero Terceto y el 2do Token
 								  	Token op3 = (Token)$3.obj;
 	 								String pos_str = "["+pos_ultimo_terceto+"]";
 	 	 								  	 
@@ -892,7 +997,7 @@ expresion : expresion '+' termino {
 								  }
 								  
 								  
-								  if (!obj1 & !obj2) {
+								  if (!obj1 && !obj2) {
 									  //OPERACION ENTRE 2 TERCETOS!
 	 								      		
 	 								  Terceto op3 = (Terceto)$3.obj;
@@ -1328,6 +1433,7 @@ String proc_declarado;
 String proc_invocado;
 
 boolean isToken=true;
+boolean deshacer=false;
 
 int nro_terceto = 0;
 int pos_ultimo_terceto = 0;
@@ -1409,8 +1515,8 @@ private int yylex() {
 
 public static void main(String args[]) {
  	//String direccion_codigo = "casos_prueba_tercetos.txt";
-	//String direccion_codigo = "casos_prueba_simple.txt";
-	String direccion_codigo = "casos_prueba_filminas.txt";
+	String direccion_codigo = "casos_prueba_simple.txt";
+	//String direccion_codigo = "casos_prueba_filminas.txt";
 			
 			
  	AnalizadorLexico al = new AnalizadorLexico(direccion_codigo);
