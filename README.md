@@ -15,7 +15,7 @@ Los componentes principales del compilador son:
   .  Tabla De Simbolos, que almacena todos los tokens correctos sintacticamente, con sus atributos como caracteristicas semanticas del token.  
 
 
-      
+<br />      
   
 
 El AnalizadorLexico reconoce los tokens soportados por el lenguaje, y aplica los checkeos semanticos relativos a la sintaxis.
