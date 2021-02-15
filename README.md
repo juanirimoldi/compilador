@@ -3,11 +3,13 @@
 
 Trabajo practico que consiste en crear un compilador que consuma codigo (tipo algol, estilo Java), haga el procesamiento de la informacion y, en caso de compilar correctamente, genere codigo maquina.
 
+
 Los componentes principales del compilador son: 
-  Analisis Lexico, que se encarga de leer los tokens correctos y clasificarlos en variables, constantes y cadenas;  
-  Analisis Sintactico, que a partir de las reglas de la gramaticaIncremental.y  arma las estructuras sintacticas con YACC, 
-  Generacion de Codigo, que genera codigo intermedio (tercetos) y codigo assembler.
-  Tabla De Simbolos, que almacena todos los tokens correctos sintacticamente, con sus atributos como caracteristicas semanticas del token.  
+
+  .  Analisis Lexico, que se encarga de leer los tokens correctos y clasificarlos en variables, constantes y cadenas;  
+  .  Analisis Sintactico, que a partir de las reglas de la gramaticaIncremental.y  arma las estructuras sintacticas con YACC, 
+  .  Generacion de Codigo, que genera codigo intermedio (tercetos) y codigo assembler.
+  .  Tabla De Simbolos, que almacena todos los tokens correctos sintacticamente, con sus atributos como caracteristicas semanticas del token.  
 
 
 El AnalizadorLexico reconoce los tokens soportados por el lenguaje, y aplica los checkeos semanticos relativos a la sintaxis.
