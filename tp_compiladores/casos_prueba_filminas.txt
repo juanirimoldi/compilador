@@ -24,10 +24,11 @@ proced ( a : m ) ;
 
 
 
-%%INTEGER z ; 
+INTEGER c ;
+INTEGER d ;
+
+INTEGER z ; 
 
 z = a + b * c - d / 9 ;
 
-
-%%INTEGER a ; falta semantica de redefinicion de variables
 

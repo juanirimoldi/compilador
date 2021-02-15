@@ -9,19 +9,22 @@ includelib \masm32\lib\user32.lib
 
 .DATA 
 
-c@main DW ? 
-z@main DW ? 
-_25 DW 25
-_8 DW 8
+y@suma@main DD ? 
+c@main DD ? 
+z@main DD ? 
+_25 DD 25
+x@suma@main DD ? 
+yes@suma@main DD ? 
+_8 DD 8
 _5_ DQ 5.
 _2_5 DQ 2.5
-a@main DW ? 
+a@main DD ? 
 _2_ DQ 2.
 _88_ DQ 88.
-_3 DW 3
-b@main DW ? 
-_0 DW 0
-bb@main DW ? 
+_3 DD 3
+b@main DQ ? 
+_0 DD 0
+bb@main DQ ? 
 
 .CODE 
 
@@ -36,21 +39,19 @@ FSTP bb@main
 FADD 
 FST b@main
 FLD _2_
-FLD _88_
-FADD 
-FST bb@main
-PROC power@main
-MOV EAX , x
-ADD EAX , y
-MOV a@main , EAX
+FSTP bb@main
+suma@main PROC
+MOV EAX , _x
+MOV yes@suma@main , EAX
 RET 
-ENDP power@main
-INVOKE power@main
-MOV EAX , b@main
-MUL EAX , 8
-MUL EAX , c@main
-ADD EAX , a@main
+suma@main ENDP
+INVOKE suma@main
+MOV EAX , a@main
+ADD EAX , c@main
 MOV z@main , EAX
+MOV EAX , a@main
+ADD EAX , c@main
+ADD EAX , 8
 MOV z@main , EAX
 
 END START 

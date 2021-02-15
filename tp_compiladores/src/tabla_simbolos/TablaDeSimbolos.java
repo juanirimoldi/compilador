@@ -64,13 +64,16 @@ public class TablaDeSimbolos {
 	
 	public boolean correctamenteDefinido(Token t) {
 		if (this.existe(t.getLexema())) {
-			//si el lexema tiene un @ -> return correcto
-			if (t.getLexema().contains("@")) {
-				//System.out.println("\n\n SI. Simbolo  "+t.getLexema() +"  correctamente definido en TSym \n");
+			//si el lexema esta bien definido (tiene un @) -> return correcto
+			if (t.getTipo().equals("ID")) {
+				if (t.getLexema().contains("@")) {
+					//System.out.println("\n\n SI. Simbolo  "+t.getLexema() +"  correctamente definido en TSym \n");
+					return true;
+				}
+			}
+			
+			if (t.getTipo().equals("CTE")) {
 				return true;
-			} else {
-				System.out.println("\n ERROR -> "+t.getLexema()+" NO tiene ambito definido -> no esta inicializada correctamente");
-				return false;
 			}
 		}
 		return false;

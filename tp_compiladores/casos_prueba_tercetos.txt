@@ -1,4 +1,3 @@
-%% x := y + z 
 
 INTEGER x ;
 INTEGER y ;
@@ -22,6 +21,9 @@ IF ( x + 5 < 9 ) { INTEGER fff ; fff = 8 ; } END_IF ;
 
 INTEGER ww ; 
 ww = 8 ;
+
+INTEGER b ;
+b = 6 ;
 
 IF ( ww > 0 ) { 
 	IF ( b1 > 8 ) { 

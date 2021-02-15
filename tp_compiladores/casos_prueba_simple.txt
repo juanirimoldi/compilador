@@ -8,30 +8,37 @@ FLOAT bb ;
 bb = 5. ;
 
 INTEGER c ;
-%%c = ( FLOAT ) a + b ; %%aca debe tirar un warning! y cambiar tipo de c a FLOAT 
-c = a + b ; %%BIEN porque muestra error por pantalla. mal porque corta la ejecucion por error de sintaxis
 
-b = b + bb ; %%BIEN
+c = ( FLOAT ) a + b ;
 
-bb = 2. + 88. ; 
+c = a + b ; 
 
-%%bbb = 2. + 88. ; %%BIEN, tira error de inicializacion
+b = b + bb ; 
 
-%%b = 2. + 88 ; %%corregir el caso en que se sume float + int, y se asigne a un float 
+%%bb = 2. + 88. ; 
+
+%%bbb = 2. + 88. ; 
+
+%%b = 2. + 88 ;  
 
 
-PROC power ( INTEGER x , INTEGER y ) NI = 3 { a = x + y ; } ;
+PROC suma ( INTEGER x , INTEGER y ) NI = 3 { 
+	INTEGER yes ;
+	yes = x + y ; 
+	} ;
+
 
 power ( a : x , b : y ) ; 
+
+suma ( a : x , b : y ) ;
+
 
 
 INTEGER z ;
 
-%%aca tambien!
-
-%% si encuentra que del lado der hay un FLOAT y del lado izq un INTEGER
-%% conversion implicita del tipo del lado izq 
 
 z = a + b * 8 * c ;
+
+z = a + c + 8 ;
 
 z = a / 0 ;

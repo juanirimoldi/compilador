@@ -22,6 +22,13 @@ public class Token {
 		this.ambito="";
 	}
 	
+	public Token(Token t) {
+		this.lexema = t.getLexema();
+		this.tipo = t.getTipo();
+		this.nro_linea = t.getNroLinea();
+		this.tipo_var = t.getTipoVar();
+		this.ambito = "";
+	}
 	
 	public String getTipo() {
 		return this.tipo;
@@ -49,6 +56,10 @@ public class Token {
 	
 	public String getTipoVar() {
 		return this.tipo_var;
+	}
+	
+	public void setTipoVar(String t) {
+		this.tipo_var = t;
 	}
 	
 	public void setAmbito(String a) {

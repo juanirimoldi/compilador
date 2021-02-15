@@ -17,12 +17,16 @@ public class GeneradorCodigo {
 	private TablaRegistros t_reg;
 	
 	private int reg_actual;
+	private int reg2_actual=0;
 	
 	private ArrayList<String> instrucciones_asmb;
 	
 	//archivo .asm generado, en formato String
 	private String archivo_asm = "";
+	
+	private int cont=0;
 
+	private boolean errorEjecucion=false;
 	
 	
 	
@@ -37,7 +41,9 @@ public class GeneradorCodigo {
 	public void generarCodigo() {
 		System.out.println("");
 		for (Terceto t : tercetos.getListaTercetos()) {
-			this.crearInstrucciones(t);
+			if (t != null) {
+				this.crearInstrucciones(t);
+			}
 		}
 	}
 	
@@ -52,22 +58,22 @@ public class GeneradorCodigo {
 	public boolean esPunteroPuntoFlotante(String var) {
 		//checkea si la variable es de tipo FLOAT
 		Token aux = tds.getSimbolo(var);
-		//System.out.println("QUE ONDA? "+aux.getLexema());
 		
-		//BESTIAAAA si no esta en la tsym
 		
 		String ptr = "";
 		if (aux != null) { //si existe el symbolo en la TSym
 			if (aux.getPtr() != "") { //si tiene puntero
 				ptr = tds.getSimbolo(var).getPtr();
-				//System.out.println("existo y tengo puntero "+var);
 			}
 		}
+		
 		Token apuntado = tds.getSimbolo(ptr);
 		
 		if (ptr != "") {	
-			if (apuntado.getTipoVar().equals("FLOAT")) {
-				return true;
+			if (apuntado != null) {
+				if (apuntado.getTipoVar().equals("FLOAT")) {
+					return true;
+				}
 			}
 		}
 	
@@ -80,8 +86,6 @@ public class GeneradorCodigo {
 		
 		String instruccion = "";
 		
-		boolean isFloat = false;
-		
 		
 		// SUMA
 		
@@ -89,27 +93,29 @@ public class GeneradorCodigo {
 			
 			int tipo_op = 0; //por defecto son 2 tokens
 			
+			//si primer operando es un registro y el segundo no
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
-				//si primer operando es un registro y el segundo no
 				tipo_op=1;
 			}
-			
+
+			//si primer operando NO es un registro y el segundo si lo es
 			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
-				//si primer operando NO es un registro y el segundo si lo es
 				tipo_op=2;
 			}
 			
+			//los dos operandos son registros
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) == '['){
-				//los dos operandos son registros
 				tipo_op=3;
 			}
 			
+			//System.out.println("sumas "+t.getOperando1()+" , "+t.getOperando2());
 			
 			switch(tipo_op) {
+				
 				case 0: //suma entre 2 tokens
 				{
 					if (esPtoFlotante(t.getOperando1()) && esPtoFlotante(t.getOperando2())) {
-						//hago otro juego de instrucciones
+						
 						String fld1 = "FLD _"+t.getOperando1().replace('.', '_');
 						this.instrucciones_asmb.add(fld1);
 												
@@ -123,7 +129,7 @@ public class GeneradorCodigo {
 					}
 					
 					
-					if (!esPunteroPuntoFlotante(t.getOperando1())) { //&& !esPtoFlotante(t.getOperando2())) {
+					if (!esPunteroPuntoFlotante(t.getOperando1())) { 
 											
 						reg_actual = t_reg.getRegistroLibre();
 						String nombre_reg = t_reg.getNombreReg(reg_actual);
@@ -132,7 +138,7 @@ public class GeneradorCodigo {
 						
 						
 						this.instrucciones_asmb.add(mov1);
-						
+
 						
 						instruccion = "ADD "+nombre_reg+" , "; 	
 						instruccion += t.getOperando2();
@@ -140,33 +146,37 @@ public class GeneradorCodigo {
 						//System.out.println(instruccion);
 						
 						this.instrucciones_asmb.add(instruccion);
-						
+
 						break;
+						
 				} else {
 					//System.out.println("suma entre tokens puntero a tipo float "+t.getOperando1()+" , "+t.getOperando2());
 					
-					String fadd = "FADD "; // en teoria esto ahace ST(1) + ST , ajusta el puntero de pila y pone el resultado en ST
-					//es decir, FADD solo suma b@main + bb@main
-					//suma entre b y bb
+					String fadd = "FADD "; // esto hace ST(1) + ST , ajusta el puntero de pila y pone el resultado en ST
+					//es decir, FADD hace la suma b@main + bb@main
 					this.instrucciones_asmb.add(fadd);
 					break;
 					}
 					
-				//aca el codigo es unreachable porque esta entre dos breaks	
 				}
+				
 				
 				case 1:
 				{
-					//SUMO Registro y Token
-					
-					//ACAA tengo que arreglar la suma para los float
-					
+					//SUMO Terceto (Registro) y Token
 					
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
 					
-					//antes tengo que agregar b@main a tope de pila, despues sumar, y despues storear
+					instruccion = "ADD "+nombre_reg+" , ";
 					
-					instruccion = "ADD "+nombre_reg+" , "; 	
+
+					Token tt = tds.getSimbolo(t.getOperando2());
+					//System.out.println("tt"+tt);
+					
+					if (tt.getTipo().equals("CTE") && tt.getTipoVar().equals("INTEGER")){
+						instruccion += "_";
+					}
+					//instruccion = "ADD "+nombre_reg+" , _"; 	
 					instruccion += t.getOperando2();
 					
 					//System.out.println(instruccion);
@@ -174,6 +184,7 @@ public class GeneradorCodigo {
 					
 					break;
 				}
+				
 				
 				case 2:
 				{
@@ -243,38 +254,88 @@ public class GeneradorCodigo {
 			
 		if (t.getOperador().equals("-")) {
 			
-			int tipo_op = 0;
 			
+			int tipo_op = 0; //por defecto son 2 tokens
+			
+			//si primer operando es un registro y el segundo no
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
-				//si elprimer operando es un registro y el segundo no
 				tipo_op=1;
 			}
-			
+
+			//si primer operando NO es un registro y el segundo si lo es
 			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
-				//si elprimer operando NO es un registro y el segundo si lo es
 				tipo_op=2;
 			}
 			
+			//los dos operandos son registros
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) == '['){
-				//si los dos operandos son registros
 				tipo_op=3;
 			}
 			
 			
 			switch(tipo_op) {
-				case 0:
+				
+				case 0: //resta entre 2 tokens
+				{	
+					if (esPtoFlotante(t.getOperando1()) && esPtoFlotante(t.getOperando2())) {
+						
+						String fld1 = "FLD _"+t.getOperando1().replace('.', '_');
+						this.instrucciones_asmb.add(fld1);
+												
+						String fld2 = "FLD _"+t.getOperando2().replace('.', '_');
+						this.instrucciones_asmb.add(fld2);
+						
+						String fsub = "FSUB ";
+						this.instrucciones_asmb.add(fsub);
+						
+						break;
+					}
+					
+					
+					if (!esPunteroPuntoFlotante(t.getOperando1())) { 
+											
+						reg_actual = t_reg.getRegistroLibre();
+						String nombre_reg = t_reg.getNombreReg(reg_actual);
+						
+						String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+						
+						
+						this.instrucciones_asmb.add(mov1);
+						
+						
+						instruccion = "SUB "+nombre_reg+" , "; 	
+						
+						Token aux = tds.getSimbolo(t.getOperando2());
+						
+						//si es una CTE 
+						if (aux.getPtr() == ""){
+							instruccion += "_";
+						}
+						
+						instruccion += t.getOperando2();
+						
+						//System.out.println(instruccion);
+						
+						this.instrucciones_asmb.add(instruccion);
+						
+						break;
+				
+				} else {
+					
+					String fsub = "FSUB "; // esto hace ST(1) + ST , ajusta el puntero de pila y pone el resultado en ST
+					
+					this.instrucciones_asmb.add(fsub);
+					break;
+					}
+					
+				}
+				
+				
+				case 1:
 				{
-					//System.out.println("\n RESTA tokens \n");
+					//RESTA Registro y Token
 					
-					reg_actual = t_reg.getRegistroLibre();
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
-					
-					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-					
-					//System.out.println(mov1);
-					
-					this.instrucciones_asmb.add(mov1);
-					
 					
 					instruccion = "SUB "+nombre_reg+" , "; 	
 					instruccion += t.getOperando2();
@@ -285,177 +346,233 @@ public class GeneradorCodigo {
 					break;
 				}
 				
-				case 1:
-				{
-					//System.out.println("\n RESTA Registro y Token \n");
-					
-					
-					String nombre_reg = t_reg.getNombreReg(reg_actual);
-					
-										
-					instruccion = "SUB "+nombre_reg+" , "; 	
-					instruccion += t.getOperando2();
-					
-					//System.out.println(instruccion);
-					this.instrucciones_asmb.add(instruccion);
-					
-					break;
-				}
 				
 				case 2:
 				{
 										
-					//System.out.println("\n RESTA Token y Terceto \n");
+					// RESTA Token y Terceto ;
 
 					reg_actual = t_reg.getRegistroLibre();
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
 					
 					
-					instruccion = "ADD "+nombre_reg+" , "; 	
+					instruccion = "SUB "+nombre_reg+" , "; 	
 					instruccion += t.getOperando2();
 					
 					//System.out.println(instruccion);
-					
 					this.instrucciones_asmb.add(instruccion);
-				
+					
+					break;
 				}
 				
 				case 3:
 				{
-					//aca tengo que liberar los 2 registros!!!
-					//System.out.println("\n RESTA Terceto y Terceto \n");
-
-					String nombre_reg1 = t_reg.getNombreReg(reg_actual);
-					String nombre_reg2 = "";
-					int id_reg2 = 0;
-					
-					//caso en que usa 2 registros en simultaneo
-					if (nombre_reg1.charAt(1)=='B') {
-						nombre_reg2 = "EAX";
-						id_reg2 = 1;
-					}
-					
-					if (nombre_reg1.charAt(1)=='C') {
-						nombre_reg2 = "EBX";
-						id_reg2 = 2;
-					}
-					
-										
-					reg_actual = t_reg.getRegistroLibre();
-					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					// RESTA Registro y Registro 
+					//tengo que liberar los 2 registros!!?
 					
 					
-					String mov1 = "MOV "+nombre_reg+" , "+nombre_reg2;//t.getOperando1();
-					//System.out.println(mov1);
-					this.instrucciones_asmb.add(mov1);
+					if (reg2_actual == 0) {
+						String nombre_reg1 = t_reg.getNombreReg(reg_actual);
+						String nombre_reg2 = "";
+						int id_reg2 = 0;
+						
+						//caso en que usa 2 registros en simultaneo
+						if (nombre_reg1.charAt(1)=='B') {
+							nombre_reg2 = "EAX";
+							id_reg2 = 1;
+						}
+						
+						if (nombre_reg1.charAt(1)=='C') {
+							nombre_reg2 = "EBX";
+							id_reg2 = 2;
+						}
+						
+											
+						reg_actual = t_reg.getRegistroLibre();
+						String nombre_reg = t_reg.getNombreReg(reg_actual);
+						
+						String mov1 = "MOV "+nombre_reg+" , "+nombre_reg2;//t.getOperando1();
+						
+						//System.out.println(mov1);
+						
+						this.instrucciones_asmb.add(mov1);
+						
+						
+						instruccion = "SUB "+nombre_reg+" , "+nombre_reg2; 	
+						
+						
+						//System.out.println(instruccion);
+						this.instrucciones_asmb.add(instruccion);
 					
-					
-					instruccion = "SUB "+nombre_reg+" , "+nombre_reg2; 	
-					//instruccion += t.getOperando2();
-					
-					//System.out.println(instruccion);
-					this.instrucciones_asmb.add(instruccion);
+						
+						this.t_reg.liberarRegistro(reg_actual);
+						this.t_reg.liberarRegistro(id_reg2);
 				
+					} else {
+						
+						
+						String nombre_reg1 = t_reg.getNombreReg(reg_actual);
+						String nombre_reg2_mov = "";//t_reg.getNombreReg(reg2_actual);
+						
+						int id_reg2 = 0;
+						
+						//caso en que usa 2 registros en simultaneo
+						if (nombre_reg1.charAt(1)=='B') {
+							nombre_reg2_mov = "EAX";
+							id_reg2 = 1;
+						}
+						
+						if (nombre_reg1.charAt(1)=='C') {
+							nombre_reg2_mov = "EBX";
+							id_reg2 = 2;
+						}
+						
+											
+						reg_actual = t_reg.getRegistroLibre();
+						String nombre_reg = t_reg.getNombreReg(reg_actual);
+						
+						String mov1 = "MOV "+nombre_reg+" , "+nombre_reg2_mov;//t.getOperando1();
+						
+						//System.out.println(mov1);
+						
+						this.instrucciones_asmb.add(mov1);
+						
+						
+						String nombre_reg2 = t_reg.getNombreReg(reg2_actual);
+						
+						instruccion = "SUB "+nombre_reg+" , "+nombre_reg2; 	
+						
+						
+						this.instrucciones_asmb.add(instruccion);
 					
-					this.t_reg.liberarRegistro(reg_actual);
-					this.t_reg.liberarRegistro(id_reg2);
+						
+						this.t_reg.liberarRegistro(reg_actual);
+						this.t_reg.liberarRegistro(id_reg2);
+						
+						this.reg2_actual=0;
+					}
 				}
-			}	
+			}
+
 		};
 		
 		
 		
 		if (t.getOperador().equals("*")) {
+						
+			int tipo_op = 0; //por defecto son 2 tokens
 			
-			int tipo_op = 0;
-			
+			//si primer operando es un registro y el segundo no
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
-				//si elprimer operando es un registro y el segundo no
 				tipo_op=1;
 			}
-			
+
+			//si primer operando NO es un registro y el segundo si lo es
 			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
-				//si elprimer operando NO es un registro y el segundo si lo es
 				tipo_op=2;
 			}
 			
+			//los dos operandos son registros
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) == '['){
-				//si los dos operandos son registros
 				tipo_op=3;
 			}
 			
 			
 			switch(tipo_op) {
-				case 0:
+				
+				case 0: //multiplicacion entre 2 tokens
 				{
-					//System.out.println("\n MULTIPLICO tokens \n");
-					reg_actual = t_reg.getRegistroLibre();
+					//si son dos tokens float
+					if (esPtoFlotante(t.getOperando1()) && esPtoFlotante(t.getOperando2())) {
+						
+						String fld1 = "FLD _"+t.getOperando1().replace('.', '_');
+						this.instrucciones_asmb.add(fld1);
+												
+						String fld2 = "FLD _"+t.getOperando2().replace('.', '_');
+						this.instrucciones_asmb.add(fld2);
+						
+						String fadd = "FMUL ";
+						this.instrucciones_asmb.add(fadd);
+						
+						break;
+					}
+					
+					//si el op1 no es puntero a float
+					if (!esPunteroPuntoFlotante(t.getOperando1())) { 
+								
+						reg_actual = t_reg.getRegistroLibre();
+						String nombre_reg = t_reg.getNombreReg(reg_actual);
+						
+						String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
+						
+						
+						this.instrucciones_asmb.add(mov1);
+						
+						instruccion = "IMUL "+nombre_reg+" , "; 	
+						
+						if (tds.getSimbolo(t.getOperando2()).getTipo().equals("CTE")) {
+							instruccion += "_"; 	
+						}
+						
+						instruccion += t.getOperando2();
+						
+						//System.out.println(instruccion);
+						
+						this.instrucciones_asmb.add(instruccion);
+						
+						break;
+						
+				} else {
+					//System.out.println("suma entre tokens puntero a tipo float "+t.getOperando1()+" , "+t.getOperando2());
+					
+					String fadd = "FMUL "; // esto hace ST(1) + ST , ajusta el puntero de pila y pone el resultado en ST
+					//es decir, FADD hace la suma b@main + bb@main
+					this.instrucciones_asmb.add(fadd);
+					break;
+					}
+					
+				}
+				
+				
+				case 1:
+				{
+					//MULTIPLICA Registro y Token
+					
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
-					
-					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-					
-					//System.out.println(mov1);
-					this.instrucciones_asmb.add(mov1);
-					
 					
 					instruccion = "MUL "+nombre_reg+" , "; 	
 					instruccion += t.getOperando2();
 					
 					//System.out.println(instruccion);
-					
 					this.instrucciones_asmb.add(instruccion);
 					
 					break;
 				}
 				
-				case 1:
-				{
-										
-					//System.out.println("\n MULTIPLICO Terceto y Token \n");
-					
-					
-					String nombre_reg = t_reg.getNombreReg(reg_actual);
-					
-					
-					instruccion = "MUL "+nombre_reg+" , "; 	
-					instruccion += t.getOperando2();
-					
-					//System.out.println(instruccion);
-					this.instrucciones_asmb.add(instruccion);
-					
-					break;
-				}
 				
 				case 2:
 				{
 										
-					//System.out.println("\n MULTIPLICO Token y Terceto \n");
+					// MULTIPLICA Token y Terceto ;
 
 					reg_actual = t_reg.getRegistroLibre();
-					
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
-					
-					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-					
-					//System.out.println(mov1);
-					
-					this.instrucciones_asmb.add(mov1);
 					
 					
 					instruccion = "MUL "+nombre_reg+" , "; 	
 					instruccion += t.getOperando2();
 					
 					//System.out.println(instruccion);
-					
 					this.instrucciones_asmb.add(instruccion);
-				
+					
 					break;
 				}
 				
 				case 3:
 				{
-					//System.out.println("\n MULTIPLICO Terceto y Terceto \n");
-
+					// MULTIPLICA Registro y Registro 
+					//tengo que liberar los 2 registros!!?
+					
 					String nombre_reg1 = t_reg.getNombreReg(reg_actual);
 					String nombre_reg2 = "";
 					int id_reg2 = 0;
@@ -475,9 +592,10 @@ public class GeneradorCodigo {
 					reg_actual = t_reg.getRegistroLibre();
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
 					
-					
 					String mov1 = "MOV "+nombre_reg+" , "+nombre_reg2;//t.getOperando1();
+					
 					//System.out.println(mov1);
+					
 					this.instrucciones_asmb.add(mov1);
 					
 					
@@ -485,15 +603,14 @@ public class GeneradorCodigo {
 					
 					
 					//System.out.println(instruccion);
-					
 					this.instrucciones_asmb.add(instruccion);
 				
-								
+					
 					this.t_reg.liberarRegistro(reg_actual);
 					this.t_reg.liberarRegistro(id_reg2);
 				}
 			}
-			
+
 		};
 		
 		
@@ -501,113 +618,130 @@ public class GeneradorCodigo {
 		// DIVISION
 		
 		if (t.getOperador().equals("/")) {
-			int tipo_op = 0;
+						
+			int tipo_op = 0; //por defecto son 2 tokens
 			
+			//si primer operando es un registro y el segundo no
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
-				//si elprimer operando es un registro y el segundo no
 				tipo_op=1;
 			}
-			
+
+			//si primer operando NO es un registro y el segundo si lo es
 			if ((t.getOperando1().charAt(0)) != '[' && (t.getOperando2().charAt(0)) == '['){
-				//si elprimer operando NO es un registro y el segundo si lo es
 				tipo_op=2;
 			}
 			
+			//los dos operandos son registros
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) == '['){
-				//si los dos operandos son registros
 				tipo_op=3;
 			}
 			
 			
 			switch(tipo_op) {
-				case 0:
+				
+				case 0: //division entre 2 tokens
 				{
-					//System.out.println("\n DIVIDO tokens \n");
+					if (esPtoFlotante(t.getOperando1()) && esPtoFlotante(t.getOperando2())) {
+						
+						String fld1 = "FLD _"+t.getOperando1().replace('.', '_');
+						this.instrucciones_asmb.add(fld1);
+												
+						String fld2 = "FLD _"+t.getOperando2().replace('.', '_');
+						this.instrucciones_asmb.add(fld2);
+						
+						String fdiv = "FDIV ";
+						this.instrucciones_asmb.add(fdiv);
+						
+						break;
+					}
 					
-					if (!t.getOperando2().equals("0")) {
+					
+					if (!esPunteroPuntoFlotante(t.getOperando1())) { 
+						
+						if (t.getOperando2().equals("0")){
+							System.out.println("ERROR de EJECUCION!  Dividide "+t.getOperando1()+" por 0 ");
+							this.errorEjecucion=true;
+							break;
+						}
+						
 						reg_actual = t_reg.getRegistroLibre();
 						String nombre_reg = t_reg.getNombreReg(reg_actual);
 						
 						String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
 						
-						//System.out.println(mov1);
 						
 						this.instrucciones_asmb.add(mov1);
 						
 						
-						instruccion = "DIV "+nombre_reg+" , "; 	
-
+						instruccion = "DIV ";//+nombre_reg+" , "; 	
+						
+						
+						//aca esta la cuestion!
+						this.reg2_actual=reg_actual;
+						//System.out.println("reg2 "+reg2_actual);
+						
+						
+						if (tds.getSimbolo(t.getOperando2()).getTipo().equals("CTE")) {
+							instruccion += "_"; 	
+						}
+						
 						instruccion += t.getOperando2();
+						
 						
 						this.instrucciones_asmb.add(instruccion);
 						
-					} else {
-						
-						System.out.println("ERROR de EJECUCCION -> division por 0");
+						break;
+				} else {
+					//System.out.println("suma entre tokens puntero a tipo float "+t.getOperando1()+" , "+t.getOperando2());
 					
+					String fadd = "FDIV "; // esto hace ST(1) + ST , ajusta el puntero de pila y pone el resultado en ST
+					//es decir, FADD hace la suma b@main + bb@main
+					this.instrucciones_asmb.add(fadd);
+					break;
 					}
+					
+				}
+				
+				
+				case 1:
+				{
+					//DIVIDO Registro y Token
+					
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					instruccion = "DIV "+nombre_reg+" , "; 	
+					instruccion += t.getOperando2();
+					
+					//System.out.println(instruccion);
+					this.instrucciones_asmb.add(instruccion);
 					
 					break;
 				}
 				
-				case 1:
-				{					
-					//System.out.println("\n DIVIDO Terceto y Token \n");
-					
-					
-					if (!t.getOperando2().equals("0")) {
-						reg_actual = t_reg.getRegistroLibre();
-						String nombre_reg = t_reg.getNombreReg(reg_actual);
-						
-						String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-						
-						//System.out.println(mov1);
-						
-						this.instrucciones_asmb.add(mov1);						
-						instruccion = "DIV "+nombre_reg+" , "; 	
-
-						instruccion += t.getOperando2();
-						this.instrucciones_asmb.add(instruccion);
-						
-					} else {
-						System.out.println("ERROR de EJECUCCION -> division por 0");
-						//this.instrucciones_asmb
-					}
-					
-					break;
-				}
 				
 				case 2:
 				{
 										
-					//System.out.println("\n DIVIDO Token y Terceto \n");
+					// DIVIDO Token y Terceto ;
 
 					reg_actual = t_reg.getRegistroLibre();
-					
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
-					
-					String mov1 = "MOV "+nombre_reg+" , "+t.getOperando1();
-					
-					//System.out.println(mov1);
-					
-					this.instrucciones_asmb.add(mov1);
 					
 					
 					instruccion = "DIV "+nombre_reg+" , "; 	
 					instruccion += t.getOperando2();
 					
 					//System.out.println(instruccion);
-					
 					this.instrucciones_asmb.add(instruccion);
-				
+					
 					break;
 				}
 				
 				case 3:
 				{
-					//aca tengo que liberar los 2 registros!!!
-					//System.out.println("\n DIVIDO Terceto y Terceto \n");
-
+					// DIVISION Registro y Registro 
+					//tengo que liberar los 2 registros!!?
+					
 					String nombre_reg1 = t_reg.getNombreReg(reg_actual);
 					String nombre_reg2 = "";
 					int id_reg2 = 0;
@@ -636,16 +770,16 @@ public class GeneradorCodigo {
 					
 					instruccion = "DIV "+nombre_reg+" , "+nombre_reg2; 	
 					
-					//System.out.println(instruccion);
 					
+					//System.out.println(instruccion);
 					this.instrucciones_asmb.add(instruccion);
 				
-								
+					
 					this.t_reg.liberarRegistro(reg_actual);
 					this.t_reg.liberarRegistro(id_reg2);
 				}
 			}
-	
+
 		};
 		
 		
@@ -656,9 +790,9 @@ public class GeneradorCodigo {
 			
 			//aca defino el tipo de JUMP
 			String jump = "JL ";
-			String tag = "etiqueta";
+			//String tag = "etiqueta";
 			
-			jump += tag;
+			//jump += tag;
 			
 			
 			int tipo_op = 0;
@@ -749,7 +883,7 @@ public class GeneradorCodigo {
 						id_reg2 = 2;
 					}
 					
-					
+					/*
 					instruccion = "CMP "+nombre_reg1+" , ";
 					instruccion += nombre_reg2;
 					
@@ -765,6 +899,26 @@ public class GeneradorCodigo {
 					
 					this.t_reg.liberarRegistro(reg_actual);
 					this.t_reg.liberarRegistro(id_reg2);
+					*/
+					reg_actual = t_reg.getRegistroLibre();
+					String nombre_reg = t_reg.getNombreReg(reg_actual);
+					
+					String mov1 = "CMP "+nombre_reg+" , "+nombre_reg2;//t.getOperando1();
+					
+					//System.out.println(mov1);
+					
+					this.instrucciones_asmb.add(mov1);
+					
+					
+					//instruccion = "ADD "+nombre_reg+" , "+nombre_reg2; 	
+					
+					
+					//System.out.println(instruccion);
+					//this.instrucciones_asmb.add(instruccion);
+				
+					
+					this.t_reg.liberarRegistro(reg_actual);
+					this.t_reg.liberarRegistro(id_reg2);
 				}
 			}
 			
@@ -775,9 +929,9 @@ public class GeneradorCodigo {
 		if (t.getOperador().equals(">")) {
 			//aca defino el tipo de JUMP
 			String jump = "JG ";
-			String tag = "etiqueta";
+			//String tag = "etiqueta";
 			
-			jump += tag;
+			//jump += tag;
 			
 			int tipo_op = 0;
 			
@@ -798,7 +952,7 @@ public class GeneradorCodigo {
 			
 			
 			switch(tipo_op) {
-				case 0:
+				case 0: //comparacion entre 2 tokens
 				{
 					instruccion = "CMP "+t.getOperando1()+" , ";
 					instruccion += t.getOperando2();
@@ -815,7 +969,7 @@ public class GeneradorCodigo {
 					break;
 				}
 				
-				case 1:
+				case 1: //comparacion entre un terceto y un token 
 				{
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
 					instruccion = "CMP "+nombre_reg+" , ";
@@ -833,7 +987,7 @@ public class GeneradorCodigo {
 					break;
 				}
 				
-				case 2:
+				case 2: //comparacion entre un token y un terceto
 				{
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
 					instruccion = "CMP "+nombre_reg+" , ";
@@ -850,7 +1004,7 @@ public class GeneradorCodigo {
 					break;
 				}
 				
-				case 3:
+				case 3: //comparacion entre tercetos
 				{
 					//aca tengo que liberar los 2 registros!!!
 					String nombre_reg1 = t_reg.getNombreReg(reg_actual);
@@ -869,6 +1023,7 @@ public class GeneradorCodigo {
 					}
 					
 					
+					
 					instruccion = "CMP "+nombre_reg1+" , ";
 					instruccion += nombre_reg2;
 					
@@ -880,7 +1035,6 @@ public class GeneradorCodigo {
 					this.t_reg.liberarRegistro(id_reg2);
 					
 					//System.out.println(jump);
-					
 					this.instrucciones_asmb.add(jump);	
 					
 					break;
@@ -896,113 +1050,147 @@ public class GeneradorCodigo {
 		
 		if (t.getOperador().equals("=")) {
 			
-			char tipo_asig = getTipoAsignacion(t); 
-			
-			
-			if (tipo_asig == 'r') { //asignacion entre reg (terceto) y variable
+			if (!errorEjecucion) {
+				char tipo_asig = getTipoAsignacion(t); 
 				
-				if (!this.esPunteroPuntoFlotante(t.getOperando1())) {
+				
+				if (tipo_asig == 'r') { //asignacion entre reg (terceto) y variable
 					
-					//esto pareceria estar bien
-					
-					String mov = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
-					//System.out.println(mov);
-					this.instrucciones_asmb.add(mov);
-	
-					this.t_reg.liberarRegistro(reg_actual);
-					//}
-				} else {
-					System.out.println("ASIGNACION entre "+t.getOperando1()+" TERRIBLKE PUNTERO a FLOAT "+t.getOperando2());
-					//aca soy la asignacion entre una variable float y un terceto!
-					
-					//hago otro juego de instrucciones!
-					
-					String fst = "FST "+t.getOperando1();
-					//o creo una copia con fstp??
-					
-					this.instrucciones_asmb.add(fst);
+					if (!this.esPunteroPuntoFlotante(t.getOperando1())) {
 						
+						//esto pareceria estar bien
+						
+						String mov = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
+						//System.out.println(mov);
+						this.instrucciones_asmb.add(mov);
+		
+						this.t_reg.liberarRegistro(reg_actual);
+						
+					} else {
+											
+						String fst = "FST "+t.getOperando1();
+						//o creo una copia con fstp??
+						
+						this.instrucciones_asmb.add(fst);
+							
+					}
 				}
-			}
-			
-			
-			//aca hacer una sentencia de control que cheke si t.getOperando2() es FLOAT!!
-			
-			//aunque no seria correcto... ya que se generaria igual el terceto
-			
-			if (tipo_asig == 'v') { //asignacion entre 2 variables
-				//aca hago el linkeo!!
-				// t.getOp1() es ID, t.getOp2() es direccion de ptro
-				//System.out.println(t.getOperando1());
 				
-				if (this.esPtoFlotante(t.getOperando2())) {
-					//System.out.println("que hay por aca...? "+t.getOperando1());
-					//System.out.println("y por aca...? "+t.getOperando2());
-					
-					String fld = "FLD _"+t.getOperando2().replace('.', '_');
-					this.instrucciones_asmb.add(fld);
-					
-					String fstp = "FSTP "+t.getOperando1();
-					this.instrucciones_asmb.add(fstp);
 				
+				if (tipo_asig == 'v') { //asignacion entre 2 variables
 					
-				} else {
+					if (this.esPtoFlotante(t.getOperando2())) {
+						//System.out.println("que hay por aca...? "+t.getOperando1());
+						//System.out.println("y por aca...? "+t.getOperando2());
 						
+						String fld = "FLD _"+t.getOperando2().replace('.', '_');
+						this.instrucciones_asmb.add(fld);
+						
+						String fstp = "FSTP "+t.getOperando1();
+						this.instrucciones_asmb.add(fstp);
+					
+						
+					} else {
+							
 						//esto parece estar bien
 						reg_actual = t_reg.getRegistroLibre();
 						String nombre_reg = t_reg.getNombreReg(reg_actual);
-						String mov1 = "MOV "+nombre_reg+" , _"+t.getOperando2();
 						
+						String mov1 = "MOV "+nombre_reg+" , ";
+						
+						System.out.println("a ver.. "+t.getOperando1()+" , "+t.getOperando2());
+						Token sym = tds.getSimbolo(t.getOperando2());
+						//if (sym != null){
+						if (sym.getTipo().equals("CTE")) {
+						//		System.out.println("symba sabe"+sym.getLexema());
+								mov1 += "_";
+							}
+						//}
+								
+						//if (tds.getSimbolo(t.getOperando2()).getTipo().equals("CTE")) {
+						//	mov1 += "_";
+						//}
+						mov1 += t.getOperando2();
+						//String mov1 = "MOV "+nombre_reg+" , _"+t.getOperando2();
+							
 						//System.out.println(mov1);
 						this.instrucciones_asmb.add(mov1);
-						
-						
+							
 						//porque en las asignaciones, el operando1 siempre es varible
 						String mov2 = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
 						//System.out.println(mov2);	
 						this.instrucciones_asmb.add(mov2);
-						
+							
 						this.t_reg.liberarRegistro(reg_actual);
-		
-					
+			
+					}
 				}
+				} 
+				else {
+					
+					this.errorEjecucion=false;
+					//break;
+				}
+			
 			}
-		}
+		
 		
 		
 		
 		//---------------- SALTOS --------------------
 		
+		
 		if (t.getOperador().equals("BI")) {
 			
-			//jump incondicional 
-			String salto = "JMP "+t.getOperando1();
+			//salto incondicional 
+			String salto = "JMP instr_"+t.getOperando1();
 			
-			//System.out.println(salto);
+			int dir_jg; 
+			dir_jg = Integer.parseInt(t.getOperando1());
+
+			String dir_aux = "instr_"+String.valueOf(dir_jg)+": \n";
+			dir_aux += instrucciones_asmb.get(dir_jg-1);
 			
+			instrucciones_asmb.set(dir_jg-1, dir_aux);
 			this.instrucciones_asmb.add(salto);
 			
 		};
 		
+		
 			
 		if (t.getOperador().equals("BF")) {
 			
-			//completar etiqueta -> JG
 			String last_instr = getUltimaInstruccion();
 			
 			last_instr = last_instr.substring(0, 3);
 			
-			if (t.getOperando2().charAt(0) == '[') {
-				last_instr += t.getOperando2().substring(1, t.getOperando2().length()-1);
-			} else {
-				last_instr += " "+t.getOperando2();
-			}
+			if (t.getOperando2() != " ") {	
+				int dir_jg; 
+
+				if (t.getOperando2().charAt(0) == '[') {
+					last_instr += "instr_"+t.getOperando2().substring(1, t.getOperando2().length()-1);
+					dir_jg = Integer.parseInt(t.getOperando2().substring(1, t.getOperando2().length()-1));
+				} else {
+					last_instr += "instr_"+t.getOperando2();
+					dir_jg = Integer.parseInt(t.getOperando2());
+				}	
 			
-			//System.out.println(last_instr);
-			
-			this.instrucciones_asmb.add(last_instr);
+				int dir = dir_jg-1;
 				
-			};
+				if (dir >= instrucciones_asmb.size()) {
+					dir = dir-1;
+				}
+				
+				String dir_aux = "instr_"+String.valueOf(dir_jg)+": \n";
+				//if ((dir_jg-1) != null) {
+				dir_aux += instrucciones_asmb.get(dir);
+				
+				instrucciones_asmb.set(dir, dir_aux);
+			
+				this.instrucciones_asmb.add(last_instr);
+				//}
+			}
+		};
 		
 		
 			
@@ -1010,7 +1198,7 @@ public class GeneradorCodigo {
 				
 		if (t.getOperador().equals("PROC")) {
 				
-			String proc = "PROC "+t.getOperando1();
+			String proc = t.getOperando1()+" PROC";
 			//System.out.println(proc);
 			this.instrucciones_asmb.add(proc);
 				
@@ -1020,7 +1208,7 @@ public class GeneradorCodigo {
 		if (t.getOperador().equals("RET")) {
 				
 			String ret = "RET ";
-			String endp = "ENDP "+t.getOperando1();
+			String endp = t.getOperando1()+" ENDP";
 			//System.out.println(ret);
 			this.instrucciones_asmb.add(ret);
 			this.instrucciones_asmb.add(endp);
@@ -1052,11 +1240,13 @@ public class GeneradorCodigo {
 	}
 	
 	
-	public void crearArchivoAssembler() throws IOException {
+	public void crearArchivoAssembler(String n) throws IOException {
 		//String ruta = "archivoAssembler.txt";
-		String ruta = "archivoAssembler.asm";
+		String ruta = "archivoAssembler_"+n+".asm";
 		
-		File f = new File(ruta);
+		File f = new File(System.getProperty("user.dir"), ruta);
+		//File f = new File(ruta);
+		
 	    FileWriter fw = new FileWriter(f);
 	    BufferedWriter escritura = new BufferedWriter(fw);
 	    
@@ -1140,28 +1330,35 @@ public class GeneradorCodigo {
 		String out = "";
 		
 		for (Token t : this.tds.getListaTokens()) {
-			if (t.getTipo().equals("CTE")){
-				//System.out.println("_"+t.getLexema() + " DW "+t.getLexema());//+ t.getLexema());
-				//out += "_"+t.getLexema() + " DW "+t.getLexema()+"\n";
-				
-				if (t.getTipoVar().equals("INTEGER")) {
-					out += "_"+t.getLexema() + " DW "+t.getLexema()+"\n";
-				}
-				
-				if (t.getTipoVar().equals("FLOAT")) {
-					out += "_"+t.getLexema().replace('.', '_') + " DQ "+t.getLexema()+ "\n";
-					//si es float, cambio el . por _
-				}
-				
-			} else {
-				//si el token no es CTE -> es ID o CADENA
-				//System.out.println(t.getLexema() + " DW ");//+ t.getLexema());
-				if (t.getUso().equals("procedimiento")) {
-					//nada. no lo agrego como sentencia declarativa al ID de un proc
-					continue;
-				} else {
+			if (t != null) {
+				if (t.getTipo().equals("CTE")){
+					//System.out.println("_"+t.getLexema() + " DW "+t.getLexema());//+ t.getLexema());
+					//out += "_"+t.getLexema() + " DW "+t.getLexema()+"\n";
 					
-					out += t.getLexema() + " DW ? \n";
+					if (t.getTipoVar().equals("INTEGER")) {
+						out += "_"+t.getLexema() + " DD "+t.getLexema()+"\n";
+					}
+					
+					if (t.getTipoVar().equals("FLOAT")) {
+						out += "_"+t.getLexema().replace('.', '_') + " DQ "+t.getLexema()+ "\n";
+						//si es float, cambio el . por _
+					}
+					
+				} else {
+					//si el token no es CTE -> es ID o CADENA
+					//System.out.println(t.getLexema() + " DW ");//+ t.getLexema());
+					if (t.getUso().equals("procedimiento")) {
+						//nada. no lo agrego como sentencia declarativa al ID de un proc
+						continue;
+					} else {
+						
+						//si es ID o CADENA
+						if (esPunteroPuntoFlotante(t.getLexema())) {
+							out += t.getLexema() + " DQ ? \n" ;
+						} else {
+							out += t.getLexema() + " DD ? \n";
+						}
+					}
 				}
 			}
 		}	
