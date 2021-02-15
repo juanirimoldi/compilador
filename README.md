@@ -2,6 +2,8 @@
 
 
 Trabajo practico que consiste en crear un compilador que consuma codigo (tipo algol, estilo Java), haga el procesamiento de la informacion y, en caso de compilar correctamente, genere codigo maquina.
+
+<br />
 <br />
 
 Los componentes principales del compilador son: 
@@ -27,6 +29,8 @@ La TablaDeSimbolos contiene la informacion necesaria para manipular la informaci
 El GeneradorCodigo procesa la estrucutura sintactica y aplica semantica en las sentencias declarativas y ejecutables. Con esta informacion, genera los tercetos 
 con la lista de tercetos, y crea el codigo maquina listo para ser ensamblado.
 
+<br />
+<br />
 
 Como ultimo paso, se procesa el ejecutable contenido en codigo.asm con el programa MASM32
 En caso de compilar correctamente, se ejecuta. La ejecucion del archivo correctamente compilado, construye el proyecto y crea un objeto referenciable, y un archivo ejecutable .exe
