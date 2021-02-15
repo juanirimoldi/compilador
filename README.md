@@ -2,7 +2,7 @@
 
 
 Trabajo practico que consiste en crear un compilador que consuma codigo (tipo algol, estilo Java), haga el procesamiento de la informacion y, en caso de compilar correctamente, genere codigo maquina.
-
+<br />
 
 Los componentes principales del compilador son: 
 
@@ -16,7 +16,7 @@ Los componentes principales del compilador son:
 
 
 <br />      
-  
+<br />  
 
 El AnalizadorLexico reconoce los tokens soportados por el lenguaje, y aplica los checkeos semanticos relativos a la sintaxis.
 
