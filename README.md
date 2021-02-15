@@ -15,6 +15,9 @@ Los componentes principales del compilador son:
   .  Tabla De Simbolos, que almacena todos los tokens correctos sintacticamente, con sus atributos como caracteristicas semanticas del token.  
 
 
+
+
+
 El AnalizadorLexico reconoce los tokens soportados por el lenguaje, y aplica los checkeos semanticos relativos a la sintaxis.
 
 El AnalizadorSintactico genera el arbol de parsing para la gramatica definida, creando las estructuras sintacticas propias del lenguaje a representar. Una vez definida correctamente la gramatica, se generan las estructuras sintacticas con el compilador de compiladores YACC 
