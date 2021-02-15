@@ -7,8 +7,11 @@ Trabajo practico que consiste en crear un compilador que consuma codigo (tipo al
 Los componentes principales del compilador son: 
 
   .  Analisis Lexico, que se encarga de leer los tokens correctos y clasificarlos en variables, constantes y cadenas;  
+  
   .  Analisis Sintactico, que a partir de las reglas de la gramaticaIncremental.y  arma las estructuras sintacticas con YACC, 
+  
   .  Generacion de Codigo, que genera codigo intermedio (tercetos) y codigo assembler.
+  
   .  Tabla De Simbolos, que almacena todos los tokens correctos sintacticamente, con sus atributos como caracteristicas semanticas del token.  
 
 
