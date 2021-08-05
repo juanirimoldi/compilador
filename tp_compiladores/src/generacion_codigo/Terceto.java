@@ -1,4 +1,4 @@
-package analizador_sintactico;
+package generacion_codigo;
 
 public class Terceto {
 	private int id;

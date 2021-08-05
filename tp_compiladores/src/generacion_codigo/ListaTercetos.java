@@ -1,4 +1,4 @@
-package analizador_sintactico;
+package generacion_codigo;
 
 import java.util.ArrayList;
 
@@ -28,13 +28,12 @@ public class ListaTercetos {
 		
 		
 		if (this.lista_tercetos.get(pos).getOperador().equals("BF")) {
-			//System.out.println("\n MODIFICO EL TERCETO BF? -> valor "+ val+ "  en pos "+pos+"\n");
+			//System.out.println("\n MODIFICO EL TERCETO BF -> valor "+ val+ "  en pos "+pos+"\n");
 
 			this.lista_tercetos.get(pos).setOperando2(val);
 			
-		} //else {
-			
-			//System.out.println("\n MODIFICO EL TERCETO BF? -> valor "+ val+ "  en pos "+pos+"\n");
+		} 
+		
 		if (this.lista_tercetos.get(pos).getOperador().equals("BI")) {
 			this.lista_tercetos.get(pos).setOperando1(val);
 		}
@@ -52,10 +51,8 @@ public class ListaTercetos {
 		String aux = "";
 		
 		for (Terceto t : lista_tercetos) {
-			//aux += t.getId()+" , "+t.getOperador()+" , "+t.getOperando1()+" , "+t.getOperando2()+"\n";
-			aux += t.getOperador()+" , "+t.getOperando1()+" , "+t.getOperando2()+"\n";
 			
-			//System.out.println(t.getId()+" , "+t.getOperador()+" , "+t.getOperando1()+" , "+t.getOperando2());
+			aux += t.getOperador()+" , "+t.getOperando1()+" , "+t.getOperando2()+"\n";
 			
 		}
 		

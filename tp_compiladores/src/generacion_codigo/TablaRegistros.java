@@ -1,4 +1,4 @@
-package analizador_sintactico;
+package generacion_codigo;
 
 public class TablaRegistros {
 	//registros inicializados como libres

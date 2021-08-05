@@ -8,7 +8,7 @@ public class AgregarCaracter extends AccionSemantica {
 		super.buffer += c;
 		
 		
-		//si el prier caracter es un digito y viene un punto -> cambio tipo de variable a FLOAT
+		//si el primer caracter es un digito y viene un punto -> cambio tipo de variable a FLOAT
 		if (Character.isDigit(super.buffer.charAt(0)) & (c == '.')) {
 			super.tipo_variable = "FLOAT";
 		}

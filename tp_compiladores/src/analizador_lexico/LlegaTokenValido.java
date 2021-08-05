@@ -9,25 +9,19 @@ public class LlegaTokenValido extends AccionSemantica {
 	private float rango_neg_min_fl = -3.40282347f+38;
 	private float rango_neg_max_fl = -1.17549435f-38;
 
-	//si detecta comentario -> volver a E0
+	
 	
 	public void ejecutar(char c, int nro_linea) {
 		//System.out.println("AS3 -> Voy a Ef con un Token Valido -> "+ super.buffer + " , tipo ->"+super.tipo_buffer);
 		
 		int ascii = (int)c;
-		//if (super.buffer == '=') {
-		//TOKEN DOBLE!!! dos tokens simples!! como entrego los dos por separado?
-		//System.out.println("LLEGA TOKEN VALIDO!! "+super.buffer+" , char "+c);	
+		
 		
 		if (ascii == 32){
 			if (super.tipo_variable.equals("CADENA")){
 				super.buffer += c;
 			}
-			//System.out.println("ESPACIO EN BLANCO -> "+ascii);
-			//continue;
 		} else if (ascii == 61) {
-			//System.out.println("IGUAL -> "+ascii);
-			//continue;
 			super.tipo_token="IGUAL";
 			super.buffer += c;
 		} 

@@ -23,6 +23,9 @@ import java.lang.Math;
 import java.io.*;
 
 import analizador_lexico.*;
+import generacion_codigo.GeneradorCodigo;
+import generacion_codigo.ListaTercetos;
+import generacion_codigo.Terceto;
 //#line 22 "Parser.java"
 import tabla_simbolos.TablaDeSimbolos;
 
@@ -525,7 +528,9 @@ public static void main(String args[]) throws IOException, IllegalArgumentExcept
 	String direccion_codigo = "casos_prueba_simple.txt";
 	//String direccion_codigo = "casos_prueba_filminas.txt";
 	
-	//String direccion_codigo = args[0];
+	
+	//String direccion_codigo = args[0]; //asi reibo casos de prueba como parametro
+	
 	
 	String nombre_file = direccion_codigo.substring(0, direccion_codigo.length()-4);		
 			

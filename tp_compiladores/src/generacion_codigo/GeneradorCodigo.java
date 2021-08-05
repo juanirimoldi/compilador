@@ -1,4 +1,4 @@
-package analizador_sintactico;
+package generacion_codigo;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -92,6 +92,11 @@ public class GeneradorCodigo {
 		if (t.getOperador().equals("+")) {
 			
 			int tipo_op = 0; //por defecto son 2 tokens
+			
+			//aclaracion!
+			//en vez de referenciar al terceto y leer para atras
+			//lo quye hay que hacer es crear variables auxiliares que almacenen el valor del terceto
+			//y despues limpiar
 			
 			//si primer operando es un registro y el segundo no
 			if ((t.getOperando1().charAt(0)) == '[' && (t.getOperando2().charAt(0)) != '['){
@@ -676,7 +681,6 @@ public class GeneradorCodigo {
 						instruccion = "DIV ";//+nombre_reg+" , "; 	
 						
 						
-						//aca esta la cuestion!
 						this.reg2_actual=reg_actual;
 						//System.out.println("reg2 "+reg2_actual);
 						
@@ -883,23 +887,8 @@ public class GeneradorCodigo {
 						id_reg2 = 2;
 					}
 					
-					/*
-					instruccion = "CMP "+nombre_reg1+" , ";
-					instruccion += nombre_reg2;
+				
 					
-					//System.out.println(instruccion);
-					
-					this.instrucciones_asmb.add(instruccion);
-					
-
-					//System.out.println(jump);
-					
-					this.instrucciones_asmb.add(jump);
-					
-					
-					this.t_reg.liberarRegistro(reg_actual);
-					this.t_reg.liberarRegistro(id_reg2);
-					*/
 					reg_actual = t_reg.getRegistroLibre();
 					String nombre_reg = t_reg.getNombreReg(reg_actual);
 					
@@ -909,13 +898,6 @@ public class GeneradorCodigo {
 					
 					this.instrucciones_asmb.add(mov1);
 					
-					
-					//instruccion = "ADD "+nombre_reg+" , "+nombre_reg2; 	
-					
-					
-					//System.out.println(instruccion);
-					//this.instrucciones_asmb.add(instruccion);
-				
 					
 					this.t_reg.liberarRegistro(reg_actual);
 					this.t_reg.liberarRegistro(id_reg2);
@@ -1006,7 +988,6 @@ public class GeneradorCodigo {
 				
 				case 3: //comparacion entre tercetos
 				{
-					//aca tengo que liberar los 2 registros!!!
 					String nombre_reg1 = t_reg.getNombreReg(reg_actual);
 					String nombre_reg2 = "";
 					int id_reg2 = 0;
@@ -1057,9 +1038,7 @@ public class GeneradorCodigo {
 				if (tipo_asig == 'r') { //asignacion entre reg (terceto) y variable
 					
 					if (!this.esPunteroPuntoFlotante(t.getOperando1())) {
-						
-						//esto pareceria estar bien
-						
+											
 						String mov = "MOV "+t.getOperando1()+" , "+t_reg.getNombreReg(reg_actual);
 						//System.out.println(mov);
 						this.instrucciones_asmb.add(mov);
@@ -1069,7 +1048,6 @@ public class GeneradorCodigo {
 					} else {
 											
 						String fst = "FST "+t.getOperando1();
-						//o creo una copia con fstp??
 						
 						this.instrucciones_asmb.add(fst);
 							
@@ -1080,8 +1058,6 @@ public class GeneradorCodigo {
 				if (tipo_asig == 'v') { //asignacion entre 2 variables
 					
 					if (this.esPtoFlotante(t.getOperando2())) {
-						//System.out.println("que hay por aca...? "+t.getOperando1());
-						//System.out.println("y por aca...? "+t.getOperando2());
 						
 						String fld = "FLD _"+t.getOperando2().replace('.', '_');
 						this.instrucciones_asmb.add(fld);
@@ -1092,7 +1068,6 @@ public class GeneradorCodigo {
 						
 					} else {
 							
-						//esto parece estar bien
 						reg_actual = t_reg.getRegistroLibre();
 						String nombre_reg = t_reg.getNombreReg(reg_actual);
 						
@@ -1100,16 +1075,12 @@ public class GeneradorCodigo {
 						
 						System.out.println("a ver.. "+t.getOperando1()+" , "+t.getOperando2());
 						Token sym = tds.getSimbolo(t.getOperando2());
-						//if (sym != null){
+
 						if (sym.getTipo().equals("CTE")) {
 						//		System.out.println("symba sabe"+sym.getLexema());
 								mov1 += "_";
 							}
-						//}
-								
-						//if (tds.getSimbolo(t.getOperando2()).getTipo().equals("CTE")) {
-						//	mov1 += "_";
-						//}
+						
 						mov1 += t.getOperando2();
 						//String mov1 = "MOV "+nombre_reg+" , _"+t.getOperando2();
 							
@@ -1291,7 +1262,7 @@ public class GeneradorCodigo {
 		aux += "include \\masm32\\include\\user32.inc \n";
 		aux += "includelib \\masm32\\lib\\kernel32.lib \n";
 		aux += "includelib \\masm32\\lib\\user32.lib \n";
-		//.data
+
 		return aux;
 	}
 	
@@ -1323,6 +1294,7 @@ public class GeneradorCodigo {
 		
 		return aux;
 	}
+	
 	
 	
 	public String getSentenciasDeclarativasString() {
